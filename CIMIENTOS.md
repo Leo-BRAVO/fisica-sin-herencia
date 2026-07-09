@@ -119,7 +119,7 @@ La ambición de largo plazo del proyecto (aportar a medicina, seguridad, paz, en
 
     datos crudos → descubridor no contaminado → validación despiadada → nodo del árbol → preguntas nuevas → datos nuevos → …
 
-Cada vuelta del ciclo deja conocimiento verificado que hace más potente la vuelta siguiente. Si el método demuestra funcionar en mecánica (Fases 0–2), el MISMO protocolo — estas mismas 19 reglas — se puede apuntar después a datos biomédicos abiertos, datos de materiales, datos climáticos: los dominios cambian, las reglas no. Esa es la ruta real de "trabajar conmigo primero y luego llevarlo al mundo": primero demostrar el motor en lo simple y barato, luego escalarlo a lo que importa. Y ese motor, con sus reglas escritas y su árbol auditable, es publicable, enseñable y heredable — un legado no depende de que su autor esté presente.
+Cada vuelta del ciclo deja conocimiento verificado que hace más potente la vuelta siguiente. Si el método demuestra funcionar en mecánica (Fases 0–2), el MISMO protocolo — estas mismas 26 reglas — se puede apuntar después a datos biomédicos abiertos, datos de materiales, datos climáticos: los dominios cambian, las reglas no. Esa es la ruta real de "trabajar conmigo primero y luego llevarlo al mundo": primero demostrar el motor en lo simple y barato, luego escalarlo a lo que importa. Y ese motor, con sus reglas escritas y su árbol auditable, es publicable, enseñable y heredable — un legado no depende de que su autor esté presente.
 
 ---
 
@@ -233,7 +233,7 @@ fisica-sin-herencia/
 └── arbol/                ← nodos de conocimiento validado (Regla 18)
 ```
 
-**Orden de ejecución de la Fase 0:** (1) crear el repositorio público en GitHub y subir CIMIENTOS.md — desde ese momento la prioridad de la idea tiene fecha; (2) escribir el prerregistro 01; (3) filmar; (4) extraer; (5) correr; (6) pruebas nulas; (7) registrar el resultado, sea cual sea.
+**Orden de ejecución de la Fase 0:** (1) crear el repositorio en GitHub y subir CIMIENTOS.md — **HECHO el 8-jul-2026** (privado por decisión del director, ver nota en Regla 16); (2) escribir el prerregistro 01; (3) filmar; (4) extraer; (5) correr; (6) pruebas nulas; (7) registrar el resultado, sea cual sea.
 
 ---
 
@@ -241,7 +241,7 @@ fisica-sin-herencia/
 
 Copiar y pegar esto para continuar el proyecto con cualquier asistente:
 
-> Lee el archivo CIMIENTOS.md completo. Tu rol es ORQUESTADOR, no descubridor (Regla 3): escribes código, organizas datos y documentas, pero jamás sugieres qué ley física deberían encontrar los datos ni interpretas resultados usando física humana antes de la validación. Ayúdame a ejecutar la fase indicada respetando las 10 reglas. Si alguna acción viola una regla, deténte y dímelo.
+> Lee los archivos CIMIENTOS.md y MENTE.md completos. Al leerlos te conviertes en el científico del proyecto (Regla 24), con toda su experiencia acumulada. Tu rol es ORQUESTADOR, no descubridor (Regla 3): escribes código, organizas datos y documentas, pero jamás sugieres qué ley física deberían encontrar los datos ni interpretas resultados usando física humana antes de la validación. Ayúdame a ejecutar la fase que indica MENTE.md respetando las 26 reglas. Toda automejora tuya sigue el ritual de la Regla 24 y espera mi OK. Si alguna acción viola una regla, deténte y dímelo.
 
 ---
 
@@ -262,3 +262,20 @@ La ambición completa del proyecto, en fases más allá de la escalera de la Reg
 - **Fase 5 (dominios que importan):** el mismo motor, las mismas 26 reglas, apuntados a datos biomédicos abiertos, materiales, energía. Cada dominio nuevo hereda el árbol de métodos, no empieza de cero.
 
 **Las dos verdades de este mapa:** (1) Nuevas formas de propulsión o energía requieren o física nueva (Fase 3 exitosa — improbable pero de valor inmenso) o combinaciones no descubiertas de física conocida (Fase 4 — mucho más probable y también valiosa: así se inventó casi todo lo que usamos). El proyecto persigue ambas rutas a la vez porque el mismo árbol alimenta las dos. (2) Cada fase solo existe si la anterior funcionó de punta a punta. El derecho a soñar con la Fase 5 se compra filmando el péndulo de la Fase 0.
+
+---
+
+## 7. LA GRAN VISIÓN — LA SEGUNDA CIENCIA
+
+La formulación completa de lo que este proyecto construye, en su horizonte máximo:
+
+**Una civilización epistémica paralela.** Miles de años de descubrimiento comprimidos en tiempo de cómputo (el precedente existe: AlphaZero comprimió siglos de aprendizaje de ajedrez en días de auto-juego), donde el conocimiento se reconstruye desde cero bajo las 26 reglas — empezando por confundir la luna con una estrella, si ese es el camino, y subiendo peldaño a peldaño hasta alcanzar y superar el punto donde la humanidad está hoy, pero por una ruta que nunca pisó las huellas de la nuestra.
+
+**El tesoro no es solo lo nuevo — es la comparación.** Cuando la Segunda Ciencia llegue a una conclusión que coincida con la nuestra por camino independiente, esa coincidencia será la validación más fuerte que exista de que eso es REAL (como el ojo, que la evolución inventó independientemente muchas veces: ver es una solución del universo, no un accidente cultural). Y donde NO coincida, habremos localizado qué parte de nuestro conocimiento era herencia disfrazada de verdad. La Segunda Ciencia es la segunda opinión de la civilización — nadie la ha construido nunca.
+
+**Los tres tipos de dominio (límite honesto que protege todo lo demás):**
+1. **Dominios con juez externo** — física, química, medicina, ingeniería: la realidad los arbitra (Reglas 5, 19). Aquí la Segunda Ciencia puede descubrir y contradecir con toda su fuerza. En medicina: solo datos abiertos, jamás experimentación propia, y la Regla 22 (doble uso) al máximo.
+2. **Dominios con juez formal** — matemática, lógica: la demostración mecánica los arbitra. Aquí puede incluso explorar axiomas distintos a los humanos.
+3. **Dominios sin juez medible** — moral, política, estética: NO existe instrumento que mida "la moral correcta". Aquí la Segunda Ciencia puede hacer algo valioso pero distinto: mapear consecuencias ("si una sociedad valora X, se sigue Y — verificable en datos históricos"), simular dinámicas, exponer incoherencias internas. Lo que NUNCA puede es proclamar valores descubiertos como verdades. La elección de valores queda siempre del lado humano — del director, y de la humanidad. Cualquier versión futura de este proyecto que viole este límite ha traicionado sus cimientos.
+
+**El ancla:** los milenios virtuales son legítimos como aceleración de búsqueda, pero un entorno solo puede enseñar lo que sus reglas contienen. Por eso la Segunda Ciencia debe tocar la realidad a intervalos regulares — datos nuevos, experimentos físicos (Regla 19) — o degenera en una mitología coherente y hermosa sobre un universo que no es este. La realidad es el único punto fijo compartido entre la Primera Ciencia y la Segunda; sin ella no hay comparación, y sin comparación no hay tesoro.
