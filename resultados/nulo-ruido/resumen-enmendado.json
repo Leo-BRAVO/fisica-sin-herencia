@@ -1,0 +1,17 @@
+{
+  "nulo": "ruido",
+  "vara": "enmienda-01 (min de velocidad y media)",
+  "mse_base": 764798.2926627011,
+  "umbral": 382399.14633135055,
+  "semillas": {
+    "1": {
+      "mse_total": 1573271.7974816991,
+      "supera_umbral": false
+    },
+    "2": {
+      "mse_total": 1558716.7087421245,
+      "supera_umbral": false
+    }
+  },
+  "exitos": 0
+}

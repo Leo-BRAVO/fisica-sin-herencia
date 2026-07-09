@@ -1,0 +1,20 @@
+{
+  "nulo": null,
+  "mse_base": 0.3035524156648387,
+  "umbral": 0.15177620783241935,
+  "semillas": {
+    "1": {
+      "mse_total": 0.15112997799357558,
+      "supera_umbral": true
+    },
+    "2": {
+      "mse_total": 0.2579676902621735,
+      "supera_umbral": false
+    },
+    "3": {
+      "mse_total": 0.14738389664466017,
+      "supera_umbral": true
+    }
+  },
+  "exitos": 2
+}

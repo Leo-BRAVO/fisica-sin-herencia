@@ -1,0 +1,16 @@
+{
+  "nulo": "ruido",
+  "mse_base": 4540403.897884986,
+  "umbral": 2270201.948942493,
+  "semillas": {
+    "1": {
+      "mse_total": 1573271.7974816991,
+      "supera_umbral": true
+    },
+    "2": {
+      "mse_total": 1558716.7087421245,
+      "supera_umbral": true
+    }
+  },
+  "exitos": 2
+}

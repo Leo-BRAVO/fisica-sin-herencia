@@ -53,6 +53,7 @@ Siguiendo el hallazgo de Columbia: correr el descubridor muchas veces con semill
 
 ### Regla 8 — Registro inmutable y prerregistro
 Antes de cada corrida: escribir qué se espera y qué contaría como éxito o fracaso (prerregistro). Guardar todo: datos, código, semillas, resultados, incluidos los fracasos. La contaminación debe poder auditarse hacia atrás. Un resultado sin registro completo no existe.
+**Gobernanza de enmiendas (agregada 9-jul-2026, aprobada por el director):** un prerregistro solo puede enmendarse dejando registro escrito con motivo y efecto sobre resultados previos. El orquestador puede enmendar unilateralmente SOLO si la enmienda endurece el criterio; cualquier enmienda que lo afloje exige OK previo del director. Toda enmienda se registra antes de conocer los resultados que juzgará.
 
 ### Regla 9 — Escalera de dificultad: ganarse cada peldaño
 No saltar a la mecánica cuántica. Subir peldaño a peldaño, y solo subir cuando el peldaño anterior funcione de punta a punta:
@@ -254,6 +255,7 @@ Copiar y pegar esto para continuar el proyecto con cualquier asistente:
 
 ## 5. HONESTIDAD INTELECTUAL (leer antes de contar esto a alguien)
 
+- **Limitación confesada (9-jul-2026):** el conjunto de operadores del descubridor (`sin`, `cos`, `exp`, etc.) fue elegido por el orquestador sabiendo que la matemática humana los usa. Son primitivas universales, no leyes — pero es una gota de herencia que se documenta en vez de callarse. Mejora futura: descubrir también el conjunto de operadores en lugar de dárselo.
 - Las reglas se apoyan en ideas existentes: la filosofía de la ciencia ya sabía que la observación está cargada de teoría (Duhem, Hanson, Kuhn), y MDL, prerregistro y validación cruzada son estándar en sus campos. **El aporte es la combinación como protocolo operativo** para descubrimiento automático no contaminado — eso, hasta donde se pudo verificar en julio de 2026, no está publicado como tal.
 - La probabilidad de que este proyecto resuelva las paradojas de la física es baja. La probabilidad de que enseñe muchísimo, produzca resultados publicables en los peldaños intermedios, y posicione a su autor en un campo que tiene tres años de vida, es alta. Los legados se construyen así.
 

@@ -1,0 +1,16 @@
+{
+  "nulo": "barajado",
+  "mse_base": 3593710.388580224,
+  "umbral": 1796855.194290112,
+  "semillas": {
+    "1": {
+      "mse_total": 1231346.1305555631,
+      "supera_umbral": true
+    },
+    "2": {
+      "mse_total": 1231013.1264118103,
+      "supera_umbral": true
+    }
+  },
+  "exitos": 2
+}

@@ -1,0 +1,17 @@
+{
+  "nulo": "barajado",
+  "vara": "enmienda-01 (min de velocidad y media)",
+  "mse_base": 611240.6895506335,
+  "umbral": 305620.3447753168,
+  "semillas": {
+    "1": {
+      "mse_total": 1231346.1305555631,
+      "supera_umbral": false
+    },
+    "2": {
+      "mse_total": 1231013.1264118103,
+      "supera_umbral": false
+    }
+  },
+  "exitos": 0
+}
