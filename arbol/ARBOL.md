@@ -13,9 +13,11 @@ graph TD
     P4{"¿Video coincide<br/>con encoder?"}:::pregunta
     P5{"¿Por qué resiste<br/>la señal 2?"}:::pregunta
 
-    Q1{"¿k depende de las UNIDADES?<br/>test re-escalado ×100<br/>— EN CURSO (prereg-04)"}:::encurso
-    Q2{"¿TRANSFERENCIA directa<br/>entre trials sin re-entrenar?<br/>— siguiente (aprobada)"}:::pregunta
-    Q3{"¿k sobrevive a un SISTEMA distinto?<br/>peldaño 2: caída y vuelo<br/>+ péndulo propio del director"}:::pregunta
+    N003["N-003 · 9-jul-2026<br/>La fórmula TRANSFIERE sin re-entrenar<br/>Trial1→Trial2 y Trial1→Trial3 bajo umbral<br/>hijo de N-001 y N-002"]:::nodo
+
+    Q1{"¿k depende de las UNIDADES?<br/>re-escalado ×100: evidencia parcial SÍ<br/>(INFORME-04, resultado C con traza de A)"}:::parcial
+    Q3{"¿k sobrevive a un APARATO distinto?<br/>peldaño 2: caída y vuelo<br/>+ péndulo propio del director"}:::pregunta
+    Q4{"¿Cuánto RUEDA la fórmula<br/>multi-paso antes de degradarse?"}:::pregunta
 
     RAIZ --> N001
     N001 --> N002
@@ -24,8 +26,11 @@ graph TD
     N001 --> P4
     N001 --> P5
     N002 --> Q1
-    N002 --> Q2
+    N002 --> N003
     N002 --> Q3
+    N003 --> Q4
+
+    classDef parcial fill:#4a3d1a,stroke:#e67e22,color:#fff
 
     classDef raiz fill:#1a1a2e,stroke:#e94560,color:#fff,stroke-width:3px
     classDef nodo fill:#0f3d2e,stroke:#2ecc71,color:#fff,stroke-width:2px

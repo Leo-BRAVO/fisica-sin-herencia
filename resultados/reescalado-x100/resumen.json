@@ -1,0 +1,27 @@
+{
+  "nulo": null,
+  "mse_base": 6071.048313296618,
+  "umbral": 3035.524156648309,
+  "mse_rival_lineal": 6183.050821825601,
+  "semillas": {
+    "1": {
+      "mse_total": 3299.0825467792274,
+      "supera_umbral": false,
+      "vence_rival_lineal": true,
+      "exito": false
+    },
+    "2": {
+      "mse_total": 6071.048313296624,
+      "supera_umbral": false,
+      "vence_rival_lineal": true,
+      "exito": false
+    },
+    "3": {
+      "mse_total": 5634.126382697088,
+      "supera_umbral": false,
+      "vence_rival_lineal": true,
+      "exito": false
+    }
+  },
+  "exitos": 0
+}
