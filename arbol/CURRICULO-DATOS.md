@@ -1,0 +1,35 @@
+# CURRÍCULO DE DATOS — la ruta de videos y datasets del proyecto
+**Documento vivo (Regla 18): detalle concreto para los próximos pasos, principios para lo lejano. Se actualiza cada vez que el árbol gana nodos.**
+Creado: 9 de julio de 2026. Toda entrada debe cumplir la Regla 25 (procedencia, sin CGI, sin narración de física, sin video generado por IA).
+
+## Cómo se avanza (criterio de aprobación de cada peldaño)
+Un peldaño se aprueba cuando: (1) la corrida oficial supera su umbral prerregistrado, (2) las pruebas nulas fracasan como deben, (3) el nodo queda escrito en el árbol con sus preguntas nuevas. Solo entonces se pasa al siguiente. Saltar peldaños está prohibido por la Regla 9.
+
+## PELDAÑO ACTUAL — 0/1: Péndulo doble (Mendeley 7yd2ntbh3w) — EN CURSO
+- Trial 1 en corrida piloto (9-jul-2026). Pendiente: corrida oficial 10 semillas, pruebas nulas, Trials 2 y 3 como replicación.
+- Extra disponible: validar el rastreo de video contra el sensor encoder del mismo dataset (dos instrumentos independientes midiendo lo mismo — primera validación cruzada del proyecto).
+- Pendiente del director: video propio de péndulo simple (cuerda + tuerca) para la corroboración física de la Regla 19.
+
+## PELDAÑO 2: Caída y vuelo (lo que R-la-gravedad debería unificar)
+Objetivo: ver si la regularidad del péndulo reaparece en fenómenos distintos — la primera oportunidad de que un nodo unifique dominios.
+- Videos propios (costo $0, cámara fija 60 fps): objetos soltados desde reposo (3 pesos distintos), lanzamientos parabólicos (pelota), rebotes.
+- Fuentes existentes verificables: grabaciones de laboratorios docentes SIN narración ni diagramas (buscar en repositorios universitarios abiertos; cada video entra al catálogo con fuente/fps/licencia/indicios de edición).
+
+## PELDAÑO 3: Resortes, colisiones y rotación
+- Masa-resorte filmado propio; colisiones de bolas sobre mesa (video cenital); trompos y ruedas.
+- Aquí se prueba si el motor descubre cantidades CONSERVADAS (cosas que no cambian antes/después del choque) — el tipo de ley más profundo que existe.
+
+## PELDAÑO 4 (= Fase 2 del mapa): Datos científicos públicos masivos
+- **the Well** (Polymathic AI, 15 TB, gratuito): dinámica de fluidos — descargar solo escenarios elegidos por preguntas del árbol, jamás todo.
+- **SDSS / datos astronómicos abiertos:** posiciones y espectros crudos.
+- **CERN Open Data:** conteos de detectores al nivel más crudo disponible.
+- Requisito de entrada: que MENTE.md registre método maduro (extracción, nulas y árbol funcionando sin sorpresas en peldaños 1–3).
+
+## PELDAÑO 5 (= Fase 3): Anomalías — se define cuando lleguemos
+No se mapea todavía (sería fingir conocimiento). Se construirá el catálogo `ANOMALIAS.md` (Regla 21) con los residuos documentados entre teoría humana y medición, y el árbol decidirá por dónde cavar. Principio de selección: anomalías con datos públicos crudos disponibles y efecto medible grande primero.
+
+## Principios permanentes de selección de datos (para cualquier peldaño futuro)
+1. El árbol pregunta, los datos responden — nunca descargar sin pregunta abierta que lo motive (anti-"tragarlo todo").
+2. Preferir siempre: instrumento más crudo, procedencia más clara, licencia más limpia.
+3. Cada dominio nuevo necesita su experimento propio barato de corroboración (Regla 19) — si no se puede corroborar físicamente, se marca provisional para siempre.
+4. Replicar antes de avanzar: mínimo 2 fuentes independientes por regularidad.
