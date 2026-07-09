@@ -123,6 +123,24 @@ Cada vuelta del ciclo deja conocimiento verificado que hace más potente la vuel
 
 ---
 
+## 2e. REGLAS DEL HORIZONTE (20–23)
+
+Estas reglas existen para la ambición de largo plazo — nuevas formas de energía, propulsión, transporte — sin romper nada de lo anterior. Son las piezas que los proyectos de descubrimiento nunca ponen al inicio y siempre lamentan al final.
+
+### Regla 20 — El camino inverso: de ley a tecnología
+Descubrir es responder "dado este sistema, ¿cómo se comporta?". Diseñar tecnología es la pregunta INVERSA: "dado este comportamiento deseado (empuje, energía almacenada, movimiento), ¿qué sistema lo produce?". Cuando el árbol tenga leyes validadas, se abre el **modo diseño**: un buscador que explora el espacio de configuraciones posibles usando ÚNICAMENTE las leyes del árbol como física — nunca la intuición ingenieril humana. Esto tiene un precedente probado: la antena evolucionada de la NASA (2006), diseñada por búsqueda automática, con una forma que ningún ingeniero humano habría dibujado — y funcionó mejor. La no-contaminación aplicada al diseño es lo que produce tecnologías que a los humanos no se les ocurren. Todo diseño candidato sigue la misma escalera de la Regla 19: primero simulado con leyes del árbol, luego construido barato, luego replicado.
+
+### Regla 21 — El mapa de anomalías: dónde cavar para contradecir
+"Contradecir el conocimiento actual" no se hace opinando contra las teorías: se hace cavando donde las teorías ya dejan **residuos** — lugares donde la predicción humana y los datos medidos no cuadran. El proyecto mantiene un archivo `arbol/ANOMALIAS.md`: un catálogo de discrepancias documentadas entre teoría y medición, registradas como pares (predicción humana, dato medido, tamaño del residuo) — solo números y procedencia, nunca las explicaciones humanas propuestas (eso sería contaminación). Cuando el motor esté maduro (Fase 3), las anomalías del catálogo son sus objetivos prioritarios: son los puntos donde una compresión alternativa tiene más probabilidad de vencer a la humana. Regla operativa: una contradicción a la física establecida exige evidencia proporcional a lo que contradice — el estándar de validación (Reglas 5, 11, 19) se aplica con el máximo rigor precisamente cuando el resultado es el que más nos gustaría creer.
+
+### Regla 22 — Doble uso: el descubrimiento también se audita moralmente
+El objetivo declarado del proyecto es ayudar — medicina, energía, paz. Pero toda física potente es de doble filo: energía nueva es también arma potencial. Regla: antes de publicar o compartir cualquier nodo validado con potencial de aplicación (energía, propulsión, materiales), el director hace una revisión de doble uso — ¿qué es lo peor que alguien podría hacer con esto? — y decide con esa respuesta delante, pidiendo consejo externo si la respuesta asusta. El árbol registra la revisión junto al nodo. Un proyecto que nace para la paz debe poder demostrar que lo pensó desde el nodo uno, no después del primer titular.
+
+### Regla 23 — El motor tampoco cree en sí mismo
+Si el proyecto aspira a contradecir el conocimiento humano, debe aplicarse la misma vara: **ningún nodo del árbol es sagrado**. Periódicamente (al cerrar cada fase), los nodos antiguos se re-someten a validación con los métodos y datos mejores que existan en ese momento; el que falle se degrada a provisional o se poda, registrando por qué. Un árbol que solo crece y nunca se poda no es conocimiento — es dogma con formato de carpeta. La disposición a contradecirse a sí mismo es lo que le da autoridad para contradecir a los demás.
+
+---
+
 ## 3. FASE 0 — INSTRUCCIONES CONCRETAS (bajo presupuesto: ~$0)
 
 Todo lo necesario es gratuito:
@@ -204,3 +222,16 @@ Copiar y pegar esto para continuar el proyecto con cualquier asistente:
 
 - Las reglas se apoyan en ideas existentes: la filosofía de la ciencia ya sabía que la observación está cargada de teoría (Duhem, Hanson, Kuhn), y MDL, prerregistro y validación cruzada son estándar en sus campos. **El aporte es la combinación como protocolo operativo** para descubrimiento automático no contaminado — eso, hasta donde se pudo verificar en julio de 2026, no está publicado como tal.
 - La probabilidad de que este proyecto resuelva las paradojas de la física es baja. La probabilidad de que enseñe muchísimo, produzca resultados publicables en los peldaños intermedios, y posicione a su autor en un campo que tiene tres años de vida, es alta. Los legados se construyen así.
+
+---
+
+## 6. EL HORIZONTE — DEL PÉNDULO A LA PROPULSIÓN (mapa honesto)
+
+La ambición completa del proyecto, en fases más allá de la escalera de la Regla 9, con sus puertas de entrada honestas:
+
+- **Fases 0–2 (mecánica):** demostrar que el motor descubre leyes reales sin contaminación. Costo ~$0. Es la prueba del método.
+- **Fase 3 (anomalías):** apuntar el motor al catálogo de la Regla 21 con datos públicos reales (astronomía, partículas). Aquí es donde "contradecir el conocimiento actual" se vuelve posible de verdad — no antes.
+- **Fase 4 (modo diseño, Regla 20):** con leyes validadas en el árbol, invertir la pregunta y buscar diseños — mecanismos, estructuras, formas de almacenar o convertir energía — que las leyes permitan y a ningún humano se le hayan ocurrido. Empieza en mecánica barata (un mecanismo que ningún libro tiene), no en cohetes.
+- **Fase 5 (dominios que importan):** el mismo motor, las mismas 23 reglas, apuntados a datos biomédicos abiertos, materiales, energía. Cada dominio nuevo hereda el árbol de métodos, no empieza de cero.
+
+**Las dos verdades de este mapa:** (1) Nuevas formas de propulsión o energía requieren o física nueva (Fase 3 exitosa — improbable pero de valor inmenso) o combinaciones no descubiertas de física conocida (Fase 4 — mucho más probable y también valiosa: así se inventó casi todo lo que usamos). El proyecto persigue ambas rutas a la vez porque el mismo árbol alimenta las dos. (2) Cada fase solo existe si la anterior funcionó de punta a punta. El derecho a soñar con la Fase 5 se compra filmando el péndulo de la Fase 0.
