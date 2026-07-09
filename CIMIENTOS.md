@@ -119,7 +119,7 @@ La ambición de largo plazo del proyecto (aportar a medicina, seguridad, paz, en
 
     datos crudos → descubridor no contaminado → validación despiadada → nodo del árbol → preguntas nuevas → datos nuevos → …
 
-Cada vuelta del ciclo deja conocimiento verificado que hace más potente la vuelta siguiente. Si el método demuestra funcionar en mecánica (Fases 0–2), el MISMO protocolo — estas mismas 26 reglas — se puede apuntar después a datos biomédicos abiertos, datos de materiales, datos climáticos: los dominios cambian, las reglas no. Esa es la ruta real de "trabajar conmigo primero y luego llevarlo al mundo": primero demostrar el motor en lo simple y barato, luego escalarlo a lo que importa. Y ese motor, con sus reglas escritas y su árbol auditable, es publicable, enseñable y heredable — un legado no depende de que su autor esté presente.
+Cada vuelta del ciclo deja conocimiento verificado que hace más potente la vuelta siguiente. Si el método demuestra funcionar en mecánica (Fases 0–2), el MISMO protocolo — estas mismas 27 reglas — se puede apuntar después a datos biomédicos abiertos, datos de materiales, datos climáticos: los dominios cambian, las reglas no. Esa es la ruta real de "trabajar conmigo primero y luego llevarlo al mundo": primero demostrar el motor en lo simple y barato, luego escalarlo a lo que importa. Y ese motor, con sus reglas escritas y su árbol auditable, es publicable, enseñable y heredable — un legado no depende de que su autor esté presente.
 
 ---
 
@@ -141,7 +141,7 @@ Si el proyecto aspira a contradecir el conocimiento humano, debe aplicarse la mi
 
 ---
 
-## 2f. REGLAS DE LA MENTE DEL PROYECTO Y DE LOS DATOS DEL MUNDO (24–26)
+## 2f. REGLAS DE LA MENTE DEL PROYECTO, LOS DATOS DEL MUNDO Y LA COMPARACIÓN (24–27)
 
 ### Regla 24 — El científico del proyecto vive en el repositorio, no en un modelo
 El proyecto tiene un científico asistente que crece con el árbol — pero su identidad no es ningún modelo de IA concreto: es un archivo, `MENTE.md`, versionado en el repositorio. Contiene: (1) el rol y las 26 reglas resumidas, (2) lo aprendido hasta ahora — lecciones de método, errores cometidos y cómo se corrigieron, mañas de las herramientas, (3) el estado del árbol y las preguntas abiertas priorizadas, (4) el historial de sus propias versiones. Cualquier modelo de IA que cargue MENTE.md + CIMIENTOS.md **se convierte en el científico del proyecto**, con toda su experiencia acumulada — hoy un modelo, mañana otro mejor, sin perder nada. Así el científico mejora de verdad entre sesiones y entre modelos, y el proyecto nunca depende de un proveedor.
@@ -163,6 +163,13 @@ Esto multiplica los datos disponibles de la Fase 1 en adelante sin presupuesto. 
 
 ### Regla 26 — Ingeniería desde cero: los documentos que no existen
 Cuando el modo diseño (Regla 20) produzca un diseño validado, el proyecto genera su documento de ingeniería completo en `ingenieria/`: especificación del mecanismo, qué nodos del árbol lo sustentan (cada afirmación del documento debe citar su nodo — nada se afirma por "todos saben que"), predicciones cuantitativas, instrucciones de construcción con materiales accesibles, y el protocolo de prueba con su prerregistro. Serán documentos de ingeniería que no existen en ninguna biblioteca — porque describen cosas descubiertas desde cero — pero con una trazabilidad que casi ningún documento humano tiene: cada línea rastreable hasta los datos que la sostienen. Ese formato — ingeniería 100% trazable a evidencia propia — es en sí mismo una de las invenciones del proyecto.
+
+### Regla 27 — El comparador y el cortafuegos: cómo se corrige el conocimiento humano
+Aprobada por el director y el orquestador el 9-jul-2026. Todo nodo validado del árbol pasa, DESPUÉS de su validación (nunca antes), por una comparación formal contra el conocimiento humano existente. La hace un rol separado — el COMPARADOR — que sí puede leer física, medicina o ingeniería humanas, y emite uno de tres veredictos, que se registran junto al nodo:
+- **COINCIDE:** el nodo llegó por camino independiente a algo que la humanidad ya sabía. Valor: validación cruzada de que eso es real (el corazón de la Sección 7).
+- **CONTRADICE:** el nodo, validado por los jueces del proyecto, choca con lo que la humanidad cree. Valor: candidato a corrección del conocimiento humano. Se aplica el máximo rigor de la Regla 21 (evidencia proporcional) antes de proclamarlo, y la Regla 22 (doble uso) antes de compartirlo.
+- **SIN EQUIVALENTE:** la humanidad no tiene nada comparable. Valor: posible conocimiento genuinamente nuevo — la categoría de la propulsión mejorada, la energía nueva, la medicina que no existe.
+**El cortafuegos (inviolable):** los veredictos del comparador llegan SOLO al director, para decidir prioridades y qué compartir con el mundo. JAMÁS entran como datos, pistas o contexto al descubridor ni al árbol de preguntas que el descubridor ve. El día que el descubridor sepa qué opina la humanidad para "corregirla", el proyecto entero pierde su razón de ser: corregir exige independencia, y la independencia no se recupera una vez perdida. Comparador y descubridor pueden ser el mismo modelo de IA en sesiones distintas, pero nunca en la misma sesión ni compartiendo contexto.
 
 ---
 
@@ -241,7 +248,7 @@ fisica-sin-herencia/
 
 Copiar y pegar esto para continuar el proyecto con cualquier asistente:
 
-> Lee los archivos CIMIENTOS.md y MENTE.md completos. Al leerlos te conviertes en el científico del proyecto (Regla 24), con toda su experiencia acumulada. Tu rol es ORQUESTADOR, no descubridor (Regla 3): escribes código, organizas datos y documentas, pero jamás sugieres qué ley física deberían encontrar los datos ni interpretas resultados usando física humana antes de la validación. Ayúdame a ejecutar la fase que indica MENTE.md respetando las 26 reglas. Toda automejora tuya sigue el ritual de la Regla 24 y espera mi OK. Si alguna acción viola una regla, deténte y dímelo.
+> Lee los archivos CIMIENTOS.md y MENTE.md completos. Al leerlos te conviertes en el científico del proyecto (Regla 24), con toda su experiencia acumulada. Tu rol es ORQUESTADOR, no descubridor (Regla 3): escribes código, organizas datos y documentas, pero jamás sugieres qué ley física deberían encontrar los datos ni interpretas resultados usando física humana antes de la validación. Ayúdame a ejecutar la fase que indica MENTE.md respetando las 27 reglas. Toda automejora tuya sigue el ritual de la Regla 24 y espera mi OK. Si actúas como descubridor-orquestador, el cortafuegos de la Regla 27 te aplica: no consultes conocimiento humano del dominio investigado. Si alguna acción viola una regla, deténte y dímelo.
 
 ---
 
@@ -259,7 +266,7 @@ La ambición completa del proyecto, en fases más allá de la escalera de la Reg
 - **Fases 0–2 (mecánica):** demostrar que el motor descubre leyes reales sin contaminación. Costo ~$0. Es la prueba del método.
 - **Fase 3 (anomalías):** apuntar el motor al catálogo de la Regla 21 con datos públicos reales (astronomía, partículas). Aquí es donde "contradecir el conocimiento actual" se vuelve posible de verdad — no antes.
 - **Fase 4 (modo diseño, Regla 20):** con leyes validadas en el árbol, invertir la pregunta y buscar diseños — mecanismos, estructuras, formas de almacenar o convertir energía — que las leyes permitan y a ningún humano se le hayan ocurrido. Empieza en mecánica barata (un mecanismo que ningún libro tiene), no en cohetes.
-- **Fase 5 (dominios que importan):** el mismo motor, las mismas 26 reglas, apuntados a datos biomédicos abiertos, materiales, energía. Cada dominio nuevo hereda el árbol de métodos, no empieza de cero.
+- **Fase 5 (dominios que importan):** el mismo motor, las mismas 27 reglas, apuntados a datos biomédicos abiertos, materiales, energía. Cada dominio nuevo hereda el árbol de métodos, no empieza de cero.
 
 **Las dos verdades de este mapa:** (1) Nuevas formas de propulsión o energía requieren o física nueva (Fase 3 exitosa — improbable pero de valor inmenso) o combinaciones no descubiertas de física conocida (Fase 4 — mucho más probable y también valiosa: así se inventó casi todo lo que usamos). El proyecto persigue ambas rutas a la vez porque el mismo árbol alimenta las dos. (2) Cada fase solo existe si la anterior funcionó de punta a punta. El derecho a soñar con la Fase 5 se compra filmando el péndulo de la Fase 0.
 
