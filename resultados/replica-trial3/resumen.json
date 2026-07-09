@@ -1,0 +1,39 @@
+{
+  "nulo": null,
+  "mse_base": 0.49028948371561537,
+  "umbral": 0.24514474185780769,
+  "mse_rival_lineal": 0.4817542131939627,
+  "semillas": {
+    "1": {
+      "mse_total": 0.12019907336497615,
+      "supera_umbral": true,
+      "vence_rival_lineal": true,
+      "exito": true
+    },
+    "2": {
+      "mse_total": 0.32925033432785805,
+      "supera_umbral": false,
+      "vence_rival_lineal": true,
+      "exito": false
+    },
+    "3": {
+      "mse_total": 0.17048905578581403,
+      "supera_umbral": true,
+      "vence_rival_lineal": true,
+      "exito": true
+    },
+    "4": {
+      "mse_total": 0.1219767910433148,
+      "supera_umbral": true,
+      "vence_rival_lineal": true,
+      "exito": true
+    },
+    "5": {
+      "mse_total": 0.3315405377566001,
+      "supera_umbral": false,
+      "vence_rival_lineal": true,
+      "exito": false
+    }
+  },
+  "exitos": 3
+}
