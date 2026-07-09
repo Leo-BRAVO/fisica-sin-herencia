@@ -141,6 +141,25 @@ Si el proyecto aspira a contradecir el conocimiento humano, debe aplicarse la mi
 
 ---
 
+## 2f. REGLAS DE LA MENTE DEL PROYECTO Y DE LOS DATOS DEL MUNDO (24–26)
+
+### Regla 24 — El científico del proyecto vive en el repositorio, no en un modelo
+El proyecto tiene un científico asistente que crece con el árbol — pero su identidad no es ningún modelo de IA concreto: es un archivo, `MENTE.md`, versionado en el repositorio. Contiene: (1) el rol y las 26 reglas resumidas, (2) lo aprendido hasta ahora — lecciones de método, errores cometidos y cómo se corrigieron, mañas de las herramientas, (3) el estado del árbol y las preguntas abiertas priorizadas, (4) el historial de sus propias versiones. Cualquier modelo de IA que cargue MENTE.md + CIMIENTOS.md **se convierte en el científico del proyecto**, con toda su experiencia acumulada — hoy un modelo, mañana otro mejor, sin perder nada. Así el científico mejora de verdad entre sesiones y entre modelos, y el proyecto nunca depende de un proveedor.
+**Cómo crece sin violar la Regla 15:** al final de cada sesión de trabajo, el orquestador PROPONE la actualización de MENTE.md (qué aprendió, qué cambiaría de su propio método); el director la lee, la edita si quiere, y la aprueba con el commit. Cada mejora del científico pasa por ojos humanos y queda fechada. Es automejora con auditoría — la única clase de automejora que produce confianza en vez de riesgo.
+
+### Regla 25 — El mundo ya está grabado: datos de video existentes
+No hay que filmar cada fenómeno: internet está lleno de grabaciones reales de física ocurriendo — objetos cayendo, péndulos, olas, colisiones, vuelos, derrumbes. Son datos válidos para el motor bajo estas condiciones:
+- **Solo registro crudo de realidad:** grabaciones directas de fenómenos reales. PROHIBIDO: animaciones, CGI, videos educativos con diagramas o narración de física (eso es teoría humana disfrazada de video — contaminación), y video generado por IA (no está atado a la realidad; es física inventada por una red).
+- **Autenticidad antes que abundancia:** preferir fuentes con procedencia verificable (grabaciones científicas públicas, cámaras de tráfico o seguridad publicadas, video amateur sin edición). Cada video entra al catálogo con: fuente, fecha, indicios de edición, tasa de cuadros conocida o estimada, y licencia de uso.
+- **Cuidados técnicos que invalidan datos si se ignoran:** cortes de edición, cámara en movimiento sin referencia fija, estabilización digital del teléfono (distorsiona trayectorias), cámara lenta re-muestreada. Ante duda sobre la integridad temporal de un video, se descarta — hay millones más.
+- La extracción sigue siendo píxeles y cuadros (Regla 2); las pruebas nulas (Regla 11) se aplican igual.
+Esto multiplica los datos disponibles de la Fase 1 en adelante sin presupuesto. El experimento propio filmado (Regla 19) sigue siendo obligatorio para CORROBORAR — el video de internet descubre, el experimento propio confirma.
+
+### Regla 26 — Ingeniería desde cero: los documentos que no existen
+Cuando el modo diseño (Regla 20) produzca un diseño validado, el proyecto genera su documento de ingeniería completo en `ingenieria/`: especificación del mecanismo, qué nodos del árbol lo sustentan (cada afirmación del documento debe citar su nodo — nada se afirma por "todos saben que"), predicciones cuantitativas, instrucciones de construcción con materiales accesibles, y el protocolo de prueba con su prerregistro. Serán documentos de ingeniería que no existen en ninguna biblioteca — porque describen cosas descubiertas desde cero — pero con una trazabilidad que casi ningún documento humano tiene: cada línea rastreable hasta los datos que la sostienen. Ese formato — ingeniería 100% trazable a evidencia propia — es en sí mismo una de las invenciones del proyecto.
+
+---
+
 ## 3. FASE 0 — INSTRUCCIONES CONCRETAS (bajo presupuesto: ~$0)
 
 Todo lo necesario es gratuito:
@@ -197,6 +216,8 @@ Pasos:
 ```
 fisica-sin-herencia/
 ├── CIMIENTOS.md          ← este documento
+├── MENTE.md              ← identidad y experiencia del científico del proyecto (Regla 24)
+├── ingenieria/           ← documentos de diseño trazables a nodos (Regla 26)
 ├── datos/
 │   ├── crudos/           ← videos y extracciones originales, NUNCA se modifican
 │   └── procesados/       ← copias transformadas, con script que las generó
@@ -232,6 +253,6 @@ La ambición completa del proyecto, en fases más allá de la escalera de la Reg
 - **Fases 0–2 (mecánica):** demostrar que el motor descubre leyes reales sin contaminación. Costo ~$0. Es la prueba del método.
 - **Fase 3 (anomalías):** apuntar el motor al catálogo de la Regla 21 con datos públicos reales (astronomía, partículas). Aquí es donde "contradecir el conocimiento actual" se vuelve posible de verdad — no antes.
 - **Fase 4 (modo diseño, Regla 20):** con leyes validadas en el árbol, invertir la pregunta y buscar diseños — mecanismos, estructuras, formas de almacenar o convertir energía — que las leyes permitan y a ningún humano se le hayan ocurrido. Empieza en mecánica barata (un mecanismo que ningún libro tiene), no en cohetes.
-- **Fase 5 (dominios que importan):** el mismo motor, las mismas 23 reglas, apuntados a datos biomédicos abiertos, materiales, energía. Cada dominio nuevo hereda el árbol de métodos, no empieza de cero.
+- **Fase 5 (dominios que importan):** el mismo motor, las mismas 26 reglas, apuntados a datos biomédicos abiertos, materiales, energía. Cada dominio nuevo hereda el árbol de métodos, no empieza de cero.
 
 **Las dos verdades de este mapa:** (1) Nuevas formas de propulsión o energía requieren o física nueva (Fase 3 exitosa — improbable pero de valor inmenso) o combinaciones no descubiertas de física conocida (Fase 4 — mucho más probable y también valiosa: así se inventó casi todo lo que usamos). El proyecto persigue ambas rutas a la vez porque el mismo árbol alimenta las dos. (2) Cada fase solo existe si la anterior funcionó de punta a punta. El derecho a soñar con la Fase 5 se compra filmando el péndulo de la Fase 0.
