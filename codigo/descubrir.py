@@ -20,23 +20,26 @@ import pandas as pd
 
 def preparar(csv_path, nulo=None, rng=None):
     df = pd.read_csv(csv_path).dropna()
-    # Acepta tanto extracción propia (x_px, y_px) como señales neutras (s1, s2)
-    c1, c2 = ("x_px", "y_px") if "x_px" in df.columns else ("s1", "s2")
-    x = df[c1].to_numpy(float)
-    y = df[c2].to_numpy(float)
+    # Acepta extracción propia (x_px, y_px), dos señales neutras (s1, s2) o UNA señal (solo s1)
+    if "x_px" in df.columns:
+        cols = ["x_px", "y_px"]
+    elif "s2" in df.columns:
+        cols = ["s1", "s2"]
+    else:
+        cols = ["s1"]
+    señales = [df[c].to_numpy(float) for c in cols]
 
     if nulo == "barajado":
-        perm = rng.permutation(len(x))
-        x, y = x[perm], y[perm]
+        perm = rng.permutation(len(señales[0]))
+        señales = [s[perm] for s in señales]
     elif nulo == "ruido":
-        x = rng.uniform(x.min(), x.max(), size=len(x))
-        y = rng.uniform(y.min(), y.max(), size=len(y))
+        señales = [rng.uniform(s.min(), s.max(), size=len(s)) for s in señales]
 
     # Velocidades por diferencia entre cuadros (operación matemática neutra)
-    vx, vy = np.diff(x), np.diff(y)
+    cambios = [np.diff(s) for s in señales]
     # Estado en t → estado en t+1
-    X = np.column_stack([x[1:-1], y[1:-1], vx[:-1], vy[:-1]])
-    Y = np.column_stack([x[2:], y[2:]])
+    X = np.column_stack([s[1:-1] for s in señales] + [c[:-1] for c in cambios])
+    Y = np.column_stack([s[2:] for s in señales])
     return X, Y
 
 
@@ -52,7 +55,8 @@ def _mse_suma(pred, Y):
 
 def error_linea_base(X_te, Y_te, Y_tr=None):
     # Vara honesta (enmienda-01): el mejor de DOS predictores triviales (velocidad y media).
-    pred_vel = np.column_stack([X_te[:, 0] + X_te[:, 2], X_te[:, 1] + X_te[:, 3]])
+    n_sig = Y_te.shape[1]  # X = [señales..., cambios...]: posición i + cambio i+n_sig
+    pred_vel = np.column_stack([X_te[:, i] + X_te[:, i + n_sig] for i in range(n_sig)])
     mse_vel = _mse_suma(pred_vel, Y_te)
     if Y_tr is None:
         return mse_vel
@@ -72,7 +76,8 @@ def error_rival_lineal(X_tr, Y_tr, X_te, Y_te):
 def correr_semilla(X_tr, Y_tr, X_te, Y_te, semilla, outdir):
     from pysr import PySRRegressor
     resultados = {}
-    for j, nombre in enumerate(["v1_sig", "v2_sig"]):  # Regla 4: sin nombres físicos
+    nombres = [f"v{j+1}_sig" for j in range(Y_tr.shape[1])]  # Regla 4: sin nombres físicos
+    for j, nombre in enumerate(nombres):
         modelo = PySRRegressor(
             niterations=200,
             binary_operators=["+", "-", "*", "/"],
@@ -84,11 +89,11 @@ def correr_semilla(X_tr, Y_tr, X_te, Y_te, semilla, outdir):
             progress=False,
             temp_equation_file=True,
         )
-        modelo.fit(X_tr, Y_tr[:, j], variable_names=["v1", "v2", "v3", "v4"])
+        modelo.fit(X_tr, Y_tr[:, j], variable_names=[f"v{i+1}" for i in range(X_tr.shape[1])])
         pred = modelo.predict(X_te)
         mse = float(np.mean((pred - Y_te[:, j]) ** 2))
         resultados[nombre] = {"ecuacion": str(modelo.get_best()["equation"]), "mse_test": mse}
-    resultados["mse_total"] = resultados["v1_sig"]["mse_test"] + resultados["v2_sig"]["mse_test"]
+    resultados["mse_total"] = sum(resultados[n]["mse_test"] for n in nombres)
     with open(os.path.join(outdir, f"semilla_{semilla}.json"), "w") as f:
         json.dump(resultados, f, indent=2)
     return resultados
