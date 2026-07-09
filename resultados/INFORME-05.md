@@ -12,3 +12,6 @@ FRACASO: 0/5 semillas en nivel A (todas quedaron a milésimas del rival lineal, 
 
 ## Continuación (anexo prerregistrado ANTES de correr, mismo criterio que prereg-06)
 Segundo intento con el archivo de mayor amplitud disponible con muestras suficientes: `dados-quarto-esfera-61.5cm` (±18.6°, 1,941 muestras). Expectativa honesta declarada: incierta — la amplitud sigue siendo moderada; puede fracasar de nuevo, y eso también sería mapa.
+
+## RESULTADO DEL ANEXO (agregado tras la corrida, 10-jul-2026)
+**También FRACASO: 0/5.** Misma fórmula lineal con pérdida — `(v1+v2) × 0.9818` — en las 5 semillas. La frontera queda mapeada con dos puntos: a ±10° y a ±18.6°, la firma trigonométrica es indistinguible del ruido de medición de este dataset. **Conclusión de la campaña Zenodo:** este dataset (todas sus amplitudes son ≤ ±22°) no puede resolver la pregunta inter-aparato; se necesitan datos de oscilación GRANDE (>45°) o rotación completa. Observación replicada en ambos aparatos del peldaño 2: el factor de pérdida (0.976 en 46.6 cm, 0.982 en 61.5 cm) — más cerca de 1 en el péndulo más largo. Candidata a pregunta: ¿el factor de pérdida escala con la longitud?
