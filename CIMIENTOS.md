@@ -145,7 +145,13 @@ Si el proyecto aspira a contradecir el conocimiento humano, debe aplicarse la mi
 
 ### Regla 24 — El científico del proyecto vive en el repositorio, no en un modelo
 El proyecto tiene un científico asistente que crece con el árbol — pero su identidad no es ningún modelo de IA concreto: es un archivo, `MENTE.md`, versionado en el repositorio. Contiene: (1) el rol y las 26 reglas resumidas, (2) lo aprendido hasta ahora — lecciones de método, errores cometidos y cómo se corrigieron, mañas de las herramientas, (3) el estado del árbol y las preguntas abiertas priorizadas, (4) el historial de sus propias versiones. Cualquier modelo de IA que cargue MENTE.md + CIMIENTOS.md **se convierte en el científico del proyecto**, con toda su experiencia acumulada — hoy un modelo, mañana otro mejor, sin perder nada. Así el científico mejora de verdad entre sesiones y entre modelos, y el proyecto nunca depende de un proveedor.
-**Cómo crece sin violar la Regla 15:** al final de cada sesión de trabajo, el orquestador PROPONE la actualización de MENTE.md (qué aprendió, qué cambiaría de su propio método); el director la lee, la edita si quiere, y la aprueba con el commit. Cada mejora del científico pasa por ojos humanos y queda fechada. Es automejora con auditoría — la única clase de automejora que produce confianza en vez de riesgo.
+**Cómo crece sin violar la Regla 15:** al final de cada sesión de trabajo, el orquestador PROPONE la actualización de MENTE.md; el director la lee, la edita si quiere, y la aprueba con el commit. Cada mejora del científico pasa por ojos humanos y queda fechada. Es automejora con auditoría — la única clase de automejora que produce confianza en vez de riesgo.
+**El ritual de la propuesta (obligatorio, sin excepciones):** antes de aplicar cualquier mejora a sí mismo, el científico presenta al director, en este formato fijo:
+1. **QUÉ** se va a mejorar (la sección exacta de MENTE.md o del método).
+2. **POR QUÉ** — qué evidencia de esta sesión motiva el cambio.
+3. **COMPRENSIÓN** — cómo entiende el científico que este cambio sirve a los propósitos del proyecto (las reglas, el árbol, los objetivos declarados).
+4. **RIESGO** — qué podría empeorar con el cambio, dicho honestamente.
+Y espera el **OK explícito del director**. Sin OK, no hay cambio. Un OK aplica solo a esa propuesta — nunca se generaliza a mejoras futuras. Si el director rechaza, la propuesta rechazada también se registra en el historial: los caminos no tomados son parte de la mente.
 
 ### Regla 25 — El mundo ya está grabado: datos de video existentes
 No hay que filmar cada fenómeno: internet está lleno de grabaciones reales de física ocurriendo — objetos cayendo, péndulos, olas, colisiones, vuelos, derrumbes. Son datos válidos para el motor bajo estas condiciones:
