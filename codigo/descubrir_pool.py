@@ -21,6 +21,9 @@ def main():
     ap.add_argument("carpeta")
     ap.add_argument("outdir")
     ap.add_argument("--semillas", type=int, default=5)
+    ap.add_argument("--semilla-inicial", type=int, default=1)
+    ap.add_argument("--maxsize", type=int, default=25)
+    ap.add_argument("--niter", type=int, default=200)
     ap.add_argument("--jueces", nargs="+", type=int, default=[3, 7, 11],
                     help="posiciones (1-indexadas) de los videos juez en la lista ordenada")
     args = ap.parse_args()
@@ -49,14 +52,15 @@ def main():
 
     resumen = {"replicas": [os.path.basename(c) for c in csvs], "jueces": sorted(jueces_idx),
                "mse_base": base, "umbral": umbral, "mse_rival_lineal": rival, "semillas": {}}
-    for s in range(1, args.semillas + 1):
+    for s in range(args.semilla_inicial, args.semilla_inicial + args.semillas):
         ya = os.path.join(args.outdir, f"semilla_{s}.json")
         if os.path.exists(ya):
             r = json.load(open(ya))
             print(f"— semilla {s}: previa, se reutiliza.")
         else:
-            print(f"— semilla {s}/{args.semillas} …")
-            r = correr_semilla(X_tr, Y_tr, X_te, Y_te, s, args.outdir)
+            print(f"— semilla {s} …")
+            r = correr_semilla(X_tr, Y_tr, X_te, Y_te, s, args.outdir,
+                               niterations=args.niter, maxsize=args.maxsize)
         resumen["semillas"][s] = {"mse_total": r["mse_total"],
                                   "supera_umbral": bool(r["mse_total"] < umbral),
                                   "ecuaciones": {k: v["ecuacion"] for k, v in r.items() if k != "mse_total"}}

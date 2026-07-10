@@ -73,16 +73,16 @@ def error_rival_lineal(X_tr, Y_tr, X_te, Y_te):
     return _mse_suma(A_te @ W, Y_te)
 
 
-def correr_semilla(X_tr, Y_tr, X_te, Y_te, semilla, outdir):
+def correr_semilla(X_tr, Y_tr, X_te, Y_te, semilla, outdir, niterations=200, maxsize=25):
     from pysr import PySRRegressor
     resultados = {}
     nombres = [f"v{j+1}_sig" for j in range(Y_tr.shape[1])]  # Regla 4: sin nombres físicos
     for j, nombre in enumerate(nombres):
         modelo = PySRRegressor(
-            niterations=200,
+            niterations=niterations,
             binary_operators=["+", "-", "*", "/"],
             unary_operators=["sin", "cos", "exp", "sqrt", "square"],
-            maxsize=25,
+            maxsize=maxsize,
             random_state=semilla,
             deterministic=True,
             parallelism="serial",

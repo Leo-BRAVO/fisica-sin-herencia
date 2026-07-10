@@ -9,3 +9,7 @@
 - **Éxito nivel B (estructura — la firma de la aceleración):** en las semillas exitosas, la ecuación de UNA de las dos señales (y solo una) contiene un término CONSTANTE ADITIVO, replicado entre semillas con variación < 10%. Interpretación comprometida: ese término — algo que se suma igual en cada paso, siempre en la misma dirección, independiente del estado — sería la firma de una influencia constante actuando sobre el cuerpo. La otra señal no debe mostrarlo (o ~0).
 - **Fracaso:** menos de 3/5 en nivel A, o constante no replicada, o constante en ambas señales por igual — se registra tal cual.
 - **Firmado:** Leo, director — 10-jul-2026.
+
+## ANEXO 1 (registrado tras el intento 1 y ANTES del intento 2, 10-jul-2026)
+- **Resultado del intento 1: FRACASO nivel A (0/5).** Causa diagnosticada: sobreajuste con ~300 transiciones — tres semillas produjeron exponenciales que divergen sobre los videos jueces. Observación neutra (no reclamable — el nivel B exige semillas exitosas): término constante aditivo ~15.52 replicado a la milésima en las semillas 2 y 3, SOLO en la señal vertical.
+- **Intento 2:** semillas 6–10, mismos jueces y criterios SIN CAMBIOS, con dos medidas de estabilidad declaradas: complejidad máxima 15 (fórmulas simples generalizan mejor con pocos datos) e iteraciones 400. No se toca el conjunto de operadores (tocarlo sería empujar hacia la respuesta esperada).

@@ -1,0 +1,65 @@
+{
+  "replicas": [
+    "video_0_fps30.csv",
+    "video_10_fps30.csv",
+    "video_11_fps30.csv",
+    "video_2_fps30.csv",
+    "video_3_fps30.csv",
+    "video_4_fps30.csv",
+    "video_5_fps30.csv",
+    "video_6_fps30.csv",
+    "video_7_fps30.csv",
+    "video_8_fps30.csv",
+    "video_9_fps30.csv"
+  ],
+  "jueces": [
+    2,
+    6,
+    10
+  ],
+  "mse_base": 2448.9715338730157,
+  "umbral": 1224.4857669365078,
+  "mse_rival_lineal": 15668.402171889516,
+  "semillas": {
+    "1": {
+      "mse_total": 2.3479575433123313e+66,
+      "supera_umbral": false,
+      "ecuaciones": {
+        "v1_sig": "v1 - (exp(cos(v2) + (sin(v1 / v3) + -0.3534399)) / cos(-15.96387 * v3))",
+        "v2_sig": "((v2 + (cos(v4 + -14.44923) * v3)) + -43.25874) + (cos(sqrt(v1)) * (67.453835 - exp(0.15744324 / sin(v2))))"
+      }
+    },
+    "2": {
+      "mse_total": 1449.4306145594396,
+      "supera_umbral": false,
+      "ecuaciones": {
+        "v1_sig": "v1 - (v3 * sin(v4))",
+        "v2_sig": "v2 + (exp(v4 * -0.018635541) - -15.523327)"
+      }
+    },
+    "3": {
+      "mse_total": 2.0519727309412378e+120,
+      "supera_umbral": false,
+      "ecuaciones": {
+        "v1_sig": "v1 + (exp((v4 / ((v1 * sin(v2)) - 14.452848)) - ((v3 * 1.482015) / v4)) + (sin(v2 / -0.8478435) * v3))",
+        "v2_sig": "exp(v4 / -53.644306) + (v2 + 15.521868)"
+      }
+    },
+    "4": {
+      "mse_total": 3771.888731975379,
+      "supera_umbral": false,
+      "ecuaciones": {
+        "v1_sig": "((exp(exp((exp(sin(v4 * 112.802025)) * cos(v2)) + -0.89771336)) + v3) * cos((112.802025 - v1) / (-1.0215644 - v4))) + v1",
+        "v2_sig": "v2 + (13.85832 / cos(-0.038408533 * v1))"
+      }
+    },
+    "5": {
+      "mse_total": 6568.833930791252,
+      "supera_umbral": false,
+      "ecuaciones": {
+        "v1_sig": "v1 + (exp(square((-0.25274733 - cos(v2)) * (sin(v2 * 0.19610658) + sin(v1)))) - (sin(v4 * 1.1408466) * v3))",
+        "v2_sig": "((v2 + -471.56912) * ((v1 * -0.0027589006) + 2.7909918)) + ((-0.21025977 / sin((v2 / 0.4420288) - v1)) - -490.75742)"
+      }
+    }
+  }
+}
