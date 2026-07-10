@@ -1,0 +1,65 @@
+{
+  "replicas": [
+    "video_0_fps30.csv",
+    "video_10_fps30.csv",
+    "video_11_fps30.csv",
+    "video_2_fps30.csv",
+    "video_3_fps30.csv",
+    "video_4_fps30.csv",
+    "video_5_fps30.csv",
+    "video_6_fps30.csv",
+    "video_7_fps30.csv",
+    "video_8_fps30.csv",
+    "video_9_fps30.csv"
+  ],
+  "jueces": [
+    2,
+    6,
+    10
+  ],
+  "mse_base": 2448.9715338730157,
+  "umbral": 1224.4857669365078,
+  "mse_rival_lineal": 15668.402171889516,
+  "semillas": {
+    "11": {
+      "mse_total": 1468.4381859064729,
+      "supera_umbral": false,
+      "ecuaciones": {
+        "v1_sig": "v1 - (sin(v4) * v3)",
+        "v2_sig": "(v2 + exp(v3 / 79.384796)) + 15.276082"
+      }
+    },
+    "12": {
+      "mse_total": 1468.458390144374,
+      "supera_umbral": false,
+      "ecuaciones": {
+        "v1_sig": "v1 - (v3 * sin(v4))",
+        "v2_sig": "(exp(v3 * 0.012596894) + v2) + 15.286935"
+      }
+    },
+    "13": {
+      "mse_total": 5683.5740063249095,
+      "supera_umbral": false,
+      "ecuaciones": {
+        "v1_sig": "v1 + ((square(sin(sin(v4))) * v3) / sin(v3 - 0.098853976))",
+        "v2_sig": "v2 + (v4 * cos(v3 + -0.7230683))"
+      }
+    },
+    "14": {
+      "mse_total": 1414.3736509233772,
+      "supera_umbral": false,
+      "ecuaciones": {
+        "v1_sig": "v1 + (cos(0.32292062 * v4) * ((0.47054702 / (cos(v4) + -0.29295504)) - v3))",
+        "v2_sig": "(exp(v4 * -0.018640844) - -15.537083) + v2"
+      }
+    },
+    "15": {
+      "mse_total": 1468.444081649364,
+      "supera_umbral": false,
+      "ecuaciones": {
+        "v1_sig": "v1 - (v3 * sin(v4))",
+        "v2_sig": "exp(v3 * 0.01259704) + (v2 + 15.279272)"
+      }
+    }
+  }
+}
