@@ -20,7 +20,10 @@ from descubrir import preparar, dividir_por_tiempo, error_linea_base, error_riva
 
 
 def longitud_de(nombre):
-    m = re.search(r"(\d+(?:\.\d+)?)\s*cm", nombre)
+    # Quitar sufijos de réplica (_v1, _v2) ANTES de buscar la longitud —
+    # si no, "63.3_v2cm" se lee como "2cm" (error cazado el 10-jul-2026).
+    limpio = re.sub(r"_v\d+", "", nombre)
+    m = re.search(r"(\d+(?:\.\d+)?)\s*cm", limpio)
     return float(m.group(1)) if m else None
 
 
