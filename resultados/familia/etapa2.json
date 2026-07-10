@@ -1,0 +1,128 @@
+{
+  "tabla": [
+    {
+      "sistema": "dados-quarto-esfera-23.5cm",
+      "L": 23.5,
+      "constante": 0.9535827600000435,
+      "ecuacion": "((sin((v2 * 0.554529) + -0.040217914) * 2.0933983) + v1) * 0.95358276",
+      "mse": 0.01536955463367858
+    },
+    {
+      "sistema": "dados-quarto-esfera-28.8cm",
+      "L": 28.8,
+      "constante": 0.9623697,
+      "ecuacion": "(v1 * 0.9623697) + v2",
+      "mse": 0.031579400138553156
+    },
+    {
+      "sistema": "31.2cm",
+      "L": 31.2,
+      "constante": 0.9628498600000001,
+      "ecuacion": "(v2 + v1) * 0.96284986",
+      "mse": 0.006140827342318917
+    },
+    {
+      "sistema": "dados-quarto-esfera-34.2cm",
+      "L": 34.2,
+      "constante": 0.9678616,
+      "ecuacion": "(v1 * (((v2 * (square(v2) * -0.013793833)) * sin((v2 - v1) * 1.9321527)) + 0.9678616)) + v2",
+      "mse": 0.009353837155289525
+    },
+    {
+      "sistema": "dados-quarto-esfera-37.3cm",
+      "L": 37.3,
+      "constante": 0.97000253,
+      "ecuacion": "(v1 * 0.97000253) + v2",
+      "mse": 0.04687475901181889
+    },
+    {
+      "sistema": "dados-sala-esfera-37.3cm",
+      "L": 37.3,
+      "constante": 0.9702202535806462,
+      "ecuacion": "(v1 / 1.0306938) + v2",
+      "mse": 0.008053386016154306
+    },
+    {
+      "sistema": "dados-quarto-esfera-40.2cm",
+      "L": 40.2,
+      "constante": 0.97399443,
+      "ecuacion": "(v1 * 0.97399443) - ((((sin((v1 * 1.6151446) + v2) * v1) * -0.033934705) + -1.2226363) * sin(v2))",
+      "mse": 0.008487504997269402
+    },
+    {
+      "sistema": "dados-sala-cadeado-44.2cm",
+      "L": 44.2,
+      "constante": 0.9713572,
+      "ecuacion": "v2 + (v1 * 0.9713572)",
+      "mse": 0.007961739616729269
+    },
+    {
+      "sistema": "L=45.8cm",
+      "L": 45.8,
+      "constante": 0.982982411888897,
+      "ecuacion": "((((v1 * -0.005682951) * (v1 * v2)) + (sin(v2 * 1.2066101) + v1)) / 1.0173122) + v2",
+      "mse": 0.06723921842567168
+    },
+    {
+      "sistema": "dados-quarto-esfera-46.6cm",
+      "L": 46.6,
+      "constante": 0.9764704,
+      "ecuacion": "(v1 + v2) * 0.9764704",
+      "mse": 0.03580519874544769
+    },
+    {
+      "sistema": "dados-quarto-esfera-51.7cm",
+      "L": 51.7,
+      "constante": 0.9803472723356687,
+      "ecuacion": "(((v2 / 2.7337942) + sin(v2)) * cos(v1 * 0.06202134)) + (v1 / 1.0200467)",
+      "mse": 0.02653850860912399
+    },
+    {
+      "sistema": "dados-quarto-esfera-57.3cm",
+      "L": 57.3,
+      "constante": 0.9802943196453531,
+      "ecuacion": "(v1 + v2) / 1.0201018",
+      "mse": 0.04280335749668538
+    },
+    {
+      "sistema": "dados-quarto-esfera-61.5cm",
+      "L": 61.5,
+      "constante": 0.98180044,
+      "ecuacion": "(v1 + v2) * 0.98180044",
+      "mse": 0.031228814910417055
+    },
+    {
+      "sistema": "dados-quarto-esfera-63.3_v1cm",
+      "L": 63.3,
+      "constante": 0.9359069879700611,
+      "ecuacion": "v1 + (v2 - (v1 / exp(cos(cos((v1 / -3.2494457) - v2)) * 5.084968)))",
+      "mse": 0.03957514189141436
+    },
+    {
+      "sistema": "dados-quarto-esfera-63.3_v2cm",
+      "L": 63.3,
+      "constante": 0.9819677337186313,
+      "ecuacion": "v2 + (v1 / 1.0183634)",
+      "mse": 0.010795079762070298
+    },
+    {
+      "sistema": "dados-quarto-esfera-69cm",
+      "L": 69.0,
+      "constante": 0.9835275,
+      "ecuacion": "(v2 + v1) * 0.9835275",
+      "mse": 0.03131040130342664
+    }
+  ],
+  "jueces": [
+    "31.2cm",
+    "dados-sala-cadeado-44.2cm",
+    "dados-quarto-esfera-57.3cm"
+  ],
+  "ley": "(sin(L * 1.272215) * 0.012828549) + 0.97314346",
+  "errores_jueces": [
+    0.022838875463120915,
+    0.0022749149461266053,
+    0.015123276696176682
+  ],
+  "exito": true
+}
