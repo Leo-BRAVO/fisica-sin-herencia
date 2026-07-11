@@ -33,26 +33,33 @@ def preparar(csv_path, nulo=None, rng=None, suavizar=0, retardos=0):
                       key=lambda c: int(c[1:]))
     señales = [df[c].to_numpy(float) for c in cols]
 
-    if suavizar and suavizar > 1:
-        k = np.ones(suavizar) / suavizar
-        señales = [np.convolve(s, k, mode="valid") for s in señales]
-
     if nulo == "barajado":
         perm = rng.permutation(len(señales[0]))
         señales = [s[perm] for s in señales]
     elif nulo == "ruido":
         señales = [rng.uniform(s.min(), s.max(), size=len(s)) for s in señales]
 
+    # CORRECCIÓN E2-intento2 (11-jul-2026, auditoría del INFORME-10): el suavizado se aplica
+    # SOLO a las ENTRADAS; el objetivo Y se mantiene CRUDO. Suavizar también el objetivo hace
+    # que el filtro mismo se vuelva descubrible (estructura artificial) y entierra la dinámica.
+    if suavizar and suavizar > 1:
+        k = np.ones(suavizar) / suavizar
+        entradas = [np.convolve(s, k, mode="valid") for s in señales]
+        off = (suavizar - 1) // 2  # alinear: suave[i] ~ cruda[i + off]
+        crudas = [s[off:off + len(entradas[0])] for s in señales]
+    else:
+        entradas = crudas = señales
+
     # Velocidades por diferencia entre cuadros (operación matemática neutra)
-    cambios = [np.diff(s) for s in señales]
+    cambios = [np.diff(s) for s in entradas]
     # Estado en t → estado en t+1, con t desde 'ini' para dar espacio a los retardos
     ini = max(1, retardos)
-    fin = len(señales[0]) - 1
-    columnas = [s[ini:fin] for s in señales] + [c[ini - 1:fin - 1] for c in cambios]
+    fin = len(entradas[0]) - 1
+    columnas = [s[ini:fin] for s in entradas] + [c[ini - 1:fin - 1] for c in cambios]
     for k in range(1, retardos + 1):
-        columnas += [s[ini - k:fin - k] for s in señales]
+        columnas += [s[ini - k:fin - k] for s in entradas]
     X = np.column_stack(columnas)
-    Y = np.column_stack([s[ini + 1:fin + 1] for s in señales])
+    Y = np.column_stack([s[ini + 1:fin + 1] for s in crudas])
     return X, Y
 
 

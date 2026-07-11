@@ -1,0 +1,57 @@
+{
+  "replicas": [
+    "trial1_50hz.csv",
+    "trial2_50hz.csv",
+    "trial3_50hz.csv"
+  ],
+  "jueces": [
+    2
+  ],
+  "mse_base": 5.613796540501669,
+  "umbral": 2.8068982702508345,
+  "mse_rival_lineal": 0.9807378816558765,
+  "mse_rival_arbol": 2.134824163707437,
+  "herencia": null,
+  "semillas": {
+    "1": {
+      "mse_total": 1.0323663135776042,
+      "supera_umbral": true,
+      "ecuaciones": {
+        "v1_sig": "v7 + (v3 * ((square(v4) * -8.456648e-5) + 2.9814663))",
+        "v2_sig": "(v4 * 2.973091) + v8"
+      }
+    },
+    "2": {
+      "mse_total": 0.9997515950976767,
+      "supera_umbral": true,
+      "ecuaciones": {
+        "v1_sig": "(v7 + v4) + (((v3 + (v4 * -0.34021196)) * 2.9828823) * cos(v4 * 0.007717444))",
+        "v2_sig": "v8 + (v4 * 2.973091)"
+      }
+    },
+    "3": {
+      "mse_total": 1.0733310177537596,
+      "supera_umbral": true,
+      "ecuaciones": {
+        "v1_sig": "v7 + (2.955345 * v3)",
+        "v2_sig": "v8 - (v4 * -2.973091)"
+      }
+    },
+    "4": {
+      "mse_total": 1.0733313278903787,
+      "supera_umbral": true,
+      "ecuaciones": {
+        "v1_sig": "v7 - (v3 * -2.955347)",
+        "v2_sig": "v8 - (v4 * -2.973091)"
+      }
+    },
+    "5": {
+      "mse_total": 1.0323671465653967,
+      "supera_umbral": true,
+      "ecuaciones": {
+        "v1_sig": "v7 - (v3 * ((square(v4) * 8.4545914e-5) + -2.9814553))",
+        "v2_sig": "v8 + (v4 / 0.3363503)"
+      }
+    }
+  }
+}
