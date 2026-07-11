@@ -22,6 +22,8 @@ def main():
     ap.add_argument("outdir")
     ap.add_argument("--semillas", type=int, default=5)
     ap.add_argument("--semilla-inicial", type=int, default=1)
+    ap.add_argument("--paralelo", type=int, default=1,
+                    help="procesos simultáneos (cada semilla sigue siendo determinista; 3 recomendado)")
     ap.add_argument("--maxsize", type=int, default=25)
     ap.add_argument("--niter", type=int, default=200)
     ap.add_argument("--jueces", nargs="+", type=int, default=[3, 7, 11],
@@ -52,20 +54,32 @@ def main():
 
     resumen = {"replicas": [os.path.basename(c) for c in csvs], "jueces": sorted(jueces_idx),
                "mse_base": base, "umbral": umbral, "mse_rival_lineal": rival, "semillas": {}}
-    for s in range(args.semilla_inicial, args.semilla_inicial + args.semillas):
-        ya = os.path.join(args.outdir, f"semilla_{s}.json")
-        if os.path.exists(ya):
-            r = json.load(open(ya))
-            print(f"— semilla {s}: previa, se reutiliza.")
-        else:
+    rango = list(range(args.semilla_inicial, args.semilla_inicial + args.semillas))
+    pendientes = [s for s in rango if not os.path.exists(os.path.join(args.outdir, f"semilla_{s}.json"))]
+
+    if args.paralelo > 1 and len(pendientes) > 1:
+        # Mejora #4 (11-jul-2026): semillas en procesos paralelos — cada una determinista por sí misma
+        from concurrent.futures import ProcessPoolExecutor
+        print(f"Corriendo {len(pendientes)} semillas en {args.paralelo} procesos paralelos…")
+        with ProcessPoolExecutor(max_workers=args.paralelo) as ex:
+            futs = {ex.submit(correr_semilla, X_tr, Y_tr, X_te, Y_te, s, args.outdir,
+                              args.niter, args.maxsize): s for s in pendientes}
+            for fut, s in futs.items():
+                fut.result()
+                print(f"— semilla {s}: completada.")
+    else:
+        for s in pendientes:
             print(f"— semilla {s} …")
-            r = correr_semilla(X_tr, Y_tr, X_te, Y_te, s, args.outdir,
-                               niterations=args.niter, maxsize=args.maxsize)
+            correr_semilla(X_tr, Y_tr, X_te, Y_te, s, args.outdir,
+                           niterations=args.niter, maxsize=args.maxsize)
+
+    for s in rango:
+        r = json.load(open(os.path.join(args.outdir, f"semilla_{s}.json")))
         resumen["semillas"][s] = {"mse_total": r["mse_total"],
                                   "supera_umbral": bool(r["mse_total"] < umbral),
                                   "ecuaciones": {k: v["ecuacion"] for k, v in r.items() if k != "mse_total"}}
-        with open(os.path.join(args.outdir, "resumen.json"), "w") as f:
-            json.dump(resumen, f, indent=2)
+    with open(os.path.join(args.outdir, "resumen.json"), "w") as f:
+        json.dump(resumen, f, indent=2)
     print("Listo. Resumen en", os.path.join(args.outdir, "resumen.json"))
 
 

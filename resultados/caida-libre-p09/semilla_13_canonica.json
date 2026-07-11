@@ -1,0 +1,34 @@
+{
+  "v1_sig": {
+    "desplazamiento": 0.0,
+    "gradiente": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "curvatura": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "explota_con_entradas_grandes": false
+  },
+  "v2_sig": {
+    "desplazamiento": 0.0,
+    "gradiente": [
+      0.0,
+      1.0,
+      0.0,
+      0.749779
+    ],
+    "curvatura": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "explota_con_entradas_grandes": false
+  }
+}
