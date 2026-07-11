@@ -1,0 +1,8 @@
+{
+    "experiment": "double_pendulum",
+    "model": "real-world",
+    "conditioning": null,
+    "prompt_type": "null",
+    "path_to_video": "real-world-cropped/double_pendulum/video_7_fps30/cropped_video.mp4",
+    "path_to_frames": "real-world-cropped/double_pendulum/video_7_fps30/frames_for_tracking"
+}
