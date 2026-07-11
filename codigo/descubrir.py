@@ -88,9 +88,14 @@ def error_rival_lineal(X_tr, Y_tr, X_te, Y_te):
 
 def correr_semilla(X_tr, Y_tr, X_te, Y_te, semilla, outdir, niterations=200, maxsize=25):
     from pysr import PySRRegressor
-    resultados = {}
+    # Guardado parcial por señal (lección de dos apagones, 11-jul-2026): si existe un
+    # parcial de esta semilla, las señales ya ajustadas se reutilizan.
+    parcial = os.path.join(outdir, f"semilla_{semilla}_parcial.json")
+    resultados = json.load(open(parcial)) if os.path.exists(parcial) else {}
     nombres = [f"v{j+1}_sig" for j in range(Y_tr.shape[1])]  # Regla 4: sin nombres físicos
     for j, nombre in enumerate(nombres):
+        if nombre in resultados:
+            continue
         modelo = PySRRegressor(
             niterations=niterations,
             binary_operators=["+", "-", "*", "/"],
@@ -106,7 +111,11 @@ def correr_semilla(X_tr, Y_tr, X_te, Y_te, semilla, outdir, niterations=200, max
         pred = modelo.predict(X_te)
         mse = float(np.mean((pred - Y_te[:, j]) ** 2))
         resultados[nombre] = {"ecuacion": str(modelo.get_best()["equation"]), "mse_test": mse}
+        with open(parcial, "w") as f:
+            json.dump(resultados, f, indent=2)
     resultados["mse_total"] = sum(resultados[n]["mse_test"] for n in nombres)
+    if os.path.exists(parcial):
+        os.remove(parcial)
     with open(os.path.join(outdir, f"semilla_{semilla}.json"), "w") as f:
         json.dump(resultados, f, indent=2)
     return resultados
