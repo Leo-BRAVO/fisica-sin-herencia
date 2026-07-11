@@ -30,8 +30,8 @@ def main():
     os.makedirs(args.outdir, exist_ok=True)
 
     csvs = sorted(glob.glob(os.path.join(args.carpeta, "*.csv")))
-    if len(csvs) < 4:
-        sys.exit("Se necesitan al menos 4 réplicas.")
+    if len(csvs) < 2:
+        sys.exit("Se necesitan al menos 2 réplicas (1 para entrenar, 1 juez).")
     jueces_idx = {j - 1 for j in args.jueces if j - 1 < len(csvs)}
     print(f"{len(csvs)} réplicas | jueces (fuera de muestra): "
           + ", ".join(os.path.basename(csvs[i]) for i in sorted(jueces_idx)))
