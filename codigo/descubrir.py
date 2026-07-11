@@ -20,13 +20,13 @@ import pandas as pd
 
 def preparar(csv_path, nulo=None, rng=None):
     df = pd.read_csv(csv_path).dropna()
-    # Acepta extracción propia (x_px, y_px), dos señales neutras (s1, s2) o UNA señal (solo s1)
+    # Acepta extracción propia (x_px, y_px) o cualquier número de señales neutras s1..sN
     if "x_px" in df.columns:
         cols = ["x_px", "y_px"]
-    elif "s2" in df.columns:
-        cols = ["s1", "s2"]
     else:
-        cols = ["s1"]
+        import re as _re
+        cols = sorted([c for c in df.columns if _re.fullmatch(r"s\d+", c)],
+                      key=lambda c: int(c[1:]))
     señales = [df[c].to_numpy(float) for c in cols]
 
     if nulo == "barajado":

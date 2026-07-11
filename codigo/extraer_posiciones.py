@@ -36,11 +36,39 @@ def centroide_por_movimiento(frame_gray, fondo_gray):
     return (M["m10"] / M["m00"], M["m01"] / M["m00"])
 
 
+def dos_puntos_por_movimiento(frame_gray, fondo_gray, previos=None):
+    """Dos centroides: los píxeles en movimiento se agrupan en 2 cúmulos (k-means).
+    La identidad de cada cúmulo se mantiene entre cuadros emparejando con los centroides previos.
+    Devuelve ((x1,y1),(x2,y2)) o None si no hay suficientes píxeles en movimiento."""
+    diff = cv2.absdiff(frame_gray, fondo_gray)
+    _, mask = cv2.threshold(diff, 25, 255, cv2.THRESH_BINARY)
+    mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, np.ones((3, 3), np.uint8))
+    ys, xs = np.nonzero(mask)
+    if len(xs) < 40:
+        return None
+    pts = np.column_stack([xs, ys]).astype(np.float32)
+    criterio = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 20, 0.5)
+    _, _, centros = cv2.kmeans(pts, 2, None, criterio, 5, cv2.KMEANS_PP_CENTERS)
+    a, b = (tuple(centros[0]), tuple(centros[1]))
+    if previos is not None:
+        # emparejar por cercanía a los centroides del cuadro anterior (continuidad de identidad)
+        (pa, pb) = previos
+        directo = np.hypot(a[0]-pa[0], a[1]-pa[1]) + np.hypot(b[0]-pb[0], b[1]-pb[1])
+        cruzado = np.hypot(b[0]-pa[0], b[1]-pa[1]) + np.hypot(a[0]-pb[0], a[1]-pb[1])
+        if cruzado < directo:
+            a, b = b, a
+    elif a[1] > b[1]:  # primer cuadro: ordenar por altura en la imagen
+        a, b = b, a
+    return (a, b)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("video")
     ap.add_argument("salida_csv")
     ap.add_argument("--metodo", choices=["color", "movimiento"], default="movimiento")
+    ap.add_argument("--puntos", type=int, choices=[1, 2], default=1,
+                    help="1 = un centroide; 2 = dos cuerpos por k-means (péndulo doble)")
     ap.add_argument("--hsv", nargs=2, type=int, default=[0, 15],
                     help="Rango de tono HSV del marcador (solo --metodo color)")
     args = ap.parse_args()
@@ -67,25 +95,40 @@ def main():
         cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
 
     filas, perdidos = [], 0
-    cuadro = 0
+    cuadro, previos = 0, None
     while True:
         ok, frame = cap.read()
         if not ok:
             break
-        if args.metodo == "color":
+        if args.puntos == 2:
+            c = dos_puntos_por_movimiento(cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY), fondo, previos)
+            if c is None:
+                perdidos += 1
+            else:
+                previos = c
+                (a, b) = c
+                filas.append((cuadro, round(a[0], 3), round(a[1], 3), round(b[0], 3), round(b[1], 3)))
+        elif args.metodo == "color":
             c = centroide_por_color(frame, args.hsv[0], args.hsv[1])
+            if c is None:
+                perdidos += 1
+            else:
+                filas.append((cuadro, round(c[0], 3), round(c[1], 3)))
         else:
             c = centroide_por_movimiento(cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY), fondo)
-        if c is None:
-            perdidos += 1
-        else:
-            filas.append((cuadro, round(c[0], 3), round(c[1], 3)))
+            if c is None:
+                perdidos += 1
+            else:
+                filas.append((cuadro, round(c[0], 3), round(c[1], 3)))
         cuadro += 1
     cap.release()
 
     with open(args.salida_csv, "w", newline="") as f:
         w = csv.writer(f)
-        w.writerow(["cuadro", "x_px", "y_px"])
+        if args.puntos == 2:
+            w.writerow(["cuadro", "s1", "s2", "s3", "s4"])  # nombres neutros (Regla 4)
+        else:
+            w.writerow(["cuadro", "x_px", "y_px"])
         w.writerows(filas)
 
     print(f"Detecciones: {len(filas)}/{cuadro} cuadros ({perdidos} sin detección)")
