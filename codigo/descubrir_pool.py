@@ -28,6 +28,10 @@ def main():
     ap.add_argument("--niter", type=int, default=200)
     ap.add_argument("--jueces", nargs="+", type=int, default=[3, 7, 11],
                     help="posiciones (1-indexadas) de los videos juez en la lista ordenada")
+    ap.add_argument("--rival-arbol", default=None,
+                    help="semilla_N.json de un nodo del árbol: sus ecuaciones se evalúan como RIVAL adicional (el conocimiento propio sube la vara)")
+    ap.add_argument("--heredar", default=None,
+                    help="semilla_N.json de un nodo del árbol: sus predicciones se AÑADEN como variables de entrada (el motor puede construir sobre lo ya descubierto o ignorarlo)")
     args = ap.parse_args()
     os.makedirs(args.outdir, exist_ok=True)
 
@@ -52,8 +56,31 @@ def main():
     print(f"Entrenamiento: {len(X_tr)} transiciones | juicio: {len(X_te)} | "
           f"base trivial={base:.4f} | umbral={umbral:.4f} | rival lineal={rival:.4f} (reportado, no exigido — ver prereg-08)")
 
+    # Interés compuesto del árbol (Regla 18, cableado 11-jul-2026): el conocimiento PROPIO
+    # validado puede subir la vara (--rival-arbol) o servir de ladrillo (--heredar).
+    # Jamás conocimiento humano — solo nodos del propio árbol (el cortafuegos no se toca).
+    rival_arbol = None
+    if args.rival_arbol:
+        from autopsia import evaluar
+        eqs = json.load(open(args.rival_arbol))
+        sigs = [k for k in eqs if k != "mse_total"]
+        pred = np.column_stack([evaluar(eqs[s]["ecuacion"], X_te) for s in sigs])
+        rival_arbol = float(np.sum(np.mean((pred - Y_te) ** 2, axis=0)))
+        print(f"rival del árbol ({os.path.basename(args.rival_arbol)}): {rival_arbol:.4f}")
+    if args.heredar:
+        from autopsia import evaluar
+        eqs = json.load(open(args.heredar))
+        sigs = [k for k in eqs if k != "mse_total"]
+        her_tr = np.column_stack([evaluar(eqs[s]["ecuacion"], X_tr) for s in sigs])
+        her_te = np.column_stack([evaluar(eqs[s]["ecuacion"], X_te) for s in sigs])
+        X_tr = np.column_stack([X_tr, her_tr])
+        X_te = np.column_stack([X_te, her_te])
+        print(f"herencia del árbol: {her_tr.shape[1]} variables añadidas "
+              f"(v{X_tr.shape[1]-her_tr.shape[1]+1}..v{X_tr.shape[1]}) — el motor decide si las usa")
+
     resumen = {"replicas": [os.path.basename(c) for c in csvs], "jueces": sorted(jueces_idx),
-               "mse_base": base, "umbral": umbral, "mse_rival_lineal": rival, "semillas": {}}
+               "mse_base": base, "umbral": umbral, "mse_rival_lineal": rival,
+               "mse_rival_arbol": rival_arbol, "herencia": args.heredar, "semillas": {}}
     rango = list(range(args.semilla_inicial, args.semilla_inicial + args.semillas))
     pendientes = [s for s in rango if not os.path.exists(os.path.join(args.outdir, f"semilla_{s}.json"))]
 
