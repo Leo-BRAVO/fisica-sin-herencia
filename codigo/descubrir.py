@@ -18,7 +18,11 @@ import numpy as np
 import pandas as pd
 
 
-def preparar(csv_path, nulo=None, rng=None):
+def preparar(csv_path, nulo=None, rng=None, suavizar=0, retardos=0):
+    """suavizar: ventana de promedio móvil centrado (0/1 = sin suavizado) — filtro GENÉRICO
+    documentado, permitido por la Regla 2. retardos: nº de valores PASADOS de cada señal
+    añadidos como variables (inmersión por retardos de Takens — pura historia, cero física).
+    Mejoras de la AUDITORIA-OBSERVACION, aprobadas por el director el 11-jul-2026."""
     df = pd.read_csv(csv_path).dropna()
     # Acepta extracción propia (x_px, y_px) o cualquier número de señales neutras s1..sN
     if "x_px" in df.columns:
@@ -29,6 +33,10 @@ def preparar(csv_path, nulo=None, rng=None):
                       key=lambda c: int(c[1:]))
     señales = [df[c].to_numpy(float) for c in cols]
 
+    if suavizar and suavizar > 1:
+        k = np.ones(suavizar) / suavizar
+        señales = [np.convolve(s, k, mode="valid") for s in señales]
+
     if nulo == "barajado":
         perm = rng.permutation(len(señales[0]))
         señales = [s[perm] for s in señales]
@@ -37,9 +45,14 @@ def preparar(csv_path, nulo=None, rng=None):
 
     # Velocidades por diferencia entre cuadros (operación matemática neutra)
     cambios = [np.diff(s) for s in señales]
-    # Estado en t → estado en t+1
-    X = np.column_stack([s[1:-1] for s in señales] + [c[:-1] for c in cambios])
-    Y = np.column_stack([s[2:] for s in señales])
+    # Estado en t → estado en t+1, con t desde 'ini' para dar espacio a los retardos
+    ini = max(1, retardos)
+    fin = len(señales[0]) - 1
+    columnas = [s[ini:fin] for s in señales] + [c[ini - 1:fin - 1] for c in cambios]
+    for k in range(1, retardos + 1):
+        columnas += [s[ini - k:fin - k] for s in señales]
+    X = np.column_stack(columnas)
+    Y = np.column_stack([s[ini + 1:fin + 1] for s in señales])
     return X, Y
 
 

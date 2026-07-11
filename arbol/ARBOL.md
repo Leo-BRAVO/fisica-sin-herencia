@@ -1,4 +1,6 @@
 # EL ÁRBOL — mapa visual del conocimiento del proyecto
+**ÉPOCA 2 EN CURSO (11-jul-2026, orden del director):** el árbol de la Época 1 (N-001, N-002, N-003) fue ARCHIVADO en `arbol/epoca1/` con la confianza retirada — la rederivación total con la tubería mejorada (prerregistro-12) decidirá qué se reconfirma, qué se refina y qué se poda. El diagrama de abajo muestra la Época 1 como referencia histórica; el árbol vivo de la Época 2 nace vacío y sus leyes deben VENCER a las viejas para entrar.
+
 **Se actualiza con cada nodo nuevo. GitHub renderiza el diagrama automáticamente al abrir este archivo. Verde = nodo validado provisional; amarillo = pregunta abierta (candidata a nodo); gris = pregunta respondida o en curso.**
 
 ```mermaid

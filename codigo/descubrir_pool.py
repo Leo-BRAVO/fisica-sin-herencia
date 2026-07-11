@@ -28,6 +28,10 @@ def main():
     ap.add_argument("--niter", type=int, default=200)
     ap.add_argument("--jueces", nargs="+", type=int, default=[3, 7, 11],
                     help="posiciones (1-indexadas) de los videos juez en la lista ordenada")
+    ap.add_argument("--suavizar", type=int, default=0,
+                    help="ventana de promedio móvil centrado (filtro genérico, Regla 2)")
+    ap.add_argument("--retardos", type=int, default=0,
+                    help="valores pasados de cada señal como variables (Takens)")
     ap.add_argument("--rival-arbol", default=None,
                     help="semilla_N.json de un nodo del árbol: sus ecuaciones se evalúan como RIVAL adicional (el conocimiento propio sube la vara)")
     ap.add_argument("--heredar", default=None,
@@ -44,7 +48,7 @@ def main():
 
     Xtr, Ytr, Xte, Yte = [], [], [], []
     for i, c in enumerate(csvs):
-        X, Y = preparar(c)  # las transiciones no cruzan videos: cada CSV se prepara por separado
+        X, Y = preparar(c, suavizar=args.suavizar, retardos=args.retardos)
         (Xte if i in jueces_idx else Xtr).append(X)
         (Yte if i in jueces_idx else Ytr).append(Y)
     X_tr, Y_tr = np.vstack(Xtr), np.vstack(Ytr)
