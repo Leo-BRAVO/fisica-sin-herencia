@@ -35,6 +35,9 @@ Hito de desacoplamiento tecnológico, no debilidad actual: el Peldaño 1 aisló 
 ## PELDAÑO 5 (= Fase 3): Anomalías — se define cuando lleguemos
 No se mapea todavía (sería fingir conocimiento). Se construirá el catálogo `ANOMALIAS.md` (Regla 21) con los residuos documentados entre teoría humana y medición, y el árbol decidirá por dónde cavar. Principio de selección: anomalías con datos públicos crudos disponibles y efecto medible grande primero.
 
+## PELDAÑO FUTURO (idea del director, 11-jul-2026): el chip cuántico como APARATO
+No como procesador (para nuestro cómputo las computadoras cuánticas actuales son inservibles: carga de datos lenta, lectura destructiva, ruido — el motor clásico evalúa 150k fórmulas/seg), sino como INSTRUMENTO: los chips cuánticos reales accesibles por nube (IBM Quantum, minutos gratuitos) devuelven conteos de medición crudos de un sistema genuinamente cuántico. Experimento futuro: darle esos conteos a la mente — sin decirle qué son — y ver si descubre las regularidades estadísticas de la mecánica cuántica desde cero. Requisitos de entrada: método maduro en mecánica clásica (peldaños 1–3 completos), lección de canonización operativa, y prerregistro con especial cuidado en el piso de ruido del chip. Nota Fase 5: la simulación molecular con hardware cuántico será relevante cuando el proyecto llegue a materiales/medicina.
+
 ## Principios permanentes de selección de datos (para cualquier peldaño futuro)
 1. El árbol pregunta, los datos responden — nunca descargar sin pregunta abierta que lo motive (anti-"tragarlo todo").
 2. Preferir siempre: instrumento más crudo, procedencia más clara, licencia más limpia.
