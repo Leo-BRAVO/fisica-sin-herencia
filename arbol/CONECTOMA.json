@@ -1,0 +1,93 @@
+{
+  "generado": "2026-07-12",
+  "nodos": {
+    "N-001-E2 (Mendeley, retardos)": {
+      "semilla": "resultados\\e2-mendeley-i2\\semilla_4.json",
+      "n_senales": 2,
+      "mse_total": 0.21939333329035016,
+      "leyes": {
+        "v1_sig": "(v5 * -2.3618972) + ((v7 * 0.6886252) + (v1 * 2.6732757))",
+        "v2_sig": "(((v2 - v8) * 0.31475976) + (v4 * 2.3612673)) + v8"
+      },
+      "constantes": [
+        0.31476,
+        0.68863,
+        2.36127,
+        2.3619,
+        2.67328
+      ]
+    },
+    "N-002-E2 (dp Morpheus, latentes propios)": {
+      "semilla": "resultados\\p13-latente\\semilla_2.json",
+      "n_senales": 8,
+      "mse_total": 0.29072078340610447,
+      "leyes": {
+        "v1_sig": "v1 - (v14 * -0.08169392)",
+        "v2_sig": "v2 + (v10 * 0.23542522)",
+        "v3_sig": "v3 + v14",
+        "v4_sig": "v4 + (v14 * -0.16662772)",
+        "v5_sig": "v2 + ((v5 + v6) * 0.7710923)",
+        "v6_sig": "(v6 - v7) * 0.49932954",
+        "v7_sig": "v7 - (v14 * 0.102892146)",
+        "v8_sig": "(v16 * 0.2826366) + v8"
+      },
+      "constantes": [
+        0.08169,
+        0.10289,
+        0.16663,
+        0.23543,
+        0.28264,
+        0.49933,
+        0.77109
+      ]
+    },
+    "epoca1/N-001 (Mendeley angulos \u2014 archivado, confianza retirada)": {
+      "semilla": "resultados\\oficial-trial1\\semilla_9.json",
+      "n_senales": 2,
+      "mse_total": 0.14611208277517446,
+      "leyes": {
+        "v1_sig": "v3 + (v1 - (sin(v1 / 55.32591) + sin((v2 - v1) * -0.017472358)))",
+        "v2_sig": "v2 + (v4 + (sin(0.017455928 * (v1 - v2)) / 0.32057697))"
+      },
+      "constantes": [
+        0.01746,
+        0.01747,
+        0.32058,
+        55.32591
+      ]
+    },
+    "epoca1/caida (observacion, firma vertical)": {
+      "semilla": "resultados\\caida-libre-p09\\semilla_14.json",
+      "n_senales": 2,
+      "mse_total": 1414.3736509233772,
+      "leyes": {
+        "v1_sig": "v1 + (cos(0.32292062 * v4) * ((0.47054702 / (cos(v4) + -0.29295504)) - v3))",
+        "v2_sig": "(exp(v4 * -0.018640844) - -15.537083) + v2"
+      },
+      "constantes": [
+        0.01864,
+        0.29296,
+        0.32292,
+        0.47055,
+        15.53708
+      ]
+    },
+    "epoca1/dp centroides (sin nodo, mejor ley disponible)": {
+      "semilla": "resultados\\e2-dp-morpheus\\semilla_2.json",
+      "n_senales": 4,
+      "mse_total": 165.70040454417344,
+      "leyes": {
+        "v1_sig": "v13 + (((-16.602507 / (v1 + (v1 + -448.9673))) + 2.9136555) * v5)",
+        "v2_sig": "v2 + v6",
+        "v3_sig": "(v3 + v15) * (square(v7 / v3) + ((v7 / v3) + 0.4999278))",
+        "v4_sig": "v8 + v4"
+      },
+      "constantes": [
+        0.49993,
+        2.91366,
+        16.60251,
+        448.9673
+      ]
+    }
+  }
+}

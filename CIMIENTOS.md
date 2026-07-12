@@ -185,6 +185,10 @@ La mente NO PUEDE tocar, jamás, ni siquiera dentro del bucle:
 - **Las reglas, los objetivos y MENTE.md** (Reglas 15 y 24 intactas: eso siempre pasa por el director).
 La unidad de aprobación humana SUBE de nivel: el director aprueba el DISEÑO del bucle (iteraciones, rangos, criterios) una vez, por prerregistro — no cada iteración. Igual que nadie aprueba cada paso de una evolución de PySR: se aprueba el experimento, no el gradiente.
 
+### Regla 29 — El conectoma: la mente ve TODAS sus hojas
+Idea del director (12-jul-2026): el conocimiento acumulado debe estar CONECTADO, no archivado. `arbol/CONECTOMA.json` es el registro legible-por-máquina de todo el conocimiento validado (leyes, representaciones, constantes canónicas, procedencia), regenerado tras cada nodo nuevo. Toda campaña futura lo consulta automáticamente: las leyes de representación compatible entran como rivales del árbol y candidatas a herencia (Regla 18 + interés compuesto) sin depender de la memoria de nadie. Horizonte de la regla: cuando el árbol tenga decenas de nodos, el conectoma alimentará una red (percepción compartida entre aparatos — los mismos ojos aprendiendo múltiples sistemas) que conecte el conocimiento a nivel de representación, no solo de consulta. Solo conocimiento propio — el cortafuegos (Regla 27) intacto.
+**OK PERMANENTE DE AUTOMEJORA (del director, 12-jul-2026):** la mente tiene autorización permanente para automejorarse bajo las recomendaciones del orquestador y dentro de las Reglas 28 y 29, con UNA prohibición eterna e inapelable: **jamás puede mejorar, tocar, ver durante el entrenamiento, ni influir sobre sus JUECES** — los datos de validación y los criterios de éxito viven fuera de su alcance, para siempre.
+
 ---
 
 ## 3. FASE 0 — INSTRUCCIONES CONCRETAS (bajo presupuesto: ~$0)
