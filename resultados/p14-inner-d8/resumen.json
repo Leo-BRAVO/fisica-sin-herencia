@@ -1,0 +1,53 @@
+{
+  "replicas": [
+    "video_0_fps30.csv",
+    "video_1_fps30.csv",
+    "video_2_fps30.csv",
+    "video_3_fps30.csv",
+    "video_4_fps30.csv",
+    "video_5_fps30.csv",
+    "video_6_fps30.csv",
+    "video_7_fps30.csv",
+    "video_8_fps30.csv",
+    "video_9_fps30.csv"
+  ],
+  "jueces": [
+    4,
+    7
+  ],
+  "mse_base": 0.8900678884064378,
+  "umbral": 0.4450339442032189,
+  "mse_rival_lineal": 0.21924023738296008,
+  "mse_rival_arbol": null,
+  "herencia": null,
+  "semillas": {
+    "1": {
+      "mse_total": 0.25122467592079495,
+      "supera_umbral": true,
+      "ecuaciones": {
+        "v1_sig": "v1 + (v14 * 0.075325)",
+        "v2_sig": "(v10 * 0.25987875) + v2",
+        "v3_sig": "v3 + ((v6 + v7) / 0.43646652)",
+        "v4_sig": "v4 + (v14 * -0.15847221)",
+        "v5_sig": "v2 + ((v5 + v6) / 1.3088772)",
+        "v6_sig": "(v6 - v7) * 0.5006536",
+        "v7_sig": "v7 + (v14 * -0.09508295)",
+        "v8_sig": "(v16 * 0.28766805) + v8"
+      }
+    },
+    "2": {
+      "mse_total": 0.2513768615450972,
+      "supera_umbral": true,
+      "ecuaciones": {
+        "v1_sig": "v1 + (v14 * 0.075325)",
+        "v2_sig": "v2 - (v10 * -0.2598433)",
+        "v3_sig": "v3 + ((v7 + v6) * 2.2912595)",
+        "v4_sig": "v4 - (v14 * 0.15847221)",
+        "v5_sig": "v2 + ((v6 + v5) * 0.76403517)",
+        "v6_sig": "(v6 + v8) * 0.49985075",
+        "v7_sig": "v7 - ((v6 + v7) * 0.115548424)",
+        "v8_sig": "v8 + (v16 * 0.2878805)"
+      }
+    }
+  }
+}
