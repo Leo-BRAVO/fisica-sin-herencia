@@ -1,0 +1,97 @@
+{
+  "registro": [
+    {
+      "epoca": 1,
+      "reconstruccion": 0.017647298845413162,
+      "dinamica": 0.005509890098767903
+    },
+    {
+      "epoca": 2,
+      "reconstruccion": 0.007869949346782004,
+      "dinamica": 4.663998584432816e-05
+    },
+    {
+      "epoca": 3,
+      "reconstruccion": 0.004188672801254217,
+      "dinamica": 2.4662959552418044e-06
+    },
+    {
+      "epoca": 4,
+      "reconstruccion": 0.0027359443759653566,
+      "dinamica": 7.035969830172013e-07
+    },
+    {
+      "epoca": 5,
+      "reconstruccion": 0.0021815854428944978,
+      "dinamica": 4.6137702709387495e-07
+    },
+    {
+      "epoca": 6,
+      "reconstruccion": 0.0019199557017868336,
+      "dinamica": 3.732996407530859e-07
+    },
+    {
+      "epoca": 7,
+      "reconstruccion": 0.0017821053251679839,
+      "dinamica": 3.538364638092928e-07
+    },
+    {
+      "epoca": 8,
+      "reconstruccion": 0.0017002802791156748,
+      "dinamica": 3.515149317102119e-07
+    },
+    {
+      "epoca": 9,
+      "reconstruccion": 0.0016488183911372361,
+      "dinamica": 3.70869158208731e-07
+    },
+    {
+      "epoca": 10,
+      "reconstruccion": 0.0016168068381547396,
+      "dinamica": 4.2320662257581953e-07
+    },
+    {
+      "epoca": 11,
+      "reconstruccion": 0.001595567714439814,
+      "dinamica": 4.968402983035464e-07
+    },
+    {
+      "epoca": 12,
+      "reconstruccion": 0.0015785632192431007,
+      "dinamica": 5.341632027180173e-07
+    },
+    {
+      "epoca": 13,
+      "reconstruccion": 0.0015685499656378952,
+      "dinamica": 6.398274205829996e-07
+    },
+    {
+      "epoca": 14,
+      "reconstruccion": 0.0015602119527043912,
+      "dinamica": 8.372104339003675e-07
+    },
+    {
+      "epoca": 15,
+      "reconstruccion": 0.0015551211401761895,
+      "dinamica": 1.0763629433483841e-06
+    }
+  ],
+  "reconstruccion_jueces": {
+    "video_2_fps30": 0.0013973137829452753,
+    "video_5_fps30": 0.0018171268748119473,
+    "video_8_fps30": 0.0018122438341379166
+  },
+  "latente": 4,
+  "videos": [
+    "video_0_fps30",
+    "video_1_fps30",
+    "video_2_fps30",
+    "video_3_fps30",
+    "video_4_fps30",
+    "video_5_fps30",
+    "video_6_fps30",
+    "video_7_fps30",
+    "video_8_fps30",
+    "video_9_fps30"
+  ]
+}
