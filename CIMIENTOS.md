@@ -174,6 +174,17 @@ Aprobada por el director y el orquestador el 9-jul-2026. Todo nodo validado del 
 - **SIN EQUIVALENTE:** la humanidad no tiene nada comparable. Valor: posible conocimiento genuinamente nuevo — la categoría de la propulsión mejorada, la energía nueva, la medicina que no existe.
 **El cortafuegos (inviolable):** los veredictos del comparador llegan SOLO al director, para decidir prioridades y qué compartir con el mundo. JAMÁS entran como datos, pistas o contexto al descubridor ni al árbol de preguntas que el descubridor ve. El día que el descubridor sepa qué opina la humanidad para "corregirla", el proyecto entero pierde su razón de ser: corregir exige independencia, y la independencia no se recupera una vez perdida. Comparador y descubridor pueden ser el mismo modelo de IA en sesiones distintas, pero nunca en la misma sesión ni compartiendo contexto.
 
+### Regla 28 — El bucle interior: automejora de las VARIABLES, jamás de los JUECES
+Propuesta por el director el 12-jul-2026 ("si siente que puede automejorar sus propias variables, dejar que lo haga en función de lo que aprende") y precisada por el orquestador. La mente PUEDE automejorar sin pedir permiso por iteración:
+- **Sus variables y representaciones** (los ojos: pesos del autoencoder, dimensión latente dentro de rangos prerregistrados).
+- **Sus parámetros de búsqueda** (presupuesto simbólico, complejidad) dentro de los rangos del prerregistro.
+- **El ciclo ojos↔ley:** re-entrenar la percepción usando dónde falla la ley (autopsia) y redescubrir — tantas iteraciones como el prerregistro haya presupuestado.
+La mente NO PUEDE tocar, jamás, ni siquiera dentro del bucle:
+- **Los jueces** (los datos de validación quedan CONGELADOS antes de la primera iteración y ninguna iteración los ve).
+- **Los criterios de éxito** (fijados en el prerregistro — un sistema que ajusta su propia vara es una máquina de autoengaño, no de ciencia).
+- **Las reglas, los objetivos y MENTE.md** (Reglas 15 y 24 intactas: eso siempre pasa por el director).
+La unidad de aprobación humana SUBE de nivel: el director aprueba el DISEÑO del bucle (iteraciones, rangos, criterios) una vez, por prerregistro — no cada iteración. Igual que nadie aprueba cada paso de una evolución de PySR: se aprueba el experimento, no el gradiente.
+
 ---
 
 ## 3. FASE 0 — INSTRUCCIONES CONCRETAS (bajo presupuesto: ~$0)
