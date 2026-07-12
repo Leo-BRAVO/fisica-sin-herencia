@@ -1,0 +1,67 @@
+{
+  "replicas": [
+    "video_0_fps30.csv",
+    "video_10_fps30.csv",
+    "video_11_fps30.csv",
+    "video_2_fps30.csv",
+    "video_3_fps30.csv",
+    "video_4_fps30.csv",
+    "video_5_fps30.csv",
+    "video_6_fps30.csv",
+    "video_7_fps30.csv",
+    "video_8_fps30.csv",
+    "video_9_fps30.csv"
+  ],
+  "jueces": [
+    2,
+    6,
+    10
+  ],
+  "mse_base": 123.96352250462944,
+  "umbral": 61.98176125231472,
+  "mse_rival_lineal": 2185.8573922717114,
+  "mse_rival_arbol": 993.5714291793372,
+  "herencia": null,
+  "semillas": {
+    "1": {
+      "mse_total": 4543.181108686182,
+      "supera_umbral": false,
+      "ecuaciones": {
+        "v1_sig": "sqrt(((sqrt(square(v3)) + v3) + 141.41904) * 2939.756)",
+        "v2_sig": "v2 + (((0.011697939 / (v3 - 0.007557835)) + (square(v3) * -0.0048839264)) + v4)"
+      }
+    },
+    "2": {
+      "mse_total": 2329.0982077573194,
+      "supera_umbral": false,
+      "ecuaciones": {
+        "v1_sig": "((v1 * 0.269726) + (v3 + (sqrt(square(v3)) - -282.56595))) * 1.4120734",
+        "v2_sig": "((v2 + (v4 / 0.68160397)) + (cos(sqrt(v1)) * (v3 + -32.256943))) + 21.735561"
+      }
+    },
+    "3": {
+      "mse_total": 4543.239109036696,
+      "supera_umbral": false,
+      "ecuaciones": {
+        "v1_sig": "sqrt(((sqrt(square(v3)) + v3) + 141.42427) * 2939.6624)",
+        "v2_sig": "(v2 + v4) + ((square(v3) - (1.2721841 / (v3 + -0.0076113115))) * -0.004822116)"
+      }
+    },
+    "4": {
+      "mse_total": 3176.629185745759,
+      "supera_umbral": false,
+      "ecuaciones": {
+        "v1_sig": "sqrt((((sqrt(square(v3)) + v3) - -78.39726) * 2659.4385) - (v1 * -320.3504))",
+        "v2_sig": "v2 - ((cos(sqrt(v1)) - 1.5129174) * (v4 + 14.372123))"
+      }
+    },
+    "5": {
+      "mse_total": 2241.7536419724547,
+      "supera_umbral": false,
+      "ecuaciones": {
+        "v1_sig": "(sqrt(v1) + 46.787025) * sqrt(sqrt(square(v3 + 79.86814)))",
+        "v2_sig": "(((sin((v4 / 185.93561) - -1.0254574) + -0.39113814) * v1) + -311.69574) + v2"
+      }
+    }
+  }
+}
