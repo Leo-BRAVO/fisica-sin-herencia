@@ -21,6 +21,9 @@ graph TD
     Q3{"¿k sobrevive a un APARATO distinto?<br/>peldaño 2: caída y vuelo<br/>+ péndulo propio del director"}:::pregunta
     Q4{"¿Cuánto RUEDA la fórmula<br/>multi-paso antes de degradarse?"}:::pregunta
 
+    E2N001["N-001-E2 · 11-jul-2026<br/>Ley de retardos Mendeley — 8× sobre É1<br/>k reapareció espontáneamente<br/>PRIMER NODO DEL ÁRBOL VIVO"]:::nodo
+
+    RAIZ --> E2N001
     RAIZ --> N001
     N001 --> N002
     N001 --> P1
