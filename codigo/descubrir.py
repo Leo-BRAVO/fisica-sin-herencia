@@ -93,8 +93,13 @@ def error_rival_lineal(X_tr, Y_tr, X_te, Y_te):
     return _mse_suma(A_te @ W, Y_te)
 
 
-def correr_semilla(X_tr, Y_tr, X_te, Y_te, semilla, outdir, niterations=200, maxsize=25):
+def correr_semilla(X_tr, Y_tr, X_te, Y_te, semilla, outdir, niterations=200, maxsize=25, ops="base"):
+    # ops="amplio" (acelerador nº5, 12-jul-2026): vocabulario matemático extendido —
+    # primitivas genéricas adicionales (tanh, abs) para frases más expresivas. Sin física.
     from pysr import PySRRegressor
+    unarios = ["sin", "cos", "exp", "sqrt", "square"]
+    if ops == "amplio":
+        unarios += ["tanh", "abs"]
     # Guardado parcial por señal (lección de dos apagones, 11-jul-2026): si existe un
     # parcial de esta semilla, las señales ya ajustadas se reutilizan.
     parcial = os.path.join(outdir, f"semilla_{semilla}_parcial.json")
@@ -106,7 +111,7 @@ def correr_semilla(X_tr, Y_tr, X_te, Y_te, semilla, outdir, niterations=200, max
         modelo = PySRRegressor(
             niterations=niterations,
             binary_operators=["+", "-", "*", "/"],
-            unary_operators=["sin", "cos", "exp", "sqrt", "square"],
+            unary_operators=unarios,
             maxsize=maxsize,
             random_state=semilla,
             deterministic=True,
