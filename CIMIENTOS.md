@@ -189,6 +189,13 @@ La unidad de aprobación humana SUBE de nivel: el director aprueba el DISEÑO de
 Idea del director (12-jul-2026): el conocimiento acumulado debe estar CONECTADO, no archivado. `arbol/CONECTOMA.json` es el registro legible-por-máquina de todo el conocimiento validado (leyes, representaciones, constantes canónicas, procedencia), regenerado tras cada nodo nuevo. Toda campaña futura lo consulta automáticamente: las leyes de representación compatible entran como rivales del árbol y candidatas a herencia (Regla 18 + interés compuesto) sin depender de la memoria de nadie. Horizonte de la regla: cuando el árbol tenga decenas de nodos, el conectoma alimentará una red (percepción compartida entre aparatos — los mismos ojos aprendiendo múltiples sistemas) que conecte el conocimiento a nivel de representación, no solo de consulta. Solo conocimiento propio — el cortafuegos (Regla 27) intacto.
 **OK PERMANENTE DE AUTOMEJORA (del director, 12-jul-2026):** la mente tiene autorización permanente para automejorarse bajo las recomendaciones del orquestador y dentro de las Reglas 28 y 29, con UNA prohibición eterna e inapelable: **jamás puede mejorar, tocar, ver durante el entrenamiento, ni influir sobre sus JUECES** — los datos de validación y los criterios de éxito viven fuera de su alcance, para siempre.
 
+### Regla 30 — Automejora total POR PROPUESTA: código, conectoma y entendimiento
+Autorizada por el director (12-jul-2026: "todo puede ser automejorado sin violar ninguna regla y sin tocar a los jueces"). Arquitectura de seguridad del orquestador:
+- **El conectoma es AUTOMANTENIDO:** se regenera tras cada campaña; la mente puede reorganizarlo, enriquecerlo con referencias cruzadas y proponer conexiones nuevas entre nodos — es su memoria, le pertenece.
+- **Las variables, parámetros y ciclos ojos↔ley:** automejora directa dentro de presupuestos prerregistrados (Regla 28).
+- **El CÓDIGO (motor, herramientas, percepción):** automejora POR PROPUESTA — toda modificación de código nace como candidata, se prueba en sandbox contra bancos de prueba CONGELADOS (nunca los jueces de campañas activas), y se adopta solo mediante commit visible y reversible. La máquina propone con evidencia; el historial de git es el tribunal de apelaciones permanente. Razón: código que se edita a sí mismo en silencio es inauditablepor construcción — el commit visible preserva la esencia de la Regla 15 mientras permite crecimiento sin fricción.
+- **Intocables eternos (sin excepción, ni con evidencia perfecta):** los JUECES y criterios de éxito, las reglas de CIMIENTOS, MENTE.md (ritual Regla 24), y el cortafuegos (Regla 27).
+
 ---
 
 ## 3. FASE 0 — INSTRUCCIONES CONCRETAS (bajo presupuesto: ~$0)
