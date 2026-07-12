@@ -1,0 +1,76 @@
+{
+  "replicas": [
+    "video_0_fps30.csv",
+    "video_1_fps30.csv",
+    "video_2_fps30.csv",
+    "video_3_fps30.csv",
+    "video_4_fps30.csv",
+    "video_5_fps30.csv",
+    "video_6_fps30.csv",
+    "video_7_fps30.csv",
+    "video_8_fps30.csv",
+    "video_9_fps30.csv"
+  ],
+  "jueces": [
+    2,
+    5,
+    8
+  ],
+  "mse_base": 192.98844976580887,
+  "umbral": 96.49422488290443,
+  "mse_rival_lineal": 136.36441580599856,
+  "mse_rival_arbol": 391.7191307113255,
+  "herencia": null,
+  "semillas": {
+    "1": {
+      "mse_total": 169.63995760715778,
+      "supera_umbral": false,
+      "ecuaciones": {
+        "v1_sig": "(((23.832195 / (v1 - 255.13007)) + 0.9509654) * v5) + v1",
+        "v2_sig": "v6 + v2",
+        "v3_sig": "v15 + (v7 * 2.7963586)",
+        "v4_sig": "v4 + v8"
+      }
+    },
+    "2": {
+      "mse_total": 165.70040454417344,
+      "supera_umbral": false,
+      "ecuaciones": {
+        "v1_sig": "v13 + (((-16.602507 / (v1 + (v1 + -448.9673))) + 2.9136555) * v5)",
+        "v2_sig": "v2 + v6",
+        "v3_sig": "(v3 + v15) * (square(v7 / v3) + ((v7 / v3) + 0.4999278))",
+        "v4_sig": "v8 + v4"
+      }
+    },
+    "3": {
+      "mse_total": 181.6008408748987,
+      "supera_umbral": false,
+      "ecuaciones": {
+        "v1_sig": "(v5 * (3.9555829 - (v11 / v1))) + v13",
+        "v2_sig": "v2 + v6",
+        "v3_sig": "(v15 + (v7 * 2.796482)) + ((v15 - v11) * sin(-0.086709306 / v7))",
+        "v4_sig": "v4 + v8"
+      }
+    },
+    "4": {
+      "mse_total": 169.24585995561318,
+      "supera_umbral": false,
+      "ecuaciones": {
+        "v1_sig": "((square(v1) - (v13 * -102.54702)) / v9) + -102.759",
+        "v2_sig": "v2 + v6",
+        "v3_sig": "v15 + (v7 * 2.7963586)",
+        "v4_sig": "v4 + v8"
+      }
+    },
+    "5": {
+      "mse_total": 167.813229090605,
+      "supera_umbral": false,
+      "ecuaciones": {
+        "v1_sig": "((v1 + -133.68677) * ((v13 + (v5 * 2.2091064)) / v9)) + 133.49138",
+        "v2_sig": "v2 + v6",
+        "v3_sig": "v15 + (v7 / 0.35760745)",
+        "v4_sig": "v4 + v8"
+      }
+    }
+  }
+}
