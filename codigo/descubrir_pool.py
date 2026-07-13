@@ -45,6 +45,18 @@ def main():
     args = ap.parse_args()
     os.makedirs(args.outdir, exist_ok=True)
 
+    # LATIDO DE CAMPAÑA (13-jul-2026): deja constancia de qué corre, dónde y con qué PID,
+    # para que el vigilante detecte cuelgues (proceso vivo pero carpeta sin escribir).
+    _base_repo = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    _activa = os.path.join(_base_repo, "registros", "campana-activa.json")
+    try:
+        with open(_activa, "w", encoding="utf-8") as _f:
+            json.dump({"outdir": os.path.abspath(args.outdir),
+                       "argv": [os.path.abspath(__file__)] + sys.argv[1:],
+                       "pid": os.getpid()}, _f)
+    except Exception:
+        pass
+
     csvs = sorted(glob.glob(os.path.join(args.carpeta, "*.csv")))
     if len(csvs) < 2:
         sys.exit("Se necesitan al menos 2 réplicas (1 para entrenar, 1 juez).")
@@ -117,6 +129,12 @@ def main():
                                   "ecuaciones": {k: v["ecuacion"] for k, v in r.items() if k != "mse_total"}}
     with open(os.path.join(args.outdir, "resumen.json"), "w") as f:
         json.dump(resumen, f, indent=2)
+    # Terminó limpio: retirar el latido (ya no hay nada que vigilar).
+    try:
+        if os.path.exists(_activa):
+            os.remove(_activa)
+    except Exception:
+        pass
     print("Listo. Resumen en", os.path.join(args.outdir, "resumen.json"))
 
 

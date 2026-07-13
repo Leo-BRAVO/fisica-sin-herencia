@@ -54,7 +54,7 @@ def proponer():
             "motivo_suyo": f"hueco: solo mejore {h.get('cuanto_mejore')} en {h['campana']}",
             "tipo": "re-analisis", "estado": "pendiente",
             "datos": rec["datos"], "salida": f"resultados/{iid}",
-            "args": f"--semillas 5 --paralelo 5 {rec['extra']} --jueces {rec['jueces']}"})
+            "args": f"--semillas 5 --paralelo 1 {rec['extra']} --jueces {rec['jueces']}"})
         n += 1
     guardar_cola(cola)
     print(f"propuestas nuevas de la mente: {n} | cola total: {len(cola['items'])}")
