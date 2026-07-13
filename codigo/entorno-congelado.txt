@@ -1,0 +1,11 @@
+﻿
+juliacall==0.9.26
+numpy==2.5.0
+opencv-python==5.0.0.93
+pandas==3.0.3
+pysr==1.5.10
+scipy==1.18.0
+sympy==1.14.0
+torch==2.13.0+cpu
+
+
