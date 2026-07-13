@@ -1,8 +1,0 @@
-{
-    "experiment": "projectile",
-    "model": "real-world",
-    "conditioning": null,
-    "prompt_type": "null",
-    "path_to_video": "real-world-cropped/projectile/video_7_fps30_cropped/cropped_video.mp4",
-    "path_to_frames": "real-world-cropped/projectile/video_7_fps30_cropped/frames_for_tracking"
-}
