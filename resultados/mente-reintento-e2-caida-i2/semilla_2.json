@@ -1,0 +1,11 @@
+{
+  "v1_sig": {
+    "ecuacion": "sqrt(sqrt(square((v3 + 74.900955) * 5570.0103)))",
+    "mse_test": 2370.2299173247
+  },
+  "v2_sig": {
+    "ecuacion": "(v4 - sqrt(square(v3))) + v2",
+    "mse_test": 40.58779755648174
+  },
+  "mse_total": 2410.817714881182
+}

@@ -1,0 +1,46 @@
+# estudios-nube.yml — el segundo cuerpo de la mente (investigacion labs, 12-jul-2026)
+# El propio repositorio corre una campana en la nube de GitHub (gratis, 2000 min/mes)
+# y commitea los resultados de vuelta. Se dispara A MANO desde la pestana Actions
+# (workflow_dispatch) — el director decide cuando la nube trabaja.
+name: estudios-nube
+
+on:
+  workflow_dispatch:
+    inputs:
+      datos:
+        description: "carpeta de datos (relativa al repo)"
+        default: "datos/procesados/dp_latente_std"
+      salida:
+        description: "carpeta de resultados"
+        default: "resultados/nube-01"
+      args:
+        description: "argumentos de descubrir_pool"
+        default: "--semillas 5 --paralelo 2 --maxsize 20 --niter 400 --jueces 3 6 9 --rapido"
+
+jobs:
+  campana:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: instalar motor
+        run: |
+          pip install -q numpy pandas pysr
+          python -c "import numpy; from pysr import PySRRegressor; import numpy as np; m=PySRRegressor(niterations=1, progress=False, temp_equation_file=True); m.fit(np.random.rand(30,2), np.random.rand(30)); print('motor listo')"
+      - name: correr campana
+        run: |
+          python codigo/descubrir_pool.py "${{ inputs.datos }}" "${{ inputs.salida }}" ${{ inputs.args }}
+      - name: actualizar memoria y conectoma
+        run: |
+          python codigo/memoria.py --retro
+          python codigo/conectoma.py
+      - name: commitear resultados
+        run: |
+          git config user.name "mente-nube"
+          git config user.email "mente@fisica-sin-herencia.local"
+          git add -A
+          git commit -m "Campana en la nube: ${{ inputs.salida }} (estudios-nube.yml)" || echo "nada nuevo"
+          git push

@@ -93,7 +93,7 @@ def error_rival_lineal(X_tr, Y_tr, X_te, Y_te):
     return _mse_suma(A_te @ W, Y_te)
 
 
-def correr_semilla(X_tr, Y_tr, X_te, Y_te, semilla, outdir, niterations=200, maxsize=25, ops="base"):
+def correr_semilla(X_tr, Y_tr, X_te, Y_te, semilla, outdir, niterations=200, maxsize=25, ops="base", rapido=False):
     # ops="amplio" (acelerador nº5, 12-jul-2026): vocabulario matemático extendido —
     # primitivas genéricas adicionales (tanh, abs) para frases más expresivas. Sin física.
     from pysr import PySRRegressor
@@ -118,6 +118,11 @@ def correr_semilla(X_tr, Y_tr, X_te, Y_te, semilla, outdir, niterations=200, max
             parallelism="serial",
             progress=False,
             temp_equation_file=True,
+            # --rapido (investigación labs, 12-jul-2026): 2–4× dentro de la semilla.
+            # Solo recetas exploratorias hasta el prerregistro de equivalencia.
+            turbo=bool(rapido),
+            batching=bool(rapido and len(X_tr) > 1000),
+            batch_size=500,
         )
         modelo.fit(X_tr, Y_tr[:, j], variable_names=[f"v{i+1}" for i in range(X_tr.shape[1])])
         pred = modelo.predict(X_te)

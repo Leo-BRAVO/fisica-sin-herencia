@@ -28,6 +28,8 @@ def main():
     ap.add_argument("--niter", type=int, default=200)
     ap.add_argument("--ops", choices=["base", "amplio"], default="base",
                     help="vocabulario matematico: base o amplio (acelerador nº5)")
+    ap.add_argument("--rapido", action="store_true",
+                    help="turbo+batching dentro de cada semilla (solo exploratorio hasta prereg de equivalencia)")
     ap.add_argument("--jueces", nargs="+", type=int, default=[3, 7, 11],
                     help="posiciones (1-indexadas) de los videos juez en la lista ordenada")
     ap.add_argument("--suavizar", type=int, default=0,
@@ -96,7 +98,7 @@ def main():
         print(f"Corriendo {len(pendientes)} semillas en {args.paralelo} procesos paralelos…")
         with ProcessPoolExecutor(max_workers=args.paralelo) as ex:
             futs = {ex.submit(correr_semilla, X_tr, Y_tr, X_te, Y_te, s, args.outdir,
-                              args.niter, args.maxsize, args.ops): s for s in pendientes}
+                              args.niter, args.maxsize, args.ops, args.rapido): s for s in pendientes}
             for fut, s in futs.items():
                 fut.result()
                 print(f"— semilla {s}: completada.")
@@ -104,7 +106,7 @@ def main():
         for s in pendientes:
             print(f"— semilla {s} …")
             correr_semilla(X_tr, Y_tr, X_te, Y_te, s, args.outdir,
-                           niterations=args.niter, maxsize=args.maxsize, ops=args.ops)
+                           niterations=args.niter, maxsize=args.maxsize, ops=args.ops, rapido=args.rapido)
 
     for s in rango:
         r = json.load(open(os.path.join(args.outdir, f"semilla_{s}.json")))
