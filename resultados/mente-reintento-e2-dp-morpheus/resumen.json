@@ -1,0 +1,76 @@
+{
+  "replicas": [
+    "video_0_fps30.csv",
+    "video_1_fps30.csv",
+    "video_2_fps30.csv",
+    "video_3_fps30.csv",
+    "video_4_fps30.csv",
+    "video_5_fps30.csv",
+    "video_6_fps30.csv",
+    "video_7_fps30.csv",
+    "video_8_fps30.csv",
+    "video_9_fps30.csv"
+  ],
+  "jueces": [
+    2,
+    5,
+    8
+  ],
+  "mse_base": 192.98844976580887,
+  "umbral": 96.49422488290443,
+  "mse_rival_lineal": 136.36441580599856,
+  "mse_rival_arbol": null,
+  "herencia": null,
+  "semillas": {
+    "1": {
+      "mse_total": 149.6499087571998,
+      "supera_umbral": false,
+      "ecuaciones": {
+        "v1_sig": "((v5 * (v13 - (sin(v1 * 0.018383669) * (v5 / 0.21943739)))) / v13) + v1",
+        "v2_sig": "v6 + v2",
+        "v3_sig": "(((v15 - v11) / -3.0582309) + sqrt(square((v7 * -4.3527384) - v15))) + (v7 * -1.7246128)",
+        "v4_sig": "v4 + v8"
+      }
+    },
+    "2": {
+      "mse_total": 178.1922555931459,
+      "supera_umbral": false,
+      "ecuaciones": {
+        "v1_sig": "(v13 + v1) * ((v5 / (v1 - (v5 / ((v1 / 80.57915) + -2.7302003)))) + 0.50005877)",
+        "v2_sig": "v6 + v2",
+        "v3_sig": "(v7 * -1.4799399) + sqrt(square(((v11 - v15) * sin(0.08528714 / v7)) + (v15 + (v7 * 4.3738904))))",
+        "v4_sig": "v8 + v4"
+      }
+    },
+    "3": {
+      "mse_total": 144.70668146861973,
+      "supera_umbral": false,
+      "ecuaciones": {
+        "v1_sig": "v13 + ((v5 / 0.34627172) - (((v13 / 3.0054731) + (v5 + -76.11143)) / exp((v1 / 20.65111) - 12.179639)))",
+        "v2_sig": "v6 + v2",
+        "v3_sig": "v7 + ((v3 + ((((v12 - v3) / v11) - 0.38792905) * (square(v7) * 0.013804895))) - (3.5544746 / ((v8 * v15) + 2.099102)))",
+        "v4_sig": "v4 + v8"
+      }
+    },
+    "4": {
+      "mse_total": 158.2825622041694,
+      "supera_umbral": false,
+      "ecuaciones": {
+        "v1_sig": "square(v1) / v9",
+        "v2_sig": "v2 + v6",
+        "v3_sig": "(((v15 - -85.60783) + (v7 * 3.2030184)) / exp(165.33083 / v3)) - (-79.48077 - (((v15 - v3) * -6.64454) / (v3 * v7)))",
+        "v4_sig": "v8 + v4"
+      }
+    },
+    "5": {
+      "mse_total": 171.62158261491098,
+      "supera_umbral": false,
+      "ecuaciones": {
+        "v1_sig": "sqrt(((((-25.702225 / v3) * v9) + 20.768436) * square(v5)) + square(v5 + v1))",
+        "v2_sig": "v6 + v2",
+        "v3_sig": "(v7 * 2.796363) + v15",
+        "v4_sig": "v4 + v8"
+      }
+    }
+  }
+}

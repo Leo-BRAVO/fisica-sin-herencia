@@ -15,7 +15,7 @@
       "origen": "PROPUESTA DE LA MENTE (curiosidad.py)",
       "motivo_suyo": "hueco: solo mejore 0.1414 en e2-dp-morpheus",
       "tipo": "re-analisis",
-      "estado": "pendiente",
+      "estado": "hecha",
       "datos": "datos/procesados/dp_morpheus",
       "salida": "resultados/mente-reintento-e2-dp-morpheus",
       "args": "--semillas 5 --paralelo 1 --suavizar 3 --retardos 2 --maxsize 25 --niter 800 --jueces 3 6 9"
