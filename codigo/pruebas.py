@@ -62,6 +62,23 @@ piso = piso_de_ruido(np.cumsum(rng.normal(size=5000)) + ruido)  # camino suave +
 caso("piso ~ var del ruido (9.0)", 6.0 < piso < 12.5, f"piso={piso:.2f}")
 caso("evaluar respeta v-indices", np.allclose(evaluar("v1 + 2*v3", np.array([[1., 0., 5., 0.]])), 11.0))
 
+print("== surrogado IAAFT: la falsificacion perfecta ==")
+from descubrir import _iaaft
+rng2 = np.random.default_rng(3)
+# senales de banda ancha (camino aleatorio suavizado) acopladas — caso realista;
+# con ondas puras monocromaticas la decorrelacion por fases es debil por naturaleza
+s1 = np.convolve(rng2.normal(size=2100), np.ones(8) / 8, mode="valid")[:2000]
+s2 = 0.8 * np.roll(s1, 3) + 0.1 * rng2.normal(size=2000)  # acoplada a s1
+f1 = _iaaft(s1, rng2)
+esp_o = np.abs(np.fft.rfft(s1)); esp_f = np.abs(np.fft.rfft(f1))
+caso("surrogado conserva el espectro",
+     np.corrcoef(esp_o, esp_f)[0, 1] > 0.99, f"corr={np.corrcoef(esp_o, esp_f)[0,1]:.3f}")
+caso("surrogado conserva la distribucion", np.allclose(np.sort(f1), np.sort(s1)))
+f2 = _iaaft(s2, rng2)
+c_orig = abs(np.corrcoef(s1, s2)[0, 1]); c_surr = abs(np.corrcoef(f1, f2)[0, 1])
+caso("surrogado DESTRUYE el acople entre senales",
+     c_surr < c_orig * 0.35, f"original={c_orig:.2f} surrogado={c_surr:.2f}")
+
 print("== canonizar: tarjeta de identidad ==")
 t = tarjeta("(v1 + v2) * 0.5 + 3.0", 4)
 caso("desplazamiento = f(0)", abs(t["desplazamiento"] - 3.0) < 1e-6)

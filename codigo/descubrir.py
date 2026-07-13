@@ -44,6 +44,11 @@ def preparar(csv_path, nulo=None, rng=None, suavizar=0, retardos=0, centrar=Fals
         señales = [s[perm] for s in señales]
     elif nulo == "ruido":
         señales = [rng.uniform(s.min(), s.max(), size=len(s)) for s in señales]
+    elif nulo == "surrogado":
+        # Verdugo de 2ª generación (13-jul-2026): sustitutos IAAFT — conservan el espectro
+        # y la distribución de cada señal (la falsificación perfecta) pero destruyen las
+        # fases y los acoples. Si el motor "descubre" aquí, el método miente.
+        señales = [_iaaft(s, rng) for s in señales]
 
     # CORRECCIÓN E2-intento2 (11-jul-2026, auditoría del INFORME-10): el suavizado se aplica
     # SOLO a las ENTRADAS; el objetivo Y se mantiene CRUDO. Suavizar también el objetivo hace
@@ -72,6 +77,20 @@ def preparar(csv_path, nulo=None, rng=None, suavizar=0, retardos=0, centrar=Fals
 def dividir_por_tiempo(X, Y, frac=0.70):
     n = int(len(X) * frac)
     return X[:n], Y[:n], X[n:], Y[n:]
+
+
+def _iaaft(s, rng, iteraciones=100):
+    """Sustituto IAAFT (Schreiber-Schmitz): mismo espectro de potencia y misma
+    distribución de valores que s, fases aleatorizadas. Matemática genérica."""
+    amplitudes = np.sort(s)
+    espectro = np.abs(np.fft.rfft(s))
+    x = rng.permutation(s)
+    for _ in range(iteraciones):
+        fase = np.angle(np.fft.rfft(x))
+        x = np.fft.irfft(espectro * np.exp(1j * fase), n=len(s))
+        rangos = np.argsort(np.argsort(x))
+        x = amplitudes[rangos]
+    return x
 
 
 def _mse_suma(pred, Y):
