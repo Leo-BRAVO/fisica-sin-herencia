@@ -1,0 +1,62 @@
+{
+  "parametros": {
+    "outdir": "caida-libre-p09",
+    "datos": "datos\\procesados\\caida",
+    "jueces": [
+      3,
+      7,
+      11
+    ],
+    "suavizar": 0,
+    "retardos": 0,
+    "centrar": false,
+    "umbral_sigma": 4.0,
+    "consenso": 0.8,
+    "n_semillas": 5,
+    "semillas_usadas": [
+      "semilla_11.json",
+      "semilla_12.json",
+      "semilla_13.json",
+      "semilla_14.json",
+      "semilla_15.json"
+    ]
+  },
+  "replicas": {
+    "video_11_fps30.csv": {
+      "total_cuadros": 41,
+      "cuadros_sospechosos": 1,
+      "porcentaje": 2.44,
+      "pico_z_consenso": 23.714,
+      "rangos_sospechosos": [
+        {
+          "rango": "39",
+          "z_medio": 23.714
+        }
+      ]
+    },
+    "video_5_fps30.csv": {
+      "total_cuadros": 43,
+      "cuadros_sospechosos": 2,
+      "porcentaje": 4.65,
+      "pico_z_consenso": 16.967,
+      "rangos_sospechosos": [
+        {
+          "rango": "41-42",
+          "z_medio": 13.851
+        }
+      ]
+    },
+    "video_9_fps30.csv": {
+      "total_cuadros": 42,
+      "cuadros_sospechosos": 3,
+      "porcentaje": 7.14,
+      "pico_z_consenso": 38.934,
+      "rangos_sospechosos": [
+        {
+          "rango": "39-41",
+          "z_medio": 22.29
+        }
+      ]
+    }
+  }
+}
