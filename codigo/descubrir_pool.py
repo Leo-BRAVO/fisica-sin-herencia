@@ -30,6 +30,8 @@ def main():
                     help="vocabulario matematico: base o amplio (acelerador nº5)")
     ap.add_argument("--rapido", action="store_true",
                     help="turbo+batching dentro de cada semilla (solo exploratorio hasta prereg de equivalencia)")
+    ap.add_argument("--centrar", action="store_true",
+                    help="centrar cada replica en su media (invariancia de traslacion, Regla 2)")
     ap.add_argument("--jueces", nargs="+", type=int, default=[3, 7, 11],
                     help="posiciones (1-indexadas) de los videos juez en la lista ordenada")
     ap.add_argument("--suavizar", type=int, default=0,
@@ -52,7 +54,7 @@ def main():
 
     Xtr, Ytr, Xte, Yte = [], [], [], []
     for i, c in enumerate(csvs):
-        X, Y = preparar(c, suavizar=args.suavizar, retardos=args.retardos)
+        X, Y = preparar(c, suavizar=args.suavizar, retardos=args.retardos, centrar=args.centrar)
         (Xte if i in jueces_idx else Xtr).append(X)
         (Yte if i in jueces_idx else Ytr).append(Y)
     X_tr, Y_tr = np.vstack(Xtr), np.vstack(Ytr)

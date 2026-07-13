@@ -18,7 +18,7 @@ import numpy as np
 import pandas as pd
 
 
-def preparar(csv_path, nulo=None, rng=None, suavizar=0, retardos=0):
+def preparar(csv_path, nulo=None, rng=None, suavizar=0, retardos=0, centrar=False):
     """suavizar: ventana de promedio móvil centrado (0/1 = sin suavizado) — filtro GENÉRICO
     documentado, permitido por la Regla 2. retardos: nº de valores PASADOS de cada señal
     añadidos como variables (inmersión por retardos de Takens — pura historia, cero física).
@@ -32,6 +32,12 @@ def preparar(csv_path, nulo=None, rng=None, suavizar=0, retardos=0):
         cols = sorted([c for c in df.columns if _re.fullmatch(r"s\d+", c)],
                       key=lambda c: int(c[1:]))
     señales = [df[c].to_numpy(float) for c in cols]
+
+    if centrar:
+        # Invariancia por diseño (INFORME-15 → planos F/invariancia, 13-jul-2026):
+        # cada réplica se centra en su propia media — matemática genérica (Regla 2) que
+        # elimina las coordenadas absolutas que no transfieren entre réplicas.
+        señales = [s - s.mean() for s in señales]
 
     if nulo == "barajado":
         perm = rng.permutation(len(señales[0]))
