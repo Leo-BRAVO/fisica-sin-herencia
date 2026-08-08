@@ -185,8 +185,15 @@ for n, tipo in nulos:
     # AVISO, no FALLO: un nulo invalido ya registrado es DEUDA DECLARADA, no corrupcion del
     # repositorio. Bloquear por el mandaria a cuarentena corridas sanas. Lo que si hace es NO
     # CONTAR para la Regla 11 (abajo), que es exactamente el castigo que merece.
+    # SUPERACION (decision del director, 8-ago-2026, "ok haslo"): un nulo invalido cuya campaña
+    # YA TIENE un verdugo valido de la clase correcta queda SUPERADO — deuda contable saldada,
+    # no cientifica. El registro del invalido no se borra: la historia queda; el aviso se apaga.
+    superado = any(PAREJAS_NULO.get(m) == real and m != n and
+                   os.path.exists(os.path.join(BASE, "resultados", m, "resumen.json")) and
+                   abs(json.load(open(os.path.join(BASE, "resultados", m, "resumen.json")))["mse_base"] - br) / br > 0.10
+                   for m, _ in nulos)
     aviso(f"Regla 31: el nulo '{n}' falsifico el mundo de verdad (base cambia >10%)",
-          cambio > 0.10,
+          cambio > 0.10 or superado,
           f"base {br:.4g} -> {bn:.4g} (cambio {cambio*100:.1f}%): NULO INVALIDO, no cuenta")
     if cambio > 0.10:
         validos.append(n)
@@ -200,8 +207,15 @@ aviso("Regla 11: las campanas insignia tienen un verdugo VALIDO con su propia tu
 _c17 = open(os.path.join(BASE, "CIMIENTOS.md"), encoding="utf-8").read()
 ok("Regla 17: la enmienda del Word esta escrita (deuda saldada, no fingida)",
      "ENMENDADO el 8-ago-2026" in _c17 and "Word se genera EN EL MOMENTO DE ENTREGAR" in _c17)
-aviso("Regla 16: repositorio publico (prioridad fuerte)", False, "sigue privado — decision del director")
-aviso("Regla 19 nivel 3: replica independiente por un tercero", False, "pendiente — ningun nodo llego al nivel 3")
+# DECISIONES DEL DIRECTOR (8-ago-2026): privado hasta tener descubrimientos reales ("como
+# levantamos capital si no ha logrado descubrir leyes; tenemos que ir mas alla"), y la replica
+# por terceros diferida hasta que exista algo que valga la pena replicar. Dejan de ser deudas
+# perpetuas; lo que se audita es que AMBAS decisiones esten ESCRITAS en la constitucion — una
+# decision que solo vive en una conversacion no existe.
+ok("Regla 16: la decision de seguir privado esta escrita en la constitucion",
+   "se queda privado" in _c17 and "revisable cuando existan resultados reales" in _c17)
+ok("Regla 19 nivel 3: el diferimiento de la replica esta escrito, con su condicion",
+   "se difiere hasta que existan resultados reales" in _c17)
 
 print("\n" + "=" * 74)
 if FALLOS:

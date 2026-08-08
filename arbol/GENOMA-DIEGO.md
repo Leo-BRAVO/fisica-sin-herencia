@@ -45,14 +45,18 @@ el registro de procedencia del genoma — la Regla 2 aplicada al recién nacido.
 | **G11 — Temple** | emociones como control de ganancia (neuromodulación): sorpresa ↑ tasa de aprendizaje local; frustración (progreso≈0 sostenido) → migrar de región; éxito → persistir | meta-parámetros operacionales y medibles — no teatro | control interno, cero contenido |
 | **G12 — Reflejos** | primitivas motoras mínimas sobre SU cuerpo (cerrar efector al contacto, orientarse al cambio) que aceleran el balbuceo | frontera GRIS confesada: puede insinuar "el contacto importa"; se documenta y se puede ablacionar en la filogenia (§4) | solo su cuerpo; ablacionable |
 
-### Genes CANDIDATOS de la revisión de literatura (8-ago-2026 — PROPUESTOS, NINGUNO ACTIVADO)
+### Genes ACTIVADOS el 8-ago-2026 por orden del director ("activalo") — con su Regla 31 aprobada
+| Gen | Qué es | Regla 31 | Blindaje de activación |
+|---|---|---|---|
+| **G13 — Poder** (`poder.py`) | R² de control sobre su futuro por región del estado (empowerment en la moneda de la casa) | **3/3**: no inventa control sin agencia, encuentra la compuerta (+0.435 vs +0.001), y el televisor ruidoso da ~0 — el canal exacto que mató a la ganancia honesta | **MIDE, NO DECIDE** hasta prerregistro firmado (la cuarentena que salvó a G10) |
+| **G14 — Incertidumbre** (`incertidumbre.py`) | epistémica (curable, cae al doblar datos) vs aleatoria (azar, no cae) por conjunto bootstrap | **3/3**, con una lección: mi primer mundo de prueba tenía ley exacta y el estimador dijo epistémica=0 — **y tenía razón él** | ídem — su firma falsable quedó congelada en el banco |
+
+### Genes candidatos restantes (PROPUESTOS, sin activar)
 Salidos de la investigación del Gimnasio (`arbol/GIMNASIO.md` §2). Ninguno entra sin su Regla 31 y
 la firma del director; se listan aquí para que el genoma diga lo que le falta, no solo lo que tiene.
 
 | Gen | Qué es | Por qué | Legalidad |
 |---|---|---|---|
-| **G13 — Empowerment (poder)** | bits de control sobre sus estados futuros (información mutua acción↔futuro) | donde la curiosidad se apaga, el poder sigue empujando; **y el mismo estadístico sirve de motor Y de detector de contingencia (G4)** — una economía que la literatura tiene partida en dos campos | limpia: mide su control, no el mundo. **Riesgo: su propio Goodhart** (controlar variables triviales) |
-| **G14 — Incertidumbre propia** | predecir una distribución, no un punto | sin ella la curiosidad no distingue "es azar" de "aún no lo aprendo" — crítico en cuanto tenga un cuerpo con juego mecánico | limpia: mide su propio estado |
 | **(gris) Ranuras / objetos** | la escena se descompone en cosas persistentes | explicaría la dimensión intrínseca 6.2 de 8 (INFORME-26) | **NO ENTRA AL GENOMA**: "hay objetos separados" es un hecho del mundo. Candidata de la **filogenia (Regla 33)**, medida por ablación — cuánto vale ese prior es un resultado publicable |
 
 ### Los genes que DELIBERADAMENTE no le damos (decisión de diseño, pendiente de firma)
@@ -160,7 +164,7 @@ examinado corrija su examen. Arquitectura:
    prerregistrados. Ya demostró que puede: eligió sus propios ojos.
 2. **ONTOGENIA — código por propuesta (Regla 30):** cambios estructurales con sandbox, banco
    congelado, commit visible.
-3. **FILOGENIA — evolución por torneo (PROPUESTA DE REGLA 33, pendiente de firma):**
+3. **FILOGENIA — evolución por torneo (REGLA 33, FIRMADA por el director el 8-ago-2026):**
    - El genoma es un archivo versionado (`GENOMA.json`): genes con parámetros y banderas de
      ablación (p.ej. ¿G12 reflejos ayuda o contamina? — la evolución responde).
    - **Una generación** = N variantes del genoma corriendo el MISMO currículo congelado del
@@ -172,7 +176,7 @@ examinado corrija su examen. Arquitectura:
    - **Muralla elevada a la evolución:** la función de aptitud vive con los JUECES ETERNOS.
      Ningún individuo, ningún bucle, ninguna generación puede tocar la vara que la mide. Jamás.
 
-> **PROPUESTA DE REGLA 33 — La filogenia (texto para CIMIENTOS, pendiente de firma):**
+> **REGLA 33 — La filogenia (FIRMADA el 8-ago-2026; el texto vigente vive en CIMIENTOS):**
 > El genoma del ente solo cambia ENTRE generaciones, nunca dentro de una vida. Una generación
 > nueva nace por torneo prerregistrado: variantes del genoma sobre un currículo congelado,
 > aptitud fijada de antemano y custodiada por los jueces eternos, ganador aprobado por el

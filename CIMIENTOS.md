@@ -95,6 +95,7 @@ Ningún bucle de automejora cerrado: ningún sistema del proyecto modifica su pr
 ### Regla 16 — Prioridad demostrable y apertura
 Para que el trabajo cuente como legado, debe ser demostrable que fue tuyo y cuándo: repositorio público (GitHub, gratis) desde el día uno, con commits fechados. El documento CIMIENTOS.md y cada prerregistro se suben ANTES de correr los experimentos — eso convierte cada idea en prioridad verificable con fecha, que es exactamente lo que le faltó a todos los que "lo pensaron primero" pero no lo escribieron en público.
 *Nota (8-jul-2026): por decisión del director, el repositorio empieza PRIVADO — los commits fechados igualmente registran la prioridad ante GitHub. Hacerlo público es la meta cuando el director lo decida; mientras siga privado, la protección de prioridad es más débil.*
+*Decisión del director (8-ago-2026): **se queda privado**. Razón dada por él, y es científica: "¿cómo levantamos capital si no ha logrado descubrir leyes? Tenemos que ir más allá". Publicar antes de tener descubrimientos reales enseñaría la mano sin tener nada que proteger. Deja de contarse como deuda pendiente: es una decisión registrada, revisable cuando existan resultados reales. Los commits fechados siguen registrando prioridad.*
 
 ---
 
@@ -118,6 +119,7 @@ Existe una carpeta `arbol/` donde cada resultado VALIDADO (que pasó las reglas 
 
 ### Regla 19 — El puente a la realidad: toda ley candidata debe poder morir en un experimento físico
 Una compresión que solo vive en la computadora no es conocimiento. Para cada ley candidata, el orquestador debe proponer y el humano ejecutar **el experimento físico más barato capaz de matarla**: si la ley predice algo sobre péndulos, se construye el péndulo con el parámetro nuevo (otra longitud, otro peso, otro ángulo) DESPUÉS de hecha la predicción, y se filma. Escalera de confianza de toda ley: (1) predice datos ocultos → candidata; (2) predice un experimento físico nuevo hecho después de la predicción → corroborada; (3) otra persona la replica de forma independiente → conocimiento. Solo el nivel 3 entra al árbol como nodo firme; los niveles 1 y 2 entran marcados como provisionales.
+**Decisión del director (8-ago-2026):** la réplica independiente por un tercero **se difiere hasta que existan resultados reales que valga la pena replicar** ("cuando tengamos resultados reales lo probamos"). No es renuncia: el proyecto ya es replicable por construcción (datos reconstruibles de fuentes públicas con huella verificada), así que el día que haya un descubrimiento, abrir la puerta toma horas, no meses. Deja de contarse como deuda activa; queda como decisión registrada y condición del nivel 3.
 **Enmienda del director (10-jul-2026):** para réplicas y transferencias dentro de dominio conocido, el nivel 2 puede satisfacerse con **datos archivados reales nunca vistos** (grabaciones o mediciones de internet que cumplan la Regla 25) siempre que la predicción quede prerregistrada ANTES de tocar esos datos — el registro del universo es real sin importar quién apretó grabar. Limitación documentada: los datos publicados tienen sesgo de selección (la gente sube sus experimentos limpios) y no permiten elegir condiciones adversariales. Por eso el **experimento físico propio, hecho después de la predicción, queda RESERVADO Y OBLIGATORIO** para los nodos que el comparador (Regla 27) marque como CONTRADICE o SIN EQUIVALENTE — donde la afirmación es extraordinaria, la evidencia se fabrica a medida, eligiendo a propósito las condiciones que más probablemente maten a la ley.
 
 ---
@@ -232,6 +234,17 @@ Ordenada por el director el 8-ago-2026 ("auto audita siempre como regla; al crea
   ciego real: bastaba con que UNA mención del README fuera correcta para que el chequeo pasara
   aunque otra quedara rancia. Esta enmienda ENDURECE (Regla 8) y no afloja nada.
 - **La única excepción a la interconexión, y es constitutiva:** las REGLAS, los JUECES y los CRITERIOS no se conectan al lado de la mente — viven del lado humano, invisibles para ella (Reglas 27 y 28). La mente ve todo su mundo tejido (árbol, conectoma, memoria, genoma operativo); jamás ve la vara que la mide ni la constitución que la gobierna. La interconexión total es para su casa; la separación total es para su tribunal.
+
+
+### Regla 33 — La filogenia: el genoma solo cambia entre generaciones, jamás dentro de una vida
+Firmada por el director el 8-ago-2026 ("actívalo"), sobre la propuesta del GENOMA-DIEGO §4.
+Ningún ser vivo edita su genoma mientras vive: el individuo aprende (ontogenia, Reglas 28 y 30); la especie evoluciona (variación + selección ENTRE generaciones). Confundir niveles es dejar que el examinado corrija su examen.
+- El genoma del ente es un archivo versionado. Solo cambia **entre** generaciones, nunca dentro de una vida.
+- Una generación nueva nace por **torneo prerregistrado**: variantes del genoma (incluidas **ablaciones** — ¿este gen ayuda o contamina?) corren el MISMO currículo congelado del Gimnasio con las mismas semillas.
+- La **aptitud se fija de antemano** y vive con los jueces eternos: bits del mundo comprimidos por unidad de cómputo + hitos superados ante el tribunal. **Ningún individuo, bucle ni generación puede tocar la vara que lo mide. Jamás.**
+- El ganador y sus mutaciones son la generación siguiente. **Cada generación nace con la firma del director y un commit visible** — la Regla 15 aplicada a la evolución: la selección propone, el humano decide.
+- Las herramientas del torneo aprueban su Regla 31 antes de su primer veredicto, como todas.
+- Los genes de frontera gris (G12 reflejos; ranuras de objetos) entran a la filogenia **como ablaciones medidas**: cuánto vale un prior es un resultado científico, no una opinión de diseño.
 
 ---
 
