@@ -80,7 +80,7 @@ print("== cola de estudios: TODO item pendiente debe poder ejecutarse (INFORME-2
 # ("A + B + C") estuvo horas atascado sin que nada avisara — parecia pendiente y nadie
 # podia ejecutarlo jamas. Un item inejecutable es peor que un item ausente.
 cola = json.load(open(os.path.join(BASE, "registros", "COLA-ESTUDIOS.json"), encoding="utf-8"))
-TIPOS_QUE_EL_LATIDO_TOMA = {"re-analisis"}
+TIPOS_QUE_EL_LATIDO_TOMA = {"re-analisis", "gimnasio"}
 for i in cola["items"]:
     caso(f"cola item '{i['id']}' tiene estado valido",
          i.get("estado") in ("pendiente", "hecha", "espera-al-director"))

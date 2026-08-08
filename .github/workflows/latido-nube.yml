@@ -44,7 +44,7 @@ jobs:
       - name: instalar motor
         if: steps.cola.outputs.id != ''
         run: |
-          pip install -q numpy pandas pysr opencv-python-headless pyyaml
+          pip install -q numpy pandas pysr opencv-python-headless pyyaml pybullet
           pip install -q torch --index-url https://download.pytorch.org/whl/cpu
           python -c "from pysr import PySRRegressor; import numpy as np; m=PySRRegressor(niterations=1, progress=False, temp_equation_file=True); m.fit(np.random.rand(30,2), np.random.rand(30)); print('motor listo')"
 
@@ -69,6 +69,27 @@ jobs:
             REC=$(python3 codigo/latido_nube.py --campo reconstruir)
             echo "::group::[$VUELTA/$MAX] $ID"
 
+            TIPO=$(python3 codigo/latido_nube.py --campo tipo)
+            if [ "$TIPO" = "gimnasio" ]; then
+              # El mundo propio se genera solo: sin reconstruccion, sin carpeta de datos.
+              # 'datos' ES el script (prerregistro firmado); los guardianes juzgan igual.
+              T0=$(date +%s)
+              python3 "$DATOS" $ARGS
+              if [ $? -ne 0 ]; then FALLOS=$((FALLOS+1)); echo "::endgroup::"; break; fi
+              SEGUNDOS=$(( $(date +%s) - T0 ))
+              python3 codigo/latido_nube.py --completar-si-terminado "$ID"
+              python3 codigo/interocepcion.py --sentir "$SALIDA" --segundos "$SEGUNDOS" || true
+              python3 codigo/memoria.py --retro || true
+              python3 codigo/conectoma.py || true
+              python3 codigo/boleta.py || true
+              echo "--- LOS TRES GUARDIANES (Regla 32) ---"
+              python3 codigo/pruebas.py && python3 codigo/coherencia.py && python3 codigo/auditoria_total.py
+              if [ $? -ne 0 ]; then FALLOS=$((FALLOS+1)); echo "::endgroup::"; break; fi
+              git add -A && git commit -m "latido-nube: $ID (gimnasio; los tres guardianes OK)" && git push origin main
+              if [ $? -ne 0 ]; then FALLOS=$((FALLOS+1)); echo "::endgroup::"; break; fi
+              echo "::endgroup::"
+              continue
+            fi
             if [ -n "$REC" ] && [ ! -d "$DATOS" ]; then
               python3 codigo/reconstruir_datos.py "$REC"
               if [ $? -ne 0 ]; then

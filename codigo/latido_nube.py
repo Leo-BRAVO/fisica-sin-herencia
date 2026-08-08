@@ -1,8 +1,9 @@
 # latido_nube.py — EL LATIDO EN LA NUBE (8-ago-2026): el corazon del proyecto ya no vive
 # en ninguna laptop. El workflow latido-nube.yml (GitHub Actions, diario) llama a este
 # script para ejecutar la cola de estudios sin que nadie este despierto.
-# Gobernanza intacta: SOLO toma items tipo "re-analisis" con estado "pendiente"
-# (aprobacion permanente del director para re-analisis; todo lo demas lo espera a el).
+# Gobernanza intacta: toma items tipo "re-analisis" (aprobacion permanente del director) y,
+# desde el 8-ago-2026, tipo "gimnasio" — corridas del mundo propio cuyo prerregistro este FIRMADO
+# (el item lleva en "datos" el script a ejecutar; el mundo se genera solo, no hay que reconstruir).
 #
 # Uso: python latido_nube.py --campo id|datos|salida|args|reconstruir   (del proximo item)
 #      python latido_nube.py --completar-si-terminado <id>   (marca hecha SOLO si hay resumen)
@@ -22,14 +23,14 @@ def cargar():
 
 def siguiente():
     for i in cargar()["items"]:
-        if i.get("tipo") == "re-analisis" and i.get("estado") == "pendiente":
+        if i.get("tipo") in ("re-analisis", "gimnasio") and i.get("estado") == "pendiente":
             return i
     return None
 
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--campo", choices=["id", "datos", "salida", "args", "reconstruir"])
+    ap.add_argument("--campo", choices=["id", "datos", "salida", "args", "reconstruir", "tipo"])
     ap.add_argument("--completar-si-terminado", default=None)
     a = ap.parse_args()
 
