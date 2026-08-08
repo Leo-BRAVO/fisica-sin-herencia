@@ -326,6 +326,26 @@ caso("verdugo escala: la persistencia sola YA transfiere (por eso la vara vieja 
      f"{_sin['transferencia_escala_deshecha']:.3f} — si esto baja de 0.3 revisar INFORME-32")
 caso("verdugo escala: APRUEBA su Regla 31", _ve31(verbose=False) == 0)
 
+print("== G13 (poder) y G14 (incertidumbre): activados por el director, congelados aqui ==")
+from poder import regla31 as _p31, medir as _pmedir
+from incertidumbre import regla31 as _i31, medir as _imedir
+caso("G13 poder: APRUEBA su Regla 31 (control real, no varianza ni casualidad)", _p31(verbose=False) == 0)
+# (corregido en el acto: la primera version de este caso terminaba en "or True" — un caso que
+# no puede fallar es decoracion, no vigilancia)
+_src_poder = _insp.getsource(__import__("poder"))
+caso("G13 poder: es MEDIDOR — no importa curiosidad2 ni escribe en la cola de estudios",
+     "import curiosidad2" not in _src_poder and "COLA-ESTUDIOS" not in _src_poder)
+caso("G14 incertidumbre: APRUEBA su Regla 31 (separa 'es azar' de 'aun no aprendo')", _i31(verbose=False) == 0)
+# la firma falsable de G14, congelada como numero: doblar datos reduce la epistemica
+_rngU = np.random.default_rng(9)
+_XU = _rngU.normal(size=(12, 2)); _YU = 2 * _XU[:, 0] - _XU[:, 1] + _rngU.normal(0, 0.5, 12)
+_XU2 = _rngU.normal(size=(48, 2)); _YU2 = 2 * _XU2[:, 0] - _XU2[:, 1] + _rngU.normal(0, 0.5, 48)
+_XtU = _rngU.normal(size=(200, 2))
+_eA = _imedir(_XU, _YU, _XtU); _eB = _imedir(_XU2, _YU2, _XtU)
+caso("G14: la ignorancia curable CAE al doblar los datos (su firma falsable)",
+     _eB["epistemica"] < 0.7 * _eA["epistemica"],
+     f"{_eA['epistemica']:.3f} -> {_eB['epistemica']:.3f}")
+
 print("== canonizar: tarjeta de identidad ==")
 t = tarjeta("(v1 + v2) * 0.5 + 3.0", 4)
 caso("desplazamiento = f(0)", abs(t["desplazamiento"] - 3.0) < 1e-6)

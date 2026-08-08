@@ -1,6 +1,8 @@
 # Prerregistro 24 — La búsqueda del cuerpo: cómo se elige un diseño de Gimnasio sin hacer trampa — 8 de agosto de 2026
-**Estado: BORRADOR pendiente de firma del director. Se escribe ANTES de mirar los resultados del
-barrido, que corre mientras esto se redacta.**
+**Estado: FIRMADO por el director el 8-ago-2026 ("as tambien esto"). El protocolo se escribió ANTES
+de mirar los resultados; la firma llegó después de ejecutarlo y de que su predicción fallara —
+lo cual queda, a propósito, como demostración de que el protocolo funciona aunque el que lo
+escribió se equivoque.**
 
 ---
 
@@ -67,4 +69,22 @@ añade un empujón marginal; con rozamiento, la velocidad SIGUE al par (respuest
 el cuerpo se vuelve aprendible en un solo paso. Espero que el límite articular ayude menos, y que
 el suavizado y los subpasos casi no muevan la aguja.
 
-- **Firmado:** PENDIENTE — Leo, director.
+## ANEXO POST-RESULTADOS (registrado el 8-ago-2026, DESPUÉS de ver los números — Regla 8)
+El director preguntó: *"ahora que viste los resultados, ¿qué cambiaríamos o mejoraríamos en la
+búsqueda de cuerpo?"*. Respuesta con la evidencia delante, para la próxima ronda:
+
+1. **La búsqueda optimizó el cuerpo para el DETECTOR, no para los OJOS.** Ganamos 28/28 sobre el
+   estado del simulador y el hito 0 visual siguió fracasando (0.38 contra piso 0.40). La próxima
+   búsqueda debe puntuar TAMBIÉN cuán legible es el cuerpo para una cámara: el R² con que unos
+   ojos frescos leen las articulaciones. Es una variable de diseño legal — es SU cuerpo y SU
+   cámara — y ataca el fallo medido (ojos que leen escena y no brazo).
+2. **La visibilidad es una variable de cuerpo y no la exploramos.** Grosor del brazo, contraste
+   contra el fondo, encuadre de la cámara: todo eso decide cuántos píxeles cuesta ignorarlo, y la
+   pérdida por píxel ignora lo que ocupa poco. Ronda 3 debe barrer visibilidad.
+3. **La potencia estadística se decide ANTES.** Dos veces nos mordió el número de ventanas; el
+   mínimo de 20 ahora está en el código, pero el diseño de cada ronda debe declarar sus ventanas
+   esperadas antes de correr.
+4. **Presupuesto declarado:** 8 diseños en ronda 1-2. Toda ronda declara cuántos dados tira.
+
+- **Firmado:** Leo, director — 8-ago-2026, aprobación en conversación ("as tambien esto"), con el
+  anexo post-resultados marcado como tal.
