@@ -304,6 +304,28 @@ caso("contingencia: se NIEGA a medir con menos ventanas del minimo (no opina sin
 caso("contingencia: sus constantes las fija el prerregistro-23, no el codigo",
      "PRERREGISTRO-23" in _insp.getsource(_cmedir) and "SIN AJUSTAR" in _insp.getsource(_cmedir))
 
+print("== verdugo por reescalado: le importa la escala o no ==")
+# Congela las DOS versiones que se cayeron antes de la que sirve (INFORME-32):
+# comparar contra la base trivial dejaba un mundo SIN LEY a 0.484 de un umbral de 0.5, y un nulo
+# con el tiempo revuelto era tan destructivo que TODO lo superaba.
+from verdugo_escala import sensibilidad_de_escala as _sens, regla31 as _ve31
+_tt = np.arange(400)
+_caida = lambda k: [np.column_stack([k * (5.0 - 0.5 * 0.004 * (_tt + f) ** 2) for f in (0, 7, 13)])
+                    for _ in range(6)]
+_rngE = np.random.default_rng(11)
+_paseo = lambda k: [np.column_stack([k * np.cumsum(_rngE.normal(size=400)) for _ in range(3)])
+                    for _ in range(6)]
+_con = _sens(_caida(1.0), _caida(3.0), 3.0, 1.0)
+_sin = _sens(_paseo(1.0), _paseo(3.0), 3.0, 1.0)
+caso("verdugo escala: un mundo CON ley es sensible a la escala",
+     _con["sensibilidad"] > 0.5 and _con["sobrevive"], f"{_con['sensibilidad']:+.3f}")
+caso("verdugo escala: un mundo SIN ley NO es sensible a la escala",
+     abs(_sin["sensibilidad"]) < 0.05 and not _sin["sobrevive"], f"{_sin['sensibilidad']:+.4f}")
+caso("verdugo escala: la persistencia sola YA transfiere (por eso la vara vieja no servia)",
+     0.3 < _sin["transferencia_escala_deshecha"] < 0.7,
+     f"{_sin['transferencia_escala_deshecha']:.3f} — si esto baja de 0.3 revisar INFORME-32")
+caso("verdugo escala: APRUEBA su Regla 31", _ve31(verbose=False) == 0)
+
 print("== canonizar: tarjeta de identidad ==")
 t = tarjeta("(v1 + v2) * 0.5 + 3.0", 4)
 caso("desplazamiento = f(0)", abs(t["desplazamiento"] - 3.0) < 1e-6)
