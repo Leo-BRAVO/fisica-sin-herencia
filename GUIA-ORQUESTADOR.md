@@ -16,6 +16,12 @@ Antes de CADA commit, el orquestador corre y aprueba AMBOS guardianes:
    secuencia de los workflows. Obligatorio ANTES de cualquier campaña seria y ANTES de mostrar
    el repositorio a un revisor o inversionista. Sus AVISOS son la deuda declarada del proyecto:
    se dicen, no se esconden (registros/DICTAMEN-PREVUELO-01.md).
+**CÓMO SE CORREN (leccion pagada el 8-ago-2026):** JAMÁS con tubería —
+`python codigo/coherencia.py | tail -1` devuelve el código de salida de `tail`, no el del
+guardián: la verificación queda enmascarada y un fallo pasa como éxito. Correcto:
+`python codigo/coherencia.py > /tmp/g.txt 2>&1; echo $?` (o `set -o pipefail`). El defecto
+estuvo activo toda una sesión y solo se descubrió cuando un guardián falló de verdad.
+
 Además, cada vez que se AGREGA algo nuevo (herramienta, documento, gen, regla): (a) la herramienta
 nueva aprueba la Regla 31 antes de su primer veredicto, (b) coherencia.py gana los casos que
 vigilen lo nuevo (solo se agregan casos, jamás se quitan), y (c) toda afirmación numérica en un

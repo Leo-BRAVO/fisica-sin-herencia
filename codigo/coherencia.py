@@ -58,7 +58,14 @@ print("== prerregistros: los borradores se declaran, los firmados no fingen ==")
 for p in sorted(glob.glob(os.path.join(BASE, "registros", "prerregistro-*.md"))):
     t = open(p, encoding="utf-8").read()
     nombre = os.path.basename(p)
-    if "BORRADOR" in t[:200]:
+    titulo, estado = t.split("\n")[0], (t.split("Estado:", 1)[1][:60] if "Estado:" in t else "")
+    borrador_titulo = "BORRADOR" in titulo
+    firmado = "FIRMADO" in estado
+    # HUECO CAZADO 8-ago-2026: tres prerregistros seguian titulandose BORRADOR despues de ser
+    # firmados. Un documento que se contradice a si mismo confunde a quien audita.
+    caso(f"{nombre}: titulo y estado NO se contradicen",
+         not (borrador_titulo and firmado), "dice BORRADOR en el titulo pero esta FIRMADO")
+    if borrador_titulo and not firmado:
         caso(f"{nombre} (borrador) declara firma PENDIENTE", "PENDIENTE" in t)
 
 print("== cola de estudios: TODO item pendiente debe poder ejecutarse (INFORME-26) ==")

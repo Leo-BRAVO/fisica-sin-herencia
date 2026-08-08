@@ -1,4 +1,4 @@
-# Prerregistro 21 — BORRADOR — Los ojos que se GANAN su dimensión: selección por ganancia honesta — 8 de agosto de 2026
+# Prerregistro 21 — Los ojos que se GANAN su dimensión: selección por ganancia honesta — 8 de agosto de 2026
 **Estado: FIRMADO — Leo, director, 8-ago-2026 ("firmado el 21"). Nace del INFORME-27 y del instrumento `ganancia_honesta.py` (aprobado por la Regla 31). Responde a la evidencia triangulada de que los ojos actuales de Diego cargan estructura que no es física.**
 
 ## La pregunta
