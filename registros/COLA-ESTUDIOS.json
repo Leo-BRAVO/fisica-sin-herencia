@@ -50,17 +50,19 @@
       "estado": "pendiente",
       "datos": "datos/procesados/mendeley_epoca2",
       "salida": "resultados/aud01-nulo-e2-mendeley-i2",
-      "args": "--semillas 2 --paralelo 1 --suavizar 3 --retardos 2 --maxsize 25 --niter 400 --jueces 3 --nulo surrogado"
+      "args": "--semillas 2 --paralelo 1 --suavizar 3 --retardos 2 --maxsize 25 --niter 400 --jueces 3 --nulo surrogado",
+      "reconstruir": "mendeley_epoca2"
     },
     {
       "id": "aud01-nulo-p14-final",
       "origen": "AUDITORIA-EXTERNA-01 (Regla 31)",
       "motivo": "Regla 11 con la tubería propia: verdugo surrogado de los latentes autoelegidos",
       "tipo": "re-analisis",
-      "estado": "pendiente",
+      "estado": "espera-al-director",
       "datos": "datos/procesados/p14_lat4_std",
       "salida": "resultados/aud01-nulo-p14-final",
-      "args": "--semillas 2 --paralelo 1 --maxsize 20 --niter 400 --jueces 3 6 9 --nulo surrogado"
+      "args": "--semillas 2 --paralelo 1 --maxsize 20 --niter 400 --jueces 3 6 9 --nulo surrogado",
+      "nota": "inejecutable en nube tal cual: los latentes p14 nacen de ojos.pt que vive solo en OneDrive de la laptop. Opciones para el director: (a) subir ojos.pt al repo cuando recupere su maquina, o (b) aprobar re-derivar ojos en la nube (aproximado, no byte-identico — necesitaria prerregistro de equivalencia)"
     },
     {
       "id": "aud01-dimension-tres-mundos",
@@ -71,6 +73,17 @@
       "estado": "pendiente",
       "datos": "datos/procesados/dp_morpheus + caida + mendeley_epoca2",
       "args": "(una corrida por carpeta)"
+    },
+    {
+      "id": "aud01-nulo-caida",
+      "origen": "AUDITORIA-EXTERNA-01 (Regla 31; hueco detectado 8-ago: nunca se encolo)",
+      "motivo": "Regla 11 con la tuberia propia: verdugo surrogado de la campana insignia de la caida",
+      "tipo": "re-analisis",
+      "estado": "pendiente",
+      "reconstruir": "caida",
+      "datos": "datos/procesados/caida",
+      "salida": "resultados/aud01-nulo-caida",
+      "args": "--semillas 2 --paralelo 1 --suavizar 3 --maxsize 12 --niter 400 --jueces 3 7 11 --nulo surrogado"
     }
   ]
 }
