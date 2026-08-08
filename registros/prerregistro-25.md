@@ -1,5 +1,5 @@
 # Prerregistro 25 — El segundo intento del hito 0: ojos que predicen en su propio idioma — 8 de agosto de 2026
-**Estado: BORRADOR pendiente de firma del director.** Responde a la pregunta *"¿qué vamos a hacer
+**Estado: FIRMADO por el director el 8-ago-2026 ("esto igual aprobado, vamos con todo"). Orden adicional: construir TODOS los sistemas del plan antes de lanzar la corrida.** Responde a la pregunta *"¿qué vamos a hacer
 con el hito 0 que sigue fracasando a 0.02 del piso?"* — con un plan, no con un piso rebajado.
 
 ## El diagnóstico completo (todo medido, nada supuesto)
@@ -37,4 +37,5 @@ con el hito 0 que sigue fracasando a 0.02 del piso?"* — con un plan, no con un
    ganadora, replicado en ≥4/5 semillas. **Si ninguna candidata lo logra, el hito 0 se registra
    como FRACASO del aparato visual actual** y la siguiente jugada es la frontera gris de las
    ranuras vía filogenia (Regla 33, ablación medida) — no un cuarto retoque del mismo autoencoder.
-- **Firmado:** PENDIENTE — Leo, director.
+- **Firmado:** Leo, director — 8-ago-2026 ("esto igual aprobado"). La candidata C (descarga
+  corolaria) fue además ordenada explícitamente: "vamos a hacer esto".

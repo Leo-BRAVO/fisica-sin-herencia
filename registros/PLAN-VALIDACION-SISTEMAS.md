@@ -47,7 +47,7 @@ construimos **un agente auditable con acta de nacimiento**.
 
 | # | Sistema de Diego | En el humano | Estado de validación | Contra qué literatura se valida | Veredicto actual |
 |---|---|---|---|---|---|
-| 1 | **Ojos** (`percepcion.py`) | retina + corteza visual | ✘ **ES EL SISTEMA ROTO**: leen escena, no movimiento (5 vías convergentes) | JEPA (predecir en latente, no en píxel); ranuras de objetos | **rediseñar — prereg-25** |
+| 1 | **Ojos** | retina + corteza visual | ✔ **V2 CONSTRUIDOS** (`percepcion2.py`): B (JEPA) y C (descarga corolaria), Regla 31 3/3 — en el mundo del punto, v1 lee R²=−0.06 y B lee +0.27. La corrida oficial del prereg-25 decide | JEPA; copia eferente/cerebelo; atenuación sensorial (medida en nuestro banco) | **v2 listos; corre el 25** |
 | 2 | **Motor simbólico** (`descubrir.py`) | lenguaje interno / composición | ✔ blindado: 2 de 3 nulos fracasan limpio; el que pasó tumbó al de arriba, no a éste | regresión simbólica (PySR/Cranmer) | sano |
 | 3 | **Curiosidad** (`curiosidad2.py`, G2) | dopamina / progreso de aprendizaje | ✔ backtest 2/2; corregido el Goodhart del `max(0,·)` | Oudeyer IAC; crítica 2026 de canales Goodhart | sano, vigilado |
 | 4 | **Cuerpo y balbuceo** (`gimnasio.py`, G3+G7) | motricidad + juego infantil | ✔ 4/4 controles, 28/28 en semillas frescas | robótica del desarrollo | sano |
@@ -56,10 +56,10 @@ construimos **un agente auditable con acta de nacimiento**.
 | 7 | **Memoria** (`MEMORIA-MENTE.jsonl`, G6) | hipocampo episódico | ✔ append-only con correcciones probadas dos veces | memoria episódica | sano |
 | 8 | **Incertidumbre** (`incertidumbre.py`, G14) | metacognición ("sé que no sé") | ✔ **ACTIVADO HOY**, Regla 31 3/3 | epistémica vs aleatoria (ruido-TV) | mide, no decide |
 | 9 | **Poder** (`poder.py`, G13) | agencia / competencia (White 1959) | ✔ **ACTIVADO HOY**, Regla 31 3/3 — incluido el televisor que mató a la ganancia honesta | empowerment (Klyubin/Salge; pre-entrenamiento 2025) | mide, no decide |
-| 10 | **Sueño** (G9) | consolidación en sueño | ✘ solo insinuado por la cola de re-análisis | replay hipocampal; re-minería offline | por construir |
-| 11 | **Atención** (G8) | fóvea + memoria de trabajo | ✘ no implementado | presupuestos de cómputo | por construir |
+| 10 | **Sueño** (G9) | consolidación en sueño | ✔ **CONSTRUIDO** (`sueno.py`), Regla 31 3/3 — re-minería MDL + homeostasis por resumen añadido | replay priorizado P(k|sueño)∝P(k|vigilia)^γ; Tononi SHY | propone, no ejecuta |
+| 11 | **Atención** (G8) | fóvea + memoria de trabajo | ✔ **CONSTRUIDO** (`atencion.py`), Regla 31 4/4 — prioridad = epistémica×poder; el azar no compra fóvea | economía de la atención | reparte, no elige |
 | 12 | **Temple** (G11) | neuromodulación (emociones como ganancia) | diseñado, NO activado (decisión: un gen a la vez) | neuromodulación computacional | espera |
-| 13 | **Filogenia** (Regla 33) | evolución de la especie | ✔ **REGLA FIRMADA HOY**; el torneo aún no corre | algoritmos evolutivos + ablación | marco listo |
+| 13 | **Filogenia** (Regla 33) | evolución de la especie | ✔ regla firmada Y **ESTADIO CONSTRUIDO** (`filogenia.py`), Regla 31 2/2: empata gemelos, corona oráculos. Ranuras (`ranuras.py`) construidas como candidata GRIS de ablación | evolución + ablación | espera su primer torneo |
 | 14 | **Los 4 guardianes + el meta** | sistema inmune | ✔ 9/9 daños cazados; deuda 0 activa | mutation testing | sano |
 
 ## 2. EL PROTOCOLO de cada validación (el mismo para los 14, sin excepciones)
