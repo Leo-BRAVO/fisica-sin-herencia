@@ -380,6 +380,20 @@ caso("GENOMA.json: los genes nuevos del dia nacen como MEDIDORES (cuarentena de 
      all(_gj["genes"][k]["modo"] == "mide" for k in
          ("G13_poder", "G14_incertidumbre", "G8_atencion", "G9_sueno", "G4_contingencia")))
 
+print("== las cinco ecuaciones nuevas (orden del director: implementa todo) ==")
+from koopman import regla31 as _k31
+from sindy2 import regla31 as _sy31, descubrir as _sydesc
+from entropia_transferencia import regla31 as _te31
+from energia_libre import regla31 as _el31
+from intermodal import regla31 as _im31
+caso("Koopman: APRUEBA (halla lo conservado, calla ante lo que decae o vaga)", _k31(verbose=False) == 0)
+caso("SINDy: APRUEBA (segundo motor; sin replicacion no hay ley)", _sy31(verbose=False) == 0)
+caso("entropia de transferencia: APRUEBA (ve el flujo no lineal que el lineal no ve)", _te31(verbose=False) == 0)
+caso("energia libre: APRUEBA (una moneda debajo de todos los impulsos)", _el31(verbose=False) == 0)
+caso("espejo intermodal: APRUEBA (refleja al que se mueve, no al que se parece)", _im31(verbose=False) == 0)
+caso("SINDy: una ley vacia no es una ley replicada (hueco cazado y congelado)",
+     "no es vacío" in _insp.getsource(_sydesc) or "sop_a.sum() == 0" in _insp.getsource(_sydesc))
+
 print("== canonizar: tarjeta de identidad ==")
 t = tarjeta("(v1 + v2) * 0.5 + 3.0", 4)
 caso("desplazamiento = f(0)", abs(t["desplazamiento"] - 3.0) < 1e-6)

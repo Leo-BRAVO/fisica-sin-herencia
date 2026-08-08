@@ -136,6 +136,16 @@
       "prerregistro": 25,
       "nota": "A vs B(JEPA) vs C(descarga corolaria) vs C-nulo; criterio del prereg-23 congelado",
       "resultado": "corrida por latido-nube (Actions)"
+    },
+    {
+      "id": "p26-hito0-multimodal",
+      "tipo": "gimnasio",
+      "estado": "pendiente",
+      "datos": "codigo/hito0_multimodal.py",
+      "salida": "resultados/p26-hito0-multimodal",
+      "args": "--episodios 12 --pasos 1500 --epocas 12",
+      "prerregistro": 26,
+      "nota": "hito 0 MULTIMODAL: vision + propiocepcion + tacto; espejo intermodal; control sin_agencia; nivel B"
     }
   ]
 }

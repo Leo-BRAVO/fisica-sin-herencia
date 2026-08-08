@@ -1,5 +1,8 @@
 # Prerregistro 26 — El hito 0 multimodal: Diego se SIENTE antes de verse — 8 de agosto de 2026
-**Estado: BORRADOR pendiente de firma del director.** Nace de la AUDITORÍA DE SENTIDOS (INFORME-35).
+**Estado: FIRMADO por el director el 8-ago-2026 ("el prereg 26 aprobado"). Nace de la AUDITORÍA
+DE SENTIDOS (INFORME-35), y el veredicto oficial del prereg-25 (nube, corrida nº10) lo convirtió
+en LA jugada: los tres aparatos visuales fracasaron el nivel A (mejores fracciones 0.24 / 0.14 /
+0.07 contra piso 0.40). La vista sola no encuentra el cuerpo bajo ninguna arquitectura.**
 
 ## El hallazgo que lo motiva
 Diego solo conocía su cuerpo **por cámara** — y llevamos tres intentos de hito 0 pidiéndole a la
@@ -31,4 +34,4 @@ Vector sensorial de Diego = [latentes visuales (ojos ganadores del prereg-25)] +
 propiocepción domina y la visión no se une, el diagnóstico visual del INFORME-32 se confirma por
 tercera vía y el torneo de la filogenia (ranuras) queda como única jugada visual.
 
-- **Firmado:** PENDIENTE — Leo, director.
+- **Firmado:** Leo, director — 8-ago-2026, aprobación en conversación ("el prereg 26 aprobado").

@@ -78,3 +78,16 @@ construimos **un agente auditable con acta de nacimiento**.
 Después **10 (sueño)** — es el que convierte la memoria en leyes y ya tiene precedente en la casa.
 Después **11 (atención)**, que da sentido a 8 y 9 como decisores. G11 espera su turno, un gen a la
 vez. La filogenia corre su primer torneo cuando exista más de un genoma que comparar.
+
+
+---
+## ADENDA 8-ago-2026 (noche): las cinco ecuaciones del registro, IMPLEMENTADAS
+Orden del director: "implementa todo lo que dijiste". Cada una con su Regla 31 aprobada:
+| Ecuación | Módulo | Regla 31 | Nota |
+|---|---|---|---|
+| Espejo intermodal (CCA + nulo de otro-episodio) | `intermodal.py` | 3/3 | corre en el prereg-26 |
+| Entropía de transferencia (con nulo restado) | `entropia_transferencia.py` | 3/3 | ve el acople |u| que el lineal no ve (R²=0.001 vs 0.29 bits) |
+| Koopman/EDMD (invariantes: constante dentro, distinta entre) | `koopman.py` | 3/3 | la ruta nueva tras F3; calla ante lo amortiguado |
+| SINDy con replicación obligatoria | `sindy2.py` | 3/3 | recuperó dx=v, dv=−0.40x−0.09v término a término; 2 huecos propios cazados por su Regla 31 (dt, ley vacía) |
+| Energía libre en MDL (BIC) | `energia_libre.py` | 3/3 | la unificación: curiosidad=−ΔF/coste; parsimonia=bits(modelo) |
+| Redes hamiltonianas | **NO construidas** | — | GRISES por decisión: asumir mundo hamiltoniano es física heredada; solo entrarían por torneo de filogenia, y ese torneo aún no corre |
