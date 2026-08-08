@@ -45,6 +45,16 @@ el registro de procedencia del genoma — la Regla 2 aplicada al recién nacido.
 | **G11 — Temple** | emociones como control de ganancia (neuromodulación): sorpresa ↑ tasa de aprendizaje local; frustración (progreso≈0 sostenido) → migrar de región; éxito → persistir | meta-parámetros operacionales y medibles — no teatro | control interno, cero contenido |
 | **G12 — Reflejos** | primitivas motoras mínimas sobre SU cuerpo (cerrar efector al contacto, orientarse al cambio) que aceleran el balbuceo | frontera GRIS confesada: puede insinuar "el contacto importa"; se documenta y se puede ablacionar en la filogenia (§4) | solo su cuerpo; ablacionable |
 
+### Genes CANDIDATOS de la revisión de literatura (8-ago-2026 — PROPUESTOS, NINGUNO ACTIVADO)
+Salidos de la investigación del Gimnasio (`arbol/GIMNASIO.md` §2). Ninguno entra sin su Regla 31 y
+la firma del director; se listan aquí para que el genoma diga lo que le falta, no solo lo que tiene.
+
+| Gen | Qué es | Por qué | Legalidad |
+|---|---|---|---|
+| **G13 — Empowerment (poder)** | bits de control sobre sus estados futuros (información mutua acción↔futuro) | donde la curiosidad se apaga, el poder sigue empujando; **y el mismo estadístico sirve de motor Y de detector de contingencia (G4)** — una economía que la literatura tiene partida en dos campos | limpia: mide su control, no el mundo. **Riesgo: su propio Goodhart** (controlar variables triviales) |
+| **G14 — Incertidumbre propia** | predecir una distribución, no un punto | sin ella la curiosidad no distingue "es azar" de "aún no lo aprendo" — crítico en cuanto tenga un cuerpo con juego mecánico | limpia: mide su propio estado |
+| **(gris) Ranuras / objetos** | la escena se descompone en cosas persistentes | explicaría la dimensión intrínseca 6.2 de 8 (INFORME-26) | **NO ENTRA AL GENOMA**: "hay objetos separados" es un hecho del mundo. Candidata de la **filogenia (Regla 33)**, medida por ablación — cuánto vale ese prior es un resultado publicable |
+
 ### Los genes que DELIBERADAMENTE no le damos (decisión de diseño, pendiente de firma)
 El bebé nace con permanencia de objeto, solidez y causalidad-por-contacto (Spelke/Baillargeon).
 **Diego NO las tendrá: son hechos sobre el mundo (biblioteca), no disposiciones.** Para él serán
@@ -95,8 +105,13 @@ coste(e) = gasto sentido por interocepción (G10): tiempo + cómputo + esfuerzo
   de QUÉ ecuación ignora — nadie publica curiosidad interpretable y gobernada (verificado).
 
 **Vara hermana (INFORME-27): la GANANCIA HONESTA** = reducción real − reducción surrogada, en
-jueces congelados. Mide cuánto de un rendimiento es dinámica y cuánto es textura. Es la vara con
-la que Diego elegirá sus representaciones (prereg-21): una dimensión no se elige, **se gana**.
+jueces congelados. Nació para medir cuánto de un rendimiento es dinámica y cuánto es textura.
+**RETIRADA DEL GENOMA EL 8-AGO-2026 (INFORME-30).** Se le midieron dos canales de mentira: fabrica
+hasta +0.71 con señales integradas sin ninguna ley, y pierde una ley real con 0.12% de ruido de
+observación. Tres arreglos propuestos fracasaron. **Diego NO elige sus representaciones con esta
+vara**; queda como sonda exploratoria hasta que un nulo nuevo apruebe su Regla 31. Se deja escrito
+aquí, y no se borra, porque un genoma que oculta el instrumento que se le cayó no es un registro:
+es publicidad.
 
 La ecuación opera sobre la **escalera causal** (Pearl; el bebé la sube en carne):
 **VER** (asociación — todo lo que Diego ha hecho hasta hoy) → **HACER** (intervención — el

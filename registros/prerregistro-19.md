@@ -1,5 +1,5 @@
-# Prerregistro 19 — BORRADOR — HITO 0: el nacimiento (la frontera yo/mundo por contingencia) — 8 de agosto de 2026
-**Estado: BORRADOR pendiente de firma del director — ASCENDIDO A PRIORIDAD el 8-ago-2026.**
+# Prerregistro 19 — HITO 0: el nacimiento (la frontera yo/mundo por contingencia) — 8 de agosto de 2026
+**Estado: FIRMADO por el director el 8-ago-2026. Es la campaña prioritaria del proyecto.**
 **Por qué ascendió (y es evidencia, no entusiasmo):** el INFORME-30 probó tres formas distintas de
 separar "hay ley" de "hay textura con deriva" MIRANDO datos ya grabados, y las tres fallaron. No fue
 mala suerte: en un mundo que solo se observa, esa información no está. Lo que rompe la degeneración
@@ -65,4 +65,5 @@ del levantamiento del congelamiento. Genes G3 (acción), G4 (contingencia), G7 (
 - **Nota de gobernanza:** este prerregistro NO habilita la filogenia (**Regla 33**, que sigue siendo
   propuesta sin firma; la Regla 32 sí está vigente y es la autoauditoría permanente) ni hitos
   posteriores: solo el hito 0.
-- **Firmado:** PENDIENTE — Leo, director.
+- **Firmado:** Leo, director — 8-ago-2026, aprobación en conversación ("firmalo"), tras leer
+  el ascenso a prioridad y el blindaje con la lección del INFORME-30.
