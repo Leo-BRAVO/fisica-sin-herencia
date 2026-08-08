@@ -1,5 +1,5 @@
 # EL ÁRBOL — mapa visual del conocimiento del proyecto
-**ÉPOCA 2 EN CURSO. Actualizado el 8-ago-2026 (AUDITORIA-EXTERNA-01): E2-N-004 en CUARENTENA hasta re-validar con el nulo corregido (Regla 31); la Época 1 vive archivada en `arbol/epoca1/` con la confianza retirada.**
+**ÉPOCA 2 EN CURSO. Actualizado el 8-ago-2026 (INFORME-22): E2-N-004 salió de cuarentena REDUCIDO — Michigan refutado por el nulo honesto, la caída sobrevive con una candidata distinta validada contra el verdugo que aprueba la Regla 31. La Época 1 vive archivada en `arbol/epoca1/` con la confianza retirada.**
 
 **GitHub renderiza el diagrama automáticamente al abrir este archivo. Verde = nodo validado provisional; naranja = en cuarentena (Regla 31); amarillo = pregunta abierta; gris punteado = en curso.**
 
@@ -10,7 +10,7 @@ graph TD
     E2N001["N-001-E2 · 11-jul-2026<br/>Ley de retardos Mendeley — 8× sobre É1<br/>k = 0.017454 reapareció espontáneamente<br/>5/5 semillas"]:::nodo
     E2N002["N-002-E2 · 12-jul-2026<br/>Percepción propia: 8 variables autoinventadas<br/>ley acoplada replicada a la 4ª–6ª cifra<br/>5/5 · el dp Morpheus por fin cedió"]:::nodo
     E2N003["N-003-E2 · 12-jul-2026<br/>Primera automejora: ojos autoelegidos<br/>latente 4 (la más simple) · 5/5 criterio cumplido<br/>reclamo 'supera al humano' corregido (AUD-EXT-01)"]:::nodo
-    E2N004["N-004-E2 · EN CUARENTENA (8-ago)<br/>cantidades conservadas — el nulo con que<br/>se validó no discriminaba (Regla 31)<br/>re-corrida con surrogado ENCOLADA"]:::cuarentena
+    E2N004["N-004-E2 · 13-jul, REDUCIDO 8-ago<br/>UNA conservada de la caída sobrevive al<br/>verdugo honesto (jueces 0.004, rompe solo<br/>en el video corrupto) · Michigan REFUTADO"]:::nodo
 
     E1["ÉPOCA 1 (archivada)<br/>N-001 · N-002 · N-003<br/>k invariante · transferencia entre trials<br/>la caída retiene su corona É1"]:::archivo
 
@@ -29,7 +29,7 @@ graph TD
     RAIZ --> P1
     RAIZ --> P2
     E2N002 --> P3
-    E2N004 -.-> P4
+    E2N004 --> P4
     E2N003 --> P5
 
     classDef raiz fill:#1a1a2e,stroke:#e94560,color:#fff,stroke-width:3px

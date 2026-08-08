@@ -1,0 +1,26 @@
+{
+  "datos": "/tmp/claude-0/-home-user-fisica-sin-herencia/8d2ce6cf-d5b3-5622-b9c9-837a575b1958/scratchpad/datos/mendeley_epoca2_aud01",
+  "centrar": false,
+  "replicas": {
+    "trial1_50hz.csv": {
+      "puntos": 3881,
+      "twonn": 2.81,
+      "participacion_pca": 1.01
+    },
+    "trial2_50hz.csv": {
+      "puntos": 3881,
+      "twonn": 2.87,
+      "participacion_pca": 1.02
+    },
+    "trial3_50hz.csv": {
+      "puntos": 3881,
+      "twonn": 3.11,
+      "participacion_pca": 1.01
+    }
+  },
+  "agrupado": {
+    "puntos": 11643,
+    "twonn": 2.45,
+    "participacion_pca": 1.08
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "datos": "/tmp/claude-0/-home-user-fisica-sin-herencia/8d2ce6cf-d5b3-5622-b9c9-837a575b1958/scratchpad/datos/caida_aud01",
+  "centrar": true,
+  "replicas": {
+    "video_0_fps30.csv": {
+      "puntos": 42,
+      "twonn": 16.11,
+      "participacion_pca": 1.0
+    },
+    "video_10_fps30.csv": {
+      "puntos": 18,
+      "twonn": null,
+      "participacion_pca": 1.01
+    },
+    "video_11_fps30.csv": {
+      "puntos": 41,
+      "twonn": 15.6,
+      "participacion_pca": 1.0
+    },
+    "video_2_fps30.csv": {
+      "puntos": 40,
+      "twonn": 16.31,
+      "participacion_pca": 1.0
+    },
+    "video_3_fps30.csv": {
+      "puntos": 43,
+      "twonn": 9.94,
+      "participacion_pca": 1.63
+    },
+    "video_4_fps30.csv": {
+      "puntos": 43,
+      "twonn": 7.21,
+      "participacion_pca": 1.23
+    },
+    "video_5_fps30.csv": {
+      "puntos": 43,
+      "twonn": 15.55,
+      "participacion_pca": 1.0
+    },
+    "video_6_fps30.csv": {
+      "puntos": 44,
+      "twonn": 15.79,
+      "participacion_pca": 1.0
+    },
+    "video_7_fps30.csv": {
+      "puntos": 41,
+      "twonn": 9.94,
+      "participacion_pca": 1.11
+    },
+    "video_8_fps30.csv": {
+      "puntos": 41,
+      "twonn": 14.66,
+      "participacion_pca": 1.0
+    },
+    "video_9_fps30.csv": {
+      "puntos": 42,
+      "twonn": 5.13,
+      "participacion_pca": 1.62
+    }
+  },
+  "agrupado": {
+    "puntos": 438,
+    "twonn": 2.3,
+    "participacion_pca": 1.16
+  }
+}
