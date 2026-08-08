@@ -95,11 +95,12 @@
       "origen": "INFORME-25 (Regla 31, enmienda: el nulo se elige segun la afirmacion)",
       "motivo": "el nulo surrogado NO falsifico los latentes (base x1.0) — el correcto para una afirmacion PREDICTIVA es el barajado, que destruye la autocorrelacion",
       "tipo": "re-analisis",
-      "estado": "pendiente",
+      "estado": "hecha",
       "reconstruir": "p14_lat4",
       "datos": "datos/procesados/p14_lat4_std",
       "salida": "resultados/aud01-baraj-p14-final",
-      "args": "--semillas 2 --paralelo 1 --maxsize 20 --niter 400 --jueces 3 6 9 --nulo barajado"
+      "args": "--semillas 2 --paralelo 1 --maxsize 20 --niter 400 --jueces 3 6 9 --nulo barajado",
+      "resultado": "corrida por latido-nube (Actions)"
     },
     {
       "id": "aud01-baraj-e2-mendeley-i2",

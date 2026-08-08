@@ -1,6 +1,6 @@
 {
   "campanas_totales": 27,
-  "pruebas_nulas_corridas": 5,
+  "pruebas_nulas_corridas": 6,
   "mejora_media": -1.5176,
   "mejor_campana": 0.923,
   "huecos_abiertos": 15,
@@ -8,8 +8,8 @@
   "nodos_en_cuarentena": 0,
   "nodos_archivados_E1": 3,
   "nodos_en_conectoma": 7,
-  "informes": 24,
-  "prerregistros": 20,
-  "lecciones_de_metodo": 28,
-  "commits_genesis": 121
+  "informes": 26,
+  "prerregistros": 21,
+  "lecciones_de_metodo": 29,
+  "commits_genesis": 125
 }
