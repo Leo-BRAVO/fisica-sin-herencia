@@ -204,6 +204,10 @@ Aprobada por el director el 8-ago-2026 (AUDITORIA-EXTERNA-01), tras demostrarse 
 - **Toda campaña que aspire a nodo corre sus pruebas nulas (Regla 11) con SU MISMA tubería** — un nulo corrido con otra tubería no cuenta.
 - Los casos de la Regla 31 de cada herramienta se **congelan en el banco de pruebas** (`pruebas.py`): el defecto atrapado no puede volver sin que el banco grite.
 Precedente fundacional: `regla31_conservada.py` — con el nulo viejo (barajado), un mundo de caminatas suavizadas sin nada conservado cumplía el criterio completo del prerregistro-16; con el nulo surrogado (IAAFT), la herramienta rechaza el vacío y encuentra lo que sí existe.
+**Enmienda del 8-ago-2026 (INFORME-25) — EL NULO SE ELIGE SEGÚN LA AFIRMACIÓN:** el nulo debe destruir **exactamente** aquello de lo que depende la afirmación, ni más ni menos. Demasiado destructivo → falsos positivos; demasiado suave → no puede falsificar nada.
+- **Afirmación de CONSERVACIÓN:** el barajado destruye también la suavidad, que la conservación no necesita → acepta mundos vacíos. **Correcto: surrogado IAAFT.**
+- **Afirmación de PREDICCIÓN:** el IAAFT conserva el espectro y con él la autocorrelación, que ES lo que hace posible predecir → el mundo "falso" resulta el mismo mundo. **Correcto: barajado** (y ruido).
+Todo prerregistro debe DECLARAR qué nulo usa y por qué corresponde a su clase de afirmación. **Verificación automática obligatoria: un verdugo que no cambia el mundo no es un verdugo** — si la base trivial de la corrida nula queda a menos del 10% de la base de su campaña real, el nulo se marca INVÁLIDO y no cuenta para la Regla 11 (`auditoria_total.py` lo comprueba solo). Precedente: el nulo surrogado de los latentes p14 dejó la base en 0.5972 contra 0.5944 real — entregó el mismo mundo con otro nombre.
 
 ### Regla 32 — La autoauditoría permanente: todo interconectado, salvo lo que la mente no ve
 Ordenada por el director el 8-ago-2026 ("auto audita siempre como regla; al crear una mente debe todo estar interconectado, excepto las reglas — que es lo que él no ve y nosotros tenemos").

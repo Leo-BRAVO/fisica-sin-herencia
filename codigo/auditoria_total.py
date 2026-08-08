@@ -161,10 +161,39 @@ for f in glob.glob(os.path.join(BASE, "resultados", "*", "resumen.json")):
     if d.get("nulo") and "semillas" in d:
         nulos.append((os.path.basename(os.path.dirname(f)), d["nulo"]))
 nulos_modernos = [n for n, _ in nulos if not n.startswith("nulo-")]  # con tuberia propia
-aviso("Regla 11: las campanas insignia tienen su verdugo CON SU PROPIA tuberia",
-      len(nulos_modernos) >= 3,
-      f"{len(nulos_modernos)}/3 corridos (los otros {len(nulos)-len(nulos_modernos)} son del dia 1, "
-      f"tuberia vieja: no amparan campanas actuales). Encolados en la nube: aud01-nulo-*")
+
+# UN VERDUGO QUE NO CAMBIA EL MUNDO NO ES UN VERDUGO (Regla 31, enmienda 8-ago-2026 / INFORME-25).
+# Si la base trivial de la corrida nula queda a menos del 10% de la de su campana real, el nulo
+# no falsifico nada y NO cuenta para la Regla 11 — por muy verde que se vea.
+PAREJAS_NULO = {                       # corrida nula -> campana real que dice falsificar
+    "aud01-nulo-e2-mendeley-i2": "e2-mendeley-i2",
+    "aud01-nulo-caida": "e2-caida-i2",
+    "aud01-nulo-p14-final": "p14-final",
+    "aud01-baraj-e2-mendeley-i2": "e2-mendeley-i2",
+    "aud01-baraj-caida": "e2-caida-i2",
+    "aud01-baraj-p14-final": "p14-final",
+}
+validos = []
+for n, tipo in nulos:
+    real = PAREJAS_NULO.get(n)
+    rp = os.path.join(BASE, "resultados", real or "", "resumen.json")
+    if not real or not os.path.exists(rp):
+        continue
+    bn = json.load(open(os.path.join(BASE, "resultados", n, "resumen.json")))["mse_base"]
+    br = json.load(open(rp))["mse_base"]
+    cambio = abs(bn - br) / br
+    # AVISO, no FALLO: un nulo invalido ya registrado es DEUDA DECLARADA, no corrupcion del
+    # repositorio. Bloquear por el mandaria a cuarentena corridas sanas. Lo que si hace es NO
+    # CONTAR para la Regla 11 (abajo), que es exactamente el castigo que merece.
+    aviso(f"Regla 31: el nulo '{n}' falsifico el mundo de verdad (base cambia >10%)",
+          cambio > 0.10,
+          f"base {br:.4g} -> {bn:.4g} (cambio {cambio*100:.1f}%): NULO INVALIDO, no cuenta")
+    if cambio > 0.10:
+        validos.append(n)
+aviso("Regla 11: las campanas insignia tienen un verdugo VALIDO con su propia tuberia",
+      len(validos) >= 3,
+      f"{len(validos)}/3 validos de {len(nulos_modernos)} corridos. Encolados: los nulos por barajado "
+      f"(el correcto para afirmaciones predictivas, INFORME-25)")
 word = glob.glob(os.path.join(BASE, "resultados", "word", "*.docx"))
 informes = glob.glob(os.path.join(BASE, "resultados", "INFORME-*.md"))
 aviso("Regla 17: cada informe tiene su version Word",
