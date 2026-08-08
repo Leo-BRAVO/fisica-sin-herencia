@@ -1,0 +1,361 @@
+{
+  "prerregistro": 25,
+  "episodios": 12,
+  "pasos": 1500,
+  "epocas": 12,
+  "candidatas": [
+    {
+      "candidata": "A-pixel",
+      "cuerpo": [],
+      "mejor_fraccion": 0.2414,
+      "detalle": [
+        {
+          "variable": 0,
+          "obedece_en": 0.0345,
+          "nulo_media": 0.0966,
+          "nulo_techo": 0.3448,
+          "es_mia": false,
+          "margen": -0.3655,
+          "horizonte": 8,
+          "ventanas": 29
+        },
+        {
+          "variable": 1,
+          "obedece_en": 0.1724,
+          "nulo_media": 0.1172,
+          "nulo_techo": 0.2759,
+          "es_mia": false,
+          "margen": -0.2276,
+          "horizonte": 8,
+          "ventanas": 29
+        },
+        {
+          "variable": 2,
+          "obedece_en": 0.0,
+          "nulo_media": 0.1793,
+          "nulo_techo": 0.3448,
+          "es_mia": false,
+          "margen": -0.4,
+          "horizonte": 8,
+          "ventanas": 29
+        },
+        {
+          "variable": 3,
+          "obedece_en": 0.0345,
+          "nulo_media": 0.2069,
+          "nulo_techo": 0.4483,
+          "es_mia": false,
+          "margen": -0.4138,
+          "horizonte": 8,
+          "ventanas": 29
+        },
+        {
+          "variable": 4,
+          "obedece_en": 0.0,
+          "nulo_media": 0.0966,
+          "nulo_techo": 0.1724,
+          "es_mia": false,
+          "margen": -0.4,
+          "horizonte": 8,
+          "ventanas": 29
+        },
+        {
+          "variable": 5,
+          "obedece_en": 0.0345,
+          "nulo_media": 0.1172,
+          "nulo_techo": 0.3103,
+          "es_mia": false,
+          "margen": -0.3655,
+          "horizonte": 8,
+          "ventanas": 29
+        },
+        {
+          "variable": 6,
+          "obedece_en": 0.0345,
+          "nulo_media": 0.0724,
+          "nulo_techo": 0.3448,
+          "es_mia": false,
+          "margen": -0.3655,
+          "horizonte": 8,
+          "ventanas": 29
+        },
+        {
+          "variable": 7,
+          "obedece_en": 0.2414,
+          "nulo_media": 0.169,
+          "nulo_techo": 0.3103,
+          "es_mia": false,
+          "margen": -0.1586,
+          "horizonte": 8,
+          "ventanas": 29
+        }
+      ]
+    },
+    {
+      "candidata": "B-predictivo",
+      "cuerpo": [],
+      "mejor_fraccion": 0.1379,
+      "detalle": [
+        {
+          "variable": 0,
+          "obedece_en": 0.069,
+          "nulo_media": 0.1034,
+          "nulo_techo": 0.2414,
+          "es_mia": false,
+          "margen": -0.331,
+          "horizonte": 8,
+          "ventanas": 29
+        },
+        {
+          "variable": 1,
+          "obedece_en": 0.069,
+          "nulo_media": 0.1,
+          "nulo_techo": 0.2069,
+          "es_mia": false,
+          "margen": -0.331,
+          "horizonte": 8,
+          "ventanas": 29
+        },
+        {
+          "variable": 2,
+          "obedece_en": 0.069,
+          "nulo_media": 0.1034,
+          "nulo_techo": 0.2414,
+          "es_mia": false,
+          "margen": -0.331,
+          "horizonte": 8,
+          "ventanas": 29
+        },
+        {
+          "variable": 3,
+          "obedece_en": 0.069,
+          "nulo_media": 0.1103,
+          "nulo_techo": 0.2414,
+          "es_mia": false,
+          "margen": -0.331,
+          "horizonte": 8,
+          "ventanas": 29
+        },
+        {
+          "variable": 4,
+          "obedece_en": 0.069,
+          "nulo_media": 0.1069,
+          "nulo_techo": 0.2414,
+          "es_mia": false,
+          "margen": -0.331,
+          "horizonte": 8,
+          "ventanas": 29
+        },
+        {
+          "variable": 5,
+          "obedece_en": 0.069,
+          "nulo_media": 0.1069,
+          "nulo_techo": 0.2414,
+          "es_mia": false,
+          "margen": -0.331,
+          "horizonte": 8,
+          "ventanas": 29
+        },
+        {
+          "variable": 6,
+          "obedece_en": 0.069,
+          "nulo_media": 0.1069,
+          "nulo_techo": 0.2414,
+          "es_mia": false,
+          "margen": -0.331,
+          "horizonte": 8,
+          "ventanas": 29
+        },
+        {
+          "variable": 7,
+          "obedece_en": 0.1379,
+          "nulo_media": 0.1207,
+          "nulo_techo": 0.2414,
+          "es_mia": false,
+          "margen": -0.2621,
+          "horizonte": 8,
+          "ventanas": 29
+        }
+      ]
+    },
+    {
+      "candidata": "C-corolario",
+      "cuerpo": [],
+      "mejor_fraccion": 0.069,
+      "detalle": [
+        {
+          "variable": 0,
+          "obedece_en": 0.069,
+          "nulo_media": 0.0897,
+          "nulo_techo": 0.1379,
+          "es_mia": false,
+          "margen": -0.331,
+          "horizonte": 8,
+          "ventanas": 29
+        },
+        {
+          "variable": 1,
+          "obedece_en": 0.069,
+          "nulo_media": 0.0966,
+          "nulo_techo": 0.1724,
+          "es_mia": false,
+          "margen": -0.331,
+          "horizonte": 8,
+          "ventanas": 29
+        },
+        {
+          "variable": 2,
+          "obedece_en": 0.0345,
+          "nulo_media": 0.0931,
+          "nulo_techo": 0.1724,
+          "es_mia": false,
+          "margen": -0.3655,
+          "horizonte": 8,
+          "ventanas": 29
+        },
+        {
+          "variable": 3,
+          "obedece_en": 0.0345,
+          "nulo_media": 0.0966,
+          "nulo_techo": 0.1724,
+          "es_mia": false,
+          "margen": -0.3655,
+          "horizonte": 8,
+          "ventanas": 29
+        },
+        {
+          "variable": 4,
+          "obedece_en": 0.069,
+          "nulo_media": 0.0966,
+          "nulo_techo": 0.1724,
+          "es_mia": false,
+          "margen": -0.331,
+          "horizonte": 8,
+          "ventanas": 29
+        },
+        {
+          "variable": 5,
+          "obedece_en": 0.069,
+          "nulo_media": 0.0966,
+          "nulo_techo": 0.1724,
+          "es_mia": false,
+          "margen": -0.331,
+          "horizonte": 8,
+          "ventanas": 29
+        },
+        {
+          "variable": 6,
+          "obedece_en": 0.069,
+          "nulo_media": 0.0966,
+          "nulo_techo": 0.1724,
+          "es_mia": false,
+          "margen": -0.331,
+          "horizonte": 8,
+          "ventanas": 29
+        },
+        {
+          "variable": 7,
+          "obedece_en": 0.069,
+          "nulo_media": 0.0966,
+          "nulo_techo": 0.1724,
+          "es_mia": false,
+          "margen": -0.331,
+          "horizonte": 8,
+          "ventanas": 29
+        }
+      ]
+    },
+    {
+      "candidata": "C-nulo",
+      "cuerpo": [],
+      "mejor_fraccion": 0.1034,
+      "detalle": [
+        {
+          "variable": 0,
+          "obedece_en": 0.1034,
+          "nulo_media": 0.0793,
+          "nulo_techo": 0.1379,
+          "es_mia": false,
+          "margen": -0.2966,
+          "horizonte": 8,
+          "ventanas": 29
+        },
+        {
+          "variable": 1,
+          "obedece_en": 0.069,
+          "nulo_media": 0.0862,
+          "nulo_techo": 0.1724,
+          "es_mia": false,
+          "margen": -0.331,
+          "horizonte": 8,
+          "ventanas": 29
+        },
+        {
+          "variable": 2,
+          "obedece_en": 0.1034,
+          "nulo_media": 0.0862,
+          "nulo_techo": 0.1379,
+          "es_mia": false,
+          "margen": -0.2966,
+          "horizonte": 8,
+          "ventanas": 29
+        },
+        {
+          "variable": 3,
+          "obedece_en": 0.069,
+          "nulo_media": 0.0828,
+          "nulo_techo": 0.1379,
+          "es_mia": false,
+          "margen": -0.331,
+          "horizonte": 8,
+          "ventanas": 29
+        },
+        {
+          "variable": 4,
+          "obedece_en": 0.069,
+          "nulo_media": 0.0793,
+          "nulo_techo": 0.1724,
+          "es_mia": false,
+          "margen": -0.331,
+          "horizonte": 8,
+          "ventanas": 29
+        },
+        {
+          "variable": 5,
+          "obedece_en": 0.069,
+          "nulo_media": 0.0828,
+          "nulo_techo": 0.1379,
+          "es_mia": false,
+          "margen": -0.331,
+          "horizonte": 8,
+          "ventanas": 29
+        },
+        {
+          "variable": 6,
+          "obedece_en": 0.069,
+          "nulo_media": 0.0586,
+          "nulo_techo": 0.1724,
+          "es_mia": false,
+          "margen": -0.331,
+          "horizonte": 8,
+          "ventanas": 29
+        },
+        {
+          "variable": 7,
+          "obedece_en": 0.069,
+          "nulo_media": 0.0862,
+          "nulo_techo": 0.1379,
+          "es_mia": false,
+          "margen": -0.331,
+          "horizonte": 8,
+          "ventanas": 29
+        }
+      ]
+    }
+  ],
+  "verdad_de_los_jueces": [
+    0,
+    1,
+    2
+  ]
+}

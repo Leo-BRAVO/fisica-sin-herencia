@@ -362,6 +362,38 @@ caso("atencion: la varianza pura NO compra fovea (anti-televisor por construccio
 caso("filogenia: dos puntajes a 0.001 EMPATAN (no se fabrican linajes)",
      _torneo([{"nombre": "a", "puntaje": 0.500}, {"nombre": "b", "puntaje": 0.501}])["veredicto"] == "EMPATE")
 
+print("== la sinapsis: el genoma es portero, no comentario ==")
+from sinapsis import regla31 as _sin31, publicar as _pub, SinapsisBloqueada as _SB
+caso("sinapsis: APRUEBA su Regla 31 (bloqueos mecanicos de modo)", _sin31(verbose=False) == 0)
+import tempfile as _tf3
+_tmp3 = _tf3.mktemp(suffix=".jsonl")
+try:
+    _pub("G14_incertidumbre", "decision", {}, _ruta=_tmp3); _blq = False
+except _SB:
+    _blq = True
+caso("sinapsis: G14 (medidor) no puede decidir ni queriendo", _blq)
+import json as _js
+_gj = _js.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "arbol", "GENOMA.json"), encoding="utf-8"))
+caso("GENOMA.json: todo gen en modo 'decide' tiene prerregistro anotado",
+     all(g.get("prerregistro") for g in _gj["genes"].values() if g["modo"] == "decide"))
+caso("GENOMA.json: los genes nuevos del dia nacen como MEDIDORES (cuarentena de activacion)",
+     all(_gj["genes"][k]["modo"] == "mide" for k in
+         ("G13_poder", "G14_incertidumbre", "G8_atencion", "G9_sueno", "G4_contingencia")))
+
+print("== las cinco ecuaciones nuevas (orden del director: implementa todo) ==")
+from koopman import regla31 as _k31
+from sindy2 import regla31 as _sy31, descubrir as _sydesc
+from entropia_transferencia import regla31 as _te31
+from energia_libre import regla31 as _el31
+from intermodal import regla31 as _im31
+caso("Koopman: APRUEBA (halla lo conservado, calla ante lo que decae o vaga)", _k31(verbose=False) == 0)
+caso("SINDy: APRUEBA (segundo motor; sin replicacion no hay ley)", _sy31(verbose=False) == 0)
+caso("entropia de transferencia: APRUEBA (ve el flujo no lineal que el lineal no ve)", _te31(verbose=False) == 0)
+caso("energia libre: APRUEBA (una moneda debajo de todos los impulsos)", _el31(verbose=False) == 0)
+caso("espejo intermodal: APRUEBA (refleja al que se mueve, no al que se parece)", _im31(verbose=False) == 0)
+caso("SINDy: una ley vacia no es una ley replicada (hueco cazado y congelado)",
+     "no es vacío" in _insp.getsource(_sydesc) or "sop_a.sum() == 0" in _insp.getsource(_sydesc))
+
 print("== canonizar: tarjeta de identidad ==")
 t = tarjeta("(v1 + v2) * 0.5 + 3.0", 4)
 caso("desplazamiento = f(0)", abs(t["desplazamiento"] - 3.0) < 1e-6)

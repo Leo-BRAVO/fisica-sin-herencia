@@ -1,0 +1,92 @@
+{
+  "version": 1,
+  "fecha": "2026-08-08",
+  "nota": "El genoma ejecutable (Regla 33). Cada organo consulta aqui su modo. Cambiarlo = commit visible + firma del director. Los modos: 'mide' (produce numeros, no toca nada), 'propone' (puede escribir propuestas para humanos/cola), 'decide' (puede actuar solo; exige prerregistro firmado que lo cablee).",
+  "genes": {
+    "G1_prediccion": {
+      "modo": "decide",
+      "modulo": "percepcion.py/descubrir.py",
+      "prerregistro": "13"
+    },
+    "G2_curiosidad": {
+      "modo": "propone",
+      "modulo": "curiosidad2.py",
+      "prerregistro": "18b"
+    },
+    "G3_accion": {
+      "modo": "decide",
+      "modulo": "gimnasio.py",
+      "prerregistro": "19"
+    },
+    "G4_contingencia": {
+      "modo": "mide",
+      "modulo": "contingencia.py",
+      "prerregistro": "23"
+    },
+    "G5_composicion": {
+      "modo": "decide",
+      "modulo": "descubrir.py",
+      "prerregistro": "02"
+    },
+    "G6_memoria": {
+      "modo": "decide",
+      "modulo": "memoria.py",
+      "prerregistro": "append-only"
+    },
+    "G7_juego": {
+      "modo": "decide",
+      "modulo": "gimnasio.py (balbuceo)",
+      "prerregistro": "19"
+    },
+    "G8_atencion": {
+      "modo": "mide",
+      "modulo": "atencion.py",
+      "prerregistro": null
+    },
+    "G9_sueno": {
+      "modo": "mide",
+      "modulo": "sueno.py",
+      "prerregistro": null
+    },
+    "G10_interocepcion": {
+      "modo": "mide",
+      "modulo": "interocepcion.py",
+      "prerregistro": null
+    },
+    "G11_temple": {
+      "modo": "inactivo",
+      "modulo": null,
+      "prerregistro": null
+    },
+    "G12_reflejos": {
+      "modo": "inactivo",
+      "modulo": null,
+      "prerregistro": null
+    },
+    "G13_poder": {
+      "modo": "mide",
+      "modulo": "poder.py",
+      "prerregistro": null
+    },
+    "G14_incertidumbre": {
+      "modo": "mide",
+      "modulo": "incertidumbre.py",
+      "prerregistro": null
+    },
+    "sentido_vision": {
+      "modo": "decide",
+      "modulo": "percepcion.py/percepcion2.py",
+      "prerregistro": "25"
+    },
+    "sentido_propiocepcion": {
+      "modo": "mide",
+      "modulo": "gimnasio.py (sensores)",
+      "prerregistro": "26-borrador"
+    },
+    "sentido_tacto": {
+      "modo": "mide",
+      "modulo": "gimnasio.py (sensores)",
+      "prerregistro": "26-borrador"
+    }
+  }
+}
