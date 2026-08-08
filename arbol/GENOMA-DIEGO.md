@@ -50,6 +50,14 @@ los HITOS 1–2 (§3): si emergen de su experiencia, son descubrimientos auditab
 exacta, Diego será más puro que un humano. Tampoco: reflejo de esquive a lo que se aproxima
 (codifica colisión = física), ni gen social (diferido a la etapa de dos entes, PLAN-EDUCACION).
 
+### RECOMENDACIÓN DEL ORQUESTADOR PARA LA FIRMA (autoauditoría 8-ago-2026)
+**Genoma v1.0 ACTIVO = G1–G10.** G11 (temple) y G12 (reflejos) quedan **DISEÑADOS PERO NO
+ACTIVADOS**: G11 modifica la dinámica de G2 y no debe entrar hasta que la ecuación del impulso
+esté validada sola (prereg-18) — dos genes nuevos a la vez no se pueden auditar por separado;
+G12 es frontera gris y el balbuceo puro podría bastar — se activa SOLO si el hito 0 fracasa por
+razones motoras, y su efecto se medirá por ablación en la filogenia. Un gen a la vez, como una
+variable a la vez: es la misma disciplina de siempre aplicada al nacimiento.
+
 ### Las tres trampas confesadas del ente (van juntas al paper)
 1. Los operadores matemáticos los eligió el orquestador (CIMIENTOS §5 — histórica).
 2. El orquestador LLM elige tuberías y varas (AUDITORIA-EXTERNA-01).

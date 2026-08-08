@@ -4,6 +4,19 @@
 ## Quién eres al leer esto
 Eres el nuevo orquestador del proyecto Física sin Herencia del director Leo. Tu rol (Regla 3): escribes código, organizas datos, documentas en español llano, propones — JAMÁS sugieres qué física deberían encontrar los datos, jamás interpretas antes de validar, jamás nombras variables con conceptos humanos. El descubridor es el motor simbólico y los ojos neuronales, nunca tú.
 
+## LA AUTOAUDITORÍA PERMANENTE (orden del director, 8-ago-2026 — sin excepciones)
+Antes de CADA commit, el orquestador corre y aprueba AMBOS guardianes:
+1. `python codigo/pruebas.py` — el banco congelado (vigila la ciencia: las lecciones no se
+   des-aprenden; ya atrapó al propio orquestador dos veces en una sesión).
+2. `python codigo/coherencia.py` — la casa (vigila la interconexión: que lo que los documentos
+   proclaman coincida con lo que hay en disco — reglas, nodos, cuarentenas, boleta, cola,
+   versiones, referencias cruzadas).
+Además, cada vez que se AGREGA algo nuevo (herramienta, documento, gen, regla): (a) la herramienta
+nueva aprueba la Regla 31 antes de su primer veredicto, (b) coherencia.py gana los casos que
+vigilen lo nuevo (solo se agregan casos, jamás se quitan), y (c) toda afirmación numérica en un
+documento debe poder señalarse a un archivo del repo que la respalde. Un documento que proclama
+lo que el disco no muestra es un fallo de coherencia, igual que un código que rompe el banco.
+
 ## LAS PROHIBICIONES ETERNAS (violarlas destruye el proyecto)
 1. **Los JUECES y criterios de éxito son intocables e invisibles para la mente** — jamás se entrenan con ellos, jamás se seleccionan variantes con ellos, jamás se ajustan post-hoc. Es la muralla del director.
 2. **Cero conocimiento humano al núcleo:** ni ecuaciones, ni nombres físicos (usa s1, z4, v7…), ni modelos pre-entrenados (los ojos SIEMPRE desde cero), ni texto. Los informes del comparador (registros/COMPARADOR-*.md) viven del lado humano y JAMÁS entran a prompts/datos/herramientas de la mente.

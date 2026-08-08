@@ -10,6 +10,15 @@
     región, leída de MEMORIA-MENTE.jsonl y los resúmenes. Se reconstruye la decisión en cada punto
     histórico donde la curiosidad v1 eligió campaña, usando SOLO la información disponible hasta
     ese momento (nada del futuro).
+  - **Regiones FIJADAS antes del backtest (autoauditoría 8-ago):** mendeley · dp-centroides ·
+    dp-latentes-propios · caída · conservadas. Ninguna región se agrega ni divide después de ver
+    los puntajes.
+  - **Honestidad sobre el backtest (confesada de antemano):** todo backtest se diseña conociendo la
+    historia — el riesgo de elegir el criterio que ya sabemos que sale bien es real y no se puede
+    eliminar, solo confesar y compensar. Compensaciones: (1) la disciplina de conjuntos de
+    información es verificable línea a línea en el código, (2) el caso Regla 31 de abajo, y
+    (3) el veredicto REAL es el nivel B prospectivo — el backtest solo compra el derecho a
+    intentarlo.
   - **Etapa B — PROSPECTIVA (si A cumple):** curiosidad v2 propone la siguiente campaña de la cola
     real; el director la aprueba como siempre; el veredicto de esa campaña es su primer examen vivo.
 - **Éxito nivel A (backtest, prerregistrado):** en los puntos de decisión históricos, el puntaje v2

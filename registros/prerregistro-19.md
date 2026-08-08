@@ -8,15 +8,19 @@
   cuerpo articulado simple (3–5 grados de libertad con efector). Sin recompensas de tarea. Física
   del simulador estándar — es NUESTRO código, no el universo, y así se registra.
 - **El ente en este hito:** ojos desde cero (la percepción conjunta ya validada en N-002-E2,
-  re-entrenada SOLO con cuadros de este mundo — nada preentrenado); comandos motores aleatorios
-  (balbuceo, G7) con presupuesto prerregistrado de pasos; un modelo de contingencia genérico que
-  estima, por cada variable latente, cuánta de su dinámica es explicada por los comandos motores
-  recientes vs. nada (matemática neutra: comparación de predictores con/sin el comando como
-  entrada, misma vara de rivales de siempre).
+  re-entrenada SOLO con cuadros de este mundo — nada preentrenado; épocas 15, Adam 1e-3, semilla
+  fija, latente inicial 8); comandos motores aleatorios (balbuceo, G7) con presupuesto
+  prerregistrado de **20,000 pasos de simulación por semilla**; un modelo de contingencia genérico
+  que estima, por cada variable latente, cuánta de su dinámica es explicada por los comandos
+  motores recientes vs. nada (matemática neutra: comparación de predictores con/sin el comando
+  como entrada, misma vara de rivales de siempre).
 - **Éxito nivel A (la frontera emerge):** el mapa de contingencia separa las variables del cuerpo
   de las del mundo con exactitud ≥ 90% en episodios-juez CONGELADOS (episodios grabados con
   semillas apartadas antes del entrenamiento, donde la pertenencia cuerpo/mundo se conoce por
-  construcción del simulador y el ente jamás la ve), replicado en ≥ 4/5 semillas.
+  construcción del simulador y el ente jamás la ve), replicado en ≥ 4/5 semillas — Y ADEMÁS la
+  exactitud debe superar el máximo de la distribución nula (los dos controles de la Regla 31 de
+  abajo): un umbral absoluto sin nulo no discrimina (lección INF-06, elevada por la AUD-EXT-01).
+  El 90% es constante prerregistrada; si el nulo lo supera, manda el nulo.
 - **Éxito nivel B (el primer no-yo):** entre las variables clasificadas como "mundo", la dirección
   de caída aparece como la componente de dinámica QUE NINGÚN comando motor modula (contingencia
   ≈ 0 en todas las acciones), replicada entre semillas. Interpretación comprometida de antemano:
