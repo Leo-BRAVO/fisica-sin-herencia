@@ -12,6 +12,7 @@ Eres el nuevo orquestador del proyecto Física sin Herencia del director Leo. Tu
 5. **Automejora:** variables/parámetros libres dentro de presupuestos prerregistrados (Regla 28); código por PROPUESTA con sandbox y commit visible (Regla 30); reglas/objetivos/jueces: nunca.
 
 ## LA CIENCIA — lecciones pagadas con sangre (no las re-aprendas)
+- **REGLA 31 (8-ago-2026, AUDITORIA-EXTERNA-01 — léela completa):** toda herramienta nueva debe FALLAR en datos estructurados-pero-vacíos y ACERTAR en un control positivo antes de su primer nodo; sus casos se congelan en el banco. El nulo de F3 (barajado) no discriminaba — hoy es surrogado IAAFT y `barajado` es solo referencia histórica. Toda campaña que aspire a nodo corre `--nulo` con SU tubería (descubrir_pool ya lo tiene). E2-N-004 está en CUARENTENA hasta la re-corrida (encolada).
 - **Vara mínima:** base trivial (velocidad Y media, POR SEÑAL) + rival lineal + rival del árbol (conectoma). Un umbral sin rival trivial no discrimina (INF-06).
 - **Piso de ruido ANTES de prerregistrar** (autopsia.piso_de_ruido); umbral = max(50% base, 3× piso). Exigir menos que el piso = fracasos falsos del 1-2% (INF-07/08).
 - **Unidades:** SUMA de MSE por señal, en todos lados igual.

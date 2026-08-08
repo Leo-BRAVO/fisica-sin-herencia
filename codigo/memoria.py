@@ -41,14 +41,20 @@ def retro():
         base = r.get("mse_base")
         prop = (mejor["mse_total"] / base) if base else None
         leyes = mejor.get("ecuaciones", {})
+        # AUDITORIA-EXTERNA-01 (8-ago-2026): una prueba nula (Regla 11) NO es un logro ni
+        # un hueco — es un verdugo. Se marca para que ni la curiosidad ni la boleta la
+        # confundan con una campana real (antes, "mejorar un 65% prediciendo ruido puro"
+        # entraba a la memoria como recuerdo de exito).
+        es_nulo = bool(r.get("nulo")) or campana.startswith("nulo")
         recuerdo = {
             "campana": campana,
+            "nulo": es_nulo,
             "replicas": len(r.get("replicas", [])) or None,
             "mi_mejor_esfuerzo": round(mejor["mse_total"], 6),
             "lo_trivial": round(base, 6) if base else None,
-            "cuanto_mejore": round(1 - prop, 4) if prop is not None else None,
+            "cuanto_mejore": None if es_nulo else (round(1 - prop, 4) if prop is not None else None),
             "mis_frases": leyes if leyes else None,
-            "hueco": bool(prop is not None and prop > 0.5),
+            "hueco": False if es_nulo else bool(prop is not None and prop > 0.5),
         }
         recordar(recuerdo)
         nuevos += 1

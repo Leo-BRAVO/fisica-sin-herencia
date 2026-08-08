@@ -34,6 +34,10 @@ def main():
                     help="centrar cada replica en su media (invariancia de traslacion, Regla 2)")
     ap.add_argument("--jueces", nargs="+", type=int, default=[3, 7, 11],
                     help="posiciones (1-indexadas) de los videos juez en la lista ordenada")
+    ap.add_argument("--nulo", choices=["barajado", "ruido", "surrogado"], default=None,
+                    help="Regla 11: corre la campaña sobre datos falsificados (por réplica). "
+                         "DEBE fracasar; si supera el umbral, la tubería miente. "
+                         "Los resultados de un --nulo jamás son campaña real.")
     ap.add_argument("--suavizar", type=int, default=0,
                     help="ventana de promedio móvil centrado (filtro genérico, Regla 2)")
     ap.add_argument("--retardos", type=int, default=0,
@@ -63,10 +67,15 @@ def main():
     jueces_idx = {j - 1 for j in args.jueces if j - 1 < len(csvs)}
     print(f"{len(csvs)} réplicas | jueces (fuera de muestra): "
           + ", ".join(os.path.basename(csvs[i]) for i in sorted(jueces_idx)))
+    if args.nulo:
+        print(f"*** PRUEBA NULA '{args.nulo}' (Regla 11): esta corrida DEBE fracasar. "
+              f"Si alguna semilla supera el umbral, la tubería está rota. ***")
 
+    rng_nulo = np.random.default_rng(0)
     Xtr, Ytr, Xte, Yte = [], [], [], []
     for i, c in enumerate(csvs):
-        X, Y = preparar(c, suavizar=args.suavizar, retardos=args.retardos, centrar=args.centrar)
+        X, Y = preparar(c, nulo=args.nulo, rng=rng_nulo,
+                        suavizar=args.suavizar, retardos=args.retardos, centrar=args.centrar)
         (Xte if i in jueces_idx else Xtr).append(X)
         (Yte if i in jueces_idx else Ytr).append(Y)
     X_tr, Y_tr = np.vstack(Xtr), np.vstack(Ytr)
@@ -100,7 +109,8 @@ def main():
         print(f"herencia del árbol: {her_tr.shape[1]} variables añadidas "
               f"(v{X_tr.shape[1]-her_tr.shape[1]+1}..v{X_tr.shape[1]}) — el motor decide si las usa")
 
-    resumen = {"replicas": [os.path.basename(c) for c in csvs], "jueces": sorted(jueces_idx),
+    resumen = {"nulo": args.nulo,
+               "replicas": [os.path.basename(c) for c in csvs], "jueces": sorted(jueces_idx),
                "mse_base": base, "umbral": umbral, "mse_rival_lineal": rival,
                "mse_rival_arbol": rival_arbol, "herencia": args.heredar, "semillas": {}}
     rango = list(range(args.semilla_inicial, args.semilla_inicial + args.semillas))
@@ -129,6 +139,10 @@ def main():
                                   "ecuaciones": {k: v["ecuacion"] for k, v in r.items() if k != "mse_total"}}
     with open(os.path.join(args.outdir, "resumen.json"), "w") as f:
         json.dump(resumen, f, indent=2)
+    if args.nulo:
+        rotas = sum(1 for v in resumen["semillas"].values() if v["supera_umbral"])
+        print("PRUEBA NULA: " + (f"{rotas} semilla(s) SUPERARON el umbral — LA TUBERÍA ESTÁ ROTA (Regla 11)."
+                                 if rotas else "0 semillas superan el umbral — fracasó correctamente. ✓"))
     # Terminó limpio: retirar el latido (ya no hay nada que vigilar).
     try:
         if os.path.exists(_activa):

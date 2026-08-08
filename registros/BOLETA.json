@@ -1,15 +1,15 @@
 {
-  "campanas_totales": 26,
-  "mejora_media": -0.685,
+  "campanas_totales": 27,
+  "pruebas_nulas_corridas": 2,
+  "mejora_media": -1.5176,
   "mejor_campana": 0.923,
-  "huecos_abiertos": 12,
+  "huecos_abiertos": 15,
   "nodos_vivos_E2": 3,
+  "nodos_en_cuarentena": 1,
   "nodos_archivados_E1": 3,
   "nodos_en_conectoma": 5,
-  "informes": 17,
-  "prerregistros": 14,
-  "lecciones_de_metodo": 16,
-  "commits_genesis": 78,
-  "leyes_humanas_redescubiertas": 3,
-  "automejoras_validadas": 1
+  "informes": 20,
+  "prerregistros": 17,
+  "lecciones_de_metodo": 26,
+  "commits_genesis": null
 }
