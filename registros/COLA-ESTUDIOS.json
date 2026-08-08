@@ -59,12 +59,13 @@
       "origen": "AUDITORIA-EXTERNA-01 (Regla 31)",
       "motivo": "Regla 11 con la tubería propia: verdugo surrogado de los latentes autoelegidos",
       "tipo": "re-analisis",
-      "estado": "pendiente",
+      "estado": "hecha",
       "datos": "datos/procesados/p14_lat4_std",
       "salida": "resultados/aud01-nulo-p14-final",
       "args": "--semillas 2 --paralelo 1 --maxsize 20 --niter 400 --jueces 3 6 9 --nulo surrogado",
       "nota": "DESBLOQUEADO 8-ago: ojos_p14_lat4.pt subido y verificado (las ecuaciones historicas sobre latentes regenerados dan mse 0.166322632 vs 0.166326505 registrado, desv 2.3e-5). La nube regenera latentes con esos ojos exactos, verifica huella (<1e-3) y corre el verdugo.",
-      "reconstruir": "p14_lat4"
+      "reconstruir": "p14_lat4",
+      "resultado": "corrida por latido-nube (Actions)"
     },
     {
       "id": "aud01-dimension-tres-mundos",
