@@ -106,16 +106,22 @@ if hay_yaml:
         job = list(d["jobs"])[0]
         pasos = d["jobs"][job]["steps"]
         ok(f"{n}: YAML valido", isinstance(pasos, list) and len(pasos) > 1)
-        nombres = [str(p.get("name", "")) for p in pasos]
+        txt = open(f, encoding="utf-8").read()
         ifs = {str(p.get("name", "")): str(p.get("if", "")) for p in pasos}
-        ok(f"{n}: corre los dos guardianes", any("GUARDIANES" in x for x in nombres))
-        # el hallazgo del 8-ago: el commit a main NO puede correr si los guardianes reprobaron
-        commit_main = [k for k in ifs if "commitear a main" in k]
-        ok(f"{n}: el commit a main EXIGE que los guardianes aprueben",
-           bool(commit_main) and "guardianes.outcome == 'success'" in ifs[commit_main[0]])
-        cuar = [k for k in ifs if "CUARENTENA" in k]
+        # Se verifica el FONDO, no la forma: un workflow puede implementar las protecciones
+        # con pasos separados (con `if:`) o dentro de un bucle en bash. Ambas valen; lo que
+        # NO vale es que falte la proteccion. (Leccion 8-ago: el auditor bloqueo un merge por
+        # verificar la forma vieja tras reescribir el latido como bucle — se corrige aqui.)
+        ok(f"{n}: invoca LOS TRES guardianes",
+           all(g in txt for g in ("pruebas.py", "coherencia.py", "auditoria_total.py")))
+        por_pasos = any("guardianes.outcome == 'success'" in v for v in ifs.values())
+        por_bucle = ('GUARDIANES=$?' in txt and '"$GUARDIANES" -eq 0' in txt
+                     and txt.index('GUARDIANES=$?') < txt.index("git push -q origin main")
+                     if "git push -q origin main" in txt else False)
+        ok(f"{n}: el push a main EXIGE que los guardianes aprueben (por pasos o por bucle)",
+           por_pasos or por_bucle)
         ok(f"{n}: hay rama de cuarentena si reprueban (nada se pierde, main intacto)",
-           bool(cuar) and "guardianes.outcome == 'failure'" in ifs[cuar[0]])
+           "nube-cuarentena" in txt)
         ok(f"{n}: concurrencia declarada (jamas dos corridas a la vez)",
            d.get("concurrency", {}).get("group") == "nube")
         ok(f"{n}: reconstruye datos con huella antes de correr",

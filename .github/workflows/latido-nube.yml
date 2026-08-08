@@ -1,15 +1,21 @@
 # latido-nube.yml — EL CORAZON DEL PROYECTO LATE EN LA NUBE (8-ago-2026).
-# Reemplaza a la tarea horaria de la laptop (que murio con ella): cada dia, si la cola
-# tiene un re-analisis pendiente, lo ejecuta, actualiza memoria/conectoma/boleta, corre
-# LOS DOS GUARDIANES (Regla 32 — ningun commit sin ellos, tampoco los de la nube) y
-# commitea. Checkpoints SIEMPRE se commitean (leccion de los 3 apagones, version nube):
-# si el runner muere, la proxima corrida REANUDA desde las semillas guardadas.
+# Reemplaza a la tarea horaria de la laptop: cada dia (o a pedido) VACIA LA COLA — corre un
+# estudio, lo SUBE a GitHub, y sigue con el siguiente, y el siguiente, hasta que no queden
+# pendientes o se acabe el presupuesto de la corrida.
+# Tras CADA estudio: actualiza memoria/conectoma/boleta y corre LOS TRES GUARDIANES; su
+# veredicto decide a donde va el commit — aprueban: main; reprueban: rama de cuarentena y el
+# latido se detiene para que el director revise. Si un estudio muere a medias, sus checkpoints
+# se guardan igual y la corrida siguiente REANUDA desde ahi (leccion de los 3 apagones).
 name: latido-nube
 
 on:
   schedule:
     - cron: "0 6 * * *"   # diario 06:00 UTC; si la cola esta vacia sale en ~1 min
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      max_estudios:
+        description: "cuantos estudios de la cola encadenar en esta corrida (1-6)"
+        default: "6"
 
 concurrency:
   group: nube            # jamas dos corridas simultaneas (carrera de commits)
@@ -21,82 +27,93 @@ permissions:
 jobs:
   latido:
     runs-on: ubuntu-latest
-    timeout-minutes: 300
+    timeout-minutes: 350
     steps:
       - uses: actions/checkout@v5
         with:
-          fetch-depth: 0   # historia completa: boleta cuenta commits reales y el rebase es sano
+          fetch-depth: 0   # historia completa: el rebase es sano y la boleta cuenta commits reales
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
 
       - name: hay trabajo en la cola?
         id: cola
-        run: |
-          echo "id=$(python3 codigo/latido_nube.py --campo id)" >> "$GITHUB_OUTPUT"
-          echo "datos=$(python3 codigo/latido_nube.py --campo datos)" >> "$GITHUB_OUTPUT"
-          echo "salida=$(python3 codigo/latido_nube.py --campo salida)" >> "$GITHUB_OUTPUT"
-          echo "args=$(python3 codigo/latido_nube.py --campo args)" >> "$GITHUB_OUTPUT"
-          echo "reconstruir=$(python3 codigo/latido_nube.py --campo reconstruir)" >> "$GITHUB_OUTPUT"
+        run: echo "id=$(python3 codigo/latido_nube.py --campo id)" >> "$GITHUB_OUTPUT"
 
-      - name: guarda de datos (el item de la cola debe traer 'reconstruir' o datos presentes)
-        if: steps.cola.outputs.id != ''
-        run: |
-          if [ -z "${{ steps.cola.outputs.reconstruir }}" ] && [ ! -d "${{ steps.cola.outputs.datos }}" ]; then
-            echo "::error::El item '${{ steps.cola.outputs.id }}' pide '${{ steps.cola.outputs.datos }}' que no existe y no declara 'reconstruir'."
-            echo "::error::Agrega el campo reconstruir al item en registros/COLA-ESTUDIOS.json."
-            exit 1
-          fi
       - name: instalar motor
         if: steps.cola.outputs.id != ''
         run: |
-          pip install -q numpy pandas pysr opencv-python-headless
+          pip install -q numpy pandas pysr opencv-python-headless pyyaml
+          pip install -q torch --index-url https://download.pytorch.org/whl/cpu
           python -c "from pysr import PySRRegressor; import numpy as np; m=PySRRegressor(niterations=1, progress=False, temp_equation_file=True); m.fit(np.random.rand(30,2), np.random.rand(30)); print('motor listo')"
 
-      - name: reconstruir datos publicos (huella verificada)
-        if: steps.cola.outputs.id != '' && steps.cola.outputs.reconstruir != ''
-        run: python codigo/reconstruir_datos.py "${{ steps.cola.outputs.reconstruir }}"
-
-      - name: correr el estudio de la cola
+      - name: "EL LATIDO — vaciar la cola: uno, subir, el siguiente, y el siguiente"
         if: steps.cola.outputs.id != ''
         run: |
-          python codigo/descubrir_pool.py "${{ steps.cola.outputs.datos }}" "${{ steps.cola.outputs.salida }}" ${{ steps.cola.outputs.args }}
-
-      - name: cierre (memoria, conectoma, boleta, cola) — corre AUNQUE el estudio muera
-        if: always() && steps.cola.outputs.id != ''
-        run: |
-          python codigo/latido_nube.py --completar-si-terminado "${{ steps.cola.outputs.id }}"
-          pip -q install numpy pandas 2>/dev/null || true
-          python codigo/memoria.py --retro || true
-          python codigo/conectoma.py || true
-          python codigo/boleta.py || true
-
-      - name: LOS DOS GUARDIANES (Regla 32 — su veredicto DECIDE a donde va el commit)
-        id: guardianes
-        if: always() && steps.cola.outputs.id != ''
-        run: |
-          python codigo/pruebas.py
-          python codigo/coherencia.py
-          python codigo/auditoria_total.py
-
-      - name: "commitear a main (SOLO si los guardianes aprobaron; incluye checkpoints)"
-        if: always() && steps.cola.outputs.id != '' && steps.guardianes.outcome == 'success'
-        run: |
+          set +e
           git config user.name "latido-nube"
           git config user.email "mente@fisica-sin-herencia.local"
-          git add -A
-          git commit -m "latido-nube: ${{ steps.cola.outputs.id }} (checkpoints incluidos; reanuda solo si quedo a medias)" || { echo "nada nuevo"; exit 0; }
-          for i in 1 2 3 4; do
-            git pull --rebase origin main && git push origin main && exit 0
-            echo "push fallo, reintento $i"; sleep $((2**i))
+          MAX="${{ inputs.max_estudios }}"; MAX="${MAX:-6}"
+
+          for VUELTA in $(seq 1 "$MAX"); do
+            ID=$(python3 codigo/latido_nube.py --campo id)
+            if [ -z "$ID" ]; then
+              echo "::notice::Cola vacia — la mente descansa (tras $((VUELTA-1)) estudio(s) en esta corrida)."
+              break
+            fi
+            DATOS=$(python3 codigo/latido_nube.py --campo datos)
+            SALIDA=$(python3 codigo/latido_nube.py --campo salida)
+            ARGS=$(python3 codigo/latido_nube.py --campo args)
+            REC=$(python3 codigo/latido_nube.py --campo reconstruir)
+            echo "::group::[$VUELTA/$MAX] $ID"
+
+            if [ -n "$REC" ] && [ ! -d "$DATOS" ]; then
+              python3 codigo/reconstruir_datos.py "$REC"
+              if [ $? -ne 0 ]; then
+                echo "::error::Reconstruccion/huella fallo en $ID — jamas se corre un veredicto sobre datos dudosos."
+                echo "::endgroup::"; break
+              fi
+            fi
+            if [ ! -d "$DATOS" ]; then
+              echo "::error::$ID pide '$DATOS' que no existe y no declara reconstruccion (campo 'reconstruir' en la cola)."
+              echo "::endgroup::"; break
+            fi
+
+            python3 codigo/descubrir_pool.py "$DATOS" "$SALIDA" $ARGS   # si muere, los checkpoints quedan
+            python3 codigo/latido_nube.py --completar-si-terminado "$ID"
+            python3 codigo/memoria.py --retro || true
+            python3 codigo/conectoma.py || true
+            python3 codigo/boleta.py || true
+
+            echo "--- LOS TRES GUARDIANES (Regla 32) ---"
+            python3 codigo/pruebas.py && python3 codigo/coherencia.py && python3 codigo/auditoria_total.py
+            GUARDIANES=$?
+
+            git add -A
+            if git diff --cached --quiet; then
+              echo "sin cambios que guardar en $ID"; echo "::endgroup::"; continue
+            fi
+
+            if [ "$GUARDIANES" -eq 0 ]; then
+              git commit -q -m "latido-nube: $ID (checkpoints incluidos; los tres guardianes OK)"
+              SUBIDO=1
+              for i in 1 2 3 4; do
+                git pull --rebase -q origin main && git push -q origin main && { SUBIDO=0; break; }
+                echo "push fallo, reintento $i"; sleep $((2**i))
+              done
+              if [ "$SUBIDO" -ne 0 ]; then
+                echo "::error::No se pudo subir $ID a main tras 4 reintentos — el latido se detiene."
+                echo "::endgroup::"; exit 1
+              fi
+              echo "::notice::$ID guardado en main. Siguiente estudio."
+            else
+              RAMA="nube-cuarentena-${{ github.run_id }}"
+              git commit -q -m "CUARENTENA $ID: los guardianes reprobaron — main no se toca"
+              git checkout -q -b "$RAMA" && git push -q origin "$RAMA"
+              echo "::error::Los guardianes REPROBARON en $ID. Nada se perdio: todo vive en la rama $RAMA y main queda intacto. El latido se detiene hasta que el director revise."
+              echo "::endgroup::"; exit 1
+            fi
+            echo "::endgroup::"
           done
-          exit 1
-
-      - name: "CUARENTENA (los guardianes reprobaron: main NO se toca)"
-        if: always() && steps.cola.outputs.id != '' && steps.guardianes.outcome == 'failure'
-        run: |
-          git config user.name "latido-nube"
-          git config user.email "mente@fisica-sin-herencia.local"
-          RAMA="nube-cuarentena-${{ github.run_id }}"
-          git checkout -b "$RAMA"
-          git add -A
-          git commit -m "CUARENTENA ${{ steps.cola.outputs.id }}: los guardianes reprobaron — nada entra a main hasta que el director revise" || true
-          git push origin "$RAMA" || true
-          echo "::error::Los guardianes REPROBARON. Nada se perdio: los resultados viven en la rama $RAMA. main queda intacto (Regla 32)."
+          echo "LATIDO COMPLETO."
