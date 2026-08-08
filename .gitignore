@@ -6,3 +6,9 @@ datos/procesados/encoder/
 
 datos/
 *.pt
+
+# Enmienda a la politica de datos (8-ago-2026, INFORME-23/decision del director):
+# los PESOS CANONICOS de nodos validados son EVIDENCIA (pocos MB), no datos pesados —
+# viven en arbol/pesos/. Todo otro .pt sigue fuera de git.
+!arbol/pesos/
+!arbol/pesos/*.pt
