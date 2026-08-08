@@ -179,6 +179,22 @@ relación con √k. **El pico no lo fabrica el método: está en el mundo.**
 Diego no recibió jamás la palabra "metro", ni "segundo", ni ningún exponente. **Encontró el
 exponente que liga longitud con tiempo en su mundo preguntando qué reescalado no lo rompe.**
 
+### Concordancia con la literatura (validación que pidió el director)
+Existe un campo entero — **dimensionless learning** — que descubre números adimensionales y leyes
+de escala desde datos, embebiendo la invariancia dimensional en el aprendizaje
+([Nature Communications 2022](https://www.nature.com/articles/s41467-022-35084-w),
+[Hi-π 2025](https://arxiv.org/pdf/2507.18332),
+[Buckingham Pi consistente](https://arxiv.org/abs/2202.04643)). También hay trabajo sobre
+descubrir la autosimilitud de un sistema y su exponente de potencia desde datos simulados.
+
+**La diferencia, dicha con justicia:** todos ellos **reciben las dimensiones de cada variable** —
+la matriz dimensional es la entrada del teorema de Buckingham. Nosotros **no podemos recibirlas**:
+serían conocimiento humano. Lo que hacemos es distinto en su naturaleza: **no imponemos la
+invariancia como restricción, la PONEMOS A PRUEBA** re-corriendo el mundo a otra escala y
+preguntando qué reescalado no rompe lo aprendido. No hace falta saber qué es una longitud ni qué es
+un tiempo. Hasta donde alcanzó esta revisión, **eso solo lo puede hacer quien tiene un mundo propio
+y la disciplina de nulos para no engañarse** — y esas dos cosas juntas casi nadie las tiene.
+
 ---
 
 ## 6. LA LISTA DE TODO LO QUE ESTÁ MAL (`diagnostico_total.py`)

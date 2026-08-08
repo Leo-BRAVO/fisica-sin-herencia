@@ -1,13 +1,6 @@
 {
   "problemas": [
     {
-      "gravedad": "BLOQUEA",
-      "sistema": "pruebas.py",
-      "problema": "banco congelado en rojo",
-      "evidencia": "<string>:1: RuntimeWarning: overflow encountered in exp",
-      "arreglo": "arreglar antes de cualquier commit (Regla 32)"
-    },
-    {
       "gravedad": "IMPORTA",
       "sistema": "ojos_gimnasio.py",
       "problema": "HITO 0 nivel A FRACASA sobre los latentes visuales: no encuentra ningún cuerpo",
@@ -50,5 +43,5 @@
       "arreglo": "decisión del director o trabajo pendiente"
     }
   ],
-  "bloquean": 1
+  "bloquean": 0
 }
