@@ -195,6 +195,78 @@ _d3 = twonn(_N3)
 caso("TwoNN ~3 en nube llena 3D", _d3 is not None and 2.4 < _d3 < 3.7, f"d={_d3}")
 caso("participacion ~3 en nube llena 3D", 2.5 < participacion(_N3) <= 3.05, f"pr={participacion(_N3):.2f}")
 
+print("== LOS DOS CANALES DE MENTIRA DE LA GANANCIA HONESTA (medidos el 8-ago-2026) ==")
+# Estos casos NO celebran el instrumento: congelan sus LIMITES, medidos con mundos de verdad
+# conocida. Nacen de tres arreglos propuestos que fracasaron uno tras otro (INFORME-30).
+import tempfile as _tf, shutil as _sh
+from ganancia_honesta import medir as _medir
+_tmpd = _tf.mkdtemp(prefix="lim_banco_")
+try:
+    def _mundo(nombre, reps):
+        c = os.path.join(_tmpd, nombre); os.makedirs(c, exist_ok=True)
+        for i, (a, b) in enumerate(reps, 1):
+            with open(os.path.join(c, f"r{i}.csv"), "w") as f:
+                f.write("t,x_px,y_px\n")
+                for t_ in range(len(a)):
+                    f.write(f"{t_},{a[t_]:.6f},{b[t_]:.6f}\n")
+        return c
+    _n = 900
+    _k9 = np.ones(9) / 9
+    _rg = np.random.default_rng(5)
+    _t = np.arange(_n)
+    # CANAL 1 — FALSO POSITIVO: dos paseos aleatorios INDEPENDIENTES (cero ley) fabrican
+    # ganancia honesta porque el IAAFT es circular y destruye la deriva que el real conserva.
+    _paseo = [(np.convolve(np.cumsum(_rg.normal(size=_n + 8)), _k9, mode="valid")[:_n],
+               np.convolve(np.cumsum(_rg.normal(size=_n + 8)), _k9, mode="valid")[:_n])
+              for _ in range(6)]
+    _g_falso = _medir(_mundo("paseo", _paseo), [3], surrogados=4, suavizar=3, retardos=2)
+    caso("ganancia honesta MIENTE con señales integradas sin ley (canal conocido)",
+         _g_falso["ganancia_honesta"] > 0.05,
+         f"si este caso se pone rojo el canal se cerro: revisar INFORME-30 (dio {_g_falso['ganancia_honesta']:+.3f})")
+    # CANAL 2 — FALSO NEGATIVO: una ley determinista vista con 0.5% de ruido de seguimiento
+    # pierde casi toda su ganancia. El instrumento no puede certificar datos de camara real.
+    def _osc(ruido):
+        r = []
+        for j in range(6):
+            w = 0.06 + 0.004 * j
+            x = 40 * np.cos(w * _t + _rg.uniform(0, 6.3)) + _rg.normal(0, ruido, _n)
+            y = 40 * np.sin(1.9 * w * _t + _rg.uniform(0, 6.3)) + _rg.normal(0, ruido, _n)
+            r.append((x, y))
+        return r
+    _limpio = _medir(_mundo("limpio", _osc(0.0)), [3], surrogados=4, suavizar=3, retardos=2)
+    _sucio = _medir(_mundo("sucio", _osc(0.4)), [3], surrogados=4, suavizar=3, retardos=2)
+    caso("ganancia honesta ve la ley cuando NO hay ruido",
+         _limpio["ganancia_honesta"] > 0.10, f"{_limpio['ganancia_honesta']:+.3f}")
+    caso("ganancia honesta PIERDE la misma ley con 1% de ruido (canal conocido)",
+         _sucio["ganancia_honesta"] < _limpio["ganancia_honesta"] / 2,
+         f"limpio {_limpio['ganancia_honesta']:+.3f} vs sucio {_sucio['ganancia_honesta']:+.3f}")
+    # LA CONSECUENCIA: los dos canales juntos hacen que (niveles alto, incrementos ~0) sea
+    # AMBIGUO — compatible con 'paseo sin ley' Y con 'ley a traves de camara ruidosa'.
+    caso("el par (niveles, incrementos) NO desambigua: queda registrado como limite",
+         "AMBIGUO" in open(os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                        "ganancia_honesta.py"), encoding="utf-8").read())
+finally:
+    _sh.rmtree(_tmpd, ignore_errors=True)
+
+print("== horizonte: retrocompatibilidad exacta ==")
+from descubrir import preparar as _prep
+_csvh = os.path.join(_tmpd, "x")  # ruta ya borrada: se usa un csv sintetico en memoria
+import tempfile as _tf2
+_fd = _tf2.mkdtemp(prefix="hz_")
+_p = os.path.join(_fd, "a.csv")
+with open(_p, "w") as _f:
+    _f.write("t,s1,s2\n")
+    for _i in range(300):
+        _f.write(f"{_i},{np.sin(_i*0.1):.6f},{np.cos(_i*0.07):.6f}\n")
+_X1, _Y1 = _prep(_p, suavizar=3, retardos=2)
+_X2, _Y2 = _prep(_p, suavizar=3, retardos=2, horizonte=1)
+caso("horizonte=1 reproduce EXACTAMENTE el comportamiento historico",
+     np.array_equal(_X1, _X2) and np.array_equal(_Y1, _Y2))
+_X4, _Y4 = _prep(_p, suavizar=3, retardos=2, horizonte=4)
+caso("horizonte=4 predice 4 cuadros al futuro (Y desplazada, no recortada al azar)",
+     len(_Y4) == len(_Y1) - 3 and abs(_Y4[0, 0] - _Y1[3, 0]) < 1e-12)
+_sh.rmtree(_fd, ignore_errors=True)
+
 print("== canonizar: tarjeta de identidad ==")
 t = tarjeta("(v1 + v2) * 0.5 + 3.0", 4)
 caso("desplazamiento = f(0)", abs(t["desplazamiento"] - 3.0) < 1e-6)

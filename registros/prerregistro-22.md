@@ -1,5 +1,12 @@
 # Prerregistro 22 — Los ojos que se ganan su dimensión, con la varianza medida — 8 de agosto de 2026
-**Estado: BORRADOR pendiente de firma del director. Rehace el prerregistro-21 con el diseño que la evidencia del 21 exigió. Se corre cuando el latido termine los nulos por barajado (no antes: una sola casa para el cómputo).**
+**Estado: SUSPENDIDO el 8-ago-2026 — NO FIRMAR. El INFORME-30 midió dos canales de mentira en la
+ganancia honesta (falso positivo con señales integradas, hasta +0.71 sin ninguna ley; falso negativo
+con 0.12% de ruido de cámara). TODO el criterio de abajo —las tres zonas, el umbral 0.05 y la
+degradación de N-002-E2/N-003-E2— descansa sobre esa vara. Firmarlo degradaría dos nodos con un
+instrumento que no puede sostener el veredicto. Se reescribirá cuando un nulo nuevo apruebe su
+Regla 31. Lo de abajo se conserva como está, sin retocar, para que el error quede a la vista.**
+
+**(texto original) BORRADOR pendiente de firma del director. Rehace el prerregistro-21 con el diseño que la evidencia del 21 exigió. Se corre cuando el latido termine los nulos por barajado (no antes: una sola casa para el cómputo).**
 
 ## Por qué se rehace (lo que el 21 enseñó, medido)
 1. **El 21 tenía una BANDA DESCUBIERTA** (0.05–0.10) y el resultado cayó justo ahí → INCONCLUSO.

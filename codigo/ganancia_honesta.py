@@ -19,6 +19,39 @@
 # la disciplina de nulos. Nosotros si. Primera medicion (INFORME-27): Mendeley 91.5% honesto;
 # los latentes de Diego -0.1% — todo su poder era textura.
 #
+# ===================== LIMITES MEDIDOS EL 8-AGO-2026 (INFORME-30) — LEER ANTES DE CITAR ====
+# El instrumento nacio ayer y ya se le encontraron DOS CANALES DE MENTIRA, midiendo en mundos
+# de verdad conocida. Ninguno es un fallo de programacion: son limites de lo que la vara PUEDE
+# medir, y estan congelados en el banco (pruebas.py) para que nadie los olvide.
+#
+#   CANAL 1 — FALSO POSITIVO con señales INTEGRADAS (tipo paseo aleatorio). El IAAFT trabaja
+#     por FFT y es circular: fuerza x[0]~x[N-1] y destruye la DERIVA. El mundo real la conserva.
+#     Resultado: dos paseos INDEPENDIENTES (cero ley) llegaron a fabricar +0.71 de ganancia.
+#
+#   CANAL 2 — FALSO NEGATIVO con RUIDO DE OBSERVACION. Un oscilador determinista que da +0.50
+#     limpio cae a +0.11 con 1% de ruido de seguimiento y a +0.00 con 2%. Una camara real basta
+#     para borrar una ley que si existe.
+#
+# CONSECUENCIA, y es la grave: el par (ganancia alta en NIVELES, ~0 en INCREMENTOS) es AMBIGUO
+# — lo produce igual un paseo sin ninguna ley que una ley vista por una camara con 0.12% de
+# ruido. Mendeley cae exactamente ahi (+0.640 en niveles, +0.008 en incrementos), asi que el
+# "+91.5% = dinamica real" del INFORME-27 NO esta sostenido a la confianza que se declaro.
+#
+# TRES ARREGLOS PROPUESTOS Y PROBADOS, LOS TRES FRACASARON (el registro completo, INFORME-30):
+#   1. medir sobre INCREMENTOS -> cierra el canal 1 pero abre el canal 2 de par en par.
+#   2. filtrar por un estadistico de deriva -> no separa: con la misma deriva medida, una
+#      tendencia lineal fabrico +0.003 y un paseo aleatorio +0.389.
+#   3. nulo IAAFT sobre los incrementos re-integrado -> mata la mentira (+0.383 -> -0.001) pero
+#      tambien mata la ley (+0.271 -> +0.010): demasiado destructivo, el error espejo.
+#
+# RAZON DE FONDO: un surrogado de fases aleatorias de una sinusoide SIGUE SIENDO una sinusoide,
+# igual de predecible. Por construccion esta vara no puede certificar dinamica LINEAL DE UNA
+# SOLA SEÑAL; solo puede detectar acoples entre señales que dependan de la fase.
+#
+# HASTA QUE UN NULO NUEVO APRUEBE SU REGLA 31: este modulo es una SONDA EXPLORATORIA. No
+# certifica nodos, no elige representaciones y sus numeros no se citan en informes cientificos.
+# ==========================================================================================
+#
 # Uso:
 #   python ganancia_honesta.py --comparar <campana_real> <campana_nula>   (lee resumenes ya corridos)
 #   python ganancia_honesta.py --medir <carpeta_datos> [--jueces 3 6 9] [--suavizar N] [--retardos N]
@@ -62,7 +95,8 @@ def comparar(campana_real, campana_nula):
             "ganancia_honesta": round(rr - rn, 5)}
 
 
-def medir(carpeta, jueces, suavizar=0, retardos=0, centrar=False, semilla=0, surrogados=8):
+def medir(carpeta, jueces, suavizar=0, retardos=0, centrar=False, semilla=0, surrogados=8,
+          horizonte=1):
     """Sonda RAPIDA con el rival lineal: no gasta el motor simbolico. Sirve para ELEGIR
     representacion (p.ej. que dimension latente merece existir) antes de invertir campanas."""
     csvs = sorted(glob.glob(os.path.join(carpeta, "*.csv")))
@@ -75,7 +109,7 @@ def medir(carpeta, jueces, suavizar=0, retardos=0, centrar=False, semilla=0, sur
         Xtr, Ytr, Xte, Yte = [], [], [], []
         for i, c in enumerate(csvs):
             X, Y = preparar(c, nulo=nulo, rng=rng, suavizar=suavizar,
-                            retardos=retardos, centrar=centrar)
+                            retardos=retardos, centrar=centrar, horizonte=horizonte)
             (Xte if i in jidx else Xtr).append(X)
             (Yte if i in jidx else Ytr).append(Y)
         return np.vstack(Xtr), np.vstack(Ytr), np.vstack(Xte), np.vstack(Yte)
@@ -98,7 +132,7 @@ def medir(carpeta, jueces, suavizar=0, retardos=0, centrar=False, semilla=0, sur
             "reduccion_falsa_desv": round(float(falsas.std()), 5),
             "ganancia_honesta": round(float(ganancias.mean()), 5),
             "ganancia_honesta_desv": round(float(ganancias.std()), 5),
-            "surrogados": surrogados}
+            "surrogados": surrogados, "horizonte": horizonte}
 
 
 def regla31():
@@ -150,6 +184,8 @@ if __name__ == "__main__":
     ap.add_argument("--jueces", nargs="+", type=int, default=[3, 6, 9])
     ap.add_argument("--suavizar", type=int, default=0)
     ap.add_argument("--retardos", type=int, default=0)
+    ap.add_argument("--horizonte", type=int, default=1,
+                    help="cuadros al futuro que se predicen (1 = historico)")
     ap.add_argument("--centrar", action="store_true")
     ap.add_argument("--regla31", action="store_true")
     a = ap.parse_args()
@@ -158,5 +194,6 @@ if __name__ == "__main__":
     if a.comparar:
         print(json.dumps(comparar(*a.comparar), indent=2, ensure_ascii=False))
     if a.medir:
-        print(json.dumps(medir(a.medir, a.jueces, a.suavizar, a.retardos, a.centrar),
+        print(json.dumps(medir(a.medir, a.jueces, a.suavizar, a.retardos, a.centrar,
+                               horizonte=a.horizonte),
                          indent=2, ensure_ascii=False))
