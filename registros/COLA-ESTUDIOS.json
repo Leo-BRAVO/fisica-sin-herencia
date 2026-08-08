@@ -119,11 +119,12 @@
       "origen": "INFORME-25",
       "motivo": "cerrar por partida doble: el barajado es el nulo canonico de una afirmacion predictiva",
       "tipo": "re-analisis",
-      "estado": "pendiente",
+      "estado": "hecha",
       "reconstruir": "caida",
       "datos": "datos/procesados/caida",
       "salida": "resultados/aud01-baraj-caida",
-      "args": "--semillas 2 --paralelo 1 --suavizar 3 --maxsize 12 --niter 400 --jueces 3 7 11 --nulo barajado"
+      "args": "--semillas 2 --paralelo 1 --suavizar 3 --maxsize 12 --niter 400 --jueces 3 7 11 --nulo barajado",
+      "resultado": "corrida por latido-nube (Actions)"
     }
   ]
 }

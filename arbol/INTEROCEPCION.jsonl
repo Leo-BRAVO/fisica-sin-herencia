@@ -4,3 +4,4 @@
 {"campana": "p14-final", "segundos": 512.0, "semillas": 5, "replicas": 10, "trabajo_motor": 1.0, "coste_sentido": 3.1623, "tiempo_fiable": true, "es_nulo": false}
 {"campana": "aud01-baraj-p14-final", "segundos": 7932.0, "semillas": 2, "replicas": 10, "trabajo_motor": 0.4, "coste_sentido": 1.2649, "tiempo_fiable": true, "es_nulo": true}
 {"campana": "aud01-baraj-e2-mendeley-i2", "segundos": 5920.0, "semillas": 2, "replicas": 3, "trabajo_motor": 0.4, "coste_sentido": 0.6928, "tiempo_fiable": true, "es_nulo": true}
+{"campana": "aud01-baraj-caida", "segundos": 263.0, "semillas": 2, "replicas": 11, "trabajo_motor": 0.4, "coste_sentido": 1.3266, "tiempo_fiable": true, "es_nulo": true}
