@@ -55,6 +55,7 @@ jobs:
           git config user.name "latido-nube"
           git config user.email "mente@fisica-sin-herencia.local"
           MAX="${{ inputs.max_estudios }}"; MAX="${MAX:-6}"
+          FALLOS=0        # un error dentro del bucle JAMAS puede terminar en verde (leccion 8-ago)
 
           for VUELTA in $(seq 1 "$MAX"); do
             ID=$(python3 codigo/latido_nube.py --campo id)
@@ -72,12 +73,12 @@ jobs:
               python3 codigo/reconstruir_datos.py "$REC"
               if [ $? -ne 0 ]; then
                 echo "::error::Reconstruccion/huella fallo en $ID — jamas se corre un veredicto sobre datos dudosos."
-                echo "::endgroup::"; break
+                FALLOS=$((FALLOS+1)); echo "::endgroup::"; break
               fi
             fi
             if [ ! -d "$DATOS" ]; then
               echo "::error::$ID pide '$DATOS' que no existe y no declara reconstruccion (campo 'reconstruir' en la cola)."
-              echo "::endgroup::"; break
+              FALLOS=$((FALLOS+1)); echo "::endgroup::"; break
             fi
 
             python3 codigo/descubrir_pool.py "$DATOS" "$SALIDA" $ARGS   # si muere, los checkpoints quedan
@@ -116,4 +117,8 @@ jobs:
             fi
             echo "::endgroup::"
           done
-          echo "LATIDO COMPLETO."
+          if [ "$FALLOS" -gt 0 ]; then
+            echo "::error::El latido termino con $FALLOS estudio(s) sin poder correr. La corrida se marca ROJA a proposito: un error dentro jamas debe verse como exito."
+            exit 1
+          fi
+          echo "LATIDO COMPLETO — sin incidencias."
