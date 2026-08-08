@@ -82,11 +82,12 @@
       "origen": "AUDITORIA-EXTERNA-01 (Regla 31; hueco detectado 8-ago: nunca se encolo)",
       "motivo": "Regla 11 con la tuberia propia: verdugo surrogado de la campana insignia de la caida",
       "tipo": "re-analisis",
-      "estado": "pendiente",
+      "estado": "hecha",
       "reconstruir": "caida",
       "datos": "datos/procesados/caida",
       "salida": "resultados/aud01-nulo-caida",
-      "args": "--semillas 2 --paralelo 1 --suavizar 3 --maxsize 12 --niter 400 --jueces 3 7 11 --nulo surrogado"
+      "args": "--semillas 2 --paralelo 1 --suavizar 3 --maxsize 12 --niter 400 --jueces 3 7 11 --nulo surrogado",
+      "resultado": "corrida por latido-nube (Actions)"
     }
   ]
 }
