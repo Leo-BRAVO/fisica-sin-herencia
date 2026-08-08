@@ -26,9 +26,10 @@
       "motivo": "decide la cuarentena de E2-N-004: re-correr F3 caida con el nulo corregido",
       "tipo": "re-analisis-herramienta",
       "herramienta": "conservada.py",
-      "estado": "pendiente",
+      "estado": "hecha",
       "datos": "datos/procesados/caida",
-      "args": "--jueces 3 7 11 --grado 2 --centrar --nulo surrogado --barajados 20"
+      "args": "--jueces 3 7 11 --grado 2 --centrar --nulo surrogado --barajados 20",
+      "resultado": "INFORME-22 (corrido en la nube con datos reconstruidos, huella verificada)"
     },
     {
       "id": "aud01-f3-michigan-surrogado",
@@ -36,9 +37,10 @@
       "motivo": "decide la cuarentena de E2-N-004: re-correr F3 Michigan con el nulo corregido",
       "tipo": "re-analisis-herramienta",
       "herramienta": "conservada.py",
-      "estado": "pendiente",
+      "estado": "hecha",
       "datos": "datos/procesados/mendeley_epoca2",
-      "args": "--jueces 3 --grado 2 --nulo surrogado --barajados 20"
+      "args": "--jueces 3 --grado 2 --nulo surrogado --barajados 20",
+      "resultado": "INFORME-22 (corrido en la nube con datos reconstruidos, huella verificada)"
     },
     {
       "id": "aud01-nulo-e2-mendeley-i2",
@@ -63,7 +65,7 @@
     {
       "id": "aud01-dimension-tres-mundos",
       "origen": "AUDITORIA-EXTERNA-01 (replanteo de la auditoria del pendulo)",
-      "motivo": "la primera pregunta que faltaba: cuantas variables esconde cada sistema",
+      "motivo": "la primera pregunta que faltaba: cuantas variables esconde cada sistema. HECHO 2/3 (mendeley TwoNN~3, caida TwoNN~2.3, INFORME-22); dp_morpheus pendiente (rastreo 2 cuerpos, via Actions)",
       "tipo": "re-analisis-herramienta",
       "herramienta": "dimension.py",
       "estado": "pendiente",

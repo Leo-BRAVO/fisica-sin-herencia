@@ -7,15 +7,18 @@ name: estudios-nube
 on:
   workflow_dispatch:
     inputs:
+      reconstruir:
+        description: "reconstruir datos publicos antes de correr (no | mendeley_epoca2 | caida) — INFORME-22: la nube reconstruye desde las fuentes con huella verificada"
+        default: "no"
       datos:
         description: "carpeta de datos (relativa al repo)"
-        default: "datos/procesados/dp_latente_std"
+        default: "datos/procesados/mendeley_epoca2"
       salida:
         description: "carpeta de resultados"
         default: "resultados/nube-01"
       args:
         description: "argumentos de descubrir_pool"
-        default: "--semillas 5 --paralelo 2 --maxsize 20 --niter 400 --jueces 3 6 9 --rapido"
+        default: "--semillas 2 --paralelo 1 --suavizar 3 --retardos 2 --maxsize 25 --niter 400 --jueces 3 --nulo surrogado"
 
 jobs:
   campana:
@@ -28,8 +31,12 @@ jobs:
           python-version: "3.12"
       - name: instalar motor
         run: |
-          pip install -q numpy pandas pysr
+          pip install -q numpy pandas pysr opencv-python-headless
           python -c "import numpy; from pysr import PySRRegressor; import numpy as np; m=PySRRegressor(niterations=1, progress=False, temp_equation_file=True); m.fit(np.random.rand(30,2), np.random.rand(30)); print('motor listo')"
+      - name: reconstruir datos publicos (huella verificada)
+        if: ${{ inputs.reconstruir != 'no' }}
+        run: |
+          python codigo/reconstruir_datos.py "${{ inputs.reconstruir }}"
       - name: correr campana
         run: |
           python codigo/descubrir_pool.py "${{ inputs.datos }}" "${{ inputs.salida }}" ${{ inputs.args }}
