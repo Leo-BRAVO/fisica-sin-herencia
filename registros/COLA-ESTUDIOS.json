@@ -47,11 +47,12 @@
       "origen": "AUDITORIA-EXTERNA-01 (Regla 31)",
       "motivo": "Regla 11 con la tubería propia: verdugo surrogado de la campana insignia E2",
       "tipo": "re-analisis",
-      "estado": "pendiente",
+      "estado": "hecha",
       "datos": "datos/procesados/mendeley_epoca2",
       "salida": "resultados/aud01-nulo-e2-mendeley-i2",
       "args": "--semillas 2 --paralelo 1 --suavizar 3 --retardos 2 --maxsize 25 --niter 400 --jueces 3 --nulo surrogado",
-      "reconstruir": "mendeley_epoca2"
+      "reconstruir": "mendeley_epoca2",
+      "resultado": "corrida por latido-nube (Actions)"
     },
     {
       "id": "aud01-nulo-p14-final",

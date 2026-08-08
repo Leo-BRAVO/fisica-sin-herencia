@@ -1,6 +1,6 @@
 {
   "campanas_totales": 27,
-  "pruebas_nulas_corridas": 2,
+  "pruebas_nulas_corridas": 3,
   "mejora_media": -1.5176,
   "mejor_campana": 0.923,
   "huecos_abiertos": 15,
@@ -11,5 +11,5 @@
   "informes": 24,
   "prerregistros": 20,
   "lecciones_de_metodo": 28,
-  "commits_genesis": null
+  "commits_genesis": 119
 }
