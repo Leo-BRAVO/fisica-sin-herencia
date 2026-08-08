@@ -13,6 +13,7 @@ import sys
 import csv
 import glob
 import json
+import time
 import zipfile
 import subprocess
 import urllib.request
@@ -43,10 +44,32 @@ HUELLAS = {
 }
 
 
-def bajar(url, destino):
-    print(f"descargando {url[:80]}...")
-    urllib.request.urlretrieve(url, destino)
-    return destino
+def bajar(url, destino, intentos=4):
+    """Descarga con agente de navegador y reintentos.
+    LECCION 8-ago-2026 (primera corrida real del latido, fallo en la nube): Mendeley responde
+    403 Forbidden al agente por defecto de Python (`Python-urllib/3.x`). El script se habia
+    probado a mano con curl — nunca por esta via. Desde hoy toda descarga pasa por aqui, y
+    `python codigo/reconstruir_datos.py` se corre COMPLETO antes de confiar en el."""
+    print(f"descargando {url[:80]}...", flush=True)
+    pet = urllib.request.Request(url, headers={
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) fisica-sin-herencia/1.0 (reconstruccion de datos publicos)",
+        "Accept": "*/*"})
+    ultimo = None
+    for i in range(1, intentos + 1):
+        try:
+            with urllib.request.urlopen(pet, timeout=300) as r, open(destino, "wb") as f:
+                while True:
+                    trozo = r.read(1 << 20)
+                    if not trozo:
+                        break
+                    f.write(trozo)
+            return destino
+        except Exception as e:                       # red inestable o limite de tasa
+            ultimo = e
+            print(f"  intento {i}/{intentos} fallo ({type(e).__name__}: {str(e)[:80]})", flush=True)
+            if i < intentos:
+                time.sleep(2 ** i)
+    raise SystemExit(f"no se pudo descargar {url[:90]} tras {intentos} intentos: {ultimo}")
 
 
 def reconstruir_mendeley(destino):
