@@ -1,0 +1,44 @@
+{
+  "nulo": "barajado",
+  "replicas": [
+    "video_0_fps30.csv",
+    "video_10_fps30.csv",
+    "video_11_fps30.csv",
+    "video_2_fps30.csv",
+    "video_3_fps30.csv",
+    "video_4_fps30.csv",
+    "video_5_fps30.csv",
+    "video_6_fps30.csv",
+    "video_7_fps30.csv",
+    "video_8_fps30.csv",
+    "video_9_fps30.csv"
+  ],
+  "jueces": [
+    2,
+    6,
+    10
+  ],
+  "mse_base": 21761.459349670367,
+  "umbral": 10880.729674835184,
+  "mse_rival_lineal": 20840.323031670134,
+  "mse_rival_arbol": null,
+  "herencia": null,
+  "semillas": {
+    "1": {
+      "mse_total": 28639.877191543776,
+      "supera_umbral": false,
+      "ecuaciones": {
+        "v1_sig": "(sqrt(square(v3)) + (v3 + 423.43307)) * 1.5211768",
+        "v2_sig": "v4 + v2"
+      }
+    },
+    "2": {
+      "mse_total": 28639.67084679148,
+      "supera_umbral": false,
+      "ecuaciones": {
+        "v1_sig": "((v3 + 423.4454) + sqrt(square(v3))) * 1.521133",
+        "v2_sig": "v4 + v2"
+      }
+    }
+  }
+}
