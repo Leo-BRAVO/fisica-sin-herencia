@@ -68,14 +68,16 @@ jobs:
           python codigo/conectoma.py || true
           python codigo/boleta.py || true
 
-      - name: LOS DOS GUARDIANES (Regla 32 — sin ellos no hay commit, tampoco en la nube)
+      - name: LOS DOS GUARDIANES (Regla 32 — su veredicto DECIDE a donde va el commit)
+        id: guardianes
         if: always() && steps.cola.outputs.id != ''
         run: |
           python codigo/pruebas.py
           python codigo/coherencia.py
+          python codigo/auditoria_total.py
 
-      - name: "commitear (con reanudacion — parciales incluidos, push con rebase y reintentos)"
-        if: always() && steps.cola.outputs.id != ''
+      - name: "commitear a main (SOLO si los guardianes aprobaron; incluye checkpoints)"
+        if: always() && steps.cola.outputs.id != '' && steps.guardianes.outcome == 'success'
         run: |
           git config user.name "latido-nube"
           git config user.email "mente@fisica-sin-herencia.local"
@@ -86,3 +88,15 @@ jobs:
             echo "push fallo, reintento $i"; sleep $((2**i))
           done
           exit 1
+
+      - name: "CUARENTENA (los guardianes reprobaron: main NO se toca)"
+        if: always() && steps.cola.outputs.id != '' && steps.guardianes.outcome == 'failure'
+        run: |
+          git config user.name "latido-nube"
+          git config user.email "mente@fisica-sin-herencia.local"
+          RAMA="nube-cuarentena-${{ github.run_id }}"
+          git checkout -b "$RAMA"
+          git add -A
+          git commit -m "CUARENTENA ${{ steps.cola.outputs.id }}: los guardianes reprobaron — nada entra a main hasta que el director revise" || true
+          git push origin "$RAMA" || true
+          echo "::error::Los guardianes REPROBARON. Nada se perdio: los resultados viven en la rama $RAMA. main queda intacto (Regla 32)."

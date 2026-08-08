@@ -12,3 +12,6 @@ datos/
 # viven en arbol/pesos/. Todo otro .pt sigue fuera de git.
 !arbol/pesos/
 !arbol/pesos/*.pt
+
+# estado transitorio del latido (PID/rutas de la maquina que corre) — no es registro
+registros/campana-activa.json
