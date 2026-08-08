@@ -137,6 +137,30 @@ _pi = _prio(_mem_inner)
 caso("records limpios 18b: las corridas internas no mueven records",
      _pi["dp-latentes-propios"] <= _umb, f"dp-latentes={_pi['dp-latentes-propios']}")
 
+print("== GEN G10 (interocepcion) + el defecto de Goodhart de G2 ==")
+# Regla 31 del gen G10: el coste sentido debe CRECER con el esfuerzo y con el territorio,
+# y jamas ser constante (un coste plano es el denominador falso que veniamos arrastrando).
+from interocepcion import trabajo_del_motor as _tm
+caso("G10: mas semillas -> mas coste", _tm(10, 400, 20) > _tm(5, 400, 20))
+caso("G10: mas iteraciones -> mas coste", _tm(5, 800, 20) > _tm(5, 400, 20))
+caso("G10: la campana unidad vale 1.0", abs(_tm(5, 400, 20) - 1.0) < 1e-9)
+caso("G10: el coste NO es constante (el denominador dejo de ser falso)",
+     len({_tm(2, 400, 12), _tm(5, 400, 20), _tm(5, 800, 25)}) == 3)
+
+# EL CANAL DE GOODHART Nº2, demostrado en NUESTROS PROPIOS DATOS (ECUACIONES-COMPARADAS §4.2):
+# una region que OLVIDA y REAPRENDE farmea interes para siempre si el progreso se recorta con
+# max(0,...). Con progreso CON SIGNO, el ciclo se cancela. Caso congelado: es la razon por la
+# que la ecuacion de G2 debe corregirse (prerregistro-20).
+def _lp_recortado(serie, H):
+    return max(0.0, serie[-1] - (serie[-1 - H] if len(serie) > H else 0.0))
+def _lp_con_signo(serie, H):
+    return serie[-1] - (serie[-1 - H] if len(serie) > H else 0.0)
+_oscila = [0.0, 0.5, 0.9, 0.4, 0.9, 0.4, 0.9]      # aprende, olvida, reaprende...
+caso("G2/Goodhart nº2: el recorte max(0,.) PREMIA olvidar-y-reaprender",
+     _lp_recortado(_oscila, 1) > 0.4, f"lp={_lp_recortado(_oscila,1):.3f}")
+caso("G2/Goodhart nº2: el progreso CON SIGNO cancela el ciclo (sobre la vuelta completa)",
+     abs(_lp_con_signo(_oscila, 2)) < 1e-9, f"lp={_lp_con_signo(_oscila,2):.3f}")
+
 print("== dimension intrinseca: TwoNN y participacion ==")
 from dimension import twonn, participacion
 _rngD = np.random.default_rng(4)
