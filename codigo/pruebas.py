@@ -168,6 +168,18 @@ print("== GANANCIA HONESTA: el instrumento que separa dinamica de textura ==")
 from ganancia_honesta import regla31 as _gh31, reduccion as _red
 caso("ganancia honesta: reduccion bien definida", abs(_red(1.0, 0.25) - 0.75) < 1e-12)
 caso("ganancia honesta: APRUEBA su Regla 31 (separa textura de dinamica)", _gh31() == 0)
+# MEDIDO el 8-ago-2026: un solo sorteo de surrogado varia +-0.015 — reportar uno es elegir el
+# que salio. La medicion DEBE traer su desviacion o no es medicion.
+import inspect as _insp
+from ganancia_honesta import medir as _gm
+caso("ganancia honesta: promedia N surrogados (no un solo sorteo)",
+     _insp.signature(_gm).parameters["surrogados"].default >= 5)
+caso("ganancia honesta: reporta su DESVIACION junto al numero",
+     "ganancia_honesta_desv" in _insp.getsource(_gm))
+# G10: una sensacion anulada o sin tiempo fiable no puede alimentar decisiones
+from interocepcion import coste_de as _cd
+caso("G10: sin tiempo fiable, coste_de devuelve None (no inventa)",
+     _cd("p14-final") is None)
 
 print("== dimension intrinseca: TwoNN y participacion ==")
 from dimension import twonn, participacion

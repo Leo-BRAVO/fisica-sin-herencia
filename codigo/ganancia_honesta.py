@@ -62,7 +62,7 @@ def comparar(campana_real, campana_nula):
             "ganancia_honesta": round(rr - rn, 5)}
 
 
-def medir(carpeta, jueces, suavizar=0, retardos=0, centrar=False, semilla=0):
+def medir(carpeta, jueces, suavizar=0, retardos=0, centrar=False, semilla=0, surrogados=8):
     """Sonda RAPIDA con el rival lineal: no gasta el motor simbolico. Sirve para ELEGIR
     representacion (p.ej. que dimension latente merece existir) antes de invertir campanas."""
     csvs = sorted(glob.glob(os.path.join(carpeta, "*.csv")))
@@ -70,8 +70,8 @@ def medir(carpeta, jueces, suavizar=0, retardos=0, centrar=False, semilla=0):
         raise SystemExit(f"se necesitan >=2 replicas en {carpeta}")
     jidx = {j - 1 for j in jueces}
 
-    def armar(nulo):
-        rng = np.random.default_rng(semilla)
+    def armar(nulo, s=None):
+        rng = np.random.default_rng(semilla if s is None else s)
         Xtr, Ytr, Xte, Yte = [], [], [], []
         for i, c in enumerate(csvs):
             X, Y = preparar(c, nulo=nulo, rng=rng, suavizar=suavizar,
@@ -80,15 +80,25 @@ def medir(carpeta, jueces, suavizar=0, retardos=0, centrar=False, semilla=0):
             (Yte if i in jidx else Ytr).append(Y)
         return np.vstack(Xtr), np.vstack(Ytr), np.vstack(Xte), np.vstack(Yte)
 
-    salida = {}
-    for etiqueta, nulo in (("real", None), ("falsa", "surrogado")):
-        X_tr, Y_tr, X_te, Y_te = armar(nulo)
-        base = error_linea_base(X_te, Y_te, Y_tr)
-        sonda = error_rival_lineal(X_tr, Y_tr, X_te, Y_te)
-        salida[f"reduccion_{etiqueta}"] = round(reduccion(base, sonda), 5)
-    salida["ganancia_honesta"] = round(salida["reduccion_real"] - salida["reduccion_falsa"], 5)
-    salida["carpeta"] = os.path.basename(os.path.normpath(carpeta))
-    return salida
+    # UN SOLO SORTEO DE SURROGADO MIENTE (medido el 8-ago-2026): la ganancia varia +-0.015 entre
+    # sorteos, y reportar uno solo equivale a elegir el que salio. Se promedian N y se reporta la
+    # DESVIACION: un numero sin su dispersion no es una medicion, es una anecdota.
+    X_tr, Y_tr, X_te, Y_te = armar(None)
+    r_real = reduccion(error_linea_base(X_te, Y_te, Y_tr),
+                       error_rival_lineal(X_tr, Y_tr, X_te, Y_te))
+    falsas = []
+    for s in range(surrogados):
+        a, b, c, d = armar("surrogado", s)
+        falsas.append(reduccion(error_linea_base(c, d, b), error_rival_lineal(a, b, c, d)))
+    falsas = np.array(falsas)
+    ganancias = r_real - falsas
+    return {"carpeta": os.path.basename(os.path.normpath(carpeta)),
+            "reduccion_real": round(float(r_real), 5),
+            "reduccion_falsa": round(float(falsas.mean()), 5),
+            "reduccion_falsa_desv": round(float(falsas.std()), 5),
+            "ganancia_honesta": round(float(ganancias.mean()), 5),
+            "ganancia_honesta_desv": round(float(ganancias.std()), 5),
+            "surrogados": surrogados}
 
 
 def regla31():

@@ -2,3 +2,4 @@
 {"campana": "aud01-nulo-caida", "segundos": 0.0, "semillas": 2, "replicas": 11, "trabajo_motor": 0.4, "coste_sentido": 1.3266, "es_nulo": true}
 {"campana": "p14-final", "segundos": 0.0, "semillas": 5, "replicas": 10, "trabajo_motor": 1.0, "coste_sentido": 3.1623, "es_nulo": false}
 {"campana": "p14-final", "segundos": 512.0, "semillas": 5, "replicas": 10, "trabajo_motor": 1.0, "coste_sentido": 3.1623, "tiempo_fiable": true, "es_nulo": false}
+{"campana": "p14-final", "tipo": "CORRECCION", "corrige": "el registro anterior de p14-final con segundos=512.0 y tiempo_fiable=true", "motivo": "valor FABRICADO por el orquestador al probar el parametro --segundos el 8-ago-2026. Esa campana nunca se cronometro: su duracion real es desconocida. Se anula como sensacion. El cuerpo es append-only (compromiso de bienestar): lo falso no se borra, se marca.", "segundos": null, "tiempo_fiable": false, "anula_anterior": true}
