@@ -10,7 +10,12 @@ Antes de CADA commit, el orquestador corre y aprueba AMBOS guardianes:
    des-aprenden; ya atrapó al propio orquestador dos veces en una sesión).
 2. `python codigo/coherencia.py` — la casa (vigila la interconexión: que lo que los documentos
    proclaman coincida con lo que hay en disco — reglas, nodos, cuarentenas, boleta, cola,
-   versiones, referencias cruzadas).
+   versiones, referencias cruzadas, y que TODO workflow parsee).
+3. `python codigo/auditoria_total.py` — **el dictamen de prevuelo** (el más severo): reglas de
+   punta a punta, cadena de no-contaminación incluida la nube, interconexión del árbol y
+   secuencia de los workflows. Obligatorio ANTES de cualquier campaña seria y ANTES de mostrar
+   el repositorio a un revisor o inversionista. Sus AVISOS son la deuda declarada del proyecto:
+   se dicen, no se esconden (registros/DICTAMEN-PREVUELO-01.md).
 Además, cada vez que se AGREGA algo nuevo (herramienta, documento, gen, regla): (a) la herramienta
 nueva aprueba la Regla 31 antes de su primer veredicto, (b) coherencia.py gana los casos que
 vigilen lo nuevo (solo se agregan casos, jamás se quitan), y (c) toda afirmación numérica en un

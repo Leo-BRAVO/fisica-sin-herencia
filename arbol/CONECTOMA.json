@@ -1,8 +1,8 @@
 {
-  "generado": "2026-07-12",
+  "generado": "2026-08-08",
   "nodos": {
     "N-001-E2 (Mendeley, retardos)": {
-      "semilla": "resultados\\e2-mendeley-i2\\semilla_4.json",
+      "semilla": "resultados/e2-mendeley-i2/semilla_4.json",
       "n_senales": 2,
       "mse_total": 0.21939333329035016,
       "leyes": {
@@ -18,7 +18,7 @@
       ]
     },
     "N-002-E2 (dp Morpheus, latentes propios)": {
-      "semilla": "resultados\\p13-latente\\semilla_2.json",
+      "semilla": "resultados/p13-latente/semilla_2.json",
       "n_senales": 8,
       "mse_total": 0.29072078340610447,
       "leyes": {
@@ -41,8 +41,27 @@
         0.77109
       ]
     },
+    "N-003-E2 (ojos autoelegidos, latente 4 \u2014 primera automejora)": {
+      "semilla": "resultados/p14-final/semilla_1.json",
+      "n_senales": 4,
+      "mse_total": 0.16632650475046837,
+      "leyes": {
+        "v1_sig": "(v2 + v1) * 0.48391813",
+        "v2_sig": "(sin((v6 + v2) + 0.039151724) + v2) * 0.54601103",
+        "v3_sig": "sin(v3) * 1.2079598",
+        "v4_sig": "(v4 - (v8 * -0.3348986)) - ((v1 - v4) * -0.075246885)"
+      },
+      "constantes": [
+        0.03915,
+        0.07525,
+        0.3349,
+        0.48392,
+        0.54601,
+        1.20796
+      ]
+    },
     "epoca1/N-001 (Mendeley angulos \u2014 archivado, confianza retirada)": {
-      "semilla": "resultados\\oficial-trial1\\semilla_9.json",
+      "semilla": "resultados/oficial-trial1/semilla_9.json",
       "n_senales": 2,
       "mse_total": 0.14611208277517446,
       "leyes": {
@@ -57,7 +76,7 @@
       ]
     },
     "epoca1/caida (observacion, firma vertical)": {
-      "semilla": "resultados\\caida-libre-p09\\semilla_14.json",
+      "semilla": "resultados/caida-libre-p09/semilla_14.json",
       "n_senales": 2,
       "mse_total": 1414.3736509233772,
       "leyes": {
@@ -73,7 +92,7 @@
       ]
     },
     "epoca1/dp centroides (sin nodo, mejor ley disponible)": {
-      "semilla": "resultados\\e2-dp-morpheus\\semilla_2.json",
+      "semilla": "resultados/e2-dp-morpheus/semilla_2.json",
       "n_senales": 4,
       "mse_total": 165.70040454417344,
       "leyes": {
@@ -88,6 +107,18 @@
         16.60251,
         448.9673
       ]
+    },
+    "N-004-E2 (caida \u2014 cantidad conservada, verdugo surrogado)": {
+      "tipo": "cantidad_conservada",
+      "fuente": "resultados/conservadas-caida_aud01/resumen.json",
+      "nulo": "surrogado",
+      "score": 0.10810375792845099,
+      "expresion": "+0.547*v3*v3 +0.521*v3*v4 -0.359*v1 +0.354*v1*v1 -0.293*v1*v3 +0.180*v1*v2",
+      "ratios_jueces": {
+        "video_11_fps30.csv": 0.004102234686839523,
+        "video_5_fps30.csv": 0.0032169066189825513,
+        "video_9_fps30.csv": 1.4125953409726337
+      }
     }
   }
 }
