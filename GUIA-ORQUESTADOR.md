@@ -47,7 +47,23 @@ lo que el disco no muestra es un fallo de coherencia, igual que un código que r
 - **Leyes lineales-con-constante no se certifican por "vencer al rival"** (el rival ES la ley): certifícalas por replicación estructural entre semillas/réplicas/sistemas (INF-08).
 - **Canoniza antes de comparar sistemas** (canonizar.py): literales de ecuaciones divergen con pocos datos; tarjetas (desplazamiento/gradiente) convergen (INF-09).
 - **Autopsia SIEMPRE tras cada veredicto** (autopsia.py) — convierte fracasos en diagnósticos. Rodado (rodar.py) distingue ley de truco.
-- **Informes:** resultados/INFORME-NN.md en español llano (Regla 17: si el director no lo entiende, está mal) + versión Word en resultados/word/ (docx-js con node, ya instalado en scratchpad — o pídele al entorno la skill docx).
+- **Informes:** resultados/INFORME-NN.md en español llano (Regla 17: si el director no lo entiende, está mal). **El `.md` es el registro maestro** — el Word ya NO es obligatorio por informe (Regla 17 enmendada el 8-ago-2026): se genera solo cuando el director va a entregar algo a un tercero, sobre el `.md` ya escrito (skill docx del entorno).
+
+### Instrumentos DE MANO — el latido NO los ejecuta (marcado el 8-ago-2026)
+La auditoría total encontró cuatro módulos que ningún automatismo invoca. **No son código muerto:
+cada uno produjo nodos y está citado en prerregistros y en el árbol; borrarlos rompería la
+trazabilidad de esos nodos.** Se quedan, marcados, para que nadie espere que corran solos:
+
+| módulo | qué hace | dónde nació |
+|---|---|---|
+| `transferir.py` | prueba si una ley cruza a otro sistema | prerregistro-05 → N-003 (época 1) |
+| `canonizar.py` | tarjeta de identidad de una ecuación (desplazamiento/gradiente) para comparar entre sistemas | prerregistro-13, INFORME-09 |
+| `forense.py` | autopsia de una campaña que falló | prerregistro-16 → N-004-E2 |
+| `rodar.py` | rodaje: distingue ley de truco | INFORME-09 |
+
+**Regla de uso:** si un estudio los necesita, va a la cola como item con su receta explícita, o se
+corre a mano y su salida se registra como cualquier otra. Lo que NO puede pasar es que un informe
+diga "se corrió la autopsia" cuando nadie la corrió: el latido no la corre por su cuenta.
 
 ## EL TALLER — LA NUBE (la casa actual, desde el 8-ago-2026)
 - **Todo corre en GitHub Actions.** No hay maquina personal en el bucle: `latido-nube.yml`
