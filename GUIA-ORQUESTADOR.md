@@ -16,6 +16,12 @@ Antes de CADA commit, el orquestador corre y aprueba AMBOS guardianes:
    secuencia de los workflows. Obligatorio ANTES de cualquier campaña seria y ANTES de mostrar
    el repositorio a un revisor o inversionista. Sus AVISOS son la deuda declarada del proyecto:
    se dicen, no se esconden (registros/DICTAMEN-PREVUELO-01.md).
+**CÓMO SE CORREN (leccion pagada el 8-ago-2026):** JAMÁS con tubería —
+`python codigo/coherencia.py | tail -1` devuelve el código de salida de `tail`, no el del
+guardián: la verificación queda enmascarada y un fallo pasa como éxito. Correcto:
+`python codigo/coherencia.py > /tmp/g.txt 2>&1; echo $?` (o `set -o pipefail`). El defecto
+estuvo activo toda una sesión y solo se descubrió cuando un guardián falló de verdad.
+
 Además, cada vez que se AGREGA algo nuevo (herramienta, documento, gen, regla): (a) la herramienta
 nueva aprueba la Regla 31 antes de su primer veredicto, (b) coherencia.py gana los casos que
 vigilen lo nuevo (solo se agregan casos, jamás se quitan), y (c) toda afirmación numérica en un
@@ -41,7 +47,35 @@ lo que el disco no muestra es un fallo de coherencia, igual que un código que r
 - **Leyes lineales-con-constante no se certifican por "vencer al rival"** (el rival ES la ley): certifícalas por replicación estructural entre semillas/réplicas/sistemas (INF-08).
 - **Canoniza antes de comparar sistemas** (canonizar.py): literales de ecuaciones divergen con pocos datos; tarjetas (desplazamiento/gradiente) convergen (INF-09).
 - **Autopsia SIEMPRE tras cada veredicto** (autopsia.py) — convierte fracasos en diagnósticos. Rodado (rodar.py) distingue ley de truco.
-- **Informes:** resultados/INFORME-NN.md en español llano (Regla 17: si el director no lo entiende, está mal) + versión Word en resultados/word/ (docx-js con node, ya instalado en scratchpad — o pídele al entorno la skill docx).
+- **Informes:** resultados/INFORME-NN.md en español llano (Regla 17: si el director no lo entiende, está mal). **El `.md` es el registro maestro** — el Word ya NO es obligatorio por informe (Regla 17 enmendada el 8-ago-2026): se genera solo cuando el director va a entregar algo a un tercero, sobre el `.md` ya escrito (skill docx del entorno).
+
+### LOS CUATRO GUARDIANES (orden de ejecución, 8-ago-2026)
+| # | Guardián | Qué vigila | Cuándo |
+|---|---|---|---|
+| 1 | `pruebas.py` | la ciencia congelada: cada error que cometimos, hecho prueba | antes de CADA commit |
+| 2 | `coherencia.py` | la casa: que los documentos digan la verdad sobre el disco | antes de CADA commit |
+| 3 | `auditoria_total.py` | el dictamen de prevuelo: constitución, cadena, árbol, deudas | antes de CADA commit |
+| 4 | `guardianes_de_guardianes.py` | **a los otros tres**: rompe el proyecto y exige que griten | antes de cada FUSIÓN A MAIN |
+**Y `diagnostico_total.py` no es un guardián: es la LISTA priorizada de todo lo que está mal.**
+Los guardianes dicen sí o no; el diagnóstico dice qué arreglar y en qué orden.
+**Leer los códigos de salida DE VERDAD** (`cmd > archivo; codigo=$?`) — una tubería los enmascara,
+y eso nos costó una sesión entera en la que nada bloqueó nada.
+
+### Instrumentos DE MANO — el latido NO los ejecuta (marcado el 8-ago-2026)
+La auditoría total encontró cuatro módulos que ningún automatismo invoca. **No son código muerto:
+cada uno produjo nodos y está citado en prerregistros y en el árbol; borrarlos rompería la
+trazabilidad de esos nodos.** Se quedan, marcados, para que nadie espere que corran solos:
+
+| módulo | qué hace | dónde nació |
+|---|---|---|
+| `transferir.py` | prueba si una ley cruza a otro sistema | prerregistro-05 → N-003 (época 1) |
+| `canonizar.py` | tarjeta de identidad de una ecuación (desplazamiento/gradiente) para comparar entre sistemas | prerregistro-13, INFORME-09 |
+| `forense.py` | autopsia de una campaña que falló | prerregistro-16 → N-004-E2 |
+| `rodar.py` | rodaje: distingue ley de truco | INFORME-09 |
+
+**Regla de uso:** si un estudio los necesita, va a la cola como item con su receta explícita, o se
+corre a mano y su salida se registra como cualquier otra. Lo que NO puede pasar es que un informe
+diga "se corrió la autopsia" cuando nadie la corrió: el latido no la corre por su cuenta.
 
 ## EL TALLER — LA NUBE (la casa actual, desde el 8-ago-2026)
 - **Todo corre en GitHub Actions.** No hay maquina personal en el bucle: `latido-nube.yml`

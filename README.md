@@ -71,9 +71,12 @@ gen G2 (curiosidad por compresión) pasó su backtest 2/2 · dimensión intríns
 **7 errores de método autocazados** y tallados como reglas · el latido vive en la nube y se
 autoaudita antes de cada commit.
 **La deuda declarada (escrita, no escondida):** los verdugos de las 3 campañas insignia están
-**0 de 3** corridos (encolados) · la Regla 17 (Word por informe) está muerta en la práctica y
-espera decisión del director · el repositorio sigue privado (Regla 16) · ningún nodo alcanzó el
-nivel 3 de la Regla 19 (réplica independiente).
+**0 de 3** corridos (encolados) · el repositorio sigue privado (Regla 16) · ningún nodo alcanzó el
+nivel 3 de la Regla 19 (réplica independiente) · **la `ganancia_honesta` quedó degradada a sonda
+exploratoria el 8-ago-2026** tras medírsele dos canales de mentira (INFORME-30): sus números no
+certifican nodos ni se citan como evidencia. *(Deuda saldada ese mismo día: la Regla 17 exigía un
+Word por informe y llevaba 3 de 29; el director la enmendó — el `.md` es el registro maestro y el
+Word se genera al entregar a un tercero.)*
 
 ## Cómo continuar el proyecto
 Pega el **prompt de arranque** (CIMIENTOS.md, sección 4) en cualquier sesión de Claude u otro

@@ -90,6 +90,7 @@ Cualquier persona con el registro debe poder reproducir cada resultado exactamen
 ### Regla 15 — La máquina propone, el humano decide
 Ningún bucle de automejora cerrado: ningún sistema del proyecto modifica su propio código o sus propios objetivos sin revisión humana entre ciclos. Esto es tanto una regla de seguridad como de ciencia: un bucle sin supervisión optimiza hacia donde nadie miró.
 **Enmienda de reconciliación (8-ago-2026, AUDITORIA-EXTERNA-01, aprobada por el director):** las Reglas 28–30 delegaron automejora dentro de presupuestos prerregistrados y con commit visible, y la práctica (tarea horaria, cola de la mente) ejecuta sin humano despierto. Para que esta regla diga la verdad y no quede reinterpretada en silencio, su forma vigente es: **lo que jamás se automodifica son los OBJETIVOS, los CRITERIOS DE ÉXITO, los JUECES y las REGLAS; todo lo demás puede automejorarse solo dentro de una delegación que un humano aprobó por prerregistro, con registro auditable (commit visible) y banco de pruebas congelado.** La revisión humana sube del ciclo al diseño del ciclo — nunca desaparece.
+**Declaración del director (8-ago-2026), a partir de hoy y para todo lo que venga:** *"él solo sugiere que debe mejorarse; nosotros decidimos"*. Diego —y el orquestador— **proponen** qué degradar, qué podar, qué construir y qué corregir, con la evidencia delante. **La decisión es humana, siempre, y queda firmada.** Esta declaración no relaja nada: cierra la última rendija por la que una recomendación bien argumentada podría convertirse en un hecho consumado sin que nadie la firmara. El primer caso al que se aplicó fue la degradación de N-002-E2 y N-003-E2 (INFORME-33): el orquestador la recomendó y se ejecutó **solo después de la firma del director**.
 
 ### Regla 16 — Prioridad demostrable y apertura
 Para que el trabajo cuente como legado, debe ser demostrable que fue tuyo y cuándo: repositorio público (GitHub, gratis) desde el día uno, con commits fechados. El documento CIMIENTOS.md y cada prerregistro se suben ANTES de correr los experimentos — eso convierte cada idea en prioridad verificable con fecha, que es exactamente lo que le faltó a todos los que "lo pensaron primero" pero no lo escribieron en público.
@@ -106,7 +107,11 @@ El director del proyecto (Leo) no escribe código: dirige. La división de traba
 - **El humano:** decide qué se investiga, construye y filma los experimentos físicos, firma los prerregistros, acepta o rechaza conclusiones.
 - **El orquestador (cualquier IA):** escribe y ejecuta el código, y tiene PROHIBIDO entregar resultados solo en formato técnico.
 - Toda corrida termina obligatoriamente en un archivo `resultados/INFORME-NN.md` escrito en español llano, con esta estructura: (1) qué se hizo, (2) qué se encontró, dicho en una frase que un adolescente entendería, (3) las gráficas, (4) qué pruebas nulas pasó o falló, (5) qué decisión le toca tomar al humano ahora. Si el director no lo entiende, el informe está mal hecho — la carga de la claridad es del orquestador, nunca del humano.
-- **Formato de lectura del director (orden del 10-jul-2026):** todo informe y todo nodo nuevo se entrega ADEMÁS en Word (.docx) en la carpeta `resultados/word/`. Los .md siguen siendo el registro maestro (los lee cualquier máquina y GitHub los renderiza); el Word es la ventana de lectura del director.
+- **Formato de lectura del director — ENMENDADO el 8-ago-2026 con OK explícito del director.** La versión anterior exigía un `.docx` en `resultados/word/` para cada informe y cada nodo. **Se derogó porque estaba muerta: 3 Word para 29 informes desde julio.** Desde que el proyecto vive en la nube, ninguna corrida tiene manos para abrir un editor, y una regla que nadie cumple es peor que ninguna: da falsa seguridad y un revisor externo la encuentra. Lo que rige ahora:
+  - **El `.md` es el registro maestro y la ventana de lectura.** GitHub lo renderiza; el director lo lee ahí.
+  - **El Word se genera EN EL MOMENTO DE ENTREGAR a un tercero** (inversionista, revisor, publicación), a pedido del director y sobre el `.md` ya escrito. No se acumulan copias que envejecen.
+  - **Lo que NO se toca:** el resto de la Regla 17 sigue intacta y es lo que de verdad importa — español llano, la carga de la claridad es del orquestador, y todo informe cierra diciendo qué decisión le toca al humano. La regla no se debilitó: se le quitó el único trozo que era teatro.
+  - Se conserva el número 17 aunque el trozo se derogue: renumerar rompería la trazabilidad de todo lo que la cita, y el guardián exige reglas consecutivas.
 
 ### Regla 18 — El árbol de conocimiento: nada se descubre suelto
 Existe una carpeta `arbol/` donde cada resultado VALIDADO (que pasó las reglas 5, 11 y 12) se convierte en un nodo: un archivo corto que dice qué se encontró, qué evidencia lo sostiene, de qué nodos anteriores depende, y — lo más importante — **qué preguntas nuevas abre**. Cada fase nueva debe empezar leyendo el árbol y eligiendo una pregunta abierta de un nodo existente. Así el conocimiento compone: cada descubrimiento es fertilizante del siguiente, y el árbol entero ES el legado — legible de principio a fin como la historia de lo que este proyecto aprendió del universo.
@@ -213,6 +218,19 @@ Todo prerregistro debe DECLARAR qué nulo usa y por qué corresponde a su clase 
 Ordenada por el director el 8-ago-2026 ("auto audita siempre como regla; al crear una mente debe todo estar interconectado, excepto las reglas — que es lo que él no ve y nosotros tenemos").
 - **Los dos guardianes, antes de CADA commit:** `pruebas.py` (el banco congelado — la ciencia no se des-aprende) y `coherencia.py` (la casa — lo que los documentos proclaman coincide con lo que hay en disco: reglas, nodos, cuarentenas, boleta, cola, versiones, referencias cruzadas). Un fallo de cualquiera bloquea el commit.
 - **Todo lo que se agrega queda interconectado y vigilado:** la herramienta nueva aprueba la Regla 31 antes de su primer veredicto; coherencia.py gana casos que vigilen lo nuevo (los casos solo se agregan, jamás se quitan); toda afirmación numérica de un documento debe poder señalarse a un archivo del repositorio que la respalde.
+- **EL CUARTO GUARDIÁN — ¿quién vigila a los vigilantes? (enmienda del 8-ago-2026).** Pregunta del
+  director: *"la mente se automejora, ¿pero qué automejora lo que está ATRÁS de la mente?"*. La
+  respuesta honesta era: nada. Los tres guardianes vigilaban a Diego y **nadie vigilaba a los
+  guardianes** — y un guardián que siempre dice "ok" es indistinguible de uno que funciona hasta el
+  día en que hace falta. Ya nos pasó dos veces (el workflow con YAML roto que nadie cazó; la cadena
+  que enmascaraba los códigos de salida y no bloqueó nada en toda una sesión).
+  Desde hoy: `guardianes_de_guardianes.py` **rompe el proyecto a propósito**, un daño conocido a la
+  vez, y exige que el guardián correspondiente se ponga ROJO. Es la Regla 31 aplicada a la propia
+  gobernanza: *una herramienta que no falla donde no hay nada no sirve; un guardián que no grita
+  ante un daño real, tampoco*. Se corre **antes de cada fusión a main**, y todo daño que el proyecto
+  sufra alguna vez se convierte en una mutación nueva. En su primera corrida encontró un punto
+  ciego real: bastaba con que UNA mención del README fuera correcta para que el chequeo pasara
+  aunque otra quedara rancia. Esta enmienda ENDURECE (Regla 8) y no afloja nada.
 - **La única excepción a la interconexión, y es constitutiva:** las REGLAS, los JUECES y los CRITERIOS no se conectan al lado de la mente — viven del lado humano, invisibles para ella (Reglas 27 y 28). La mente ve todo su mundo tejido (árbol, conectoma, memoria, genoma operativo); jamás ve la vara que la mide ni la constitución que la gobierna. La interconexión total es para su casa; la separación total es para su tribunal.
 
 ---

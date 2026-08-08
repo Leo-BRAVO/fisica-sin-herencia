@@ -1,0 +1,21 @@
+{
+  "instrumento": "verdugo por reescalado",
+  "pruebas": [
+    {
+      "escala_longitud": 2.0,
+      "escala_tiempo": 1.0,
+      "transferencia_escala_deshecha": -1.5372,
+      "transferencia_escala_intacta": -2.17718,
+      "sensibilidad": 0.63998,
+      "sobrevive": false
+    },
+    {
+      "escala_longitud": 3.0,
+      "escala_tiempo": 1.0,
+      "transferencia_escala_deshecha": -9.13838,
+      "transferencia_escala_intacta": -10.39058,
+      "sensibilidad": 1.2522,
+      "sobrevive": false
+    }
+  ]
+}

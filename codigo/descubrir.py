@@ -18,11 +18,18 @@ import numpy as np
 import pandas as pd
 
 
-def preparar(csv_path, nulo=None, rng=None, suavizar=0, retardos=0, centrar=False):
+def preparar(csv_path, nulo=None, rng=None, suavizar=0, retardos=0, centrar=False, horizonte=1):
     """suavizar: ventana de promedio móvil centrado (0/1 = sin suavizado) — filtro GENÉRICO
     documentado, permitido por la Regla 2. retardos: nº de valores PASADOS de cada señal
     añadidos como variables (inmersión por retardos de Takens — pura historia, cero física).
-    Mejoras de la AUDITORIA-OBSERVACION, aprobadas por el director el 11-jul-2026."""
+    Mejoras de la AUDITORIA-OBSERVACION, aprobadas por el director el 11-jul-2026.
+
+    horizonte: a cuántos cuadros al futuro se predice (1 = el comportamiento histórico, exacto).
+    Añadido el 8-ago-2026: a horizonte 1 la textura y la dinámica son casi degeneradas (todo
+    está dominado por 'las cosas cambian poco'), y la ganancia honesta acaba siendo la RESTA DE
+    DOS NÚMEROS GRANDES Y CASI IGUALES — mal condicionada. Al alejar el horizonte, la parte
+    explicable por autocorrelación se derrumba en AMBOS mundos y lo que sobreviva en el real
+    es dinámica de verdad. Es una VARIABLE que Diego no tenía: el tiempo solo era un índice."""
     df = pd.read_csv(csv_path).dropna()
     # Acepta extracción propia (x_px, y_px) o cualquier número de señales neutras s1..sN
     if "x_px" in df.columns:
@@ -65,12 +72,15 @@ def preparar(csv_path, nulo=None, rng=None, suavizar=0, retardos=0, centrar=Fals
     cambios = [np.diff(s) for s in entradas]
     # Estado en t → estado en t+1, con t desde 'ini' para dar espacio a los retardos
     ini = max(1, retardos)
-    fin = len(entradas[0]) - 1
+    h = max(1, int(horizonte))
+    fin = len(entradas[0]) - h
+    if fin <= ini:
+        raise ValueError(f"horizonte {h} demasiado grande para {len(entradas[0])} cuadros")
     columnas = [s[ini:fin] for s in entradas] + [c[ini - 1:fin - 1] for c in cambios]
     for k in range(1, retardos + 1):
         columnas += [s[ini - k:fin - k] for s in entradas]
     X = np.column_stack(columnas)
-    Y = np.column_stack([s[ini + 1:fin + 1] for s in crudas])
+    Y = np.column_stack([s[ini + h:fin + h] for s in crudas])
     return X, Y
 
 

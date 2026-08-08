@@ -94,11 +94,20 @@ def coste_de(campana):
         return None
     ultimo = None
     for linea in open(CUERPO, encoding="utf-8"):
-        if linea.strip():
-            s = json.loads(linea)
-            if s["campana"] == campana:
-                ultimo = s
-    return ultimo["coste_sentido"] if ultimo else None
+        if not linea.strip():
+            continue
+        s = json.loads(linea)
+        if s.get("campana") != campana:
+            continue
+        # El cuerpo es append-only: una CORRECCION posterior anula la sensacion anterior en vez
+        # de borrarla (8-ago-2026: un registro fabricado en pruebas quedo anulado asi).
+        if s.get("tipo") == "CORRECCION" and s.get("anula_anterior"):
+            ultimo = None
+            continue
+        ultimo = s
+    if ultimo is None or not ultimo.get("tiempo_fiable", False):
+        return None          # sin tiempo fiable no hay coste que ofrecer: mejor nada que mentir
+    return ultimo["coste_sentido"]
 
 
 def ver(n=12):

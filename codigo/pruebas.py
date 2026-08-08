@@ -168,6 +168,18 @@ print("== GANANCIA HONESTA: el instrumento que separa dinamica de textura ==")
 from ganancia_honesta import regla31 as _gh31, reduccion as _red
 caso("ganancia honesta: reduccion bien definida", abs(_red(1.0, 0.25) - 0.75) < 1e-12)
 caso("ganancia honesta: APRUEBA su Regla 31 (separa textura de dinamica)", _gh31() == 0)
+# MEDIDO el 8-ago-2026: un solo sorteo de surrogado varia +-0.015 — reportar uno es elegir el
+# que salio. La medicion DEBE traer su desviacion o no es medicion.
+import inspect as _insp
+from ganancia_honesta import medir as _gm
+caso("ganancia honesta: promedia N surrogados (no un solo sorteo)",
+     _insp.signature(_gm).parameters["surrogados"].default >= 5)
+caso("ganancia honesta: reporta su DESVIACION junto al numero",
+     "ganancia_honesta_desv" in _insp.getsource(_gm))
+# G10: una sensacion anulada o sin tiempo fiable no puede alimentar decisiones
+from interocepcion import coste_de as _cd
+caso("G10: sin tiempo fiable, coste_de devuelve None (no inventa)",
+     _cd("p14-final") is None)
 
 print("== dimension intrinseca: TwoNN y participacion ==")
 from dimension import twonn, participacion
@@ -182,6 +194,137 @@ _N3 = _rngD.normal(size=(800, 3))
 _d3 = twonn(_N3)
 caso("TwoNN ~3 en nube llena 3D", _d3 is not None and 2.4 < _d3 < 3.7, f"d={_d3}")
 caso("participacion ~3 en nube llena 3D", 2.5 < participacion(_N3) <= 3.05, f"pr={participacion(_N3):.2f}")
+
+print("== LOS DOS CANALES DE MENTIRA DE LA GANANCIA HONESTA (medidos el 8-ago-2026) ==")
+# Estos casos NO celebran el instrumento: congelan sus LIMITES, medidos con mundos de verdad
+# conocida. Nacen de tres arreglos propuestos que fracasaron uno tras otro (INFORME-30).
+import tempfile as _tf, shutil as _sh
+from ganancia_honesta import medir as _medir
+_tmpd = _tf.mkdtemp(prefix="lim_banco_")
+try:
+    def _mundo(nombre, reps):
+        c = os.path.join(_tmpd, nombre); os.makedirs(c, exist_ok=True)
+        for i, (a, b) in enumerate(reps, 1):
+            with open(os.path.join(c, f"r{i}.csv"), "w") as f:
+                f.write("t,x_px,y_px\n")
+                for t_ in range(len(a)):
+                    f.write(f"{t_},{a[t_]:.6f},{b[t_]:.6f}\n")
+        return c
+    _n = 900
+    _k9 = np.ones(9) / 9
+    _rg = np.random.default_rng(5)
+    _t = np.arange(_n)
+    # CANAL 1 — FALSO POSITIVO: dos paseos aleatorios INDEPENDIENTES (cero ley) fabrican
+    # ganancia honesta porque el IAAFT es circular y destruye la deriva que el real conserva.
+    _paseo = [(np.convolve(np.cumsum(_rg.normal(size=_n + 8)), _k9, mode="valid")[:_n],
+               np.convolve(np.cumsum(_rg.normal(size=_n + 8)), _k9, mode="valid")[:_n])
+              for _ in range(6)]
+    _g_falso = _medir(_mundo("paseo", _paseo), [3], surrogados=4, suavizar=3, retardos=2)
+    caso("ganancia honesta MIENTE con señales integradas sin ley (canal conocido)",
+         _g_falso["ganancia_honesta"] > 0.05,
+         f"si este caso se pone rojo el canal se cerro: revisar INFORME-30 (dio {_g_falso['ganancia_honesta']:+.3f})")
+    # CANAL 2 — FALSO NEGATIVO: una ley determinista vista con 0.5% de ruido de seguimiento
+    # pierde casi toda su ganancia. El instrumento no puede certificar datos de camara real.
+    def _osc(ruido):
+        r = []
+        for j in range(6):
+            w = 0.06 + 0.004 * j
+            x = 40 * np.cos(w * _t + _rg.uniform(0, 6.3)) + _rg.normal(0, ruido, _n)
+            y = 40 * np.sin(1.9 * w * _t + _rg.uniform(0, 6.3)) + _rg.normal(0, ruido, _n)
+            r.append((x, y))
+        return r
+    _limpio = _medir(_mundo("limpio", _osc(0.0)), [3], surrogados=4, suavizar=3, retardos=2)
+    _sucio = _medir(_mundo("sucio", _osc(0.4)), [3], surrogados=4, suavizar=3, retardos=2)
+    caso("ganancia honesta ve la ley cuando NO hay ruido",
+         _limpio["ganancia_honesta"] > 0.10, f"{_limpio['ganancia_honesta']:+.3f}")
+    caso("ganancia honesta PIERDE la misma ley con 1% de ruido (canal conocido)",
+         _sucio["ganancia_honesta"] < _limpio["ganancia_honesta"] / 2,
+         f"limpio {_limpio['ganancia_honesta']:+.3f} vs sucio {_sucio['ganancia_honesta']:+.3f}")
+    # LA CONSECUENCIA: los dos canales juntos hacen que (niveles alto, incrementos ~0) sea
+    # AMBIGUO — compatible con 'paseo sin ley' Y con 'ley a traves de camara ruidosa'.
+    caso("el par (niveles, incrementos) NO desambigua: queda registrado como limite",
+         "AMBIGUO" in open(os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                        "ganancia_honesta.py"), encoding="utf-8").read())
+finally:
+    _sh.rmtree(_tmpd, ignore_errors=True)
+
+print("== horizonte: retrocompatibilidad exacta ==")
+from descubrir import preparar as _prep
+_csvh = os.path.join(_tmpd, "x")  # ruta ya borrada: se usa un csv sintetico en memoria
+import tempfile as _tf2
+_fd = _tf2.mkdtemp(prefix="hz_")
+_p = os.path.join(_fd, "a.csv")
+with open(_p, "w") as _f:
+    _f.write("t,s1,s2\n")
+    for _i in range(300):
+        _f.write(f"{_i},{np.sin(_i*0.1):.6f},{np.cos(_i*0.07):.6f}\n")
+_X1, _Y1 = _prep(_p, suavizar=3, retardos=2)
+_X2, _Y2 = _prep(_p, suavizar=3, retardos=2, horizonte=1)
+caso("horizonte=1 reproduce EXACTAMENTE el comportamiento historico",
+     np.array_equal(_X1, _X2) and np.array_equal(_Y1, _Y2))
+_X4, _Y4 = _prep(_p, suavizar=3, retardos=2, horizonte=4)
+caso("horizonte=4 predice 4 cuadros al futuro (Y desplazada, no recortada al azar)",
+     len(_Y4) == len(_Y1) - 3 and abs(_Y4[0, 0] - _Y1[3, 0]) < 1e-12)
+_sh.rmtree(_fd, ignore_errors=True)
+
+print("== contingencia (G4): el detector de la frontera yo/mundo ==")
+# Congela las DOS lecciones que costaron una tarde de corridas contra el simulador:
+# (1) a un cuadro vista un cuerpo es casi invisible -> el horizonte importa;
+# (2) un objeto manipulable TAMBIEN es contingente -> lo que separa es la CONSISTENCIA.
+from contingencia import medir as _cmedir, _mundos_regla31 as _cmundos
+_cm = _cmundos(n_ep=14, T=1600, semilla=3)
+_cjueces = [13, 14]
+_sin_ag = _cm["1 SIN AGENCIA (motores desconectados)"][0]
+_pos = _cm["2 CONTROL POSITIVO (solo la var 0 obedece)"][0]
+_trampa = _cm["4 DERIVA FUERTE, CERO AGENCIA (la trampa del INF-30)"][0]
+_r_sin = _cmedir(_sin_ag, _cjueces, nulos=5, horizonte=8, ventana=150)
+_r_pos = _cmedir(_pos, _cjueces, nulos=5, horizonte=8, ventana=150)
+_r_tra = _cmedir(_trampa, _cjueces, nulos=5, horizonte=8, ventana=150)
+caso("contingencia: NO inventa cuerpo donde los motores estan desconectados",
+     not any(r["es_mia"] for r in _r_sin),
+     str([r["variable"] for r in _r_sin if r["es_mia"]]))
+caso("contingencia: encuentra EXACTAMENTE el grado de libertad conectado",
+     [r["variable"] for r in _r_pos if r["es_mia"]] == [0],
+     str([(r["variable"], r["obedece_en"]) for r in _r_pos]))
+caso("contingencia: la deriva fuerte con comandos suaves NO fabrica cuerpo (trampa INF-30)",
+     not any(r["es_mia"] for r in _r_tra),
+     str([r["variable"] for r in _r_tra if r["es_mia"]]))
+caso("contingencia: el nulo es DESPLAZAMIENTO circular, no barajado (regla 31 enmendada)",
+     "roll" in _insp.getsource(__import__("contingencia")._desplazar))
+# HUECO CAZADO POR EL PROPIO BANCO (8-ago-2026): con pocas ventanas el criterio firmado
+# fabrica cuerpo donde no lo hay. Ahora la medicion se NIEGA a opinar bajo el minimo.
+try:
+    _cmedir(_cmundos(n_ep=6, T=300, semilla=3)["1 SIN AGENCIA (motores desconectados)"][0],
+            [5, 6], nulos=2, horizonte=8, ventana=150)
+    _rechaza = False
+except SystemExit:
+    _rechaza = True
+caso("contingencia: se NIEGA a medir con menos ventanas del minimo (no opina sin potencia)",
+     _rechaza)
+caso("contingencia: sus constantes las fija el prerregistro-23, no el codigo",
+     "PRERREGISTRO-23" in _insp.getsource(_cmedir) and "SIN AJUSTAR" in _insp.getsource(_cmedir))
+
+print("== verdugo por reescalado: le importa la escala o no ==")
+# Congela las DOS versiones que se cayeron antes de la que sirve (INFORME-32):
+# comparar contra la base trivial dejaba un mundo SIN LEY a 0.484 de un umbral de 0.5, y un nulo
+# con el tiempo revuelto era tan destructivo que TODO lo superaba.
+from verdugo_escala import sensibilidad_de_escala as _sens, regla31 as _ve31
+_tt = np.arange(400)
+_caida = lambda k: [np.column_stack([k * (5.0 - 0.5 * 0.004 * (_tt + f) ** 2) for f in (0, 7, 13)])
+                    for _ in range(6)]
+_rngE = np.random.default_rng(11)
+_paseo = lambda k: [np.column_stack([k * np.cumsum(_rngE.normal(size=400)) for _ in range(3)])
+                    for _ in range(6)]
+_con = _sens(_caida(1.0), _caida(3.0), 3.0, 1.0)
+_sin = _sens(_paseo(1.0), _paseo(3.0), 3.0, 1.0)
+caso("verdugo escala: un mundo CON ley es sensible a la escala",
+     _con["sensibilidad"] > 0.5 and _con["sobrevive"], f"{_con['sensibilidad']:+.3f}")
+caso("verdugo escala: un mundo SIN ley NO es sensible a la escala",
+     abs(_sin["sensibilidad"]) < 0.05 and not _sin["sobrevive"], f"{_sin['sensibilidad']:+.4f}")
+caso("verdugo escala: la persistencia sola YA transfiere (por eso la vara vieja no servia)",
+     0.3 < _sin["transferencia_escala_deshecha"] < 0.7,
+     f"{_sin['transferencia_escala_deshecha']:.3f} — si esto baja de 0.3 revisar INFORME-32")
+caso("verdugo escala: APRUEBA su Regla 31", _ve31(verbose=False) == 0)
 
 print("== canonizar: tarjeta de identidad ==")
 t = tarjeta("(v1 + v2) * 0.5 + 3.0", 4)

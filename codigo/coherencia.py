@@ -37,6 +37,13 @@ caso("las reglas son consecutivas 1..N sin huecos",
 readme = leer("README.md")
 caso(f"README proclama '{max_regla} reglas' (las que CIMIENTOS contiene)",
      f"{max_regla} reglas" in readme)
+# PUNTO CIEGO CAZADO POR guardianes_de_guardianes.py (8-ago-2026, su PRIMERA corrida): bastaba
+# con que UNA mencion siguiera bien para que el chequeo pasara, aunque otra quedara rancia. Un
+# documento que se contradice a si mismo confunde a quien audita — igual que el titulo de un
+# prerregistro firmado que sigue diciendo BORRADOR.
+_rancias = sorted({int(n) for n in re.findall(r"(\d+) reglas", readme)} - {max_regla})
+caso("README sin NINGUNA cifra rancia de reglas (ni una mencion vieja)",
+     not _rancias, f"menciona tambien: {_rancias}")
 
 print("== arbol: nodos, cuarentena y conectoma cuentan lo mismo ==")
 nodos_e2 = sorted(glob.glob(os.path.join(BASE, "arbol", "N-*-E2.md")))
@@ -58,7 +65,14 @@ print("== prerregistros: los borradores se declaran, los firmados no fingen ==")
 for p in sorted(glob.glob(os.path.join(BASE, "registros", "prerregistro-*.md"))):
     t = open(p, encoding="utf-8").read()
     nombre = os.path.basename(p)
-    if "BORRADOR" in t[:200]:
+    titulo, estado = t.split("\n")[0], (t.split("Estado:", 1)[1][:60] if "Estado:" in t else "")
+    borrador_titulo = "BORRADOR" in titulo
+    firmado = "FIRMADO" in estado
+    # HUECO CAZADO 8-ago-2026: tres prerregistros seguian titulandose BORRADOR despues de ser
+    # firmados. Un documento que se contradice a si mismo confunde a quien audita.
+    caso(f"{nombre}: titulo y estado NO se contradicen",
+         not (borrador_titulo and firmado), "dice BORRADOR en el titulo pero esta FIRMADO")
+    if borrador_titulo and not firmado:
         caso(f"{nombre} (borrador) declara firma PENDIENTE", "PENDIENTE" in t)
 
 print("== cola de estudios: TODO item pendiente debe poder ejecutarse (INFORME-26) ==")

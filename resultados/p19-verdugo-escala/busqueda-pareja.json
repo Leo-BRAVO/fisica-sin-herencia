@@ -1,0 +1,117 @@
+{
+  "instrumento": "verdugo por reescalado — busqueda de pareja",
+  "resultados": [
+    {
+      "escala_longitud": 2.0,
+      "curva": [
+        {
+          "escala_longitud": 2.0,
+          "escala_tiempo": 1.0,
+          "transferencia_escala_deshecha": -1.53713,
+          "transferencia_escala_intacta": -1.9477,
+          "sensibilidad": 0.41057,
+          "sobrevive": false
+        },
+        {
+          "escala_longitud": 2.0,
+          "escala_tiempo": 1.25,
+          "transferencia_escala_deshecha": 0.62775,
+          "transferencia_escala_intacta": 0.23511,
+          "sensibilidad": 0.39264,
+          "sobrevive": false
+        },
+        {
+          "escala_longitud": 2.0,
+          "escala_tiempo": 1.4,
+          "transferencia_escala_deshecha": 0.91314,
+          "transferencia_escala_intacta": 0.59931,
+          "sensibilidad": 0.31383,
+          "sobrevive": false
+        },
+        {
+          "escala_longitud": 2.0,
+          "escala_tiempo": 1.6,
+          "transferencia_escala_deshecha": 0.81287,
+          "transferencia_escala_intacta": 0.54964,
+          "sensibilidad": 0.26323,
+          "sobrevive": false
+        },
+        {
+          "escala_longitud": 2.0,
+          "escala_tiempo": 2.0,
+          "transferencia_escala_deshecha": 0.31323,
+          "transferencia_escala_intacta": 0.11155,
+          "sensibilidad": 0.20169,
+          "sobrevive": false
+        },
+        {
+          "escala_longitud": 2.0,
+          "escala_tiempo": 2.5,
+          "transferencia_escala_deshecha": -0.38293,
+          "transferencia_escala_intacta": -0.52622,
+          "sensibilidad": 0.14329,
+          "sobrevive": false
+        }
+      ],
+      "mejor_tiempo": 1.4,
+      "rango_de_la_curva": 2.4503,
+      "hay_pico": true
+    },
+    {
+      "escala_longitud": 4.0,
+      "curva": [
+        {
+          "escala_longitud": 4.0,
+          "escala_tiempo": 1.0,
+          "transferencia_escala_deshecha": -20.72745,
+          "transferencia_escala_intacta": -20.96995,
+          "sensibilidad": 0.24249,
+          "sobrevive": false
+        },
+        {
+          "escala_longitud": 4.0,
+          "escala_tiempo": 1.25,
+          "transferencia_escala_deshecha": -6.72762,
+          "transferencia_escala_intacta": -7.4394,
+          "sensibilidad": 0.71178,
+          "sobrevive": false
+        },
+        {
+          "escala_longitud": 4.0,
+          "escala_tiempo": 1.4,
+          "transferencia_escala_deshecha": -2.82169,
+          "transferencia_escala_intacta": -3.47029,
+          "sensibilidad": 0.64861,
+          "sobrevive": false
+        },
+        {
+          "escala_longitud": 4.0,
+          "escala_tiempo": 1.6,
+          "transferencia_escala_deshecha": -0.48577,
+          "transferencia_escala_intacta": -1.1755,
+          "sensibilidad": 0.68974,
+          "sobrevive": false
+        },
+        {
+          "escala_longitud": 4.0,
+          "escala_tiempo": 2.0,
+          "transferencia_escala_deshecha": 0.84418,
+          "transferencia_escala_intacta": 0.23624,
+          "sensibilidad": 0.60794,
+          "sobrevive": true
+        },
+        {
+          "escala_longitud": 4.0,
+          "escala_tiempo": 2.5,
+          "transferencia_escala_deshecha": 0.66961,
+          "transferencia_escala_intacta": 0.24392,
+          "sensibilidad": 0.42568,
+          "sobrevive": false
+        }
+      ],
+      "mejor_tiempo": 2.0,
+      "rango_de_la_curva": 21.5716,
+      "hay_pico": true
+    }
+  ]
+}

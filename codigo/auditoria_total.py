@@ -194,10 +194,12 @@ aviso("Regla 11: las campanas insignia tienen un verdugo VALIDO con su propia tu
       len(validos) >= 3,
       f"{len(validos)}/3 validos de {len(nulos_modernos)} corridos. Encolados: los nulos por barajado "
       f"(el correcto para afirmaciones predictivas, INFORME-25)")
-word = glob.glob(os.path.join(BASE, "resultados", "word", "*.docx"))
-informes = glob.glob(os.path.join(BASE, "resultados", "INFORME-*.md"))
-aviso("Regla 17: cada informe tiene su version Word",
-      len(word) >= len(informes), f"{len(word)} Word para {len(informes)} informes")
+# DEUDA SALDADA EL 8-AGO-2026: la Regla 17 exigia un Word por informe y llevaba 3 de 29 desde
+# julio. El director la ENMENDO: el .md es el registro maestro y el Word se genera al ENTREGAR a
+# un tercero. Ya no se audita como deuda; lo que se audita es que la enmienda este escrita.
+_c17 = open(os.path.join(BASE, "CIMIENTOS.md"), encoding="utf-8").read()
+ok("Regla 17: la enmienda del Word esta escrita (deuda saldada, no fingida)",
+     "ENMENDADO el 8-ago-2026" in _c17 and "Word se genera EN EL MOMENTO DE ENTREGAR" in _c17)
 aviso("Regla 16: repositorio publico (prioridad fuerte)", False, "sigue privado — decision del director")
 aviso("Regla 19 nivel 3: replica independiente por un tercero", False, "pendiente — ningun nodo llego al nivel 3")
 

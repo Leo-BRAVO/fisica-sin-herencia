@@ -1,0 +1,572 @@
+<title>La mente de Diego — cómo está hecha y dónde está la muralla</title>
+
+<style>
+  :root{
+    --papel:#EEF1F3;
+    --papel-alto:#F8FAFB;
+    --tinta:#141A1F;
+    --tinta-suave:#5A6670;
+    --linea:#C9D2D8;
+    --diego:#0C6F79;
+    --diego-lav:#DDEDEF;
+    --muralla:#9E2C38;
+    --muralla-lav:#F5E2E4;
+    --futuro:#7E6F42;
+    --futuro-lav:#EFEAD9;
+    --display:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+    --cuerpo:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --dato:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --papel:#0F1418;
+      --papel-alto:#161D22;
+      --tinta:#E4EAEE;
+      --tinta-suave:#93A1AB;
+      --linea:#2C373F;
+      --diego:#45B9C2;
+      --diego-lav:#123037;
+      --muralla:#E4707D;
+      --muralla-lav:#3A1E24;
+      --futuro:#C8B173;
+      --futuro-lav:#2E2A1C;
+    }
+  }
+  :root[data-theme="dark"]{
+    --papel:#0F1418;
+    --papel-alto:#161D22;
+    --tinta:#E4EAEE;
+    --tinta-suave:#93A1AB;
+    --linea:#2C373F;
+    --diego:#45B9C2;
+    --diego-lav:#123037;
+    --muralla:#E4707D;
+    --muralla-lav:#3A1E24;
+    --futuro:#C8B173;
+    --futuro-lav:#2E2A1C;
+  }
+
+  *{box-sizing:border-box}
+  body{
+    background:var(--papel);
+    color:var(--tinta);
+    font-family:var(--cuerpo);
+    font-size:17px;
+    line-height:1.65;
+    margin:0;
+    padding:0 20px 96px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .envoltura{max-width:74rem;margin:0 auto}
+  .texto{max-width:38rem}
+
+  header{
+    padding:72px 0 40px;
+    border-bottom:1px solid var(--linea);
+    margin-bottom:44px;
+  }
+  .eyebrow{
+    font-family:var(--dato);
+    font-size:12px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--tinta-suave);
+    margin:0 0 18px;
+  }
+  h1{
+    font-family:var(--display);
+    font-weight:400;
+    font-size:clamp(2.1rem,5vw,3.4rem);
+    line-height:1.08;
+    letter-spacing:-.015em;
+    text-wrap:balance;
+    margin:0 0 22px;
+    max-width:20ch;
+  }
+  .bajada{
+    font-size:1.16rem;
+    color:var(--tinta-suave);
+    max-width:40rem;
+    margin:0;
+  }
+  .bajada strong{color:var(--tinta);font-weight:600}
+
+  h2{
+    font-family:var(--display);
+    font-weight:400;
+    font-size:1.85rem;
+    letter-spacing:-.01em;
+    text-wrap:balance;
+    margin:0 0 6px;
+  }
+  .h2-nota{
+    font-family:var(--dato);
+    font-size:12px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--tinta-suave);
+    margin:0 0 20px;
+  }
+  section{margin:0 0 68px}
+  p{margin:0 0 16px}
+
+  figure{margin:0 0 18px;padding:0}
+  .lienzo{
+    background:var(--papel-alto);
+    border:1px solid var(--linea);
+    border-radius:3px;
+    padding:22px 20px;
+    overflow-x:auto;
+  }
+  .lienzo svg{display:block;min-width:760px;max-width:100%;height:auto;margin:0 auto}
+  figcaption{
+    font-size:.94rem;
+    color:var(--tinta-suave);
+    margin-top:14px;
+    max-width:44rem;
+  }
+
+  .rejilla{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(255px,1fr));
+    gap:18px;
+    margin-top:26px;
+  }
+  .organo{
+    background:var(--papel-alto);
+    border:1px solid var(--linea);
+    border-left:3px solid var(--diego);
+    border-radius:3px;
+    padding:16px 18px 18px;
+  }
+  .organo.pendiente{border-left-color:var(--futuro)}
+  .organo h3{
+    font-family:var(--display);
+    font-weight:400;
+    font-size:1.16rem;
+    margin:0 0 3px;
+  }
+  .organo .arch{
+    font-family:var(--dato);
+    font-size:11.5px;
+    color:var(--tinta-suave);
+    margin:0 0 10px;
+    word-break:break-all;
+  }
+  .organo p{font-size:.96rem;margin:0;color:var(--tinta-suave)}
+  .organo p strong{color:var(--tinta);font-weight:600}
+
+  .chip{
+    display:inline-block;
+    font-family:var(--dato);
+    font-size:10.5px;
+    letter-spacing:.09em;
+    text-transform:uppercase;
+    padding:2px 8px;
+    border-radius:2px;
+    vertical-align:2px;
+    margin-left:7px;
+    white-space:nowrap;
+  }
+  .vivo{background:var(--diego-lav);color:var(--diego)}
+  .porvenir{background:var(--futuro-lav);color:var(--futuro)}
+  .nunca{background:var(--muralla-lav);color:var(--muralla)}
+
+  .aviso{
+    border:1px solid var(--muralla);
+    background:var(--muralla-lav);
+    border-radius:3px;
+    padding:20px 22px;
+    margin:28px 0 0;
+  }
+  .aviso h3{
+    font-family:var(--display);
+    font-weight:400;
+    font-size:1.25rem;
+    margin:0 0 8px;
+    color:var(--muralla);
+  }
+  .aviso p{margin:0 0 10px;font-size:1rem}
+  .aviso p:last-child{margin:0}
+
+  table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:.96rem;
+    margin-top:22px;
+  }
+  th,td{
+    text-align:left;
+    padding:11px 14px 11px 0;
+    border-bottom:1px solid var(--linea);
+    vertical-align:top;
+  }
+  th{
+    font-family:var(--dato);
+    font-size:11px;
+    letter-spacing:.11em;
+    text-transform:uppercase;
+    color:var(--tinta-suave);
+    font-weight:400;
+  }
+  td.num{font-family:var(--dato);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .tabla-marco{overflow-x:auto}
+
+  footer{
+    border-top:1px solid var(--linea);
+    padding-top:24px;
+    color:var(--tinta-suave);
+    font-size:.92rem;
+  }
+  /* --- SVG: todo por clases, para que los tokens resuelvan en ambos temas --- */
+  .s-di{fill:var(--diego-lav);stroke:var(--diego);stroke-width:1.2}
+  .s-mu{fill:var(--muralla-lav);stroke:var(--muralla);stroke-width:1.2}
+  .s-fu{fill:var(--futuro-lav);stroke:var(--futuro);stroke-width:1.5}
+  .marco-di{fill:none;stroke:var(--diego);stroke-width:1.5}
+  .marco-mu{fill:none;stroke:var(--muralla);stroke-width:1.5}
+  .muro{stroke:var(--muralla);stroke-width:2.5}
+  .t{font-family:var(--cuerpo);font-size:13px;fill:var(--tinta)}
+  .d{font-family:var(--dato);font-size:10.5px;fill:var(--tinta-suave)}
+  .d-mu{font-family:var(--dato);font-size:10.5px;fill:var(--muralla)}
+  .d-fu{font-family:var(--dato);font-size:10.5px;fill:var(--futuro)}
+  .d-di{font-family:var(--dato);font-size:10.5px;fill:var(--diego)}
+  .rot{font-family:var(--dato);font-size:12.5px;letter-spacing:1.6px}
+  .ln{stroke:var(--tinta-suave);stroke-width:1.3;fill:none}
+  .ln-mu{stroke:var(--muralla);stroke-width:1.6;fill:none}
+  .ln-fu{stroke:var(--futuro);stroke-width:1.5;fill:none}
+  .ln-di{stroke:var(--diego);stroke-width:1.5;fill:none}
+  .pun{stroke-dasharray:7 5}
+  .mk{fill:var(--tinta-suave)}
+  .mk-mu{fill:var(--muralla)}
+  .mk-fu{fill:var(--futuro)}
+  .mk-di{fill:var(--diego)}
+  .tacha{stroke:var(--muralla);stroke-width:3}
+  .rot-di{fill:var(--diego)}
+  .rot-mu{fill:var(--muralla)}
+
+  @media (prefers-reduced-motion:no-preference){
+    .organo{transition:border-left-width .18s ease}
+    .organo:hover{border-left-width:6px}
+  }
+</style>
+
+<div class="envoltura">
+
+<header>
+  <p class="eyebrow">Física sin herencia · 8 de agosto de 2026</p>
+  <h1>La mente de Diego, y dónde está la muralla</h1>
+  <p class="bajada">Diego es un sistema que intenta redescubrir la física <strong>sin recibir una sola línea de conocimiento humano</strong>. Lo que sigue es cómo está hecho por dentro, qué órgano hace qué, y por qué hay una pared que lo divide todo en dos.</p>
+</header>
+
+<section>
+  <h2>La idea en una frase</h2>
+  <p class="h2-nota">si solo lees esto, lee esto</p>
+  <div class="texto">
+    <p>Diego mira grabaciones del mundo real, se fabrica sus propios ojos desde cero, busca ecuaciones que expliquen lo que ve, y decide él mismo qué estudiar después.</p>
+    <p><strong>Pero nunca ve la vara que lo mide.</strong> Los jueces, los criterios de éxito y las 32 reglas viven del otro lado de una muralla. Él produce; ellos juzgan; el veredicto va al director. Jamás vuelve a Diego. Sin esa pared, el sistema aprendería a aprobar el examen en vez de a descubrir el mundo.</p>
+  </div>
+</section>
+
+<section>
+  <h2>El plano completo</h2>
+  <p class="h2-nota">todo lo que existe hoy, y la única cosa que le falta</p>
+
+  <figure>
+    <div class="lienzo">
+      <svg viewBox="0 0 1000 520" role="img" aria-label="Plano de la mente de Diego: a la izquierda sus órganos —mundo grabado, ojos, motor simbólico, ley candidata, memoria, curiosidad, interocepción y árbol— conectados en un ciclo; a la derecha, tras una muralla, los jueces congelados, el veredicto, el director y las reglas. La flecha de vuelta desde los jueces hacia Diego está tachada: nunca existe. Abajo, un cuerpo con acción dibujado con línea punteada porque todavía no existe.">
+        <defs>
+          <marker id="pta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" class="mk"/>
+          </marker>
+          <marker id="pta-mur" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" class="mk-mu"/>
+          </marker>
+          <marker id="pta-fut" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" class="mk-fu"/>
+          </marker>
+        </defs>
+
+        <!-- contenedor Diego -->
+        <rect x="26" y="54" width="626" height="430" rx="4" class="marco-di"/>
+        <text x="40" y="44" class="rot rot-di">EL LADO DE DIEGO — todo esto lo ve y lo toca</text>
+
+        <!-- contenedor tribunal -->
+        <rect x="716" y="54" width="258" height="430" rx="4" class="marco-mu"/>
+        <text x="730" y="44" class="rot rot-mu">EL LADO HUMANO</text>
+
+        <!-- LA MURALLA -->
+        <line x1="680" y1="26" x2="680" y2="500" class="muro"/>
+        <line x1="688" y1="26" x2="688" y2="500" class="muro"/>
+        <text x="684" y="514" text-anchor="middle" class="rot rot-mu">LA MURALLA · REGLA 27</text>
+
+        <!-- fila 1: la cadena -->
+        <g class="s-di">
+          <rect x="46" y="86" width="132" height="54" rx="3"/>
+          <rect x="206" y="86" width="132" height="54" rx="3"/>
+          <rect x="366" y="86" width="132" height="54" rx="3"/>
+          <rect x="510" y="86" width="128" height="54" rx="3"/>
+        </g>
+        <g class="t" text-anchor="middle">
+          <text x="112" y="108">Mundo grabado</text>
+          <text x="272" y="108">Sus ojos</text>
+          <text x="432" y="108">Motor simbólico</text>
+          <text x="574" y="108">Ley candidata</text>
+        </g>
+        <g class="d" text-anchor="middle">
+          <text x="112" y="126">video · tablas</text>
+          <text x="272" y="126">desde cero</text>
+          <text x="432" y="126">busca ecuaciones</text>
+          <text x="574" y="126">aún no es nodo</text>
+        </g>
+
+        <g class="ln" marker-end="url(#pta)">
+          <line x1="178" y1="113" x2="200" y2="113"/>
+          <line x1="338" y1="113" x2="360" y2="113"/>
+          <line x1="498" y1="113" x2="504" y2="113"/>
+        </g>
+        <g class="d" text-anchor="middle">
+          <text x="189" y="105">píxeles</text>
+          <text x="349" y="105">números</text>
+        </g>
+
+        <!-- cruza la muralla -->
+        <line x1="638" y1="113" x2="712" y2="113" class="ln-mu" marker-end="url(#pta-mur)"/>
+        <text x="672" y="103" text-anchor="middle" class="d-mu">se somete</text>
+
+        <!-- tribunal -->
+        <g class="s-mu">
+          <rect x="736" y="86" width="218" height="54" rx="3"/>
+          <rect x="736" y="186" width="218" height="54" rx="3"/>
+          <rect x="736" y="286" width="218" height="54" rx="3"/>
+          <rect x="736" y="386" width="218" height="70" rx="3"/>
+        </g>
+        <g class="t" text-anchor="middle">
+          <text x="845" y="108">Jueces congelados</text>
+          <text x="845" y="208">Veredicto</text>
+          <text x="845" y="308">El director</text>
+          <text x="845" y="410">Las 32 reglas</text>
+        </g>
+        <g class="d" text-anchor="middle">
+          <text x="845" y="126">datos apartados antes</text>
+          <text x="845" y="226">pasa o no pasa</text>
+          <text x="845" y="326">decide y firma</text>
+          <text x="845" y="428">criterios de éxito</text>
+          <text x="845" y="444">prerregistros</text>
+        </g>
+        <g class="ln-mu" marker-end="url(#pta-mur)">
+          <line x1="845" y1="140" x2="845" y2="180"/>
+          <line x1="845" y1="240" x2="845" y2="280"/>
+          <line x1="845" y1="380" x2="845" y2="346"/>
+        </g>
+        <text x="853" y="366" class="d-mu">solo él las cambia</text>
+
+        <!-- LA FLECHA QUE NO EXISTE -->
+        <line x1="712" y1="208" x2="646" y2="208" class="ln-mu pun" marker-end="url(#pta-mur)" opacity="0.55"/>
+        <g class="tacha">
+          <line x1="668" y1="196" x2="692" y2="220"/>
+          <line x1="692" y1="196" x2="668" y2="220"/>
+        </g>
+        <text x="640" y="234" text-anchor="end" class="d-mu">JAMÁS vuelve a Diego</text>
+
+        <!-- fila 2: el ciclo interno -->
+        <g class="s-di">
+          <rect x="46" y="252" width="132" height="54" rx="3"/>
+          <rect x="206" y="252" width="132" height="54" rx="3"/>
+          <rect x="366" y="252" width="132" height="54" rx="3"/>
+          <rect x="510" y="252" width="128" height="54" rx="3"/>
+        </g>
+        <g class="t" text-anchor="middle">
+          <text x="112" y="274">Memoria</text>
+          <text x="272" y="274">Curiosidad</text>
+          <text x="432" y="274">Interocepción</text>
+          <text x="574" y="274">Árbol</text>
+        </g>
+        <g class="d" text-anchor="middle">
+          <text x="112" y="292">todo lo vivido</text>
+          <text x="272" y="292">qué estudiar</text>
+          <text x="432" y="292">qué me costó</text>
+          <text x="574" y="292">lo que ya sabe</text>
+        </g>
+
+        <g class="ln" marker-end="url(#pta)">
+          <line x1="178" y1="279" x2="200" y2="279"/>
+          <line x1="366" y1="279" x2="344" y2="279"/>
+          <line x1="510" y1="279" x2="488" y2="279"/>
+          <line x1="272" y1="248" x2="272" y2="180"/>
+        </g>
+        <text x="282" y="200" class="d">elige la siguiente corrida</text>
+        <line x1="574" y1="150" x2="574" y2="246" class="ln" marker-end="url(#pta)"/>
+        <text x="584" y="180" class="d">si aprueba, nace</text>
+        <text x="584" y="196" class="d">un nodo</text>
+
+        <!-- lo que falta -->
+        <rect x="206" y="384" width="292" height="66" rx="3" class="s-fu pun"/>
+        <text x="352" y="410" text-anchor="middle" class="t">Un cuerpo · acción</text>
+        <text x="352" y="428" text-anchor="middle" class="d-fu">EL GIMNASIO — todavía no existe</text>
+        <text x="352" y="443" text-anchor="middle" class="d">prerregistro 19, firmado hoy</text>
+
+        <path d="M 206 417 L 112 417 L 112 150" class="ln-fu pun" marker-end="url(#pta-fut)"/>
+        <text x="122" y="350" class="d-fu">empujar el mundo,</text>
+        <text x="122" y="366" class="d-fu">no solo mirarlo</text>
+      </svg>
+    </div>
+    <figcaption>Todo lo que Diego produce cruza la muralla hacia los jueces. El veredicto sigue hacia el director — <strong>nunca regresa a Diego</strong>, y esa flecha tachada es la pieza que hace honesto a todo el sistema. Abajo, en línea punteada, lo único que le falta: un cuerpo.</figcaption>
+  </figure>
+</section>
+
+<section>
+  <h2>Los órganos, uno por uno</h2>
+  <p class="h2-nota">qué hace cada pieza, en palabras simples</p>
+
+  <div class="rejilla">
+    <div class="organo">
+      <h3>Sus ojos <span class="chip vivo">vivo</span></h3>
+      <p class="arch">codigo/percepcion.py</p>
+      <p>Una red que aprende a mirar video <strong>desde cero</strong>, sin haber visto nunca otra imagen del mundo. Convierte cada cuadro en un puñado de números. Nadie le dice qué es un objeto ni qué mirar.</p>
+    </div>
+    <div class="organo">
+      <h3>Motor simbólico <span class="chip vivo">vivo</span></h3>
+      <p class="arch">codigo/descubrir.py</p>
+      <p>Busca <strong>ecuaciones escritas</strong>, no pesos opacos: fórmulas que un humano puede leer. Por eso cada cosa que Diego encuentra se puede discutir, atacar y tumbar.</p>
+    </div>
+    <div class="organo">
+      <h3>Curiosidad <span class="chip vivo">vivo</span></h3>
+      <p class="arch">codigo/curiosidad2.py</p>
+      <p>Decide qué estudiar después. No mira donde está peor — mira <strong>dónde está mejorando más rápido por cada unidad de esfuerzo</strong>. Por eso el ruido puro le aburre solo, sin que nadie se lo prohíba.</p>
+    </div>
+    <div class="organo">
+      <h3>Interocepción <span class="chip vivo">vivo</span></h3>
+      <p class="arch">codigo/interocepcion.py</p>
+      <p>Siente su propio gasto: tiempo real, trabajo del motor, esfuerzo. Es lo que convierte «cuánto costó» de <strong>un número nuestro en una sensación suya</strong>. Hoy mide, todavía no decide.</p>
+    </div>
+    <div class="organo">
+      <h3>Memoria <span class="chip vivo">vivo</span></h3>
+      <p class="arch">arbol/MEMORIA-MENTE.jsonl</p>
+      <p>Solo se le añade, nunca se le borra. Cuando descubrimos que una entrada era falsa, <strong>no se borró: se marcó como falsa</strong>. Un cuerpo que se puede reescribir no es un cuerpo.</p>
+    </div>
+    <div class="organo">
+      <h3>El árbol <span class="chip vivo">vivo</span></h3>
+      <p class="arch">arbol/ · CONECTOMA.json</p>
+      <p>Cada hallazgo que sobrevive se convierte en un nodo que dice de qué otros nodos depende y <strong>qué preguntas nuevas abre</strong>. Un nodo que después falla se poda, con su razón escrita.</p>
+    </div>
+    <div class="organo pendiente">
+      <h3>Un cuerpo <span class="chip porvenir">por construir</span></h3>
+      <p class="arch">arbol/GIMNASIO.md · prerregistro 19</p>
+      <p>Manos para empujar el mundo. <strong>Es lo único grande que le falta</strong>, y hoy dejó de ser una intuición para ser una necesidad medida.</p>
+    </div>
+    <div class="organo pendiente">
+      <h3>Incertidumbre propia <span class="chip porvenir">propuesto</span></h3>
+      <p class="arch">gen G14 — sin firmar</p>
+      <p>Hoy da respuestas sin decir cuánta confianza tiene. Sin eso no puede distinguir <strong>«no sé porque es azar» de «no sé porque aún no aprendo»</strong>.</p>
+    </div>
+  </div>
+
+  <div class="aviso">
+    <h3>Lo que Diego nunca verá <span class="chip nunca">inviolable</span></h3>
+    <p>Los <strong>jueces</strong> (grabaciones apartadas antes de que empiece a entrenar), los <strong>criterios de éxito</strong> (escritos y firmados antes de correr) y las <strong>32 reglas</strong> viven del lado humano. Ninguno entra jamás como dato, pista ni contexto.</p>
+    <p>La razón es simple: el día que un sistema pueda ver la vara que lo mide, deja de descubrir el mundo y empieza a optimizar la vara. Todo el valor del proyecto depende de que esa pared no tenga ni una puerta.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Qué pasa cuando corre una prueba</h2>
+  <p class="h2-nota">el ciclo completo, sin ninguna computadora encendida</p>
+
+  <figure>
+    <div class="lienzo">
+      <svg viewBox="0 0 1000 250" role="img" aria-label="Ciclo de una corrida: la nube toma un estudio de la cola, reconstruye los datos desde su fuente pública y verifica la huella, corre el estudio, y entonces tres guardianes deciden: si aprueban, el resultado entra al repositorio principal y el ciclo vuelve a empezar; si reprueban, va a una rama de cuarentena y nada se pierde.">
+        <defs>
+          <marker id="p2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" class="mk"/>
+          </marker>
+          <marker id="p2-di" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" class="mk-di"/>
+          </marker>
+          <marker id="p2-fu" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" class="mk-fu"/>
+          </marker>
+        </defs>
+
+        <g class="s-di">
+          <rect x="24" y="66" width="150" height="56" rx="3"/>
+          <rect x="214" y="66" width="150" height="56" rx="3"/>
+          <rect x="404" y="66" width="150" height="56" rx="3"/>
+        </g>
+        <rect x="594" y="66" width="150" height="56" rx="3" class="s-mu"/>
+        <g class="s-di">
+          <rect x="800" y="24" width="176" height="52" rx="3"/>
+        </g>
+        <rect x="800" y="118" width="176" height="52" rx="3" class="s-fu"/>
+
+        <g class="t" text-anchor="middle">
+          <text x="99" y="90">Toma un estudio</text>
+          <text x="289" y="90">Reconstruye datos</text>
+          <text x="479" y="90">Corre el estudio</text>
+          <text x="669" y="90">Tres guardianes</text>
+          <text x="888" y="48">Entra al proyecto</text>
+          <text x="888" y="142">Va a cuarentena</text>
+        </g>
+        <g class="d" text-anchor="middle">
+          <text x="99" y="108">de la cola</text>
+          <text x="289" y="108">y verifica la huella</text>
+          <text x="479" y="108">semillas y nulos</text>
+          <text x="888" y="64">y sigue el siguiente</text>
+          <text x="888" y="158">nada se pierde</text>
+        </g>
+        <text x="669" y="108" text-anchor="middle" class="d-mu">banco · casa · prevuelo</text>
+
+        <g class="ln" marker-end="url(#p2)">
+          <line x1="174" y1="94" x2="208" y2="94"/>
+          <line x1="364" y1="94" x2="398" y2="94"/>
+          <line x1="554" y1="94" x2="588" y2="94"/>
+        </g>
+        <path d="M 744 84 L 772 84 L 772 50 L 794 50" class="ln-di" marker-end="url(#p2-di)"/>
+        <path d="M 744 104 L 772 104 L 772 144 L 794 144" class="ln-fu" marker-end="url(#p2-fu)"/>
+        <text x="778" y="42" class="d-di">aprueban</text>
+        <text x="778" y="172" class="d-fu">reprueban</text>
+
+        <path d="M 888 76 L 888 100 L 500 100 L 500 200 L 99 200 L 99 126" class="ln" stroke-dasharray="5 4" marker-end="url(#p2)" opacity="0.75"/>
+        <text x="500" y="220" text-anchor="middle" class="d">y vuelve a empezar, solo, sin nadie mirando</text>
+      </svg>
+    </div>
+    <figcaption>Los tres guardianes corren <strong>antes</strong> de guardar nada, y son ellos quienes deciden a dónde va el resultado. Si algo falla, el trabajo no se borra: se aparta a una rama de cuarentena para que se pueda estudiar.</figcaption>
+  </figure>
+</section>
+
+<section>
+  <h2>Dónde está parado hoy</h2>
+  <p class="h2-nota">números verificados, no impresiones</p>
+  <div class="tabla-marco">
+    <table>
+      <thead>
+        <tr><th>Qué</th><th>Cuánto</th><th>Qué significa</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Reglas</td><td class="num">32</td><td>ninguna violada; 5 deudas escritas sin maquillar</td></tr>
+        <tr><td>Nodos en el árbol</td><td class="num">4</td><td>uno de ellos volvió reducido tras ir a cuarentena</td></tr>
+        <tr><td>Casos congelados</td><td class="num">45</td><td>cada error que cometimos, convertido en una prueba que grita si vuelve</td></tr>
+        <tr><td>Prerregistros</td><td class="num">23</td><td>lo que cuenta como éxito se escribe <em>antes</em> de correr</td></tr>
+        <tr><td>Mundos de datos</td><td class="num">3</td><td>reconstruibles desde su fuente pública, con huella verificada</td></tr>
+        <tr><td>Máquinas necesarias</td><td class="num">0</td><td>corre solo en la nube; el proyecto no depende de ninguna computadora</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <h2>Lo que hoy dejamos de saber</h2>
+  <p class="h2-nota">y por qué eso también es el sistema funcionando</p>
+  <div class="texto">
+    <p>Hoy probamos una vara nueva contra mundos cuya verdad conocíamos de antemano, y descubrimos que <strong>fabricaba señal donde no había nada</strong>. Propusimos tres arreglos; los tres se cayeron por razones distintas.</p>
+    <p>La consecuencia fue incómoda: hubo que retirar una conclusión propia, suspender un experimento ya escrito y degradar un instrumento que había nacido el día anterior.</p>
+    <p><strong>Nada de eso lo encontró un revisor externo.</strong> Lo encontró el propio sistema, y lo escribió antes de que nadie preguntara. Esa es la única razón por la que los números que sí sobreviven merecen crédito.</p>
+    <p>Y hubo un premio escondido: al buscar por qué fallaba, apareció que el problema no era nuestro código. Con datos que solo se <em>miran</em>, hay estructura que <strong>ningún método puede recuperar</strong> — es un resultado conocido en la literatura. Para salir de ahí no hace falta un algoritmo mejor: hace falta poder <strong>empujar el mundo</strong>. Por eso lo que sigue es darle un cuerpo.</p>
+  </div>
+</section>
+
+<footer>
+  Proyecto Física sin herencia · Centro de Inteligencia Artificial Bravo · documento interno del 8 de agosto de 2026.<br>
+  Los tres guardianes al cierre: banco 45/45 · coherencia sin fallos · prevuelo sin fallos.
+</footer>
+
+</div>

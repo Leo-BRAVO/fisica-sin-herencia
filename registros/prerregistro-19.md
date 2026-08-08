@@ -1,5 +1,11 @@
-# Prerregistro 19 — BORRADOR — HITO 0: el nacimiento (la frontera yo/mundo por contingencia) — 8 de agosto de 2026
-**Estado: BORRADOR pendiente de firma del director. Se ejecuta DESPUÉS del prereg-18 y del levantamiento del congelamiento. Genes G3 (acción), G4 (contingencia), G7 (juego) del GENOMA-DIEGO. Primera campaña del Gimnasio. TODO lo aprendido aquí queda marcado "sobre-el-simulador" — jamás entra al árbol como física del mundo (regla del Gimnasio).**
+# Prerregistro 19 — HITO 0: el nacimiento (la frontera yo/mundo por contingencia) — 8 de agosto de 2026
+**Estado: FIRMADO por el director el 8-ago-2026. Es la campaña prioritaria del proyecto.**
+**Por qué ascendió (y es evidencia, no entusiasmo):** el INFORME-30 probó tres formas distintas de
+separar "hay ley" de "hay textura con deriva" MIRANDO datos ya grabados, y las tres fallaron. No fue
+mala suerte: en un mundo que solo se observa, esa información no está. Lo que rompe la degeneración
+es **intervenir** — cambiar una condición a propósito y ver qué cambia y qué no. Este prerregistro
+construye justamente el órgano que le falta a Diego: la ACCIÓN. Se ejecuta después del prereg-18 y
+del levantamiento del congelamiento. Genes G3 (acción), G4 (contingencia), G7 (juego) del GENOMA-DIEGO. Primera campaña del Gimnasio. TODO lo aprendido aquí queda marcado "sobre-el-simulador" — jamás entra al árbol como física del mundo (regla del Gimnasio).**
 
 - **Pregunta:** con balbuceo motor puro y un detector de contingencia genérico, ¿EMERGE la
   frontera yo/mundo — sin que nadie se la programe? (El paradigma del móvil de la literatura
@@ -38,6 +44,26 @@
 - **Fracaso:** se registra tal cual; abriría preguntas sobre presupuesto de balbuceo, dimensión
   latente u ojos (el bucle interior de la Regla 28 puede explorar esas perillas dentro de rangos
   que este prerregistro fija: latente ∈ {4, 8, 12}, balbuceo ∈ {N, 2N}).
-- **Nota de gobernanza:** este prerregistro NO habilita la filogenia (Regla 32 sigue siendo
-  propuesta sin firma) ni hitos posteriores: solo el hito 0.
-- **Firmado:** PENDIENTE — Leo, director.
+- **LECCIÓN DEL INFORME-30 INCORPORADA (añadida el 8-ago-2026, antes de firmar).** El detector de
+  contingencia tiene **exactamente la misma forma matemática** que la ganancia honesta: una RESTA
+  DE DOS PODERES PREDICTIVOS (con el comando motor como entrada vs. sin él). Por lo tanto hereda
+  sus dos canales de mentira, ya medidos, y no se firma sin blindarlos:
+  1. **Falso positivo por señales integradas.** Si una variable latente se comporta como paseo
+     aleatorio, la resta fabrica contingencia donde no hay ninguna (medido: hasta +0.71 en un mundo
+     sin ninguna ley). **Obligatorio antes del veredicto:** reportar, por cada variable latente, si
+     es integrada, y correr el control 1 (motores desconectados) sobre las MISMAS variables. Si el
+     control 1 da contingencia > 0 en cualquier variable, el veredicto queda anulado — no se
+     "corrige", se anula.
+  2. **Falso negativo por ruido.** Un 0.12% de ruido de observación borró una ley determinista real.
+     El simulador no tiene ruido de cámara, así que aquí el canal está cerrado por construcción —
+     **pero eso deja de ser cierto en cuanto el Gimnasio pase a video o a un cuerpo físico**, y se
+     escribe aquí para que nadie lo olvide en el hito siguiente.
+  3. **El nulo se elige según la afirmación** (enmienda de la Regla 31). La afirmación aquí es
+     "este comando modula esta variable": el nulo correcto es **barajar los comandos manteniendo
+     las series intactas**, no barajar las series. Barajar las series destruye la no estacionariedad
+     y volvería a abrir el canal 1.
+- **Nota de gobernanza:** este prerregistro NO habilita la filogenia (**Regla 33**, que sigue siendo
+  propuesta sin firma; la Regla 32 sí está vigente y es la autoauditoría permanente) ni hitos
+  posteriores: solo el hito 0.
+- **Firmado:** Leo, director — 8-ago-2026, aprobación en conversación ("firmalo"), tras leer
+  el ascenso a prioridad y el blindaje con la lección del INFORME-30.
