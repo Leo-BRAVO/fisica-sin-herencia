@@ -31,6 +31,10 @@ def main():
     n_sig = len(señales)
 
     X, Y = preparar(args.csv)
+    if X.shape[1] != 2 * n_sig:
+        raise SystemExit(f"rodar.py asume estado [señales, cambios] ({2*n_sig} columnas) y los datos "
+                         f"traen {X.shape[1]} — con retardos u otras variables el rodado daría números "
+                         f"en silencio. Preparar los datos sin retardos para rodar.")
     pasos = min(args.pasos, len(Y) - 1)
     tol = [3.0 * np.sqrt(max(piso_de_ruido(Y[:, j]), 1e-12)) for j in range(n_sig)]
 

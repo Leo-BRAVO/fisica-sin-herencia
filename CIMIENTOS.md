@@ -89,6 +89,7 @@ Cualquier persona con el registro debe poder reproducir cada resultado exactamen
 
 ### Regla 15 — La máquina propone, el humano decide
 Ningún bucle de automejora cerrado: ningún sistema del proyecto modifica su propio código o sus propios objetivos sin revisión humana entre ciclos. Esto es tanto una regla de seguridad como de ciencia: un bucle sin supervisión optimiza hacia donde nadie miró.
+**Enmienda de reconciliación (8-ago-2026, AUDITORIA-EXTERNA-01, aprobada por el director):** las Reglas 28–30 delegaron automejora dentro de presupuestos prerregistrados y con commit visible, y la práctica (tarea horaria, cola de la mente) ejecuta sin humano despierto. Para que esta regla diga la verdad y no quede reinterpretada en silencio, su forma vigente es: **lo que jamás se automodifica son los OBJETIVOS, los CRITERIOS DE ÉXITO, los JUECES y las REGLAS; todo lo demás puede automejorarse solo dentro de una delegación que un humano aprobó por prerregistro, con registro auditable (commit visible) y banco de pruebas congelado.** La revisión humana sube del ciclo al diseño del ciclo — nunca desaparece.
 
 ### Regla 16 — Prioridad demostrable y apertura
 Para que el trabajo cuente como legado, debe ser demostrable que fue tuyo y cuándo: repositorio público (GitHub, gratis) desde el día uno, con commits fechados. El documento CIMIENTOS.md y cada prerregistro se suben ANTES de correr los experimentos — eso convierte cada idea en prioridad verificable con fecha, que es exactamente lo que le faltó a todos los que "lo pensaron primero" pero no lo escribieron en público.
@@ -122,7 +123,7 @@ La ambición de largo plazo del proyecto (aportar a medicina, seguridad, paz, en
 
     datos crudos → descubridor no contaminado → validación despiadada → nodo del árbol → preguntas nuevas → datos nuevos → …
 
-Cada vuelta del ciclo deja conocimiento verificado que hace más potente la vuelta siguiente. Si el método demuestra funcionar en mecánica (Fases 0–2), el MISMO protocolo — estas mismas 27 reglas — se puede apuntar después a datos biomédicos abiertos, datos de materiales, datos climáticos: los dominios cambian, las reglas no. Esa es la ruta real de "trabajar conmigo primero y luego llevarlo al mundo": primero demostrar el motor en lo simple y barato, luego escalarlo a lo que importa. Y ese motor, con sus reglas escritas y su árbol auditable, es publicable, enseñable y heredable — un legado no depende de que su autor esté presente.
+Cada vuelta del ciclo deja conocimiento verificado que hace más potente la vuelta siguiente. Si el método demuestra funcionar en mecánica (Fases 0–2), el MISMO protocolo — estas mismas reglas (hoy 32) — se puede apuntar después a datos biomédicos abiertos, datos de materiales, datos climáticos: los dominios cambian, las reglas no. Esa es la ruta real de "trabajar conmigo primero y luego llevarlo al mundo": primero demostrar el motor en lo simple y barato, luego escalarlo a lo que importa. Y ese motor, con sus reglas escritas y su árbol auditable, es publicable, enseñable y heredable — un legado no depende de que su autor esté presente.
 
 ---
 
@@ -147,7 +148,7 @@ Si el proyecto aspira a contradecir el conocimiento humano, debe aplicarse la mi
 ## 2f. REGLAS DE LA MENTE DEL PROYECTO, LOS DATOS DEL MUNDO Y LA COMPARACIÓN (24–27)
 
 ### Regla 24 — El científico del proyecto vive en el repositorio, no en un modelo
-El proyecto tiene un científico asistente que crece con el árbol — pero su identidad no es ningún modelo de IA concreto: es un archivo, `MENTE.md`, versionado en el repositorio. Contiene: (1) el rol y las 26 reglas resumidas, (2) lo aprendido hasta ahora — lecciones de método, errores cometidos y cómo se corrigieron, mañas de las herramientas, (3) el estado del árbol y las preguntas abiertas priorizadas, (4) el historial de sus propias versiones. Cualquier modelo de IA que cargue MENTE.md + CIMIENTOS.md **se convierte en el científico del proyecto**, con toda su experiencia acumulada — hoy un modelo, mañana otro mejor, sin perder nada. Así el científico mejora de verdad entre sesiones y entre modelos, y el proyecto nunca depende de un proveedor.
+El proyecto tiene un científico asistente que crece con el árbol — pero su identidad no es ningún modelo de IA concreto: es un archivo, `MENTE.md`, versionado en el repositorio. Contiene: (1) el rol y las reglas resumidas, (2) lo aprendido hasta ahora — lecciones de método, errores cometidos y cómo se corrigieron, mañas de las herramientas, (3) el estado del árbol y las preguntas abiertas priorizadas, (4) el historial de sus propias versiones. Cualquier modelo de IA que cargue MENTE.md + CIMIENTOS.md **se convierte en el científico del proyecto**, con toda su experiencia acumulada — hoy un modelo, mañana otro mejor, sin perder nada. Así el científico mejora de verdad entre sesiones y entre modelos, y el proyecto nunca depende de un proveedor.
 **Cómo crece sin violar la Regla 15:** al final de cada sesión de trabajo, el orquestador PROPONE la actualización de MENTE.md; el director la lee, la edita si quiere, y la aprueba con el commit. Cada mejora del científico pasa por ojos humanos y queda fechada. Es automejora con auditoría — la única clase de automejora que produce confianza en vez de riesgo.
 **El ritual de la propuesta (obligatorio, sin excepciones):** antes de aplicar cualquier mejora a sí mismo, el científico presenta al director, en este formato fijo:
 1. **QUÉ** se va a mejorar (la sección exacta de MENTE.md o del método).
@@ -195,6 +196,20 @@ Autorizada por el director (12-jul-2026: "todo puede ser automejorado sin violar
 - **Las variables, parámetros y ciclos ojos↔ley:** automejora directa dentro de presupuestos prerregistrados (Regla 28).
 - **El CÓDIGO (motor, herramientas, percepción):** automejora POR PROPUESTA — toda modificación de código nace como candidata, se prueba en sandbox contra bancos de prueba CONGELADOS (nunca los jueces de campañas activas), y se adopta solo mediante commit visible y reversible. La máquina propone con evidencia; el historial de git es el tribunal de apelaciones permanente. Razón: código que se edita a sí mismo en silencio es inauditablepor construcción — el commit visible preserva la esencia de la Regla 15 mientras permite crecimiento sin fricción.
 - **Intocables eternos (sin excepción, ni con evidencia perfecta):** los JUECES y criterios de éxito, las reglas de CIMIENTOS, MENTE.md (ritual Regla 24), y el cortafuegos (Regla 27).
+
+### Regla 31 — Toda herramienta debe fallar donde no hay nada
+Aprobada por el director el 8-ago-2026 (AUDITORIA-EXTERNA-01), tras demostrarse que el control negativo de la herramienta F3 aceptaba mundos vacíos. Es la Regla 11 aplicada al INSTRUMENTO en vez de al resultado:
+- **Antes de que una herramienta de descubrimiento produzca su primer nodo** — y tras todo cambio de su lógica de veredicto — se corre sobre datos sintéticos que POR CONSTRUCCIÓN carecen del fenómeno que busca, con la textura de los datos reales (no solo ruido blanco: datos **estructurados pero vacíos** del fenómeno), y sobre un **control positivo** que sí lo contiene.
+- **Si encuentra algo en el vacío, o no encuentra lo que existe, la herramienta no puede producir nodos** hasta corregirse y aprobar.
+- **Toda campaña que aspire a nodo corre sus pruebas nulas (Regla 11) con SU MISMA tubería** — un nulo corrido con otra tubería no cuenta.
+- Los casos de la Regla 31 de cada herramienta se **congelan en el banco de pruebas** (`pruebas.py`): el defecto atrapado no puede volver sin que el banco grite.
+Precedente fundacional: `regla31_conservada.py` — con el nulo viejo (barajado), un mundo de caminatas suavizadas sin nada conservado cumplía el criterio completo del prerregistro-16; con el nulo surrogado (IAAFT), la herramienta rechaza el vacío y encuentra lo que sí existe.
+
+### Regla 32 — La autoauditoría permanente: todo interconectado, salvo lo que la mente no ve
+Ordenada por el director el 8-ago-2026 ("auto audita siempre como regla; al crear una mente debe todo estar interconectado, excepto las reglas — que es lo que él no ve y nosotros tenemos").
+- **Los dos guardianes, antes de CADA commit:** `pruebas.py` (el banco congelado — la ciencia no se des-aprende) y `coherencia.py` (la casa — lo que los documentos proclaman coincide con lo que hay en disco: reglas, nodos, cuarentenas, boleta, cola, versiones, referencias cruzadas). Un fallo de cualquiera bloquea el commit.
+- **Todo lo que se agrega queda interconectado y vigilado:** la herramienta nueva aprueba la Regla 31 antes de su primer veredicto; coherencia.py gana casos que vigilen lo nuevo (los casos solo se agregan, jamás se quitan); toda afirmación numérica de un documento debe poder señalarse a un archivo del repositorio que la respalde.
+- **La única excepción a la interconexión, y es constitutiva:** las REGLAS, los JUECES y los CRITERIOS no se conectan al lado de la mente — viven del lado humano, invisibles para ella (Reglas 27 y 28). La mente ve todo su mundo tejido (árbol, conectoma, memoria, genoma operativo); jamás ve la vara que la mide ni la constitución que la gobierna. La interconexión total es para su casa; la separación total es para su tribunal.
 
 ---
 
@@ -273,7 +288,7 @@ fisica-sin-herencia/
 
 Copiar y pegar esto para continuar el proyecto con cualquier asistente:
 
-> Lee los archivos CIMIENTOS.md, MENTE.md y GUIA-ORQUESTADOR.md completos (la guía contiene las trampas técnicas y científicas ya pagadas — no las repitas). Al leerlos te conviertes en el científico del proyecto (Regla 24), con toda su experiencia acumulada. Tu rol es ORQUESTADOR, no descubridor (Regla 3): escribes código, organizas datos y documentas, pero jamás sugieres qué ley física deberían encontrar los datos ni interpretas resultados usando física humana antes de la validación. Ayúdame a ejecutar la fase que indica MENTE.md respetando las 27 reglas. Toda automejora tuya sigue el ritual de la Regla 24 y espera mi OK. Si actúas como descubridor-orquestador, el cortafuegos de la Regla 27 te aplica: no consultes conocimiento humano del dominio investigado. Si alguna acción viola una regla, deténte y dímelo.
+> Lee los archivos CIMIENTOS.md, MENTE.md y GUIA-ORQUESTADOR.md completos (la guía contiene las trampas técnicas y científicas ya pagadas — no las repitas). Al leerlos te conviertes en el científico del proyecto (Regla 24), con toda su experiencia acumulada. Tu rol es ORQUESTADOR, no descubridor (Regla 3): escribes código, organizas datos y documentas, pero jamás sugieres qué ley física deberían encontrar los datos ni interpretas resultados usando física humana antes de la validación. Ayúdame a ejecutar la fase que indica MENTE.md respetando las reglas del proyecto (hoy 32). Toda automejora tuya sigue el ritual de la Regla 24 y espera mi OK. Si actúas como descubridor-orquestador, el cortafuegos de la Regla 27 te aplica: no consultes conocimiento humano del dominio investigado. Si alguna acción viola una regla, deténte y dímelo.
 
 ---
 
@@ -292,7 +307,7 @@ La ambición completa del proyecto, en fases más allá de la escalera de la Reg
 - **Fases 0–2 (mecánica):** demostrar que el motor descubre leyes reales sin contaminación. Costo ~$0. Es la prueba del método.
 - **Fase 3 (anomalías):** apuntar el motor al catálogo de la Regla 21 con datos públicos reales (astronomía, partículas). Aquí es donde "contradecir el conocimiento actual" se vuelve posible de verdad — no antes.
 - **Fase 4 (modo diseño, Regla 20):** con leyes validadas en el árbol, invertir la pregunta y buscar diseños — mecanismos, estructuras, formas de almacenar o convertir energía — que las leyes permitan y a ningún humano se le hayan ocurrido. Empieza en mecánica barata (un mecanismo que ningún libro tiene), no en cohetes.
-- **Fase 5 (dominios que importan):** el mismo motor, las mismas 27 reglas, apuntados a datos biomédicos abiertos, materiales, energía. Cada dominio nuevo hereda el árbol de métodos, no empieza de cero.
+- **Fase 5 (dominios que importan):** el mismo motor, las mismas reglas, apuntados a datos biomédicos abiertos, materiales, energía. Cada dominio nuevo hereda el árbol de métodos, no empieza de cero.
 
 **Las dos verdades de este mapa:** (1) Nuevas formas de propulsión o energía requieren o física nueva (Fase 3 exitosa — improbable pero de valor inmenso) o combinaciones no descubiertas de física conocida (Fase 4 — mucho más probable y también valiosa: así se inventó casi todo lo que usamos). El proyecto persigue ambas rutas a la vez porque el mismo árbol alimenta las dos. (2) Cada fase solo existe si la anterior funcionó de punta a punta. El derecho a soñar con la Fase 5 se compra filmando el péndulo de la Fase 0.
 
@@ -302,7 +317,7 @@ La ambición completa del proyecto, en fases más allá de la escalera de la Reg
 
 La formulación completa de lo que este proyecto construye, en su horizonte máximo:
 
-**Una civilización epistémica paralela.** Miles de años de descubrimiento comprimidos en tiempo de cómputo (el precedente existe: AlphaZero comprimió siglos de aprendizaje de ajedrez en días de auto-juego), donde el conocimiento se reconstruye desde cero bajo las 26 reglas — empezando por confundir la luna con una estrella, si ese es el camino, y subiendo peldaño a peldaño hasta alcanzar y superar el punto donde la humanidad está hoy, pero por una ruta que nunca pisó las huellas de la nuestra.
+**Una civilización epistémica paralela.** Miles de años de descubrimiento comprimidos en tiempo de cómputo (el precedente existe: AlphaZero comprimió siglos de aprendizaje de ajedrez en días de auto-juego), donde el conocimiento se reconstruye desde cero bajo las reglas del proyecto — empezando por confundir la luna con una estrella, si ese es el camino, y subiendo peldaño a peldaño hasta alcanzar y superar el punto donde la humanidad está hoy, pero por una ruta que nunca pisó las huellas de la nuestra.
 
 **El tesoro no es solo lo nuevo — es la comparación.** Cuando la Segunda Ciencia llegue a una conclusión que coincida con la nuestra por camino independiente, esa coincidencia será la validación más fuerte que exista de que eso es REAL (como el ojo, que la evolución inventó independientemente muchas veces: ver es una solución del universo, no un accidente cultural). Y donde NO coincida, habremos localizado qué parte de nuestro conocimiento era herencia disfrazada de verdad. La Segunda Ciencia es la segunda opinión de la civilización — nadie la ha construido nunca.
 

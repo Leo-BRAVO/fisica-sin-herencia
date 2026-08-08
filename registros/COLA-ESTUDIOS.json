@@ -19,6 +19,56 @@
       "datos": "datos/procesados/dp_morpheus",
       "salida": "resultados/mente-reintento-e2-dp-morpheus",
       "args": "--semillas 5 --paralelo 1 --suavizar 3 --retardos 2 --maxsize 25 --niter 800 --jueces 3 6 9"
+    },
+    {
+      "id": "aud01-f3-caida-surrogado",
+      "origen": "AUDITORIA-EXTERNA-01 (Regla 31)",
+      "motivo": "decide la cuarentena de E2-N-004: re-correr F3 caida con el nulo corregido",
+      "tipo": "re-analisis-herramienta",
+      "herramienta": "conservada.py",
+      "estado": "pendiente",
+      "datos": "datos/procesados/caida",
+      "args": "--jueces 3 7 11 --grado 2 --centrar --nulo surrogado --barajados 20"
+    },
+    {
+      "id": "aud01-f3-michigan-surrogado",
+      "origen": "AUDITORIA-EXTERNA-01 (Regla 31)",
+      "motivo": "decide la cuarentena de E2-N-004: re-correr F3 Michigan con el nulo corregido",
+      "tipo": "re-analisis-herramienta",
+      "herramienta": "conservada.py",
+      "estado": "pendiente",
+      "datos": "datos/procesados/mendeley_epoca2",
+      "args": "--jueces 3 --grado 2 --nulo surrogado --barajados 20"
+    },
+    {
+      "id": "aud01-nulo-e2-mendeley-i2",
+      "origen": "AUDITORIA-EXTERNA-01 (Regla 31)",
+      "motivo": "Regla 11 con la tubería propia: verdugo surrogado de la campana insignia E2",
+      "tipo": "re-analisis",
+      "estado": "pendiente",
+      "datos": "datos/procesados/mendeley_epoca2",
+      "salida": "resultados/aud01-nulo-e2-mendeley-i2",
+      "args": "--semillas 2 --paralelo 1 --suavizar 3 --retardos 2 --maxsize 25 --niter 400 --jueces 3 --nulo surrogado"
+    },
+    {
+      "id": "aud01-nulo-p14-final",
+      "origen": "AUDITORIA-EXTERNA-01 (Regla 31)",
+      "motivo": "Regla 11 con la tubería propia: verdugo surrogado de los latentes autoelegidos",
+      "tipo": "re-analisis",
+      "estado": "pendiente",
+      "datos": "datos/procesados/p14_lat4_std",
+      "salida": "resultados/aud01-nulo-p14-final",
+      "args": "--semillas 2 --paralelo 1 --maxsize 20 --niter 400 --jueces 3 6 9 --nulo surrogado"
+    },
+    {
+      "id": "aud01-dimension-tres-mundos",
+      "origen": "AUDITORIA-EXTERNA-01 (replanteo de la auditoria del pendulo)",
+      "motivo": "la primera pregunta que faltaba: cuantas variables esconde cada sistema",
+      "tipo": "re-analisis-herramienta",
+      "herramienta": "dimension.py",
+      "estado": "pendiente",
+      "datos": "datos/procesados/dp_morpheus + caida + mendeley_epoca2",
+      "args": "(una corrida por carpeta)"
     }
   ]
 }

@@ -2,12 +2,13 @@
 # Evalúa las ecuaciones descubiertas en un trial sobre OTRO trial, sin re-entrenar.
 # Uso: python transferir.py <semilla_origen.json> <datos_destino.csv>
 
+import os
 import sys
 import json
 
 import numpy as np
 
-sys.path.insert(0, __file__.rsplit("\\", 1)[0])
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))  # portable (antes solo Windows)
 from descubrir import preparar, dividir_por_tiempo, error_linea_base
 
 

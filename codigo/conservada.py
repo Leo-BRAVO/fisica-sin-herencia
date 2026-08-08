@@ -12,21 +12,28 @@
 # transforma de vuelta c = L^-T w.
 #
 # Control negativo (misma lógica de la Regla 11 que usa descubrir.py): se repite
-# EXACTAMENTE el mismo cálculo con el orden temporal de cada réplica de entrenamiento
-# permutado al azar (independiente por réplica, rng semilla fija 0), --barajados veces, y
-# se guarda el autovalor MÍNIMO de cada corrida. El score de cada candidata real es su
-# lambda dividido por la mediana de esos mínimos barajados: si una candidata real no es al
-# menos 5 veces más constante que el piso del azar (score < 0.2), no se considera seria.
+# EXACTAMENTE el mismo cálculo sobre versiones NULAS de las réplicas de entrenamiento,
+# generadas con el propio mecanismo nulo=... de preparar() (la falsificación se hace a las
+# SEÑALES antes de calcular los cambios — así la relación señal/cambio queda coherente),
+# --barajados veces, y se guarda el autovalor MÍNIMO de cada corrida. El score de cada
+# candidata real es su lambda dividido por la mediana de esos mínimos nulos: si una
+# candidata real no es al menos 5 veces más constante que el piso del nulo (score < 0.2),
+# no se considera seria.
+#
+# REGLA 31 / AUDITORÍA EXTERNA 01 (8-ago-2026): el nulo por defecto es "surrogado"
+# (IAAFT — conserva el espectro y la distribución de cada señal, destruye fases y
+# acoples). El nulo "barajado" destruye TAMBIÉN la suavidad temporal, y contra él
+# cualquier función suave de señales suaves parece "conservada": la prueba de la Regla 31
+# (réplicas de ruido suavizado sin nada conservado) mostró que barajado acepta falsos
+# positivos con score 0.0004 y jueces < 0.2, mientras que surrogado los rechaza.
+# barajado se mantiene disponible SOLO como referencia histórica, nunca para veredictos.
 #
 # Validación en jueces (réplicas fuera del entrenamiento): para las candidatas serias se
 # compara, réplica por réplica, la varianza de la candidata evaluada en los datos reales
-# contra su varianza evaluada en una reconstrucción barajada de ESA MISMA réplica (usando
-# el propio mecanismo nulo="barajado" de preparar(), que permuta las señales ANTES de
-# calcular los cambios — así los cambios barajados quedan hechos de pares al azar y dejan
-# de ser derivadas reales, lo que rompe cualquier candidata que dependa de ellos).
+# contra su varianza evaluada en la reconstrucción NULA de ESA MISMA réplica (mismo nulo).
 #
 # Uso: python conservada.py <carpeta_csvs> [--jueces 3 7 11] [--grado 2] [--barajados 20]
-#      [--centrar] [--top 3]
+#      [--nulo surrogado|barajado] [--centrar] [--top 3]
 
 import os
 import glob
@@ -91,15 +98,22 @@ def calcular_lambdas(bases):
     return resolver_generalizado(C, D)
 
 
-def barajar_minimos(bases, barajados):
-    """Control negativo: permuta el orden temporal de cada réplica (independiente por
-    réplica, mismo rng con semilla fija 0 avanzando entre corridas) y repite EXACTAMENTE
-    el mismo cálculo --barajados veces. Devuelve la lista de autovalores MÍNIMOS."""
+def nulos_minimos(csvs_tr, grado, mu, sd, corridas, nulo, centrar):
+    """Control negativo a nivel de SEÑAL (Regla 31): cada corrida genera versiones nulas
+    de las réplicas de entrenamiento con preparar(nulo=...) — surrogado IAAFT por defecto
+    (conserva suavidad y distribución, destruye fases/acoples) o barajado (referencia
+    histórica) — reconstruye la base de funciones, la estandariza con las MISMAS
+    estadísticas del entrenamiento real, y repite el cálculo. Devuelve la lista de
+    autovalores MÍNIMOS (rng semilla fija 0 avanzando entre corridas: determinista)."""
     rng = np.random.default_rng(0)
     minimos = []
-    for _ in range(barajados):
-        barajadas = [b[rng.permutation(len(b))] for b in bases]
-        lam, _ = calcular_lambdas(barajadas)
+    for _ in range(corridas):
+        bases_nulas = []
+        for c in csvs_tr:
+            Xn = preparar(c, nulo=nulo, rng=rng, centrar=centrar)[0]
+            bn, _ = construir_base(Xn, grado)
+            bases_nulas.append((bn - mu) / sd)
+        lam, _ = calcular_lambdas(bases_nulas)
         minimos.append(float(lam.min()))
     return minimos
 
@@ -107,6 +121,19 @@ def barajar_minimos(bases, barajados):
 def expresion_top6(c, nombres, n=6):
     orden = np.argsort(-np.abs(c))[:n]
     return " ".join(f"{c[i]:+.3f}*{nombres[i]}" for i in orden)
+
+
+def ratio_juez(csv_j, c, bj_real, mu, sd, grado, nulo, rng, centrar):
+    """Nivel B — el verdugo decisivo: varianza de la candidata en la réplica juez real
+    dividida por su varianza en la reconstrucción NULA de esa misma réplica. La lección
+    de la Regla 31: el score de entrenamiento (nivel A) puede sobreajustar en señales no
+    estacionarias; son los JUECES con nulo surrogado quienes separan lo conservado de lo
+    inventado (el mundo vacío pasa A y muere aquí)."""
+    Xj_nulo = preparar(csv_j, nulo=nulo, rng=rng, centrar=centrar)[0]
+    bj_nulo = (construir_base(Xj_nulo, grado)[0] - mu) / sd
+    v_real = float(np.var(bj_real @ c))
+    v_nulo = float(np.var(bj_nulo @ c))
+    return v_real / v_nulo if v_nulo > 0 else float("inf")
 
 
 def main():
@@ -119,7 +146,10 @@ def main():
     ap.add_argument("--grado", type=int, default=2,
                      help="1 = solo v_i ; 2 (o mas) = agrega tambien los productos v_i*v_j")
     ap.add_argument("--barajados", type=int, default=20,
-                     help="numero de corridas del control negativo (orden temporal permutado)")
+                     help="numero de corridas del control negativo")
+    ap.add_argument("--nulo", choices=["surrogado", "barajado"], default="surrogado",
+                     help="tipo de control negativo (Regla 31): surrogado IAAFT (defecto, "
+                          "el unico valido para veredictos) o barajado (referencia historica)")
     ap.add_argument("--centrar", action="store_true",
                      help="centra cada replica en su propia media antes de construir las variables")
     ap.add_argument("--top", type=int, default=3,
@@ -168,17 +198,21 @@ def main():
     # Pasos 5-6: B, dB, C, D y el problema generalizado sobre el entrenamiento agrupado
     lam, Cvec = calcular_lambdas(bases_tr)
 
-    # Paso 7: control negativo (barajado) y score
-    minimos = barajar_minimos(bases_tr, args.barajados)
+    # Paso 7: control negativo a nivel de senal (Regla 31) y score
+    csvs_tr = [csvs[i] for i in idx_tr]
+    minimos = nulos_minimos(csvs_tr, args.grado, mu, sd, args.barajados, args.nulo, args.centrar)
     piso = float(np.median(minimos))
     score = lam / piso if piso > 0 else np.full(F, np.inf)
     seria = score < 0.2
 
     print("=== CANTIDADES CONSERVADAS (control negativo integrado) ===")
     print(f"carpeta: {args.carpeta}")
+    if args.nulo != "surrogado":
+        print("AVISO REGLA 31: nulo 'barajado' es solo referencia historica — NO sirve para veredictos "
+              "(acepta falsos positivos en senales suaves; ver AUDITORIA-EXTERNA-01).")
     print(f"replicas: {len(csvs)} total | entrenamiento: {len(idx_tr)} | jueces (1-indexado): {sorted(j + 1 for j in idx_te)}")
     print(f"variables base v1..v{k} (columnas de X: senales + cambios) | grado={args.grado} -> {F} funciones en la base")
-    print(f"piso del azar (mediana de {args.barajados} autovalores minimos barajados): {piso:.6g}")
+    print(f"piso del nulo '{args.nulo}' (mediana de {args.barajados} autovalores minimos): {piso:.6g}")
     print()
     print(f"{'idx':>4} {'lambda':>12} {'score':>10} {'seria':>6}  expresion (6 terminos de mayor |coef|)")
     tope = min(F, 30)
@@ -201,16 +235,8 @@ def main():
         ratios = {}
         for pos in idx_te:
             csv_j = csvs[pos]
-            bj_real = bases_std[pos]  # ya construida y estandarizada arriba
-            Xj_baraj = preparar(csv_j, nulo="barajado", rng=rng_juez, centrar=args.centrar)[0]
-            bj_baraj_cruda, _ = construir_base(Xj_baraj, args.grado)
-            bj_baraj = (bj_baraj_cruda - mu) / sd
-            f_real = bj_real @ c
-            f_baraj = bj_baraj @ c
-            v_real = float(np.var(f_real))
-            v_baraj = float(np.var(f_baraj))
-            ratio = v_real / v_baraj if v_baraj > 0 else float("inf")
-            ratios[os.path.basename(csv_j)] = ratio
+            ratios[os.path.basename(csv_j)] = ratio_juez(
+                csv_j, c, bases_std[pos], mu, sd, args.grado, args.nulo, rng_juez, args.centrar)
         validaciones.append({"indice": int(i), "expresion": expresion_top6(c, nombres),
                               "lambda": float(lam[i]), "score": float(score[i]), "ratios_jueces": ratios})
         print(f"candidata {i} (lambda={lam[i]:.6g}, score={score[i]:.4f}): {expresion_top6(c, nombres)}")
@@ -226,6 +252,7 @@ def main():
         "csvs": [os.path.basename(c) for c in csvs],
         "jueces_1indexado": sorted(args.jueces),
         "grado": args.grado,
+        "nulo": args.nulo,
         "barajados": args.barajados,
         "centrar": bool(args.centrar),
         "top": args.top,
@@ -234,8 +261,8 @@ def main():
         "nombres_base": nombres,
         "n_entrenamiento": len(idx_tr),
         "n_jueces": len(idx_te),
-        "lambdas_barajados_minimos": minimos,
-        "piso_barajado": piso,
+        "lambdas_nulos_minimos": minimos,
+        "piso_nulo": piso,
         "candidatas": [
             {"indice": i, "lambda": float(lam[i]), "score": float(score[i]), "seria": bool(seria[i]),
              "expresion_top6": expresion_top6(Cvec[:, i], nombres),

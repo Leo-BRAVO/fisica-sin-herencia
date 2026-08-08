@@ -4,6 +4,19 @@
 ## Quién eres al leer esto
 Eres el nuevo orquestador del proyecto Física sin Herencia del director Leo. Tu rol (Regla 3): escribes código, organizas datos, documentas en español llano, propones — JAMÁS sugieres qué física deberían encontrar los datos, jamás interpretas antes de validar, jamás nombras variables con conceptos humanos. El descubridor es el motor simbólico y los ojos neuronales, nunca tú.
 
+## LA AUTOAUDITORÍA PERMANENTE (orden del director, 8-ago-2026 — sin excepciones)
+Antes de CADA commit, el orquestador corre y aprueba AMBOS guardianes:
+1. `python codigo/pruebas.py` — el banco congelado (vigila la ciencia: las lecciones no se
+   des-aprenden; ya atrapó al propio orquestador dos veces en una sesión).
+2. `python codigo/coherencia.py` — la casa (vigila la interconexión: que lo que los documentos
+   proclaman coincida con lo que hay en disco — reglas, nodos, cuarentenas, boleta, cola,
+   versiones, referencias cruzadas).
+Además, cada vez que se AGREGA algo nuevo (herramienta, documento, gen, regla): (a) la herramienta
+nueva aprueba la Regla 31 antes de su primer veredicto, (b) coherencia.py gana los casos que
+vigilen lo nuevo (solo se agregan casos, jamás se quitan), y (c) toda afirmación numérica en un
+documento debe poder señalarse a un archivo del repo que la respalde. Un documento que proclama
+lo que el disco no muestra es un fallo de coherencia, igual que un código que rompe el banco.
+
 ## LAS PROHIBICIONES ETERNAS (violarlas destruye el proyecto)
 1. **Los JUECES y criterios de éxito son intocables e invisibles para la mente** — jamás se entrenan con ellos, jamás se seleccionan variantes con ellos, jamás se ajustan post-hoc. Es la muralla del director.
 2. **Cero conocimiento humano al núcleo:** ni ecuaciones, ni nombres físicos (usa s1, z4, v7…), ni modelos pre-entrenados (los ojos SIEMPRE desde cero), ni texto. Los informes del comparador (registros/COMPARADOR-*.md) viven del lado humano y JAMÁS entran a prompts/datos/herramientas de la mente.
@@ -12,6 +25,7 @@ Eres el nuevo orquestador del proyecto Física sin Herencia del director Leo. Tu
 5. **Automejora:** variables/parámetros libres dentro de presupuestos prerregistrados (Regla 28); código por PROPUESTA con sandbox y commit visible (Regla 30); reglas/objetivos/jueces: nunca.
 
 ## LA CIENCIA — lecciones pagadas con sangre (no las re-aprendas)
+- **REGLA 31 (8-ago-2026, AUDITORIA-EXTERNA-01 — léela completa):** toda herramienta nueva debe FALLAR en datos estructurados-pero-vacíos y ACERTAR en un control positivo antes de su primer nodo; sus casos se congelan en el banco. El nulo de F3 (barajado) no discriminaba — hoy es surrogado IAAFT y `barajado` es solo referencia histórica. Toda campaña que aspire a nodo corre `--nulo` con SU tubería (descubrir_pool ya lo tiene). E2-N-004 está en CUARENTENA hasta la re-corrida (encolada).
 - **Vara mínima:** base trivial (velocidad Y media, POR SEÑAL) + rival lineal + rival del árbol (conectoma). Un umbral sin rival trivial no discrimina (INF-06).
 - **Piso de ruido ANTES de prerregistrar** (autopsia.piso_de_ruido); umbral = max(50% base, 3× piso). Exigir menos que el piso = fracasos falsos del 1-2% (INF-07/08).
 - **Unidades:** SUMA de MSE por señal, en todos lados igual.

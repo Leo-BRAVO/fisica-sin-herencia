@@ -79,6 +79,78 @@ c_orig = abs(np.corrcoef(s1, s2)[0, 1]); c_surr = abs(np.corrcoef(f1, f2)[0, 1])
 caso("surrogado DESTRUYE el acople entre senales",
      c_surr < c_orig * 0.35, f"original={c_orig:.2f} surrogado={c_surr:.2f}")
 
+print("== REGLA 31 (agregado 8-ago-2026): el criterio completo A+B de conservada ==")
+# Caso congelado: replicas de ruido SUAVIZADO e independientes (nada conservado, nada
+# compartido). Con el nulo viejo (barajado) el criterio completo de los prerregistros
+# 16-17 ACEPTABA este mundo vacio (score 0.0004 y jueces < 0.2 — habria parido un nodo).
+# Con surrogado (IAAFT) los JUECES lo rechazan. Leccion tallada aqui: en senales no
+# estacionarias el score de entrenamiento (nivel A) puede sobreajustar; el verdugo
+# decisivo es el nivel B con nulo surrogado.
+import tempfile as _tmp, shutil as _sh
+from regla31_conservada import mundo_vacio as _mv, mundo_lleno as _ml, \
+    escribir_replicas as _er, correr_mundo as _cm
+# Parametros IDENTICOS a la corrida oficial de regla31_conservada.py (6 replicas, T=600,
+# 20 corridas nulas): miniaturizarlo hace trampas — con 2 replicas de entrenamiento y senos
+# monocromaticos, el surrogado conserva una combinacion por accidente (leccion documentada).
+_dir31 = _tmp.mkdtemp(prefix="p31_")
+_csvs_v = _er(os.path.join(_dir31, "v"), _mv(np.random.default_rng(12345)))
+_csvs_l = _er(os.path.join(_dir31, "l"), _ml(np.random.default_rng(54321)))
+_sv, _nv, _jv = _cm(_csvs_v, "surrogado", 20)
+caso("surrogado: el mundo vacio NO pare nodo",
+     not (_nv > 0 and _jv), f"score={_sv:.4g} serias={_nv} jueces={_jv}")
+_sb, _nb, _jb = _cm(_csvs_v, "barajado", 20)
+caso("barajado daba 5 'serias' en el mundo vacio (defecto historico documentado)",
+     _nb > 0, f"score={_sb:.4g} serias={_nb}")
+_sl, _nl, _jl = _cm(_csvs_l, "surrogado", 20)
+caso("surrogado: el mundo lleno SI pare nodo (s1^2+s2^2 encontrada)",
+     _nl > 0 and _jl, f"score={_sl:.4g} serias={_nl} jueces={_jl}")
+_sh.rmtree(_dir31, ignore_errors=True)
+
+print("== GEN G2 (curiosidad2, metrica 18b FIRMADA): aburrimiento, frescura, records limpios ==")
+# NOTA DE GOBERNANZA: estos casos REEMPLAZAN a los del prereg-18 original (8-ago-2026) porque
+# prueban la metrica: la 18a fracaso su backtest (INFORME-21) y la 18b fue firmada por el
+# director. El ESPIRITU del caso (Regla 31 del gen: sin progreso -> aburrimiento; jamas
+# interes inventado) es identico y queda congelado aqui.
+from curiosidad2 import prioridades as _prio, UMBRAL as _umb, H as _H
+_prefijos = ["oficial-trial1", "peldano2-pendulo46", "dp-morpheus", "p13-latente",
+             "caida-libre", "conservadas-x"]
+# memoria plana LARGA: dos pasadas por todas las regiones con el MISMO g — los records de
+# todas quedan viejos (mas alla del horizonte H) y nada progresa.
+_mem_plana = [{"campana": p, "lo_trivial": 4.0, "mi_mejor_esfuerzo": 1.0}
+              for _v in range(3) for p in _prefijos]
+_pp = _prio(_mem_plana)
+caso("memoria sin progreso -> aburrimiento universal (todas <= umbral)",
+     all(p <= _umb for p in _pp.values()), f"{_pp}")
+_mem_viva = list(_mem_plana) + [{"campana": "oficial-trial1", "lo_trivial": 4.0, "mi_mejor_esfuerzo": 0.25}]
+_pv = _prio(_mem_viva)
+caso("record que mejora -> progreso positivo SOLO en su region",
+     _pv["mendeley"] > _umb and all(_pv[r] <= _umb for r in _pv if r != "mendeley"), f"{_pv}")
+# frescura: un record ganado hace mas de H eventos ya no cuenta como progreso
+_mem_rancia = list(_mem_viva) + [{"campana": p, "lo_trivial": 4.0, "mi_mejor_esfuerzo": 1.0}
+                                 for p in _prefijos[:1] * _H]
+_pr = _prio(_mem_rancia)
+caso("frescura 18b: el record viejo deja de contar como progreso",
+     _pr["mendeley"] <= _umb, f"mendeley={_pr['mendeley']}")
+# records limpios: una corrida interna (-inner-) con g gigante NO mueve el record
+_mem_inner = list(_mem_plana) + [{"campana": "p14-inner-d4", "lo_trivial": 100.0, "mi_mejor_esfuerzo": 0.001}]
+_pi = _prio(_mem_inner)
+caso("records limpios 18b: las corridas internas no mueven records",
+     _pi["dp-latentes-propios"] <= _umb, f"dp-latentes={_pi['dp-latentes-propios']}")
+
+print("== dimension intrinseca: TwoNN y participacion ==")
+from dimension import twonn, participacion
+_rngD = np.random.default_rng(4)
+# curva 1-D (circulo) embebida en 4 dimensiones: TwoNN debe decir ~1, participacion ~2
+_t = _rngD.uniform(0, 2 * np.pi, 800)
+_C = np.column_stack([np.cos(_t), np.sin(_t), 0.5 * np.cos(_t), -0.2 * np.sin(_t)])
+_d1 = twonn(_C + _rngD.normal(0, 1e-4, _C.shape))
+caso("TwoNN ~1 en una curva embebida en 4D", _d1 is not None and 0.7 < _d1 < 1.5, f"d={_d1}")
+# nube llena en 3D: TwoNN ~3
+_N3 = _rngD.normal(size=(800, 3))
+_d3 = twonn(_N3)
+caso("TwoNN ~3 en nube llena 3D", _d3 is not None and 2.4 < _d3 < 3.7, f"d={_d3}")
+caso("participacion ~3 en nube llena 3D", 2.5 < participacion(_N3) <= 3.05, f"pr={participacion(_N3):.2f}")
+
 print("== canonizar: tarjeta de identidad ==")
 t = tarjeta("(v1 + v2) * 0.5 + 3.0", 4)
 caso("desplazamiento = f(0)", abs(t["desplazamiento"] - 3.0) < 1e-6)

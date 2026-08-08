@@ -38,8 +38,11 @@ def proponer():
     if not os.path.exists(MEM):
         print("sin memoria; nada que proponer"); return
     recuerdos = [json.loads(l) for l in open(MEM, encoding="utf-8") if l.strip()]
-    # su criterio: donde quedo hueco (mejora < 50%) y tiene receta para reintentar mas fuerte
-    huecos = [r for r in recuerdos if r.get("hueco") and r["campana"] in RECETAS]
+    # su criterio: donde quedo hueco (mejora < 50%) y tiene receta para reintentar mas fuerte.
+    # Las pruebas nulas (Regla 11) jamas cuentan: son verdugos, no campanas (AUD-EXT-01).
+    huecos = [r for r in recuerdos
+              if r.get("hueco") and not r.get("nulo")
+              and not r["campana"].startswith("nulo") and r["campana"] in RECETAS]
     huecos.sort(key=lambda r: (r.get("cuanto_mejore") or 0))  # peor primero: mas curiosidad
     cola = cargar_cola()
     existentes = {i["id"] for i in cola["items"]}
