@@ -132,9 +132,32 @@ que las regiones grandes dominan el error y omitir un brazo fino cuesta casi nad
 **Y aquí está lo que el director dijo y tenía razón:** *"si tenemos algo bueno no hay que
 desecharlo, solo repensarlo con los problemas que validamos"*. Probé primero cambiar los ojos
 (ponderar la reconstrucción por cuánto cambia cada píxel): mejoró el brazo apenas y **destrozó la
-escena** (+0.66 → −0.17). No era la pieza rota. **La pieza rota era el cuerpo que los ojos tenían
-que mirar** — un brazo girando como hélice es casi imposible de ver. Con el cuerpo nuevo, la
-medición se repite; los números van en el registro de esta corrida.
+escena** (+0.66 → −0.17). No era la pieza rota — o no era la única.
+
+### El hito 0 con el cuerpo nuevo: MEJORA, pero SIGUE FRACASANDO
+Repetido con el cuerpo ganador (topes articulares), 12 episodios × 1500 cuadros, 12 épocas:
+
+| latente | obedece en | techo de su nulo | |
+|---|---|---|---|
+| z1 | 0.38 | 0.38 | empata con su nulo |
+| **z4** | **0.38** | **0.34** | **supera su nulo** — pero no el piso de 0.40 |
+| z2, z3 | 0.24 | 0.31 / 0.48 | por debajo |
+| z0, z5, z6, z7 | ≤ 0.07 | 0.34–0.55 | por debajo |
+
+**Cuerpo hallado: ninguno de 8.** Con el cuerpo viejo los latentes llegaban a 0.34 como máximo;
+ahora hay uno en 0.38 que **sí supera su nulo** y se queda a 0.02 del piso. La señal subió y no
+alcanzó. **El hito 0 sobre latentes visuales NO está conseguido**, y no voy a bajar el piso: ya
+lo movimos una vez con el prerregistro-23 y esa vez estaba justificada por una derivación; esta no
+lo estaría.
+
+**Nivel B:** fuerza 0.0005 contra techo del nulo 0.0005 — no supera. Correlación de la dirección
+hallada con la altura real de los objetos: 0.068. Sin nivel A no hay nivel B.
+
+**Diagnóstico que queda en pie:** el cuerpo era *una* de las piezas rotas y arreglarlo movió la
+aguja; la otra sigue siendo la representación. Es la misma conclusión que la revisión de literatura
+anticipó en `GIMNASIO.md` §1.5: sin estructura de objetos, un autoencoder gasta sus dimensiones en
+disposición espacial. Y es coherente con el INFORME-33 del mismo día: unos ojos que codifican
+escena y no movimiento producen latentes cuya predictibilidad sobrevive al barajado.
 
 ---
 

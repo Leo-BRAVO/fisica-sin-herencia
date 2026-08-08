@@ -3,75 +3,83 @@
   "nivel_a": [
     {
       "variable": 0,
-      "obedece_en": 0.1034,
-      "nulo_media": 0.1276,
-      "nulo_techo": 0.2759,
+      "obedece_en": 0.069,
+      "nulo_media": 0.169,
+      "nulo_techo": 0.3793,
       "es_mia": false,
-      "margen": -0.2966,
-      "horizonte": 8
+      "margen": -0.331,
+      "horizonte": 8,
+      "ventanas": 29
     },
     {
       "variable": 1,
-      "obedece_en": 0.3103,
-      "nulo_media": 0.1724,
-      "nulo_techo": 0.3448,
+      "obedece_en": 0.3793,
+      "nulo_media": 0.2172,
+      "nulo_techo": 0.3793,
       "es_mia": false,
-      "margen": -0.0897,
-      "horizonte": 8
+      "margen": -0.0207,
+      "horizonte": 8,
+      "ventanas": 29
     },
     {
       "variable": 2,
-      "obedece_en": 0.069,
-      "nulo_media": 0.1103,
-      "nulo_techo": 0.2069,
+      "obedece_en": 0.2414,
+      "nulo_media": 0.1276,
+      "nulo_techo": 0.3103,
       "es_mia": false,
-      "margen": -0.331,
-      "horizonte": 8
+      "margen": -0.1586,
+      "horizonte": 8,
+      "ventanas": 29
     },
     {
       "variable": 3,
-      "obedece_en": 0.2759,
-      "nulo_media": 0.169,
-      "nulo_techo": 0.4138,
+      "obedece_en": 0.2414,
+      "nulo_media": 0.2414,
+      "nulo_techo": 0.4828,
       "es_mia": false,
-      "margen": -0.1379,
-      "horizonte": 8
+      "margen": -0.2414,
+      "horizonte": 8,
+      "ventanas": 29
     },
     {
       "variable": 4,
-      "obedece_en": 0.3448,
-      "nulo_media": 0.1621,
-      "nulo_techo": 0.3793,
+      "obedece_en": 0.3793,
+      "nulo_media": 0.1897,
+      "nulo_techo": 0.3448,
       "es_mia": false,
-      "margen": -0.0552,
-      "horizonte": 8
+      "margen": -0.0207,
+      "horizonte": 8,
+      "ventanas": 29
     },
     {
       "variable": 5,
-      "obedece_en": 0.3103,
-      "nulo_media": 0.1621,
-      "nulo_techo": 0.3793,
+      "obedece_en": 0.069,
+      "nulo_media": 0.2862,
+      "nulo_techo": 0.4483,
       "es_mia": false,
-      "margen": -0.0897,
-      "horizonte": 8
+      "margen": -0.3793,
+      "horizonte": 8,
+      "ventanas": 29
     },
     {
       "variable": 6,
-      "obedece_en": 0.0345,
-      "nulo_media": 0.1241,
-      "nulo_techo": 0.4138,
+      "obedece_en": 0.069,
+      "nulo_media": 0.1655,
+      "nulo_techo": 0.3448,
       "es_mia": false,
-      "margen": -0.3793,
-      "horizonte": 8
+      "margen": -0.331,
+      "horizonte": 8,
+      "ventanas": 29
     },
     {
       "variable": 7,
-      "obedece_en": 0.3448,
-      "nulo_media": 0.1759,
-      "nulo_techo": 0.4138,
+      "obedece_en": 0.0,
+      "nulo_media": 0.2345,
+      "nulo_techo": 0.5517,
       "es_mia": false,
-      "margen": -0.069,
-      "horizonte": 8
+      "margen": -0.5517,
+      "horizonte": 8,
+      "ventanas": 29
     }
   ],
   "cuerpo": [],
@@ -87,18 +95,18 @@
       7
     ],
     "direccion": [
-      -0.1454,
-      -0.4107,
-      0.5367,
-      -0.0243,
-      -0.6006,
-      0.3541,
-      0.0178,
-      0.1873
+      0.1069,
+      -0.5261,
+      -0.1486,
+      0.2829,
+      -0.5132,
+      0.4664,
+      -0.0106,
+      0.3587
     ],
-    "fuerza": 0.00046,
-    "nulo_media": 0.00048,
-    "nulo_techo": 0.00049,
+    "fuerza": 0.00048,
+    "nulo_media": 0.00052,
+    "nulo_techo": 0.00054,
     "supera_al_nulo": false
   },
   "verdad_de_los_jueces": [
@@ -106,5 +114,5 @@
     1,
     2
   ],
-  "correlacion_con_la_caida_real": 0.0026
+  "correlacion_con_la_caida_real": 0.0684
 }
