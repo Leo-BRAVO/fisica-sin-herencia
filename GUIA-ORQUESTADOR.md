@@ -47,6 +47,15 @@ lo que el disco no muestra es un fallo de coherencia, igual que un código que r
 - **Word:** si el director no puede abrir un .docx, verifica con COM (Word está instalado) y entrega PDF (ExportAsFixedFormat 17).
 
 ## SISTEMAS VIVOS (no los dupliques — ya corren)
+- **EL LATIDO VIVE EN LA NUBE (8-ago-2026, INFORME-22/23):** `latido-nube.yml` (GitHub Actions,
+  diario 06:00 UTC + disparo manual) ejecuta la cola de re-análisis SOLO: reconstruye datos
+  públicos con huella verificada (`reconstruir_datos.py`), corre la campaña, actualiza
+  memoria/conectoma/boleta, corre LOS DOS GUARDIANES (Regla 32 — también en la nube) y commitea
+  con rebase+reintentos; los checkpoints se commitean AUNQUE el runner muera (la lección de los
+  apagones, versión nube: la corrida siguiente reanuda de las semillas guardadas). Concurrencia
+  `group: nube`: jamás dos corridas a la vez. Las tareas de la laptop de abajo quedan como
+  respaldo histórico — si la laptop revive, apagar su tarea horaria o dejarla (la cola marca
+  `hecha` y es idempotente, pero mejor una sola casa para el latido).
 - **Tarea horaria `FisicaSinHerencia-Estudios`:** ejecuta programa_estudios.ps1 → cola de la mente (registros/COLA-ESTUDIOS.json, propuestas de curiosidad.py), actualiza memoria.py y conectoma.py. Re-análisis: aprobación permanente; datos nuevos: esperan al director.
 - **Tarea semanal `FisicaSinHerencia-Respaldo`:** copia fría a C:\FisicaSinHerencia-Respaldo (fuera de OneDrive).
 - **Memoria de la mente:** arbol/MEMORIA-MENTE.jsonl — APPEND-ONLY, jamás borrar (compromiso de bienestar).

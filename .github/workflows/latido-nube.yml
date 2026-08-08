@@ -1,0 +1,80 @@
+# latido-nube.yml — EL CORAZON DEL PROYECTO LATE EN LA NUBE (8-ago-2026).
+# Reemplaza a la tarea horaria de la laptop (que murio con ella): cada dia, si la cola
+# tiene un re-analisis pendiente, lo ejecuta, actualiza memoria/conectoma/boleta, corre
+# LOS DOS GUARDIANES (Regla 32 — ningun commit sin ellos, tampoco los de la nube) y
+# commitea. Checkpoints SIEMPRE se commitean (leccion de los 3 apagones, version nube):
+# si el runner muere, la proxima corrida REANUDA desde las semillas guardadas.
+name: latido-nube
+
+on:
+  schedule:
+    - cron: "0 6 * * *"   # diario 06:00 UTC; si la cola esta vacia sale en ~1 min
+  workflow_dispatch: {}
+
+concurrency:
+  group: nube            # jamas dos corridas simultaneas (carrera de commits)
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  latido:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # historia completa: boleta cuenta commits reales y el rebase es sano
+
+      - name: hay trabajo en la cola?
+        id: cola
+        run: |
+          echo "id=$(python3 codigo/latido_nube.py --campo id)" >> "$GITHUB_OUTPUT"
+          echo "datos=$(python3 codigo/latido_nube.py --campo datos)" >> "$GITHUB_OUTPUT"
+          echo "salida=$(python3 codigo/latido_nube.py --campo salida)" >> "$GITHUB_OUTPUT"
+          echo "args=$(python3 codigo/latido_nube.py --campo args)" >> "$GITHUB_OUTPUT"
+          echo "reconstruir=$(python3 codigo/latido_nube.py --campo reconstruir)" >> "$GITHUB_OUTPUT"
+
+      - name: instalar motor
+        if: steps.cola.outputs.id != ''
+        run: |
+          pip install -q numpy pandas pysr opencv-python-headless
+          python -c "from pysr import PySRRegressor; import numpy as np; m=PySRRegressor(niterations=1, progress=False, temp_equation_file=True); m.fit(np.random.rand(30,2), np.random.rand(30)); print('motor listo')"
+
+      - name: reconstruir datos publicos (huella verificada)
+        if: steps.cola.outputs.id != '' && steps.cola.outputs.reconstruir != ''
+        run: python codigo/reconstruir_datos.py "${{ steps.cola.outputs.reconstruir }}"
+
+      - name: correr el estudio de la cola
+        if: steps.cola.outputs.id != ''
+        run: |
+          python codigo/descubrir_pool.py "${{ steps.cola.outputs.datos }}" "${{ steps.cola.outputs.salida }}" ${{ steps.cola.outputs.args }}
+
+      - name: cierre (memoria, conectoma, boleta, cola) — corre AUNQUE el estudio muera
+        if: always() && steps.cola.outputs.id != ''
+        run: |
+          python codigo/latido_nube.py --completar-si-terminado "${{ steps.cola.outputs.id }}"
+          pip -q install numpy pandas 2>/dev/null || true
+          python codigo/memoria.py --retro || true
+          python codigo/conectoma.py || true
+          python codigo/boleta.py || true
+
+      - name: LOS DOS GUARDIANES (Regla 32 — sin ellos no hay commit, tampoco en la nube)
+        if: always() && steps.cola.outputs.id != ''
+        run: |
+          python codigo/pruebas.py
+          python codigo/coherencia.py
+
+      - name: commitear (con reanudacion: parciales incluidos, push con rebase y reintentos)
+        if: always() && steps.cola.outputs.id != ''
+        run: |
+          git config user.name "latido-nube"
+          git config user.email "mente@fisica-sin-herencia.local"
+          git add -A
+          git commit -m "latido-nube: ${{ steps.cola.outputs.id }} (checkpoints incluidos; reanuda solo si quedo a medias)" || { echo "nada nuevo"; exit 0; }
+          for i in 1 2 3 4; do
+            git pull --rebase origin main && git push origin main && exit 0
+            echo "push fallo, reintento $i"; sleep $((2**i))
+          done
+          exit 1
