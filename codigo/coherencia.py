@@ -77,6 +77,43 @@ caso("MENTE declara version", v is not None)
 if v:
     caso(f"README cita la misma version (v{v.group(1)})", f"(v{v.group(1)})" in readme)
 
+print("== workflows: el cuerpo de la nube DEBE ser YAML valido y completo ==")
+# HUECO CAZADO EL 8-AGO-2026: latido-nube.yml se fusiono con YAML ROTO (un ':' seguido de
+# espacio dentro del NOMBRE de un paso hace que YAML lo lea como mapa anidado). GitHub lo
+# habria rechazado en silencio: el corazon del proyecto nunca habria latido. Desde hoy,
+# ningun workflow entra sin parsear.
+_wf = sorted(glob.glob(os.path.join(BASE, ".github", "workflows", "*.yml")))
+caso("hay workflows que vigilar", len(_wf) > 0)
+try:
+    import yaml as _yaml
+    _hay_yaml = True
+except ImportError:
+    _hay_yaml = False
+    print("  (aviso: pyyaml no instalado — se usa el chequeo de respaldo, sin parseo completo)")
+for _f in _wf:
+    _n = os.path.basename(_f)
+    _txt = open(_f, encoding="utf-8").read()
+    if _hay_yaml:
+        try:
+            _d = _yaml.safe_load(_txt)
+            _job = list(_d["jobs"])[0]
+            _pasos = _d["jobs"][_job]["steps"]
+            caso(f"{_n}: YAML valido con pasos", isinstance(_pasos, list) and len(_pasos) > 0)
+            _nombres = " ".join(str(p.get("name", "")) for p in _pasos)
+            caso(f"{_n}: corre los DOS guardianes antes de commitear (Regla 32)",
+                 "pruebas.py" in _txt and "coherencia.py" in _txt)
+        except Exception as _e:
+            caso(f"{_n}: YAML valido", False, str(_e).splitlines()[0])
+    else:
+        # respaldo sin dependencias: la trampa exacta que nos mordio
+        _malos = [l.strip() for l in _txt.splitlines()
+                  if l.strip().startswith("- name:") and ": " in l.split("- name:", 1)[1]
+                  and not l.split("- name:", 1)[1].strip().startswith(('"', "'"))]
+        caso(f"{_n}: ningun nombre de paso con ':' sin comillas (rompe el YAML)",
+             not _malos, str(_malos[:1]))
+        caso(f"{_n}: corre los DOS guardianes antes de commitear (Regla 32)",
+             "pruebas.py" in _txt and "coherencia.py" in _txt)
+
 print("== documentos fundacionales: sus referencias cruzadas existen ==")
 genoma_path = os.path.join(BASE, "arbol", "GENOMA-DIEGO.md")
 if os.path.exists(genoma_path):

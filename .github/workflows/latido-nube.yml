@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 300
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0   # historia completa: boleta cuenta commits reales y el rebase es sano
 
@@ -36,6 +36,14 @@ jobs:
           echo "args=$(python3 codigo/latido_nube.py --campo args)" >> "$GITHUB_OUTPUT"
           echo "reconstruir=$(python3 codigo/latido_nube.py --campo reconstruir)" >> "$GITHUB_OUTPUT"
 
+      - name: guarda de datos (el item de la cola debe traer 'reconstruir' o datos presentes)
+        if: steps.cola.outputs.id != ''
+        run: |
+          if [ -z "${{ steps.cola.outputs.reconstruir }}" ] && [ ! -d "${{ steps.cola.outputs.datos }}" ]; then
+            echo "::error::El item '${{ steps.cola.outputs.id }}' pide '${{ steps.cola.outputs.datos }}' que no existe y no declara 'reconstruir'."
+            echo "::error::Agrega el campo reconstruir al item en registros/COLA-ESTUDIOS.json."
+            exit 1
+          fi
       - name: instalar motor
         if: steps.cola.outputs.id != ''
         run: |
@@ -66,7 +74,7 @@ jobs:
           python codigo/pruebas.py
           python codigo/coherencia.py
 
-      - name: commitear (con reanudacion: parciales incluidos, push con rebase y reintentos)
+      - name: "commitear (con reanudacion — parciales incluidos, push con rebase y reintentos)"
         if: always() && steps.cola.outputs.id != ''
         run: |
           git config user.name "latido-nube"

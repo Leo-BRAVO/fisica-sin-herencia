@@ -9,3 +9,4 @@ sympy==1.14.0
 torch==2.13.0+cpu
 
 
+pyyaml==6.0.2
