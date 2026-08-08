@@ -73,9 +73,10 @@
       "motivo": "la primera pregunta que faltaba: cuantas variables esconde cada sistema. HECHO 2/3 (mendeley TwoNN~3, caida TwoNN~2.3, INFORME-22); dp_morpheus pendiente (rastreo 2 cuerpos, via Actions)",
       "tipo": "re-analisis-herramienta",
       "herramienta": "dimension.py",
-      "estado": "pendiente",
+      "estado": "hecha",
       "datos": "datos/procesados/dp_morpheus + caida + mendeley_epoca2",
-      "args": "(una corrida por carpeta)"
+      "args": "(una corrida por carpeta)",
+      "resultado": "HECHO 3/3 (INFORME-22 y 26): Michigan TwoNN~3, caida ~2.3, latentes p14 ~6.2. NOTA DE GOBERNANZA: este item estuvo ATASCADO — tipo 're-analisis-herramienta' que el latido no toma y una ruta inexistente ('A + B + C'). Los items de herramienta deben crearse UNO POR MUNDO con ruta real, o el latido los ignora en silencio para siempre."
     },
     {
       "id": "aud01-nulo-caida",

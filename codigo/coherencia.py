@@ -61,14 +61,24 @@ for p in sorted(glob.glob(os.path.join(BASE, "registros", "prerregistro-*.md")))
     if "BORRADOR" in t[:200]:
         caso(f"{nombre} (borrador) declara firma PENDIENTE", "PENDIENTE" in t)
 
-print("== cola de estudios: cada item ejecutable esta completo ==")
+print("== cola de estudios: TODO item pendiente debe poder ejecutarse (INFORME-26) ==")
+# HUECO CAZADO 8-ago-2026: un item con tipo que el latido no toma y una ruta imposible
+# ("A + B + C") estuvo horas atascado sin que nada avisara — parecia pendiente y nadie
+# podia ejecutarlo jamas. Un item inejecutable es peor que un item ausente.
 cola = json.load(open(os.path.join(BASE, "registros", "COLA-ESTUDIOS.json"), encoding="utf-8"))
+TIPOS_QUE_EL_LATIDO_TOMA = {"re-analisis"}
 for i in cola["items"]:
-    if i.get("tipo") == "re-analisis":
-        caso(f"cola item '{i['id']}' tiene datos/salida/args",
-             all(k in i for k in ("datos", "salida", "args")))
     caso(f"cola item '{i['id']}' tiene estado valido",
          i.get("estado") in ("pendiente", "hecha", "espera-al-director"))
+    if i.get("estado") != "pendiente":
+        continue
+    caso(f"cola PENDIENTE '{i['id']}': su tipo lo toma el latido",
+         i.get("tipo") in TIPOS_QUE_EL_LATIDO_TOMA, f"tipo={i.get('tipo')}")
+    caso(f"cola PENDIENTE '{i['id']}': tiene datos/salida/args",
+         all(k in i for k in ("datos", "salida", "args")))
+    caso(f"cola PENDIENTE '{i['id']}': la ruta de datos es UNA sola, real",
+         isinstance(i.get("datos"), str) and "+" not in i.get("datos", "+"),
+         f"datos={i.get('datos')}")
 
 print("== version de la MENTE: coincide donde se proclama ==")
 mente = leer("MENTE.md")

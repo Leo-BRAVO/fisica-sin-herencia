@@ -1,0 +1,61 @@
+{
+  "datos": "/tmp/claude-0/-home-user-fisica-sin-herencia/8d2ce6cf-d5b3-5622-b9c9-837a575b1958/scratchpad/p14test",
+  "centrar": false,
+  "replicas": {
+    "video_0_fps30.csv": {
+      "puntos": 529,
+      "twonn": 6.47,
+      "participacion_pca": 2.48
+    },
+    "video_1_fps30.csv": {
+      "puntos": 490,
+      "twonn": 6.49,
+      "participacion_pca": 2.61
+    },
+    "video_2_fps30.csv": {
+      "puntos": 502,
+      "twonn": 6.51,
+      "participacion_pca": 2.61
+    },
+    "video_3_fps30.csv": {
+      "puntos": 493,
+      "twonn": 5.25,
+      "participacion_pca": 2.57
+    },
+    "video_4_fps30.csv": {
+      "puntos": 445,
+      "twonn": 6.55,
+      "participacion_pca": 2.74
+    },
+    "video_5_fps30.csv": {
+      "puntos": 479,
+      "twonn": 6.16,
+      "participacion_pca": 2.34
+    },
+    "video_6_fps30.csv": {
+      "puntos": 520,
+      "twonn": 5.51,
+      "participacion_pca": 2.32
+    },
+    "video_7_fps30.csv": {
+      "puntos": 549,
+      "twonn": 5.52,
+      "participacion_pca": 2.26
+    },
+    "video_8_fps30.csv": {
+      "puntos": 569,
+      "twonn": 5.4,
+      "participacion_pca": 2.22
+    },
+    "video_9_fps30.csv": {
+      "puntos": 617,
+      "twonn": 6.1,
+      "participacion_pca": 2.24
+    }
+  },
+  "agrupado": {
+    "puntos": 5193,
+    "twonn": 6.2,
+    "participacion_pca": 1.19
+  }
+}
