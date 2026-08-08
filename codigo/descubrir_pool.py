@@ -63,7 +63,16 @@ def main():
 
     csvs = sorted(glob.glob(os.path.join(args.carpeta, "*.csv")))
     if len(csvs) < 2:
-        sys.exit("Se necesitan al menos 2 réplicas (1 para entrenar, 1 juez).")
+        existe = os.path.isdir(args.carpeta)
+        sys.exit(
+            f"Se necesitan al menos 2 réplicas (1 para entrenar, 1 juez).\n"
+            f"  carpeta pedida: {args.carpeta}\n"
+            f"  {'existe pero tiene ' + str(len(csvs)) + ' CSV' if existe else 'NO EXISTE'}\n"
+            "  Si esto corre en la NUBE: `datos/` está fuera de git a propósito (política de datos),\n"
+            "  así que hay que RECONSTRUIR los datos antes de correr:\n"
+            "      python codigo/reconstruir_datos.py mendeley_epoca2   (o: caida)\n"
+            "  En los workflows eso es el campo 'reconstruir' — dejarlo en 'no' sin datos locales\n"
+            "  siempre falla (lección del 8-ago-2026, primera campaña nube fallida).")
     jueces_idx = {j - 1 for j in args.jueces if j - 1 < len(csvs)}
     print(f"{len(csvs)} réplicas | jueces (fuera de muestra): "
           + ", ".join(os.path.basename(csvs[i]) for i in sorted(jueces_idx)))

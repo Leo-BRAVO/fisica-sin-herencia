@@ -8,8 +8,8 @@ on:
   workflow_dispatch:
     inputs:
       reconstruir:
-        description: "reconstruir datos publicos antes de correr (no | mendeley_epoca2 | caida) — INFORME-22: la nube reconstruye desde las fuentes con huella verificada"
-        default: "no"
+        description: "reconstruir datos publicos antes de correr (mendeley_epoca2 | caida | no) — EN LA NUBE casi siempre hace falta: datos/ esta fuera de git. 'no' solo si la carpeta ya vino en el repo."
+        default: "mendeley_epoca2"
       datos:
         description: "carpeta de datos (relativa al repo)"
         default: "datos/procesados/mendeley_epoca2"
@@ -32,12 +32,19 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 300
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
+      - name: guarda de datos (falla en segundos, no tras 4 min de compilar Julia)
+        run: |
+          if [ "${{ inputs.reconstruir }}" = "no" ] && [ ! -d "${{ inputs.datos }}" ]; then
+            echo "::error::La carpeta '${{ inputs.datos }}' no existe y 'reconstruir' esta en 'no'."
+            echo "::error::En la nube, datos/ esta fuera de git (politica de datos): pon 'mendeley_epoca2' o 'caida' en el campo reconstruir."
+            exit 1
+          fi
       - name: instalar motor
         run: |
           pip install -q numpy pandas pysr opencv-python-headless
