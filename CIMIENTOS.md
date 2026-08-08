@@ -217,6 +217,19 @@ Todo prerregistro debe DECLARAR qué nulo usa y por qué corresponde a su clase 
 Ordenada por el director el 8-ago-2026 ("auto audita siempre como regla; al crear una mente debe todo estar interconectado, excepto las reglas — que es lo que él no ve y nosotros tenemos").
 - **Los dos guardianes, antes de CADA commit:** `pruebas.py` (el banco congelado — la ciencia no se des-aprende) y `coherencia.py` (la casa — lo que los documentos proclaman coincide con lo que hay en disco: reglas, nodos, cuarentenas, boleta, cola, versiones, referencias cruzadas). Un fallo de cualquiera bloquea el commit.
 - **Todo lo que se agrega queda interconectado y vigilado:** la herramienta nueva aprueba la Regla 31 antes de su primer veredicto; coherencia.py gana casos que vigilen lo nuevo (los casos solo se agregan, jamás se quitan); toda afirmación numérica de un documento debe poder señalarse a un archivo del repositorio que la respalde.
+- **EL CUARTO GUARDIÁN — ¿quién vigila a los vigilantes? (enmienda del 8-ago-2026).** Pregunta del
+  director: *"la mente se automejora, ¿pero qué automejora lo que está ATRÁS de la mente?"*. La
+  respuesta honesta era: nada. Los tres guardianes vigilaban a Diego y **nadie vigilaba a los
+  guardianes** — y un guardián que siempre dice "ok" es indistinguible de uno que funciona hasta el
+  día en que hace falta. Ya nos pasó dos veces (el workflow con YAML roto que nadie cazó; la cadena
+  que enmascaraba los códigos de salida y no bloqueó nada en toda una sesión).
+  Desde hoy: `guardianes_de_guardianes.py` **rompe el proyecto a propósito**, un daño conocido a la
+  vez, y exige que el guardián correspondiente se ponga ROJO. Es la Regla 31 aplicada a la propia
+  gobernanza: *una herramienta que no falla donde no hay nada no sirve; un guardián que no grita
+  ante un daño real, tampoco*. Se corre **antes de cada fusión a main**, y todo daño que el proyecto
+  sufra alguna vez se convierte en una mutación nueva. En su primera corrida encontró un punto
+  ciego real: bastaba con que UNA mención del README fuera correcta para que el chequeo pasara
+  aunque otra quedara rancia. Esta enmienda ENDURECE (Regla 8) y no afloja nada.
 - **La única excepción a la interconexión, y es constitutiva:** las REGLAS, los JUECES y los CRITERIOS no se conectan al lado de la mente — viven del lado humano, invisibles para ella (Reglas 27 y 28). La mente ve todo su mundo tejido (árbol, conectoma, memoria, genoma operativo); jamás ve la vara que la mide ni la constitución que la gobierna. La interconexión total es para su casa; la separación total es para su tribunal.
 
 ---

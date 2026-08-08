@@ -1,5 +1,5 @@
 # Prerregistro 23 — Enmienda al 19: el criterio de la frontera yo/mundo, con sus constantes fijadas — 8 de agosto de 2026
-**Estado: BORRADOR pendiente de firma del director. Enmienda el prerregistro-19 (FIRMADO) en un
+**Estado: FIRMADO por el director el 8-ago-2026 ("está ok el prereg 23"), con la fracción en 0.40 y la objeción de contaminación registrada a la vista. Enmienda el prerregistro-19 (FIRMADO) en un
 punto que solo se descubrió CONSTRUYENDO el Gimnasio y corriéndolo contra sus propios controles.**
 
 ---
@@ -77,4 +77,6 @@ señal genuinamente débil, y habría que decirlo así en vez de seguir moviendo
 Los jueces congelados, el nivel B (el primer no-yo), la marca `sobre-el-simulador` en todo lo que
 salga del Gimnasio, y la prohibición de que nada de esto entre al árbol como física del mundo.
 
-- **Firmado:** PENDIENTE — Leo, director.
+- **Firmado:** Leo, director — 8-ago-2026, aprobación en conversación ("está ok el prereg 23"),
+  habiendo leído que la fracción 0.40 se propone DESPUÉS de ver un 0.47 y que esa objeción
+  queda registrada en el propio documento para cualquier revisor externo.

@@ -1,0 +1,695 @@
+[
+  {
+    "diseno": {
+      "amortiguacion": 0.0,
+      "limite": 2.5,
+      "suavizado": 15,
+      "amplitud": 2.2,
+      "subpasos": 8
+    },
+    "puntos": 28,
+    "detalle": {
+      "normal": {
+        "hallado": [
+          0,
+          1,
+          2
+        ],
+        "verdad": [
+          0,
+          1,
+          2
+        ],
+        "bien": 7,
+        "fracciones": [
+          0.8,
+          0.96,
+          0.96,
+          0.0,
+          0.2,
+          0.0,
+          0.12
+        ]
+      },
+      "un_grado": {
+        "hallado": [
+          0
+        ],
+        "verdad": [
+          0
+        ],
+        "bien": 7,
+        "fracciones": [
+          0.76,
+          0.2,
+          0.08,
+          0.32,
+          0.12,
+          0.0,
+          0.0
+        ]
+      },
+      "sin_agencia": {
+        "hallado": [],
+        "verdad": [],
+        "bien": 7,
+        "fracciones": [
+          0.0,
+          0.12,
+          0.0,
+          0.0,
+          0.04,
+          0.04,
+          0.0
+        ]
+      },
+      "tv_ruidoso": {
+        "hallado": [
+          0,
+          2
+        ],
+        "verdad": [
+          0,
+          2
+        ],
+        "bien": 7,
+        "fracciones": [
+          0.6,
+          0.0,
+          0.96,
+          0.0,
+          0.12,
+          0.0,
+          0.0
+        ]
+      }
+    }
+  },
+  {
+    "diseno": {
+      "amortiguacion": 0.3,
+      "limite": 2.5,
+      "suavizado": 40,
+      "amplitud": 2.2,
+      "subpasos": 8
+    },
+    "puntos": 28,
+    "detalle": {
+      "normal": {
+        "hallado": [
+          0,
+          1,
+          2
+        ],
+        "verdad": [
+          0,
+          1,
+          2
+        ],
+        "bien": 7,
+        "fracciones": [
+          0.92,
+          0.6,
+          0.64,
+          0.2,
+          0.36,
+          0.28,
+          0.2
+        ]
+      },
+      "un_grado": {
+        "hallado": [
+          0
+        ],
+        "verdad": [
+          0
+        ],
+        "bien": 7,
+        "fracciones": [
+          0.92,
+          0.24,
+          0.08,
+          0.0,
+          0.0,
+          0.04,
+          0.04
+        ]
+      },
+      "sin_agencia": {
+        "hallado": [],
+        "verdad": [],
+        "bien": 7,
+        "fracciones": [
+          0.0,
+          0.2,
+          0.0,
+          0.28,
+          0.2,
+          0.04,
+          0.0
+        ]
+      },
+      "tv_ruidoso": {
+        "hallado": [
+          0,
+          2
+        ],
+        "verdad": [
+          0,
+          2
+        ],
+        "bien": 7,
+        "fracciones": [
+          0.88,
+          0.12,
+          0.64,
+          0.16,
+          0.36,
+          0.24,
+          0.16
+        ]
+      }
+    }
+  },
+  {
+    "diseno": {
+      "amortiguacion": 0.0,
+      "limite": null,
+      "suavizado": 15,
+      "amplitud": 2.2,
+      "subpasos": 8
+    },
+    "puntos": 27,
+    "detalle": {
+      "normal": {
+        "hallado": [
+          0,
+          1,
+          2
+        ],
+        "verdad": [
+          0,
+          1,
+          2
+        ],
+        "bien": 7,
+        "fracciones": [
+          0.72,
+          0.72,
+          0.88,
+          0.08,
+          0.12,
+          0.0,
+          0.04
+        ]
+      },
+      "un_grado": {
+        "hallado": [],
+        "verdad": [
+          0
+        ],
+        "bien": 6,
+        "fracciones": [
+          0.4,
+          0.08,
+          0.28,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "sin_agencia": {
+        "hallado": [],
+        "verdad": [],
+        "bien": 7,
+        "fracciones": [
+          0.0,
+          0.16,
+          0.0,
+          0.04,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "tv_ruidoso": {
+        "hallado": [
+          0,
+          2
+        ],
+        "verdad": [
+          0,
+          2
+        ],
+        "bien": 7,
+        "fracciones": [
+          0.6,
+          0.2,
+          0.68,
+          0.08,
+          0.2,
+          0.12,
+          0.0
+        ]
+      }
+    }
+  },
+  {
+    "diseno": {
+      "amortiguacion": 0.3,
+      "limite": 2.5,
+      "suavizado": 15,
+      "amplitud": 2.2,
+      "subpasos": 8
+    },
+    "puntos": 26,
+    "detalle": {
+      "normal": {
+        "hallado": [
+          0,
+          2
+        ],
+        "verdad": [
+          0,
+          1,
+          2
+        ],
+        "bien": 6,
+        "fracciones": [
+          0.92,
+          0.4,
+          0.72,
+          0.04,
+          0.32,
+          0.2,
+          0.28
+        ]
+      },
+      "un_grado": {
+        "hallado": [
+          0,
+          2
+        ],
+        "verdad": [
+          0
+        ],
+        "bien": 6,
+        "fracciones": [
+          0.96,
+          0.24,
+          0.56,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "sin_agencia": {
+        "hallado": [],
+        "verdad": [],
+        "bien": 7,
+        "fracciones": [
+          0.0,
+          0.04,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "tv_ruidoso": {
+        "hallado": [
+          0,
+          2
+        ],
+        "verdad": [
+          0,
+          2
+        ],
+        "bien": 7,
+        "fracciones": [
+          0.88,
+          0.08,
+          0.72,
+          0.08,
+          0.36,
+          0.2,
+          0.12
+        ]
+      }
+    }
+  },
+  {
+    "diseno": {
+      "amortiguacion": 1.0,
+      "limite": null,
+      "suavizado": 15,
+      "amplitud": 2.2,
+      "subpasos": 8
+    },
+    "puntos": 25,
+    "detalle": {
+      "normal": {
+        "hallado": [
+          0,
+          2
+        ],
+        "verdad": [
+          0,
+          1,
+          2
+        ],
+        "bien": 6,
+        "fracciones": [
+          0.44,
+          0.24,
+          0.48,
+          0.24,
+          0.32,
+          0.04,
+          0.28
+        ]
+      },
+      "un_grado": {
+        "hallado": [
+          3
+        ],
+        "verdad": [
+          0
+        ],
+        "bien": 5,
+        "fracciones": [
+          0.08,
+          0.2,
+          0.4,
+          0.6,
+          0.32,
+          0.0,
+          0.12
+        ]
+      },
+      "sin_agencia": {
+        "hallado": [],
+        "verdad": [],
+        "bien": 7,
+        "fracciones": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "tv_ruidoso": {
+        "hallado": [
+          0,
+          2
+        ],
+        "verdad": [
+          0,
+          2
+        ],
+        "bien": 7,
+        "fracciones": [
+          0.72,
+          0.04,
+          0.56,
+          0.12,
+          0.32,
+          0.36,
+          0.32
+        ]
+      }
+    }
+  },
+  {
+    "diseno": {
+      "amortiguacion": 0.3,
+      "limite": null,
+      "suavizado": 15,
+      "amplitud": 2.2,
+      "subpasos": 8
+    },
+    "puntos": 24,
+    "detalle": {
+      "normal": {
+        "hallado": [
+          0,
+          2
+        ],
+        "verdad": [
+          0,
+          1,
+          2
+        ],
+        "bien": 6,
+        "fracciones": [
+          0.52,
+          0.24,
+          0.52,
+          0.04,
+          0.36,
+          0.28,
+          0.32
+        ]
+      },
+      "un_grado": {
+        "hallado": [],
+        "verdad": [
+          0
+        ],
+        "bien": 6,
+        "fracciones": [
+          0.2,
+          0.0,
+          0.32,
+          0.08,
+          0.16,
+          0.04,
+          0.16
+        ]
+      },
+      "sin_agencia": {
+        "hallado": [],
+        "verdad": [],
+        "bien": 7,
+        "fracciones": [
+          0.0,
+          0.04,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "tv_ruidoso": {
+        "hallado": [
+          0,
+          2,
+          5,
+          6
+        ],
+        "verdad": [
+          0,
+          2
+        ],
+        "bien": 5,
+        "fracciones": [
+          0.56,
+          0.08,
+          0.56,
+          0.04,
+          0.36,
+          0.48,
+          0.44
+        ]
+      }
+    }
+  },
+  {
+    "diseno": {
+      "amortiguacion": 1.0,
+      "limite": 2.5,
+      "suavizado": 15,
+      "amplitud": 2.2,
+      "subpasos": 8
+    },
+    "puntos": 22,
+    "detalle": {
+      "normal": {
+        "hallado": [
+          0,
+          2,
+          4,
+          6
+        ],
+        "verdad": [
+          0,
+          1,
+          2
+        ],
+        "bien": 4,
+        "fracciones": [
+          0.76,
+          0.16,
+          0.44,
+          0.28,
+          0.68,
+          0.12,
+          0.6
+        ]
+      },
+      "un_grado": {
+        "hallado": [
+          0
+        ],
+        "verdad": [
+          0
+        ],
+        "bien": 7,
+        "fracciones": [
+          0.88,
+          0.36,
+          0.28,
+          0.24,
+          0.04,
+          0.0,
+          0.24
+        ]
+      },
+      "sin_agencia": {
+        "hallado": [],
+        "verdad": [],
+        "bien": 7,
+        "fracciones": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "tv_ruidoso": {
+        "hallado": [
+          0,
+          2,
+          4,
+          5,
+          6
+        ],
+        "verdad": [
+          0,
+          2
+        ],
+        "bien": 4,
+        "fracciones": [
+          0.84,
+          0.04,
+          0.56,
+          0.4,
+          0.88,
+          0.68,
+          0.76
+        ]
+      }
+    }
+  },
+  {
+    "diseno": {
+      "amortiguacion": 0.3,
+      "limite": 2.5,
+      "suavizado": 15,
+      "amplitud": 2.2,
+      "subpasos": 4
+    },
+    "puntos": 21,
+    "detalle": {
+      "normal": {
+        "hallado": [
+          0,
+          2,
+          4,
+          6
+        ],
+        "verdad": [
+          0,
+          1,
+          2
+        ],
+        "bien": 4,
+        "fracciones": [
+          0.92,
+          0.2,
+          0.64,
+          0.12,
+          0.64,
+          0.32,
+          0.48
+        ]
+      },
+      "un_grado": {
+        "hallado": [
+          0,
+          2
+        ],
+        "verdad": [
+          0
+        ],
+        "bien": 6,
+        "fracciones": [
+          0.96,
+          0.04,
+          0.52,
+          0.12,
+          0.12,
+          0.12,
+          0.2
+        ]
+      },
+      "sin_agencia": {
+        "hallado": [],
+        "verdad": [],
+        "bien": 7,
+        "fracciones": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "tv_ruidoso": {
+        "hallado": [
+          0,
+          2,
+          4,
+          5,
+          6
+        ],
+        "verdad": [
+          0,
+          2
+        ],
+        "bien": 4,
+        "fracciones": [
+          0.96,
+          0.12,
+          0.68,
+          0.12,
+          0.6,
+          0.48,
+          0.48
+        ]
+      }
+    }
+  }
+]

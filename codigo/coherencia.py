@@ -37,6 +37,13 @@ caso("las reglas son consecutivas 1..N sin huecos",
 readme = leer("README.md")
 caso(f"README proclama '{max_regla} reglas' (las que CIMIENTOS contiene)",
      f"{max_regla} reglas" in readme)
+# PUNTO CIEGO CAZADO POR guardianes_de_guardianes.py (8-ago-2026, su PRIMERA corrida): bastaba
+# con que UNA mencion siguiera bien para que el chequeo pasara, aunque otra quedara rancia. Un
+# documento que se contradice a si mismo confunde a quien audita — igual que el titulo de un
+# prerregistro firmado que sigue diciendo BORRADOR.
+_rancias = sorted({int(n) for n in re.findall(r"(\d+) reglas", readme)} - {max_regla})
+caso("README sin NINGUNA cifra rancia de reglas (ni una mencion vieja)",
+     not _rancias, f"menciona tambien: {_rancias}")
 
 print("== arbol: nodos, cuarentena y conectoma cuentan lo mismo ==")
 nodos_e2 = sorted(glob.glob(os.path.join(BASE, "arbol", "N-*-E2.md")))

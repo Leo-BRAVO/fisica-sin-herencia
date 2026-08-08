@@ -49,6 +49,18 @@ lo que el disco no muestra es un fallo de coherencia, igual que un código que r
 - **Autopsia SIEMPRE tras cada veredicto** (autopsia.py) — convierte fracasos en diagnósticos. Rodado (rodar.py) distingue ley de truco.
 - **Informes:** resultados/INFORME-NN.md en español llano (Regla 17: si el director no lo entiende, está mal). **El `.md` es el registro maestro** — el Word ya NO es obligatorio por informe (Regla 17 enmendada el 8-ago-2026): se genera solo cuando el director va a entregar algo a un tercero, sobre el `.md` ya escrito (skill docx del entorno).
 
+### LOS CUATRO GUARDIANES (orden de ejecución, 8-ago-2026)
+| # | Guardián | Qué vigila | Cuándo |
+|---|---|---|---|
+| 1 | `pruebas.py` | la ciencia congelada: cada error que cometimos, hecho prueba | antes de CADA commit |
+| 2 | `coherencia.py` | la casa: que los documentos digan la verdad sobre el disco | antes de CADA commit |
+| 3 | `auditoria_total.py` | el dictamen de prevuelo: constitución, cadena, árbol, deudas | antes de CADA commit |
+| 4 | `guardianes_de_guardianes.py` | **a los otros tres**: rompe el proyecto y exige que griten | antes de cada FUSIÓN A MAIN |
+**Y `diagnostico_total.py` no es un guardián: es la LISTA priorizada de todo lo que está mal.**
+Los guardianes dicen sí o no; el diagnóstico dice qué arreglar y en qué orden.
+**Leer los códigos de salida DE VERDAD** (`cmd > archivo; codigo=$?`) — una tubería los enmascara,
+y eso nos costó una sesión entera en la que nada bloqueó nada.
+
 ### Instrumentos DE MANO — el latido NO los ejecuta (marcado el 8-ago-2026)
 La auditoría total encontró cuatro módulos que ningún automatismo invoca. **No son código muerto:
 cada uno produjo nodos y está citado en prerregistros y en el árbol; borrarlos rompería la

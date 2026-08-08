@@ -1,0 +1,110 @@
+{
+  "modo": "normal",
+  "nivel_a": [
+    {
+      "variable": 0,
+      "obedece_en": 0.1034,
+      "nulo_media": 0.1276,
+      "nulo_techo": 0.2759,
+      "es_mia": false,
+      "margen": -0.2966,
+      "horizonte": 8
+    },
+    {
+      "variable": 1,
+      "obedece_en": 0.3103,
+      "nulo_media": 0.1724,
+      "nulo_techo": 0.3448,
+      "es_mia": false,
+      "margen": -0.0897,
+      "horizonte": 8
+    },
+    {
+      "variable": 2,
+      "obedece_en": 0.069,
+      "nulo_media": 0.1103,
+      "nulo_techo": 0.2069,
+      "es_mia": false,
+      "margen": -0.331,
+      "horizonte": 8
+    },
+    {
+      "variable": 3,
+      "obedece_en": 0.2759,
+      "nulo_media": 0.169,
+      "nulo_techo": 0.4138,
+      "es_mia": false,
+      "margen": -0.1379,
+      "horizonte": 8
+    },
+    {
+      "variable": 4,
+      "obedece_en": 0.3448,
+      "nulo_media": 0.1621,
+      "nulo_techo": 0.3793,
+      "es_mia": false,
+      "margen": -0.0552,
+      "horizonte": 8
+    },
+    {
+      "variable": 5,
+      "obedece_en": 0.3103,
+      "nulo_media": 0.1621,
+      "nulo_techo": 0.3793,
+      "es_mia": false,
+      "margen": -0.0897,
+      "horizonte": 8
+    },
+    {
+      "variable": 6,
+      "obedece_en": 0.0345,
+      "nulo_media": 0.1241,
+      "nulo_techo": 0.4138,
+      "es_mia": false,
+      "margen": -0.3793,
+      "horizonte": 8
+    },
+    {
+      "variable": 7,
+      "obedece_en": 0.3448,
+      "nulo_media": 0.1759,
+      "nulo_techo": 0.4138,
+      "es_mia": false,
+      "margen": -0.069,
+      "horizonte": 8
+    }
+  ],
+  "cuerpo": [],
+  "nivel_b": {
+    "columnas": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "direccion": [
+      -0.1454,
+      -0.4107,
+      0.5367,
+      -0.0243,
+      -0.6006,
+      0.3541,
+      0.0178,
+      0.1873
+    ],
+    "fuerza": 0.00046,
+    "nulo_media": 0.00048,
+    "nulo_techo": 0.00049,
+    "supera_al_nulo": false
+  },
+  "verdad_de_los_jueces": [
+    0,
+    1,
+    2
+  ],
+  "correlacion_con_la_caida_real": 0.0026
+}

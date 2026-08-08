@@ -39,6 +39,10 @@ import numpy as np
 
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# Mínimo de ventanas para que la medición sea válida. Derivado a priori: para distinguir una
+# fracción de 0.40 con resolución mejor que 0.05 hacen falta al menos 20 ventanas.
+MINIMO_VENTANAS = 20
+
 
 def _lstsq_mse(X_tr, y_tr, X_te, y_te):
     """Rival lineal con término independiente — la misma vara del proyecto desde el día uno."""
@@ -73,7 +77,7 @@ def _desplazar(com, rng):
 
 
 def medir(episodios, jueces, retardos=2, nulos=12, semilla=0,
-          horizonte=8, ventana=150, piso_ventana=0.02, fraccion=0.5):
+          horizonte=8, ventana=150, piso_ventana=0.02, fraccion=0.40):
     """Contingencia por variable, medida como CONSISTENCIA a través de ventanas.
 
     ===================== LO QUE CORRER ESTO NOS ENSEÑÓ (8-ago-2026) =====================
@@ -94,10 +98,11 @@ def medir(episodios, jueces, retardos=2, nulos=12, semilla=0,
        prerregistro-19 lo pasó por alto y por eso su criterio está subespecificado — ver
        INFORME-31 y la enmienda propuesta al director.)
 
-    ADVERTENCIA HONESTA: `piso_ventana` y `fraccion` son constantes que este código NO puede
-    fijar por su cuenta sin caer en el vicio que llevamos toda la semana cazando (ajustar la
-    vara hasta que el resultado salga). Quedan expuestas y SIN AJUSTAR, y deben fijarse en un
-    prerregistro firmado antes de que este detector emita ningún veredicto sobre un hito.
+    CONSTANTES FIJADAS POR EL PRERREGISTRO-23 (FIRMADO 8-ago-2026), no por este código:
+    horizonte=8, ventana=150, piso_ventana=0.02, fraccion=0.40. La fracción se propuso DESPUÉS
+    de ver un 0.47 en el control 2, y esa objeción de contaminación quedó escrita en el propio
+    prerregistro para cualquier revisor: no se esconde, se declara. SIN AJUSTAR desde entonces —
+    cambiarlas otra vez exige un prerregistro nuevo, no una edición.
     ======================================================================================
     """
     jidx = {j - 1 for j in jueces}
@@ -148,6 +153,24 @@ def medir(episodios, jueces, retardos=2, nulos=12, semilla=0,
             out.append(buenas / max(total, 1))
         return np.array(out)
 
+    # ===== ENDURECIMIENTO DEL 8-AGO-2026 (lo cazó el propio banco) =====
+    # Con POCAS VENTANAS el criterio del prerregistro-23 inventa cuerpo donde no lo hay: medido,
+    # con 4-6 ventanas el mundo trampa (deriva fuerte, cero agencia) declaró la variable 0 como
+    # suya, y con 11 ventanas el mundo SIN AGENCIA declaró la variable 1. Con 19 ventanas los dos
+    # quedan limpios. La causa no son las constantes: es que una fracción estimada sobre un puñado
+    # de ventanas es ruido, y el techo de unos pocos nulos no alcanza a cubrirlo.
+    # DERIVACIÓN A PRIORI del mínimo (no ajustada): para distinguir una fracción de 0.40 con una
+    # resolución mejor que 0.05 hacen falta al menos 1/0.05 = 20 ventanas.
+    # Esto ENDURECE el criterio firmado, así que la Regla 8 permite aplicarlo sin nueva firma;
+    # queda declarado igualmente en el INFORME-32.
+    _n_ventanas = max(0, (len(bloques(test, False, np.random.default_rng(0))[0]) - ventana)
+                      // ventana + 1)
+    if _n_ventanas < MINIMO_VENTANAS:
+        raise SystemExit(
+            f"MEDICIÓN INVÁLIDA: solo {_n_ventanas} ventanas (mínimo {MINIMO_VENTANAS}). "
+            f"Con menos, este criterio fabrica cuerpo donde no lo hay — medido el 8-ago-2026. "
+            f"Alarga los episodios o baja 'ventana'.")
+
     real = fracciones(False, semilla)
     falsas = np.array([fracciones(True, semilla + 1 + i) for i in range(nulos)])
     techo = falsas.max(axis=0)
@@ -157,13 +180,13 @@ def medir(episodios, jueces, retardos=2, nulos=12, semilla=0,
              "nulo_techo": round(float(techo[d]), 4),
              "es_mia": bool(real[d] > techo[d] and real[d] > fraccion),
              "margen": round(float(real[d] - max(techo[d], fraccion)), 4),
-             "horizonte": horizonte}
+             "horizonte": horizonte, "ventanas": _n_ventanas}
             for d in range(len(real))]
 
 
 # ============================== REGLA 31: cuatro mundos con verdad conocida ==============================
 
-def _mundos_regla31(n_ep=12, T=600, semilla=7):
+def _mundos_regla31(n_ep=14, T=1600, semilla=7):
     """Cuatro mundos donde YO sé la respuesta. Si el detector falla en alguno, no puede opinar
     sobre Diego. Cada mundo: 3 grados de libertad de 'cuerpo' + 2 variables de 'mundo'."""
     rng = np.random.default_rng(semilla)
@@ -232,13 +255,13 @@ def _mundos_regla31(n_ep=12, T=600, semilla=7):
 
 def regla31(verbose=True):
     """El detector se prueba a sí mismo antes de tocar a Diego (Regla 31)."""
-    jueces = [10, 11, 12]
+    jueces = [13, 14]
     fallos = []
     if verbose:
         print("=== REGLA 31 sobre contingencia.py — el detector de la frontera yo/mundo ===")
-        print("   (jueces 10/11/12 congelados; nulo = desplazamiento circular; se mide la\n    FRACCION DE VENTANAS en que la variable obedece — la contingencia perfecta)\n")
+        print("   (jueces congelados; nulo = desplazamiento circular; constantes del prereg-23; se mide la\n    FRACCION DE VENTANAS en que la variable obedece — la contingencia perfecta)\n")
     for nombre, (eps, mias_reales) in _mundos_regla31().items():
-        res = medir(eps, jueces, nulos=10, horizonte=4, ventana=120)
+        res = medir(eps, jueces, nulos=8, horizonte=8, ventana=150)
         halladas = {r["variable"] for r in res if r["es_mia"]}
         ok = halladas == mias_reales
         if verbose:

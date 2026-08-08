@@ -1,0 +1,54 @@
+{
+  "problemas": [
+    {
+      "gravedad": "BLOQUEA",
+      "sistema": "pruebas.py",
+      "problema": "banco congelado en rojo",
+      "evidencia": "<string>:1: RuntimeWarning: overflow encountered in exp",
+      "arreglo": "arreglar antes de cualquier commit (Regla 32)"
+    },
+    {
+      "gravedad": "IMPORTA",
+      "sistema": "ojos_gimnasio.py",
+      "problema": "HITO 0 nivel A FRACASA sobre los latentes visuales: no encuentra ningún cuerpo",
+      "evidencia": "0 de 8 latentes superan su nulo; el mismo detector acierta 4/4 sobre el estado del simulador, luego el fallo está en los OJOS, no en el detector",
+      "arreglo": "sus ojos apenas codifican el brazo (R2 de los ángulos: -0.09, +0.03, +0.21) mientras leen bien la escena (+0.66): la pérdida por píxel pesa igual todos los píxeles y el brazo es fino. Candidata medida: ponderar la reconstrucción por cuánto cambia cada píxel. Exige enmienda de prerregistro."
+    },
+    {
+      "gravedad": "IMPORTA",
+      "sistema": "ojos_gimnasio.py",
+      "problema": "HITO 0 nivel B (el primer no-yo) no supera su nulo",
+      "evidencia": "fuerza 0.00046 contra techo del nulo 0.00049",
+      "arreglo": "depende del nivel A: sin cuerpo identificado no hay 'no-yo' que aislar"
+    },
+    {
+      "gravedad": "DEUDA",
+      "sistema": "gobernanza",
+      "problema": "Regla 31: el nulo 'aud01-nulo-p14-final' falsifico el mundo de verdad (base cambia >10%)",
+      "evidencia": "declarada por el dictamen de prevuelo",
+      "arreglo": "decisión del director o trabajo pendiente"
+    },
+    {
+      "gravedad": "DEUDA",
+      "sistema": "gobernanza",
+      "problema": "Regla 11: las campanas insignia tienen un verdugo VALIDO con su propia tuberia",
+      "evidencia": "declarada por el dictamen de prevuelo",
+      "arreglo": "decisión del director o trabajo pendiente"
+    },
+    {
+      "gravedad": "DEUDA",
+      "sistema": "gobernanza",
+      "problema": "Regla 16: repositorio publico (prioridad fuerte)",
+      "evidencia": "declarada por el dictamen de prevuelo",
+      "arreglo": "decisión del director o trabajo pendiente"
+    },
+    {
+      "gravedad": "DEUDA",
+      "sistema": "gobernanza",
+      "problema": "Regla 19 nivel 3: replica independiente por un tercero",
+      "evidencia": "declarada por el dictamen de prevuelo",
+      "arreglo": "decisión del director o trabajo pendiente"
+    }
+  ],
+  "bloquean": 1
+}

@@ -272,14 +272,14 @@ print("== contingencia (G4): el detector de la frontera yo/mundo ==")
 # (1) a un cuadro vista un cuerpo es casi invisible -> el horizonte importa;
 # (2) un objeto manipulable TAMBIEN es contingente -> lo que separa es la CONSISTENCIA.
 from contingencia import medir as _cmedir, _mundos_regla31 as _cmundos
-_cm = _cmundos(n_ep=8, T=320, semilla=3)
-_cjueces = [7, 8]
+_cm = _cmundos(n_ep=14, T=1600, semilla=3)
+_cjueces = [13, 14]
 _sin_ag = _cm["1 SIN AGENCIA (motores desconectados)"][0]
 _pos = _cm["2 CONTROL POSITIVO (solo la var 0 obedece)"][0]
 _trampa = _cm["4 DERIVA FUERTE, CERO AGENCIA (la trampa del INF-30)"][0]
-_r_sin = _cmedir(_sin_ag, _cjueces, nulos=4, horizonte=4, ventana=90)
-_r_pos = _cmedir(_pos, _cjueces, nulos=4, horizonte=4, ventana=90)
-_r_tra = _cmedir(_trampa, _cjueces, nulos=4, horizonte=4, ventana=90)
+_r_sin = _cmedir(_sin_ag, _cjueces, nulos=5, horizonte=8, ventana=150)
+_r_pos = _cmedir(_pos, _cjueces, nulos=5, horizonte=8, ventana=150)
+_r_tra = _cmedir(_trampa, _cjueces, nulos=5, horizonte=8, ventana=150)
 caso("contingencia: NO inventa cuerpo donde los motores estan desconectados",
      not any(r["es_mia"] for r in _r_sin),
      str([r["variable"] for r in _r_sin if r["es_mia"]]))
@@ -291,8 +291,18 @@ caso("contingencia: la deriva fuerte con comandos suaves NO fabrica cuerpo (tram
      str([r["variable"] for r in _r_tra if r["es_mia"]]))
 caso("contingencia: el nulo es DESPLAZAMIENTO circular, no barajado (regla 31 enmendada)",
      "roll" in _insp.getsource(__import__("contingencia")._desplazar))
-caso("contingencia: sus dos constantes quedan EXPUESTAS y sin prerregistrar",
-     "SIN AJUSTAR" in _insp.getsource(_cmedir))
+# HUECO CAZADO POR EL PROPIO BANCO (8-ago-2026): con pocas ventanas el criterio firmado
+# fabrica cuerpo donde no lo hay. Ahora la medicion se NIEGA a opinar bajo el minimo.
+try:
+    _cmedir(_cmundos(n_ep=6, T=300, semilla=3)["1 SIN AGENCIA (motores desconectados)"][0],
+            [5, 6], nulos=2, horizonte=8, ventana=150)
+    _rechaza = False
+except SystemExit:
+    _rechaza = True
+caso("contingencia: se NIEGA a medir con menos ventanas del minimo (no opina sin potencia)",
+     _rechaza)
+caso("contingencia: sus constantes las fija el prerregistro-23, no el codigo",
+     "PRERREGISTRO-23" in _insp.getsource(_cmedir) and "SIN AJUSTAR" in _insp.getsource(_cmedir))
 
 print("== canonizar: tarjeta de identidad ==")
 t = tarjeta("(v1 + v2) * 0.5 + 3.0", 4)
