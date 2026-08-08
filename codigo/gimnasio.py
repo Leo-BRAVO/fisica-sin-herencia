@@ -162,12 +162,18 @@ def _balbuceo(pasos, n, rng, suavizado=None):
     return com
 
 
-def episodio(semilla, pasos=1200, modo="normal", render=False):
+def episodio(semilla, pasos=1200, modo="normal", render=False, sensores=False):
     """Corre un episodio y devuelve (comandos, señales, etiqueta_verdadera).
 
     señales: [3 ángulos del cuerpo] + [3 alturas de objetos] + [1 distancia entre dos objetos]
     render: si es True devuelve TAMBIÉN los cuadros de cámara (T, 64, 64) — lo único que Diego
-      llega a ver cuando el Gimnasio corre en su modo verdadero. El estado de arriba es de los
+      llega a ver cuando el Gimnasio corre en su modo verdadero.
+    sensores: si es True devuelve ADEMÁS los SENTIDOS DEL CUERPO (T, 9): ángulo y velocidad de
+      cada articulación (PROPIOCEPCIÓN — los husos musculares del bebé, que los tiene desde el
+      útero, antes de que madure la vista) y contacto binario por eslabón (TACTO — los
+      mecanorreceptores). AUDITORÍA DE SENTIDOS 8-ago-2026: Diego solo se veía a sí mismo por
+      cámara — un bebé ciego se descubre igual, porque se SIENTE. Legalidad: son sensores DE SU
+      CUERPO; nadie le dice qué canal es cuerpo — eso sigue emergiendo por contingencia. El estado de arriba es de los
       jueces: sirve para saber si acertó, jamás para que aprenda.
     etiqueta_verdadera: qué columnas son CUERPO por construcción del simulador.
       *** ESTA ETIQUETA ES DE LOS JUECES. Diego jamás la recibe. ***
@@ -181,7 +187,7 @@ def episodio(semilla, pasos=1200, modo="normal", render=False):
         comandos = _balbuceo(pasos, N_ARTICULACIONES, rng)
         rng_tv = np.random.default_rng(semilla + 99991)
 
-        filas, cuadros = [], []
+        filas, cuadros, sentidos = [], [], []
         if render:
             vm = p.computeViewMatrix(*CAMARA)
             pm = p.computeProjectionMatrixFOV(60, 1.0, 0.1, 8.0)
@@ -214,6 +220,14 @@ def episodio(semilla, pasos=1200, modo="normal", render=False):
             alturas = [q[2] for q in pos]
             d01 = float(np.linalg.norm(np.array(pos[0]) - np.array(pos[1])))
             filas.append(ang + alturas + [d01])
+            if sensores:
+                vel = [p.getJointState(brazo, j, physicsClientId=cliente)[1]
+                       for j in range(N_ARTICULACIONES)]
+                contactos = []
+                for j in range(N_ARTICULACIONES):
+                    pts = p.getContactPoints(bodyA=brazo, linkIndexA=j, physicsClientId=cliente)
+                    contactos.append(1.0 if pts else 0.0)
+                sentidos.append(ang + vel + contactos)
             if render:
                 w_, h_, rgb, _, _ = p.getCameraImage(TAM_IMAGEN, TAM_IMAGEN, vm, pm,
                                                      renderer=p.ER_TINY_RENDERER,
@@ -233,8 +247,13 @@ def episodio(semilla, pasos=1200, modo="normal", render=False):
             cuerpo = {0, 1, 2}
         else:
             cuerpo = {0, 1, 2}
+        extra = []
         if render:
-            return comandos, senales, cuerpo, np.stack(cuadros).astype(np.float32)
+            extra.append(np.stack(cuadros).astype(np.float32))
+        if sensores:
+            extra.append(np.array(sentidos, dtype=float))
+        if extra:
+            return (comandos, senales, cuerpo, *extra)
         return comandos, senales, cuerpo
     finally:
         p.disconnect(physicsClientId=cliente)
