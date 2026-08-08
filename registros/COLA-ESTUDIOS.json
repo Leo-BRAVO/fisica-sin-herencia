@@ -62,7 +62,7 @@
       "datos": "datos/procesados/p14_lat4_std",
       "salida": "resultados/aud01-nulo-p14-final",
       "args": "--semillas 2 --paralelo 1 --maxsize 20 --niter 400 --jueces 3 6 9 --nulo surrogado",
-      "nota": "inejecutable en nube tal cual: los latentes p14 nacen de ojos.pt que vive solo en OneDrive de la laptop. Opciones para el director: (a) subir ojos.pt al repo cuando recupere su maquina, o (b) aprobar re-derivar ojos en la nube (aproximado, no byte-identico — necesitaria prerregistro de equivalencia)"
+      "nota": "DECISION DEL DIRECTOR (8-ago): se suben los ojos canonicos al repo (arbol/pesos/, via navegador OneDrive->GitHub; instrucciones en arbol/pesos/LEEME.md). Cuando ojos_p14_lat4.pt exista, este item se vuelve ejecutable: regenerar latentes con esos ojos exactos + huella contra base 0.594409 del resumen historico + verdugo surrogado. La re-derivacion aproximada queda como plan B solo si el archivo se perdio."
     },
     {
       "id": "aud01-dimension-tres-mundos",
