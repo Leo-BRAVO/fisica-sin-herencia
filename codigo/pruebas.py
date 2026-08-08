@@ -346,6 +346,22 @@ caso("G14: la ignorancia curable CAE al doblar los datos (su firma falsable)",
      _eB["epistemica"] < 0.7 * _eA["epistemica"],
      f"{_eA['epistemica']:.3f} -> {_eB['epistemica']:.3f}")
 
+print("== los sistemas del plan biologico: sueño, atencion, filogenia (Reglas 31 rapidas) ==")
+from sueno import regla31 as _s31
+from atencion import regla31 as _a31, repartir as _rep
+from filogenia import regla31 as _f31, torneo as _torneo
+caso("G9 sueño: APRUEBA su Regla 31 (sueña donde hay algo, calla donde no)", _s31(verbose=False) == 0)
+caso("G8 atencion: APRUEBA su Regla 31 (la fovea huye del televisor)", _a31(verbose=False) == 0)
+caso("Regla 33 filogenia: el estadio empata gemelos y corona oraculos", _f31(verbose=False) == 0)
+# la propiedad anti-Goodhart de la atencion, congelada como numero:
+_regs = [{"id": "tv", "epistemica": 0.05, "aleatoria": 5.0, "poder": 0.0, "coste": 10},
+         {"id": "buena", "epistemica": 0.8, "aleatoria": 0.1, "poder": 0.5, "coste": 10}]
+_r = {x["id"]: x["asignado"] for x in _rep(_regs, presupuesto=10)}
+caso("atencion: la varianza pura NO compra fovea (anti-televisor por construccion)",
+     _r["buena"] > 4 * _r["tv"], str(_r))
+caso("filogenia: dos puntajes a 0.001 EMPATAN (no se fabrican linajes)",
+     _torneo([{"nombre": "a", "puntaje": 0.500}, {"nombre": "b", "puntaje": 0.501}])["veredicto"] == "EMPATE")
+
 print("== canonizar: tarjeta de identidad ==")
 t = tarjeta("(v1 + v2) * 0.5 + 3.0", 4)
 caso("desplazamiento = f(0)", abs(t["desplazamiento"] - 3.0) < 1e-6)

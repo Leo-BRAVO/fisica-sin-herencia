@@ -30,17 +30,17 @@ el registro de procedencia del genoma — la Regla 2 aplicada al recién nacido.
 |---|---|---|---|
 | **G1 — Predicción** | minimizar sorpresa | sus funciones de pérdida actuales | ✅ ya lo tiene |
 | **G2 — Curiosidad por compresión** | LA ECUACIÓN (§2) | progreso de compresión esperado / coste | por construir (prereg-18) |
-| **G3 — Acción** | comandos motores; el escalón 2 de la causalidad (intervenir, no solo ver) | cuerpo en el Gimnasio | por construir (prereg-19) |
-| **G4 — Contingencia** | detector "¿esto respondió a MI comando?" → la frontera yo/mundo EMERGE, no se programa | modelo de contingencia sensomotora (paradigma del móvil de la literatura infantil) | por construir (prereg-19) |
+| **G3 — Acción** | comandos motores; el escalón 2 de la causalidad | `gimnasio.py` — cuerpo con topes elegido por torneo anti-autoengaño (prereg-24), 4/4 controles | ✅ construido (8-ago) |
+| **G4 — Contingencia** | detector "¿esto respondió a MI comando?" → la frontera yo/mundo EMERGE | `contingencia.py` — contingencia PERFECTA por ventanas, mínimo de potencia, nulo por desplazamiento. Regla 31: 4/4 | ✅ construido (8-ago); espera ojos v2 |
 | **G5 — Composicionalidad** | pensar en piezas combinables — la marca del pensamiento humano | su lenguaje simbólico (PySR) YA es composicional y legible: su superpoder de nacimiento | ✅ ya lo tiene |
 | **G6 — Memoria episódica** | recordar lo vivido, append-only | MEMORIA-MENTE.jsonl + resultados | ✅ parcial |
-| **G7 — Juego** | exploración sin castigo — la infancia como presupuesto de experimentos gratis | presupuesto de balbuceo/exploración prerregistrado por etapa | por diseñar |
+| **G7 — Juego** | exploración sin castigo — la infancia como presupuesto de experimentos gratis | balbuceo del Gimnasio (`gimnasio.py`), presupuesto prerregistrado | ✅ construido (8-ago) |
 
 ### Los genes del límite (v0.2 — lo que faltaba: sin escasez, el deseo no significa nada)
 | Gen | Qué es | Mecanismo | Por qué es legal |
 |---|---|---|---|
-| **G8 — Atención** | presupuesto de foco por ciclo (el bebé: fóvea estrecha, memoria de trabajo 3–4 ítems) | cuota de cómputo/sensores por ciclo; elegir solo importa cuando no puedes todo | restricción de recursos, cero contenido |
-| **G9 — Sueño** | fases offline de consolidación: re-comprimir memoria episódica → leyes, podar redundancia, re-minar lo viejo | ciclos alternos explorar/consolidar (formaliza lo que la cola de re-análisis ya insinuaba) | mecanismo, cero contenido |
+| **G8 — Atención** | presupuesto de foco por ciclo (el bebé: fóvea estrecha, memoria de trabajo 3–4 ítems) | `atencion.py` — prioridad = epistémica (G14) × poder (G13); la aleatoria NO compra fóvea (anti-televisor por construcción). Regla 31: 4/4 | ✅ construido (8-ago); reparte, no elige objetivos |
+| **G9 — Sueño** | fases offline de consolidación (repetición priorizada + homeostasis de Tononi: podar lo absoluto, conservar lo relativo) | `sueno.py` — re-minería MDL: propone re-análisis donde una ley más simple explicaría lo viejo; consolida memoria por resumen AÑADIDO, jamás borrado. Regla 31: 3/3 | ✅ construido (8-ago); propone, no ejecuta |
 | **G10 — Interocepción** | SENTIR el propio gasto (tiempo, cómputo, esfuerzo motor) — el denominador coste(e) de la ecuación deja de ser un número nuestro y pasa a ser una sensación suya; semilla del automodelo | sensores internos de consumo | mide su propio cuerpo, no el mundo |
 | **G11 — Temple** | emociones como control de ganancia (neuromodulación): sorpresa ↑ tasa de aprendizaje local; frustración (progreso≈0 sostenido) → migrar de región; éxito → persistir | meta-parámetros operacionales y medibles — no teatro | control interno, cero contenido |
 | **G12 — Reflejos** | primitivas motoras mínimas sobre SU cuerpo (cerrar efector al contacto, orientarse al cambio) que aceleran el balbuceo | frontera GRIS confesada: puede insinuar "el contacto importa"; se documenta y se puede ablacionar en la filogenia (§4) | solo su cuerpo; ablacionable |
