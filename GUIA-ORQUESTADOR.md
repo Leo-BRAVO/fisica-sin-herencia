@@ -43,7 +43,22 @@ lo que el disco no muestra es un fallo de coherencia, igual que un código que r
 - **Autopsia SIEMPRE tras cada veredicto** (autopsia.py) — convierte fracasos en diagnósticos. Rodado (rodar.py) distingue ley de truco.
 - **Informes:** resultados/INFORME-NN.md en español llano (Regla 17: si el director no lo entiende, está mal) + versión Word en resultados/word/ (docx-js con node, ya instalado en scratchpad — o pídele al entorno la skill docx).
 
-## EL TALLER — trampas técnicas de esta máquina (Windows 11, PS 5.1)
+## EL TALLER — LA NUBE (la casa actual, desde el 8-ago-2026)
+- **Todo corre en GitHub Actions.** No hay maquina personal en el bucle: `latido-nube.yml`
+  (diario) y `estudios-nube.yml` (a pedido). El director lanza desde el navegador.
+- **`datos/` NUNCA existe en la nube** (fuera de git por politica): toda corrida remota declara
+  su `reconstruir` y `reconstruir_datos.py` baja de la fuente publica y VERIFICA LA HUELLA
+  (base trivial recalculada vs la registrada) antes de dejar correr un veredicto. Sin eso, la
+  campana muere tras compilar Julia en balde (leccion INFORME-24).
+- **Los guardianes deciden a donde va el commit:** aprueban -> main; reprueban -> rama
+  `nube-cuarentena-<run_id>` (nada se pierde, main intacto). Nunca `if: always()` en el commit.
+- **Tolerancias de huella:** cadenas tabulares = identidad (3e-15 y 0.0 exacto); cadena de VIDEO
+  = < 1e-3 (el decodificador difiere entre versiones de OpenCV — documentado en arbol/pesos/).
+- **Trampa de YAML pagada:** un `:` seguido de espacio dentro del NOMBRE de un paso invalida el
+  workflow entero y GitHub lo rechaza en silencio. `coherencia.py` ahora parsea todo workflow.
+- **PySR/Julia en la nube:** ~4 min de compilacion antes de la primera semilla. Es normal.
+
+## EL TALLER HISTORICO — la maquina del director (Windows 11, PS 5.1; scripts en codigo/archivo/)
 - **PowerShell 5.1:** no existe `&&` ni ternarios; los .ps1 DEBEN ser ASCII puro (los acentos rompen el parser); `$env:PYTHONUTF8="1"` siempre antes de python; cuidado `$t:` en strings (usa `${t}`).
 - **Rutas OneDrive largas:** las descargas de HuggingFace fallan — descarga a C:\corto y `robocopy /E /MOVE`. De HF pide SOLO los mp4/json (`allow_patterns`), no los miles de JPEG (7 h vs 3 min).
 - **Julia/PySR:** ~1 GB por proceso — máximo 5 semillas paralelas (`--paralelo 5`). Determinismo: random_state+serial por semilla. La primera corrida compila (~2 min).
@@ -61,8 +76,10 @@ lo que el disco no muestra es un fallo de coherencia, igual que un código que r
   `group: nube`: jamás dos corridas a la vez. Las tareas de la laptop de abajo quedan como
   respaldo histórico — si la laptop revive, apagar su tarea horaria o dejarla (la cola marca
   `hecha` y es idempotente, pero mejor una sola casa para el latido).
-- **Tarea horaria `FisicaSinHerencia-Estudios`:** ejecuta programa_estudios.ps1 → cola de la mente (registros/COLA-ESTUDIOS.json, propuestas de curiosidad.py), actualiza memoria.py y conectoma.py. Re-análisis: aprobación permanente; datos nuevos: esperan al director.
-- **Tarea semanal `FisicaSinHerencia-Respaldo`:** copia fría a C:\FisicaSinHerencia-Respaldo (fuera de OneDrive).
+- **ARCHIVADAS (era laptop, ver `codigo/archivo/LEEME.md`):** la tarea horaria
+  `FisicaSinHerencia-Estudios` (programa_estudios.ps1) y la semanal `FisicaSinHerencia-Respaldo`.
+  Si la laptop revive, **no las enciendas junto al latido de la nube**: serian dos corazones
+  ejecutando la misma cola.
 - **Memoria de la mente:** arbol/MEMORIA-MENTE.jsonl — APPEND-ONLY, jamás borrar (compromiso de bienestar).
 - **Posible pendiente:** el bucle interior (prereg-14, bucle14.ps1) pudo quedar inconcluso — revisa resultados/p14-* y relanza bucle14.ps1 si falta el veredicto final (reanuda solo).
 - **Artefactos del director** (para actualizarlos desde otra conversación pasa su URL como `url` al publicar): Panel 🌳 claude.ai/code/artifact/45920dd8-ac04-42be-ae48-5a9cbb28ed10 · Voz 👁️ .../3c35fbfa-d363-4f23-b1c0-047b3d1ad022 · Red 🕸️ .../91dd7ef5-0a60-4962-a5e7-27970bbb6435. Actualízalos en cada hito.
