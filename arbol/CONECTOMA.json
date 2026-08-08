@@ -39,11 +39,9 @@
         0.28264,
         0.49933,
         0.77109
-      ],
-      "certificacion": "ESTRUCTURAL (degradada de PREDICTIVA el 8-ago-2026, INFORME-33)",
-      "aviso": "NO usar como rival predictivo: su nulo por barajado paso (80.7% contra 72.0% del mundo real)"
+      ]
     },
-    "N-003-E2 (ojos autoelegidos, latente 4 — primera automejora)": {
+    "N-003-E2 (ojos autoelegidos, latente 4 \u2014 primera automejora)": {
       "semilla": "resultados/p14-final/semilla_1.json",
       "n_senales": 4,
       "mse_total": 0.16632650475046837,
@@ -60,11 +58,9 @@
         0.48392,
         0.54601,
         1.20796
-      ],
-      "certificacion": "ESTRUCTURAL (degradada de PREDICTIVA el 8-ago-2026, INFORME-33)",
-      "aviso": "NO usar como rival predictivo: su nulo por barajado paso (80.7% contra 72.0% del mundo real)"
+      ]
     },
-    "epoca1/N-001 (Mendeley angulos — archivado, confianza retirada)": {
+    "epoca1/N-001 (Mendeley angulos \u2014 archivado, confianza retirada)": {
       "semilla": "resultados/oficial-trial1/semilla_9.json",
       "n_senales": 2,
       "mse_total": 0.14611208277517446,
@@ -112,7 +108,7 @@
         448.9673
       ]
     },
-    "N-004-E2 (caida — cantidad conservada, verdugo surrogado)": {
+    "N-004-E2 (caida \u2014 cantidad conservada, verdugo surrogado)": {
       "tipo": "cantidad_conservada",
       "fuente": "resultados/conservadas-caida_aud01/resumen.json",
       "nulo": "surrogado",

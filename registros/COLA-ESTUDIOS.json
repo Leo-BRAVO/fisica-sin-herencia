@@ -129,12 +129,13 @@
     {
       "id": "p25-hito0-v2",
       "tipo": "gimnasio",
-      "estado": "pendiente",
+      "estado": "hecha",
       "datos": "codigo/hito0_v2.py",
       "salida": "resultados/p25-hito0-v2",
       "args": "--episodios 12 --pasos 1500 --epocas 12",
       "prerregistro": 25,
-      "nota": "A vs B(JEPA) vs C(descarga corolaria) vs C-nulo; criterio del prereg-23 congelado"
+      "nota": "A vs B(JEPA) vs C(descarga corolaria) vs C-nulo; criterio del prereg-23 congelado",
+      "resultado": "corrida por latido-nube (Actions)"
     }
   ]
 }
