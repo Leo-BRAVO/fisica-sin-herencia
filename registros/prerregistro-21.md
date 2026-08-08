@@ -1,5 +1,5 @@
 # Prerregistro 21 — BORRADOR — Los ojos que se GANAN su dimensión: selección por ganancia honesta — 8 de agosto de 2026
-**Estado: BORRADOR pendiente de firma del director. Nace del INFORME-27 y del instrumento `ganancia_honesta.py` (aprobado por la Regla 31). Responde a la evidencia triangulada de que los ojos actuales de Diego cargan estructura que no es física.**
+**Estado: FIRMADO — Leo, director, 8-ago-2026 ("firmado el 21"). Nace del INFORME-27 y del instrumento `ganancia_honesta.py` (aprobado por la Regla 31). Responde a la evidencia triangulada de que los ojos actuales de Diego cargan estructura que no es física.**
 
 ## La pregunta
 Los laboratorios eligen la dimensión de una representación por **error de reconstrucción** o por
@@ -41,4 +41,9 @@ Casos congelados en el banco.
 Se registra tal cual. Un fracaso aquí no es del método: es el mapa de lo que 30 fps y un
 autoencoder pueden y no pueden ver.
 
-- **Firmado:** PENDIENTE — Leo, director.
+- **Nota de ejecución (concurrencia, 8-ago):** se implementa y corre en la RAMA mientras el
+  latido vacía la cola de nulos en la nube. Razón: el latido hace `git pull --rebase origin main`
+  antes de cada push, así que código nuevo en main entraría en su directorio a mitad de corrida;
+  si algo rompiera el banco, su siguiente guardián lo mandaría a cuarentena y los nulos quedarían
+  a medias. La rama aísla por completo. Se fusiona cuando los nulos aterricen.
+- **Firmado:** Leo, director — 8-ago-2026.

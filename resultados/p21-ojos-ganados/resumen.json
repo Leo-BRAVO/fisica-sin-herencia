@@ -1,0 +1,55 @@
+{
+  "prerregistro": 21,
+  "jueces": [
+    3,
+    6,
+    9
+  ],
+  "epocas": 15,
+  "candidatas": [
+    {
+      "reduccion_real": 0.49738,
+      "reduccion_falsa": 0.401,
+      "ganancia_honesta": 0.09638,
+      "carpeta": "d2",
+      "dimension": 2
+    },
+    {
+      "reduccion_real": 0.63864,
+      "reduccion_falsa": 0.55179,
+      "ganancia_honesta": 0.08685,
+      "carpeta": "d8",
+      "dimension": 8
+    },
+    {
+      "reduccion_real": 0.721,
+      "reduccion_falsa": 0.70389,
+      "ganancia_honesta": 0.01711,
+      "carpeta": "d3",
+      "dimension": 3
+    },
+    {
+      "reduccion_real": 0.74955,
+      "reduccion_falsa": 0.74104,
+      "ganancia_honesta": 0.00851,
+      "carpeta": "d4",
+      "dimension": 4
+    },
+    {
+      "reduccion_real": 0.33617,
+      "reduccion_falsa": 0.42128,
+      "ganancia_honesta": -0.08511,
+      "carpeta": "d6",
+      "dimension": 6
+    }
+  ],
+  "ganadora": {
+    "reduccion_real": 0.49738,
+    "reduccion_falsa": 0.401,
+    "ganancia_honesta": 0.09638,
+    "carpeta": "d2",
+    "dimension": 2
+  },
+  "veredicto": "INCONCLUSO: el mejor resultado (+0.0964) cae en la BANDA DESCUBIERTA del prerregistro-21 (0.05 a 0.10) — ni la prediccion 1 ni la 2 aplican. El prerregistro tenia un hueco y se registra como tal; no se declara veredicto sobre los nodos",
+  "veredicto_original_erroneo": "el codigo declaraba 'prediccion 2' con solo no superar 0.10, pero la prediccion 2 exige que TODAS esten bajo 0.05; corregido 8-ago-2026"
+}
