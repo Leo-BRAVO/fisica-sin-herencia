@@ -14,10 +14,10 @@ graph TD
 
     E1["ÉPOCA 1 (archivada)<br/>N-001 · N-002 · N-003<br/>k invariante · transferencia entre trials<br/>la caída retiene su corona É1"]:::archivo
 
-    P1{"¿Nulos surrogados de las<br/>campañas insignia? (Regla 31,<br/>ENCOLADO — decide mucho)"}:::pregunta
-    P2{"¿Dimensión intrínseca de cada<br/>sistema? (dimension.py listo,<br/>el primer paso que faltaba)"}:::pregunta
+    P1{"¿Nulos surrogados de las campañas<br/>insignia? (mendeley: se corre en la<br/>NUBE vía Actions; p14 espera ojos)"}:::pregunta
+    P2{"Dimensión intrínseca: MEDIDA 2/3<br/>(Michigan ~3 · caída ~2.3, INF-22)<br/>falta dp Morpheus (rastreo 2 cuerpos)"}:::parcial
     P3{"¿Los latentes canonizan a los<br/>ángulos físicos o son una carta<br/>alternativa tipo Columbia?"}:::pregunta
-    P4{"¿Ojos con pérdida de conservación<br/>verían lo eterno directamente?<br/>(espera a que N-004 salga de cuarentena)"}:::pregunta
+    P4{"¿Ojos con pérdida de conservación<br/>verían lo eterno directamente?<br/>(N-004 ya resuelto — pregunta ABIERTA)"}:::pregunta
     P5{"¿El bucle multi-perilla (latente+<br/>tubería junta) mejora más?"}:::pregunta
 
     RAIZ --> E2N001
@@ -32,6 +32,7 @@ graph TD
     E2N004 --> P4
     E2N003 --> P5
 
+    classDef parcial fill:#4a3d1a,stroke:#e67e22,color:#fff
     classDef raiz fill:#1a1a2e,stroke:#e94560,color:#fff,stroke-width:3px
     classDef nodo fill:#0f3d2e,stroke:#2ecc71,color:#fff,stroke-width:2px
     classDef cuarentena fill:#4a2d1a,stroke:#e67e22,color:#fff,stroke-width:2px
