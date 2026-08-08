@@ -267,6 +267,33 @@ caso("horizonte=4 predice 4 cuadros al futuro (Y desplazada, no recortada al aza
      len(_Y4) == len(_Y1) - 3 and abs(_Y4[0, 0] - _Y1[3, 0]) < 1e-12)
 _sh.rmtree(_fd, ignore_errors=True)
 
+print("== contingencia (G4): el detector de la frontera yo/mundo ==")
+# Congela las DOS lecciones que costaron una tarde de corridas contra el simulador:
+# (1) a un cuadro vista un cuerpo es casi invisible -> el horizonte importa;
+# (2) un objeto manipulable TAMBIEN es contingente -> lo que separa es la CONSISTENCIA.
+from contingencia import medir as _cmedir, _mundos_regla31 as _cmundos
+_cm = _cmundos(n_ep=8, T=320, semilla=3)
+_cjueces = [7, 8]
+_sin_ag = _cm["1 SIN AGENCIA (motores desconectados)"][0]
+_pos = _cm["2 CONTROL POSITIVO (solo la var 0 obedece)"][0]
+_trampa = _cm["4 DERIVA FUERTE, CERO AGENCIA (la trampa del INF-30)"][0]
+_r_sin = _cmedir(_sin_ag, _cjueces, nulos=4, horizonte=4, ventana=90)
+_r_pos = _cmedir(_pos, _cjueces, nulos=4, horizonte=4, ventana=90)
+_r_tra = _cmedir(_trampa, _cjueces, nulos=4, horizonte=4, ventana=90)
+caso("contingencia: NO inventa cuerpo donde los motores estan desconectados",
+     not any(r["es_mia"] for r in _r_sin),
+     str([r["variable"] for r in _r_sin if r["es_mia"]]))
+caso("contingencia: encuentra EXACTAMENTE el grado de libertad conectado",
+     [r["variable"] for r in _r_pos if r["es_mia"]] == [0],
+     str([(r["variable"], r["obedece_en"]) for r in _r_pos]))
+caso("contingencia: la deriva fuerte con comandos suaves NO fabrica cuerpo (trampa INF-30)",
+     not any(r["es_mia"] for r in _r_tra),
+     str([r["variable"] for r in _r_tra if r["es_mia"]]))
+caso("contingencia: el nulo es DESPLAZAMIENTO circular, no barajado (regla 31 enmendada)",
+     "roll" in _insp.getsource(__import__("contingencia")._desplazar))
+caso("contingencia: sus dos constantes quedan EXPUESTAS y sin prerregistrar",
+     "SIN AJUSTAR" in _insp.getsource(_cmedir))
+
 print("== canonizar: tarjeta de identidad ==")
 t = tarjeta("(v1 + v2) * 0.5 + 3.0", 4)
 caso("desplazamiento = f(0)", abs(t["desplazamiento"] - 3.0) < 1e-6)
