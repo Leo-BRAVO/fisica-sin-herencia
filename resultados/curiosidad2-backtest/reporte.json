@@ -1,5 +1,6 @@
 {
-  "ventana": 2,
+  "metrica": "18b",
+  "horizonte_H": 8,
   "novedad": 0.05,
   "umbral": 0.01,
   "decisiones": [
@@ -7,30 +8,30 @@
       "eleccion_v1": "mente-reintento-e2-caida-i2",
       "region_v1": "caida",
       "prioridades": {
-        "mendeley": 0.6778269009624673,
-        "zenodo": 0.4441414784732224,
-        "dp-centroides": 0.5394469883073125,
-        "dp-latentes-propios": 0.0,
+        "mendeley": 0.0,
+        "zenodo": 0.0,
+        "dp-centroides": 0.0,
+        "dp-latentes-propios": 0.9187167892487467,
         "caida": 0.0,
         "conservadas": 0.05
       },
-      "preferida_v2": "mendeley",
-      "cumple": false
+      "preferida_v2": "dp-latentes-propios",
+      "cumple": true
     },
     {
       "eleccion_v1": "mente-reintento-e2-dp-morpheus",
       "region_v1": "dp-centroides",
       "prioridades": {
-        "mendeley": 0.6778269009624673,
-        "zenodo": 0.4441414784732224,
-        "dp-centroides": 0.5394469883073125,
-        "dp-latentes-propios": 0.0,
+        "mendeley": 0.0,
+        "zenodo": 0.0,
+        "dp-centroides": 0.0,
+        "dp-latentes-propios": 0.9187167892487467,
         "caida": 0.0,
         "conservadas": 0.05
       },
-      "preferida_v2": "mendeley",
-      "cumple": false
+      "preferida_v2": "dp-latentes-propios",
+      "cumple": true
     }
   ],
-  "exito_nivel_A": false
+  "exito_nivel_A": true
 }

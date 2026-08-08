@@ -106,25 +106,36 @@ caso("surrogado: el mundo lleno SI pare nodo (s1^2+s2^2 encontrada)",
      _nl > 0 and _jl, f"score={_sl:.4g} serias={_nl} jueces={_jl}")
 _sh.rmtree(_dir31, ignore_errors=True)
 
-print("== GEN G2 (curiosidad2, prereg-18): aburrimiento y progreso ==")
-# Regla 31 del gen: una memoria donde NADA progresa (mismo g en todos los intentos de todas
-# las regiones) debe producir ABURRIMIENTO universal (prioridad 0 en toda region visitada),
-# jamas interes inventado. Y una region cuyo record MEJORA debe puntuar positivo.
-from curiosidad2 import prioridades as _prio, UMBRAL as _umb
-_mem_plana = []
-for _reg, _pref in [("mendeley", "oficial-trial1"), ("zenodo", "peldano2-pendulo46"),
-                    ("dp-centroides", "dp-morpheus"), ("dp-latentes-propios", "p13-latente"),
-                    ("caida", "caida-libre"), ("conservadas", "conservadas-x")]:
-    for _k in range(3):
-        _mem_plana.append({"campana": _pref, "lo_trivial": 4.0, "mi_mejor_esfuerzo": 1.0})
+print("== GEN G2 (curiosidad2, metrica 18b FIRMADA): aburrimiento, frescura, records limpios ==")
+# NOTA DE GOBERNANZA: estos casos REEMPLAZAN a los del prereg-18 original (8-ago-2026) porque
+# prueban la metrica: la 18a fracaso su backtest (INFORME-21) y la 18b fue firmada por el
+# director. El ESPIRITU del caso (Regla 31 del gen: sin progreso -> aburrimiento; jamas
+# interes inventado) es identico y queda congelado aqui.
+from curiosidad2 import prioridades as _prio, UMBRAL as _umb, H as _H
+_prefijos = ["oficial-trial1", "peldano2-pendulo46", "dp-morpheus", "p13-latente",
+             "caida-libre", "conservadas-x"]
+# memoria plana LARGA: dos pasadas por todas las regiones con el MISMO g — los records de
+# todas quedan viejos (mas alla del horizonte H) y nada progresa.
+_mem_plana = [{"campana": p, "lo_trivial": 4.0, "mi_mejor_esfuerzo": 1.0}
+              for _v in range(3) for p in _prefijos]
 _pp = _prio(_mem_plana)
-caso("memoria sin progreso -> aburrimiento universal (todas las prioridades <= umbral)",
+caso("memoria sin progreso -> aburrimiento universal (todas <= umbral)",
      all(p <= _umb for p in _pp.values()), f"{_pp}")
 _mem_viva = list(_mem_plana) + [{"campana": "oficial-trial1", "lo_trivial": 4.0, "mi_mejor_esfuerzo": 0.25}]
 _pv = _prio(_mem_viva)
-caso("record que mejora -> progreso positivo en su region",
-     _pv["mendeley"] > _umb and all(_pv[r] <= _umb for r in _pv if r != "mendeley"),
-     f"{_pv}")
+caso("record que mejora -> progreso positivo SOLO en su region",
+     _pv["mendeley"] > _umb and all(_pv[r] <= _umb for r in _pv if r != "mendeley"), f"{_pv}")
+# frescura: un record ganado hace mas de H eventos ya no cuenta como progreso
+_mem_rancia = list(_mem_viva) + [{"campana": p, "lo_trivial": 4.0, "mi_mejor_esfuerzo": 1.0}
+                                 for p in _prefijos[:1] * _H]
+_pr = _prio(_mem_rancia)
+caso("frescura 18b: el record viejo deja de contar como progreso",
+     _pr["mendeley"] <= _umb, f"mendeley={_pr['mendeley']}")
+# records limpios: una corrida interna (-inner-) con g gigante NO mueve el record
+_mem_inner = list(_mem_plana) + [{"campana": "p14-inner-d4", "lo_trivial": 100.0, "mi_mejor_esfuerzo": 0.001}]
+_pi = _prio(_mem_inner)
+caso("records limpios 18b: las corridas internas no mueven records",
+     _pi["dp-latentes-propios"] <= _umb, f"dp-latentes={_pi['dp-latentes-propios']}")
 
 print("== dimension intrinseca: TwoNN y participacion ==")
 from dimension import twonn, participacion

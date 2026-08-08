@@ -1,5 +1,5 @@
-# Prerregistro 18b — BORRADOR — Curiosidad v2, segundo intento: récords limpios y frescura — 8 de agosto de 2026
-**Estado: BORRADOR pendiente de firma del director. Nace del FRACASO registrado del prereg-18
+# Prerregistro 18b — Curiosidad v2, segundo intento: récords limpios y frescura — 8 de agosto de 2026
+**Estado: FIRMADO — Leo, director, 8-ago-2026, aprobación en conversación ("ok vamos con los 3 aprobado avancemos"). Nace del FRACASO registrado del prereg-18
 Etapa A (INFORME-21): el criterio no se ablanda — se rediseña la métrica con las dos lecciones de
 la autopsia, y el criterio nuevo queda firmado ANTES de re-correr. Mismo gen (G2), misma ecuación;
 cambia solo CÓMO se mide el progreso.**
@@ -27,4 +27,7 @@ cambia solo CÓMO se mide el progreso.**
 - **Fracaso:** se registra tal cual; dos fracasos de diseño consecutivos del gen G2 abrirían la
   pregunta de si el corpus histórico (27 campañas) es demasiado chico para derivadas de progreso,
   y el gen esperaría al Gimnasio (que genera corpus denso).
-- **Firmado:** PENDIENTE — Leo, director.
+- **Nota de honestidad (confesada al firmar):** el diseño 18b nace de la autopsia del fracaso 18 —
+  como toda iteración de método, se diseña conociendo la historia que corrigió. El examen que no
+  admite esa trampa es el nivel B prospectivo: ahí se juega el gen de verdad.
+- **Firmado:** Leo, director — 8-ago-2026 ("ok vamos con los 3 aprobado avancemos fusiona").

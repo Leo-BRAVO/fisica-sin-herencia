@@ -47,7 +47,21 @@ fotografiada; lo que falló fue mi métrica de "dónde está naciendo", por las 
 - Los casos del gen quedaron congelados en el banco (aburrimiento universal ante memoria plana;
   progreso positivo ante récord que mejora): 26/26 OK.
 
+## ANEXO — RESULTADO DEL 18b (agregado tras la firma del director y la re-corrida, 8-ago-2026)
+**ÉXITO del nivel A: 2/2 decisiones cumplen el criterio firmado.** Con récords limpios y
+frescura (H=8), en AMBAS decisiones históricas la ecuación: (a) asigna prioridad 0.000 bits a la
+región estéril que la v1 eligió (última o empatada al fondo del ranking), y (b) habría preferido
+`dp-latentes-propios` (0.92 bits) — **la percepción propia: exactamente la vía que, hoy sabemos,
+resolvió el péndulo doble 5/5 donde los centroides fracasaban.** La ecuación, mirando solo el
+pasado disponible en cada momento, señala el camino que la historia después confirmó.
+- Honestidad de rigor: el diseño 18b nació de la autopsia del fracaso 18 (confesado en el
+  prerregistro); el examen sin trampa posible es el **nivel B prospectivo** — la próxima campaña
+  real que la v2 proponga. Su ranking de hoy: dp-latentes-propios 0.92 · conservadas 0.05
+  (novedad — esperando la cuarentena) · el resto 0.
+- Los 4 casos de la métrica 18b quedaron congelados en el banco (aburrimiento, progreso,
+  frescura, récords limpios).
+
 ## Qué decide el director
-1. Firmar (o corregir) el prerregistro-18b cuando lo lea.
-2. Sigue pendiente lo de siempre: las 5 corridas encoladas en su máquina (la cuarentena de
-   E2-N-004 espera) y la fusión de esta rama a main para que la tarea horaria vea la cola nueva.
+1. ✅ 18b firmado y ejecutado (esta misma sesión).
+2. Sigue pendiente: las 5 corridas encoladas en su máquina (la cuarentena de E2-N-004 espera) —
+   con la fusión a main hecha, la tarea horaria ya podrá ver la cola nueva.
