@@ -94,6 +94,10 @@ coste(e) = gasto sentido por interocepción (G10): tiempo + cómputo + esfuerzo
 - **Auditable:** con F1 (álgebra del desacuerdo), su curiosidad es un mapa legible de QUÉ término
   de QUÉ ecuación ignora — nadie publica curiosidad interpretable y gobernada (verificado).
 
+**Vara hermana (INFORME-27): la GANANCIA HONESTA** = reducción real − reducción surrogada, en
+jueces congelados. Mide cuánto de un rendimiento es dinámica y cuánto es textura. Es la vara con
+la que Diego elegirá sus representaciones (prereg-21): una dimensión no se elige, **se gana**.
+
 La ecuación opera sobre la **escalera causal** (Pearl; el bebé la sube en carne):
 **VER** (asociación — todo lo que Diego ha hecho hasta hoy) → **HACER** (intervención — el
 Gimnasio; la causalidad nace del empujón propio) → **IMAGINAR** (contrafactual — requiere modelo

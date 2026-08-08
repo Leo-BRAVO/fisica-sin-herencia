@@ -161,6 +161,14 @@ caso("G2/Goodhart nº2: el recorte max(0,.) PREMIA olvidar-y-reaprender",
 caso("G2/Goodhart nº2: el progreso CON SIGNO cancela el ciclo (sobre la vuelta completa)",
      abs(_lp_con_signo(_oscila, 2)) < 1e-9, f"lp={_lp_con_signo(_oscila,2):.3f}")
 
+print("== GANANCIA HONESTA: el instrumento que separa dinamica de textura ==")
+# Nace de convertir un fracaso en medidor (INFORME-27). Casos congelados: debe dar ~0 donde
+# solo hay textura y >0 donde hay acople real. Si deja de distinguirlos, no puede opinar
+# sobre ninguna representacion y el banco lo grita.
+from ganancia_honesta import regla31 as _gh31, reduccion as _red
+caso("ganancia honesta: reduccion bien definida", abs(_red(1.0, 0.25) - 0.75) < 1e-12)
+caso("ganancia honesta: APRUEBA su Regla 31 (separa textura de dinamica)", _gh31() == 0)
+
 print("== dimension intrinseca: TwoNN y participacion ==")
 from dimension import twonn, participacion
 _rngD = np.random.default_rng(4)

@@ -1,5 +1,5 @@
 # Prerregistro 20 — BORRADOR — G2 corregido: progreso CON SIGNO sobre auditoría SELLADA, con coste real (G10) — 8 de agosto de 2026
-**Estado: BORRADOR pendiente de firma del director. Nace de `arbol/ECUACIONES-COMPARADAS.md`: la crítica formal de 2026 a la teoría de Schmidhuber nombra cuatro canales de Goodhart, y nuestra ecuación tenía DOS de ellos abiertos. G10 (interocepción) ya está construido y MIDE; este prerregistro decide si puede DECIDIR.**
+**Estado: FIRMADO — 8-ago-2026, con UNA CORRECCION del orquestador antes de firmar (abajo). Nace de `arbol/ECUACIONES-COMPARADAS.md`: la crítica formal de 2026 a la teoría de Schmidhuber nombra cuatro canales de Goodhart, y nuestra ecuación tenía DOS de ellos abiertos. G10 (interocepción) ya está construido y MIDE; este prerregistro decide si puede DECIDIR.**
 
 - **Qué cambia (tres correcciones, ninguna cosmética):**
   1. **Progreso CON SIGNO:** desaparece el `max(0, ·)`. Cierra el canal nº2 (olvidar-y-reaprender),
@@ -10,10 +10,18 @@
      nº1 (mejorar en el propio flujo) y nº3 (sobreajustar la validación).
   3. **Denominador real:** `coste_sentido` de G10 sustituye al `coste = 1` uniforme. Cierra el
      canal nº4 (perseguir ganancias diminutas a costo infinito).
-- **Éxito nivel A (backtest, mismas dos decisiones históricas del prereg-18b):** la ecuación
-  corregida mantiene el veredicto ya obtenido — la región estéril que la v1 eligió queda en la
-  mitad inferior y no es la preferida. **Si el cambio de métrica ROMPE ese resultado, se registra
-  como fracaso** y se investiga cuál de las tres correcciones lo causó (una a la vez).
+- **CORRECCION ANTES DE FIRMAR (del orquestador, 8-ago):** el criterio A que yo mismo habia
+  escrito era CONFIRMATORIO — pedia que la ecuacion nueva "mantenga el veredicto" de la vieja.
+  Eso no es una prueba, es un chequeo de consistencia: una metrica no se valida pidiendole que
+  este de acuerdo con la que reemplaza. **El criterio correcto es ADVERSARIAL: la ecuacion nueva
+  debe SOBREVIVIR un ataque que MATA a la vieja.**
+- **Éxito nivel A (ADVERSARIAL, criterio corregido):** se construye de antemano un ataque de
+  Goodhart —una region que oscila (aprende, olvida, reaprende)— y se exige:
+  (a) la ecuacion VIEJA le asigna interes alto y sostenido (cae en la trampa);
+  (b) la ecuacion NUEVA le asigna progreso ~0 (resiste).
+  **Ya demostrado y congelado en el banco.** Ademas, sobre las dos decisiones historicas del
+  prereg-18b, la nueva no debe elegir la region esteril (se conserva como criterio secundario,
+  no como validacion).
 - **Éxito nivel B (Regla 31 del gen, obligatorio antes de cualquier decisión real):**
   1. memoria plana → aburrimiento universal (ya congelado en el banco);
   2. memoria que OSCILA → progreso ≈ 0 con signo, y > 0 con recorte (la demostración del defecto);

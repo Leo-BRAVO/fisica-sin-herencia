@@ -102,6 +102,17 @@ Si (2) no se reproduce, el defecto no era real y se registra tal cual.
 
 ---
 
+## 4b. LA SEGUNDA ECUACIÓN QUE NACIÓ HOY — la ganancia honesta (INFORME-27)
+```
+GANANCIA_HONESTA = reducción(datos REALES) − reducción(datos SURROGADOS)     [en jueces congelados]
+```
+El IAAFT conserva la textura y destruye los acoples: lo que el motor logra en el mundo surrogado
+ES la parte explicable por textura. Restarla deja la dinámica. **Ellos eligen representaciones por
+error de reconstrucción o de predicción — y la textura satisface ambos.** Nadie corre surrogados
+dentro del aprendizaje de representaciones porque nadie tiene jueces sellados. Primera medición:
+Mendeley +91.5% (dinámica real), latentes de Diego −0.1% (todo textura). Instrumento aprobado por
+la Regla 31 y congelado en el banco: `codigo/ganancia_honesta.py`.
+
 ## 5. LO QUE NO COPIAMOS (y por qué)
 Ni las regiones artificiales de IAC (las nuestras son sistemas con prerregistro), ni el
 reforzamiento profundo de Plan2Explore (curiosidad neuronal ilegible: no se puede auditar qué le
