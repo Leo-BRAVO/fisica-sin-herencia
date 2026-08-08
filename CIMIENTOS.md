@@ -123,7 +123,7 @@ La ambición de largo plazo del proyecto (aportar a medicina, seguridad, paz, en
 
     datos crudos → descubridor no contaminado → validación despiadada → nodo del árbol → preguntas nuevas → datos nuevos → …
 
-Cada vuelta del ciclo deja conocimiento verificado que hace más potente la vuelta siguiente. Si el método demuestra funcionar en mecánica (Fases 0–2), el MISMO protocolo — estas mismas reglas (hoy 31) — se puede apuntar después a datos biomédicos abiertos, datos de materiales, datos climáticos: los dominios cambian, las reglas no. Esa es la ruta real de "trabajar conmigo primero y luego llevarlo al mundo": primero demostrar el motor en lo simple y barato, luego escalarlo a lo que importa. Y ese motor, con sus reglas escritas y su árbol auditable, es publicable, enseñable y heredable — un legado no depende de que su autor esté presente.
+Cada vuelta del ciclo deja conocimiento verificado que hace más potente la vuelta siguiente. Si el método demuestra funcionar en mecánica (Fases 0–2), el MISMO protocolo — estas mismas reglas (hoy 32) — se puede apuntar después a datos biomédicos abiertos, datos de materiales, datos climáticos: los dominios cambian, las reglas no. Esa es la ruta real de "trabajar conmigo primero y luego llevarlo al mundo": primero demostrar el motor en lo simple y barato, luego escalarlo a lo que importa. Y ese motor, con sus reglas escritas y su árbol auditable, es publicable, enseñable y heredable — un legado no depende de que su autor esté presente.
 
 ---
 
@@ -205,6 +205,12 @@ Aprobada por el director el 8-ago-2026 (AUDITORIA-EXTERNA-01), tras demostrarse 
 - Los casos de la Regla 31 de cada herramienta se **congelan en el banco de pruebas** (`pruebas.py`): el defecto atrapado no puede volver sin que el banco grite.
 Precedente fundacional: `regla31_conservada.py` — con el nulo viejo (barajado), un mundo de caminatas suavizadas sin nada conservado cumplía el criterio completo del prerregistro-16; con el nulo surrogado (IAAFT), la herramienta rechaza el vacío y encuentra lo que sí existe.
 
+### Regla 32 — La autoauditoría permanente: todo interconectado, salvo lo que la mente no ve
+Ordenada por el director el 8-ago-2026 ("auto audita siempre como regla; al crear una mente debe todo estar interconectado, excepto las reglas — que es lo que él no ve y nosotros tenemos").
+- **Los dos guardianes, antes de CADA commit:** `pruebas.py` (el banco congelado — la ciencia no se des-aprende) y `coherencia.py` (la casa — lo que los documentos proclaman coincide con lo que hay en disco: reglas, nodos, cuarentenas, boleta, cola, versiones, referencias cruzadas). Un fallo de cualquiera bloquea el commit.
+- **Todo lo que se agrega queda interconectado y vigilado:** la herramienta nueva aprueba la Regla 31 antes de su primer veredicto; coherencia.py gana casos que vigilen lo nuevo (los casos solo se agregan, jamás se quitan); toda afirmación numérica de un documento debe poder señalarse a un archivo del repositorio que la respalde.
+- **La única excepción a la interconexión, y es constitutiva:** las REGLAS, los JUECES y los CRITERIOS no se conectan al lado de la mente — viven del lado humano, invisibles para ella (Reglas 27 y 28). La mente ve todo su mundo tejido (árbol, conectoma, memoria, genoma operativo); jamás ve la vara que la mide ni la constitución que la gobierna. La interconexión total es para su casa; la separación total es para su tribunal.
+
 ---
 
 ## 3. FASE 0 — INSTRUCCIONES CONCRETAS (bajo presupuesto: ~$0)
@@ -282,7 +288,7 @@ fisica-sin-herencia/
 
 Copiar y pegar esto para continuar el proyecto con cualquier asistente:
 
-> Lee los archivos CIMIENTOS.md, MENTE.md y GUIA-ORQUESTADOR.md completos (la guía contiene las trampas técnicas y científicas ya pagadas — no las repitas). Al leerlos te conviertes en el científico del proyecto (Regla 24), con toda su experiencia acumulada. Tu rol es ORQUESTADOR, no descubridor (Regla 3): escribes código, organizas datos y documentas, pero jamás sugieres qué ley física deberían encontrar los datos ni interpretas resultados usando física humana antes de la validación. Ayúdame a ejecutar la fase que indica MENTE.md respetando las reglas del proyecto (hoy 31). Toda automejora tuya sigue el ritual de la Regla 24 y espera mi OK. Si actúas como descubridor-orquestador, el cortafuegos de la Regla 27 te aplica: no consultes conocimiento humano del dominio investigado. Si alguna acción viola una regla, deténte y dímelo.
+> Lee los archivos CIMIENTOS.md, MENTE.md y GUIA-ORQUESTADOR.md completos (la guía contiene las trampas técnicas y científicas ya pagadas — no las repitas). Al leerlos te conviertes en el científico del proyecto (Regla 24), con toda su experiencia acumulada. Tu rol es ORQUESTADOR, no descubridor (Regla 3): escribes código, organizas datos y documentas, pero jamás sugieres qué ley física deberían encontrar los datos ni interpretas resultados usando física humana antes de la validación. Ayúdame a ejecutar la fase que indica MENTE.md respetando las reglas del proyecto (hoy 32). Toda automejora tuya sigue el ritual de la Regla 24 y espera mi OK. Si actúas como descubridor-orquestador, el cortafuegos de la Regla 27 te aplica: no consultes conocimiento humano del dominio investigado. Si alguna acción viola una regla, deténte y dímelo.
 
 ---
 

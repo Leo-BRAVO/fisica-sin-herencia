@@ -1,5 +1,5 @@
-# Prerregistro 18 — BORRADOR — Curiosidad v2: el impulso por progreso de compresión — 8 de agosto de 2026
-**Estado: BORRADOR pendiente de firma del director. Se ejecuta AL LEVANTAR el congelamiento de la AUDITORIA-EXTERNA-01. Gen G2 del GENOMA-DIEGO (la ecuación del impulso). Sin datos nuevos, sin Gimnasio: solo su memoria y su corpus existente.**
+# Prerregistro 18 — Curiosidad v2: el impulso por progreso de compresión — 8 de agosto de 2026
+**Estado: FIRMADO — aprobación del director en conversación, 8-ago-2026 ("luego avanza con lo que le falta al genoma, todo lo que recomendaste"), que además levanta el congelamiento de la AUDITORIA-EXTERNA-01 SOLO para la línea del genoma (la voz, el gimnasio como órgano completo y la plataforma siguen congelados). Gen G2 del GENOMA-DIEGO (la ecuación del impulso). Sin datos nuevos, sin Gimnasio: solo su memoria y su corpus existente.**
 
 - **Pregunta:** ¿la ecuación del impulso — Curiosidad(e) = ΔC esperado / coste — elige mejor los
   estudios del ente que la curiosidad v1 (lista fija de recetas ordenada por peor-hueco-primero)?
@@ -10,7 +10,8 @@
     región, leída de MEMORIA-MENTE.jsonl y los resúmenes. Se reconstruye la decisión en cada punto
     histórico donde la curiosidad v1 eligió campaña, usando SOLO la información disponible hasta
     ese momento (nada del futuro).
-  - **Regiones FIJADAS antes del backtest (autoauditoría 8-ago):** mendeley · dp-centroides ·
+  - **Regiones FIJADAS antes del backtest (autoauditoría 8-ago, completada al firmar — la
+    memoria contiene también campañas zenodo):** mendeley · zenodo · dp-centroides ·
     dp-latentes-propios · caída · conservadas. Ninguna región se agrega ni divide después de ver
     los puntajes.
   - **Honestidad sobre el backtest (confesada de antemano):** todo backtest se diseña conociendo la
@@ -40,4 +41,6 @@
   ANTES del backtest.
 - **Fracaso:** se registra tal cual; abriría la pregunta de si el corpus histórico es demasiado
   chico para estimar derivadas de progreso (y entonces el hito 0 del Gimnasio genera el corpus).
-- **Firmado:** PENDIENTE — Leo, director.
+- **Firmado:** Leo, director — 8-ago-2026, aprobación en conversación ("avanza con... todo lo que
+  recomendaste"), sobre la recomendación explícita del orquestador de firmar este prerregistro con
+  las correcciones de la autoauditoría ya aplicadas.

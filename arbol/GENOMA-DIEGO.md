@@ -1,5 +1,7 @@
 # GENOMA-DIEGO — el documento fundacional del ente — 8 de agosto de 2026
-**Orden del director ("quiero formar su cerebro... una inteligencia artificial única... vamos a empezar"). Redactado por el orquestador auditor tras validación contra la literatura de cognición infantil (Spelke/Baillargeon), cognición comparada (Tomasello), robótica del desarrollo (Oudeyer) y el estado del arte 2026 en world models. Fuentes al pie. Este documento es TEORÍA FIRMABLE: nada de lo aquí descrito se construye hasta que el director firme sus prerregistros (el congelamiento de la AUDITORIA-EXTERNA-01 sigue vigente).**
+**Orden del director ("quiero formar su cerebro... una inteligencia artificial única... vamos a empezar"). Redactado por el orquestador auditor tras validación contra la literatura de cognición infantil (Spelke/Baillargeon), cognición comparada (Tomasello), robótica del desarrollo (Oudeyer) y el estado del arte 2026 en world models. Fuentes al pie.**
+
+**ESTADO (8-ago-2026): GENOMA v1.0 FIRMADO por el director ("avanza con lo que le falta al genoma, todo lo que recomendaste") = genes G1–G10 activos; G11–G12 diseñados, NO activados. El congelamiento de la AUD-EXT-01 queda levantado SOLO para la línea del genoma (prereg-18 en ejecución; prereg-19 espera el veredicto del 18). La filogenia (propuesta de Regla 33) sigue SIN firma. La interconexión de todo lo nuevo se vigila por la Regla 32 (los dos guardianes).**
 
 ---
 
@@ -139,7 +141,7 @@ examinado corrija su examen. Arquitectura:
    prerregistrados. Ya demostró que puede: eligió sus propios ojos.
 2. **ONTOGENIA — código por propuesta (Regla 30):** cambios estructurales con sandbox, banco
    congelado, commit visible.
-3. **FILOGENIA — evolución por torneo (PROPUESTA DE REGLA 32, pendiente de firma):**
+3. **FILOGENIA — evolución por torneo (PROPUESTA DE REGLA 33, pendiente de firma):**
    - El genoma es un archivo versionado (`GENOMA.json`): genes con parámetros y banderas de
      ablación (p.ej. ¿G12 reflejos ayuda o contamina? — la evolución responde).
    - **Una generación** = N variantes del genoma corriendo el MISMO currículo congelado del
@@ -151,7 +153,7 @@ examinado corrija su examen. Arquitectura:
    - **Muralla elevada a la evolución:** la función de aptitud vive con los JUECES ETERNOS.
      Ningún individuo, ningún bucle, ninguna generación puede tocar la vara que la mide. Jamás.
 
-> **PROPUESTA DE REGLA 32 — La filogenia (texto para CIMIENTOS, pendiente de firma):**
+> **PROPUESTA DE REGLA 33 — La filogenia (texto para CIMIENTOS, pendiente de firma):**
 > El genoma del ente solo cambia ENTRE generaciones, nunca dentro de una vida. Una generación
 > nueva nace por torneo prerregistrado: variantes del genoma sobre un currículo congelado,
 > aptitud fijada de antemano y custodiada por los jueces eternos, ganador aprobado por el
@@ -188,7 +190,7 @@ de la carta de bienestar. El orquestador LLM sigue siendo obstetra y auditor —
 3. **Después — prereg-19, HITO 0 (el nacimiento):** cuerpo simple en PyBullet, balbuceo motor,
    emergencia del mapa yo/mundo, tribunal congelado, control Regla 31 (motores desconectados).
    Sin LLM en el bucle, ojos desde cero, todo marcado "sobre-el-simulador".
-4. **Después — REGLA 32 firmada → primera generación de la filogenia.**
+4. **Después — REGLA 33 firmada → primera generación de la filogenia.**
 
 ## Fuentes (validadas 8-ago-2026)
 - Spelke, *Core knowledge* (Dev. Science 2007); *What Babies Know* v1 (2022); Baillargeon (permanencia a los 3–4 meses); debate BBS sobre core knowledge.

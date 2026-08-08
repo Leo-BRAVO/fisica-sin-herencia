@@ -1,0 +1,36 @@
+{
+  "ventana": 2,
+  "novedad": 0.05,
+  "umbral": 0.01,
+  "decisiones": [
+    {
+      "eleccion_v1": "mente-reintento-e2-caida-i2",
+      "region_v1": "caida",
+      "prioridades": {
+        "mendeley": 0.6778269009624673,
+        "zenodo": 0.4441414784732224,
+        "dp-centroides": 0.5394469883073125,
+        "dp-latentes-propios": 0.0,
+        "caida": 0.0,
+        "conservadas": 0.05
+      },
+      "preferida_v2": "mendeley",
+      "cumple": false
+    },
+    {
+      "eleccion_v1": "mente-reintento-e2-dp-morpheus",
+      "region_v1": "dp-centroides",
+      "prioridades": {
+        "mendeley": 0.6778269009624673,
+        "zenodo": 0.4441414784732224,
+        "dp-centroides": 0.5394469883073125,
+        "dp-latentes-propios": 0.0,
+        "caida": 0.0,
+        "conservadas": 0.05
+      },
+      "preferida_v2": "mendeley",
+      "cumple": false
+    }
+  ],
+  "exito_nivel_A": false
+}

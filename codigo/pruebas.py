@@ -106,6 +106,26 @@ caso("surrogado: el mundo lleno SI pare nodo (s1^2+s2^2 encontrada)",
      _nl > 0 and _jl, f"score={_sl:.4g} serias={_nl} jueces={_jl}")
 _sh.rmtree(_dir31, ignore_errors=True)
 
+print("== GEN G2 (curiosidad2, prereg-18): aburrimiento y progreso ==")
+# Regla 31 del gen: una memoria donde NADA progresa (mismo g en todos los intentos de todas
+# las regiones) debe producir ABURRIMIENTO universal (prioridad 0 en toda region visitada),
+# jamas interes inventado. Y una region cuyo record MEJORA debe puntuar positivo.
+from curiosidad2 import prioridades as _prio, UMBRAL as _umb
+_mem_plana = []
+for _reg, _pref in [("mendeley", "oficial-trial1"), ("zenodo", "peldano2-pendulo46"),
+                    ("dp-centroides", "dp-morpheus"), ("dp-latentes-propios", "p13-latente"),
+                    ("caida", "caida-libre"), ("conservadas", "conservadas-x")]:
+    for _k in range(3):
+        _mem_plana.append({"campana": _pref, "lo_trivial": 4.0, "mi_mejor_esfuerzo": 1.0})
+_pp = _prio(_mem_plana)
+caso("memoria sin progreso -> aburrimiento universal (todas las prioridades <= umbral)",
+     all(p <= _umb for p in _pp.values()), f"{_pp}")
+_mem_viva = list(_mem_plana) + [{"campana": "oficial-trial1", "lo_trivial": 4.0, "mi_mejor_esfuerzo": 0.25}]
+_pv = _prio(_mem_viva)
+caso("record que mejora -> progreso positivo en su region",
+     _pv["mendeley"] > _umb and all(_pv[r] <= _umb for r in _pv if r != "mendeley"),
+     f"{_pv}")
+
 print("== dimension intrinseca: TwoNN y participacion ==")
 from dimension import twonn, participacion
 _rngD = np.random.default_rng(4)

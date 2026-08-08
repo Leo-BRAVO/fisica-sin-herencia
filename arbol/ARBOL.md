@@ -5,7 +5,7 @@
 
 ```mermaid
 graph TD
-    RAIZ(("FÍSICA SIN HERENCIA<br/>31 reglas · MENTE v12")):::raiz
+    RAIZ(("FÍSICA SIN HERENCIA<br/>32 reglas · MENTE v12")):::raiz
 
     E2N001["N-001-E2 · 11-jul-2026<br/>Ley de retardos Mendeley — 8× sobre É1<br/>k = 0.017454 reapareció espontáneamente<br/>5/5 semillas"]:::nodo
     E2N002["N-002-E2 · 12-jul-2026<br/>Percepción propia: 8 variables autoinventadas<br/>ley acoplada replicada a la 4ª–6ª cifra<br/>5/5 · el dp Morpheus por fin cedió"]:::nodo
