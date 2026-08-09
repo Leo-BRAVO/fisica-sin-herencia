@@ -59,7 +59,13 @@ def reconstruir(traza=None):
     traza = traza or (ts[-1] if ts else None)
     ev = leer(traza=traza) if traza else []
     ev = [e for e in ev if e.get("id") is not None]   # eventos previos al pasaporte
-    por_id = {e["id"]: e for e in ev}
+    # append-only con reescritura: de cada id vale la ULTIMA version (una agregacion se publica
+    # parcial y despues completa con sus enlaces). La historia queda; la verdad es la ultima.
+    ult = {}
+    for e in ev:
+        ult[e["id"]] = e
+    ev = [ult[k] for k in sorted(ult)]
+    por_id = dict(ult)
     hijos = defaultdict(list)
     for e in ev:
         if e.get("causa") is not None:
@@ -81,6 +87,13 @@ def conexiones(t):
         elif e.get("a"):
             out.append({"de": e["gen"], "a": e["a"], "tema": e.get("tema"),
                         "via": f"{e['tipo']} dirigido", "ids": [e["id"]]})
+        for l in (e.get("enlaces") or []):
+            # LOS ENLACES son las relaciones que padre-hijo no puede cargar: sin esto una
+            # sintesis de doce voces aparece conectada a una sola.
+            if l in t["por_id"]:
+                out.append({"de": t["por_id"][l]["gen"], "a": e["gen"],
+                            "tema": e.get("tema"), "via": "aporta a la sintesis",
+                            "ids": [l, e["id"]]})
     return out
 
 
@@ -168,6 +181,13 @@ def revisar(t, bloqueos=None):
                 f"{', '.join(mudos)}")
 
     # ---- CEREBRO
+    for e in ev:
+        if e["tipo"] in ("sintesis", "veredicto") or (e.get("enlaces") and len(e["enlaces"]) > 1):
+            aportes = [h for h in ev if h.get("causa") == e.get("causa") and h["id"] != e["id"]]
+            if aportes and len(e.get("enlaces") or []) < len(aportes):
+                fallos["cerebro"].append(
+                    f"agregacion {e['id']} de {e['gen']}: {len(aportes)} contribuyentes y solo "
+                    f"{len(e.get('enlaces') or [])} enlazados — hay aportes que no constan")
     for e in ev:
         if e.get("causa") is not None and e["causa"] not in t["por_id"]:
             fallos["cerebro"].append(
