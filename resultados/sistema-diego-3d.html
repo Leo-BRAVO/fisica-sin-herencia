@@ -1,0 +1,329 @@
+<title>El sistema de Diego — cómo se comunican sus órganos</title>
+<style>
+  :root{
+    --ground:#EDF0EF; --panel:#FFFFFF; --ink:#0E1618; --ink-2:#4A5C60; --ink-3:#7A8C90;
+    --line:#C9D3D2; --line-2:#E1E8E7;
+    --decide:#B4681F; --propone:#1F7A69; --mide:#4E6873; --inactivo:#98A6A9;
+    --espina:#7C8E93; --alerta:#A8503A; --oro:#8A6D1F;
+    --cuerpo:#2F7A8C; --mundo:#6B5FA8; --frontera:#B4681F; --leyes:#1F7A69;
+    --recursos:#8A6D1F; --descanso:#5C6E9C; --revision:#A8503A;
+  }
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+    --ground:#070C0E; --panel:#0D1518; --ink:#DCE6E6; --ink-2:#8DA1A7; --ink-3:#5F7278;
+    --line:#1E2B2F; --line-2:#151F22;
+    --decide:#E8A050; --propone:#4FC0AA; --mide:#7FA0AC; --inactivo:#3A484C;
+    --espina:#46575C; --alerta:#D8735A; --oro:#C9A44E;
+    --cuerpo:#4FAFC4; --mundo:#9A8CE0; --frontera:#E8A050; --leyes:#4FC0AA;
+    --recursos:#C9A44E; --descanso:#8A9BD4; --revision:#D8735A;
+  }}
+  :root[data-theme="dark"]{
+    --ground:#070C0E; --panel:#0D1518; --ink:#DCE6E6; --ink-2:#8DA1A7; --ink-3:#5F7278;
+    --line:#1E2B2F; --line-2:#151F22;
+    --decide:#E8A050; --propone:#4FC0AA; --mide:#7FA0AC; --inactivo:#3A484C;
+    --espina:#46575C; --alerta:#D8735A; --oro:#C9A44E;
+    --cuerpo:#4FAFC4; --mundo:#9A8CE0; --frontera:#E8A050; --leyes:#4FC0AA;
+    --recursos:#C9A44E; --descanso:#8A9BD4; --revision:#D8735A;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--ink);
+    font-family:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+    font-size:13px;line-height:1.5;overflow:hidden}
+  .serif{font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif}
+  .capa{position:fixed;inset:0;display:grid;grid-template-columns:1fr 420px}
+  #escena{position:relative;overflow:hidden}
+  #lienzo{display:block;width:100%;height:100vh;cursor:grab}
+  #lienzo.arr{cursor:grabbing}
+
+  .cabecera{position:absolute;top:0;left:0;padding:22px 26px;pointer-events:none;
+    background:linear-gradient(to bottom,var(--ground) 42%,transparent)}
+  h1{font-size:21px;margin:0;font-weight:600;letter-spacing:-.01em}
+  h1 em{font-style:italic;color:var(--ink-2)}
+  .sub{color:var(--ink-2);font-size:11px;margin-top:5px;letter-spacing:.02em}
+
+  .pestanas{position:absolute;bottom:20px;left:26px;display:flex;gap:2px;
+    border:1px solid var(--line);border-radius:2px;overflow:hidden;background:var(--panel)}
+  .pestanas button{background:none;border:0;color:var(--ink-2);font:inherit;font-size:11px;
+    padding:8px 15px;cursor:pointer;letter-spacing:.05em;text-transform:uppercase}
+  .pestanas button[aria-selected="true"]{background:var(--ink);color:var(--ground)}
+  .pestanas button:focus-visible{outline:2px solid var(--decide);outline-offset:-2px}
+
+  .lat{border-left:1px solid var(--line);background:var(--panel);overflow-y:auto;padding:24px 24px 60px}
+  .eyebrow{font-size:9.5px;letter-spacing:.17em;text-transform:uppercase;color:var(--ink-3);
+    border-bottom:1px solid var(--line-2);padding-bottom:6px;margin:0 0 12px}
+  .lat section{margin-bottom:26px}
+  h2{font-size:17px;margin:0 0 3px;font-weight:600;letter-spacing:-.01em}
+  .modo{font-size:9.5px;letter-spacing:.15em;text-transform:uppercase;margin-bottom:12px}
+  .hace{color:var(--ink);font-size:12.5px;line-height:1.6;margin:0 0 14px}
+  dl{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0}
+  dt{color:var(--ink-3);font-size:10.5px;letter-spacing:.03em}
+  dd{margin:0;font-size:11.5px;text-align:right;font-variant-numeric:tabular-nums}
+  .chip{display:inline-block;padding:1px 7px;border-radius:2px;font-size:10px;margin:2px 3px 2px 0;
+    border:1px solid currentColor}
+  .msg{border-left:2px solid var(--line);padding:6px 0 6px 11px;margin-bottom:9px}
+  .msg .cab{font-size:10px;color:var(--ink-3);letter-spacing:.04em;display:flex;gap:7px}
+  .msg .cuerpo{font-size:11.5px;margin-top:3px;word-break:break-word;color:var(--ink-2)}
+  .vacio{opacity:.45;font-style:italic}
+  .ayuda{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);color:var(--ink-3);
+    font-size:10px;letter-spacing:.09em;text-transform:uppercase;transition:opacity .4s}
+
+  .fases{display:flex;flex-direction:column;gap:0}
+  .fase{border-left:2px solid var(--line);padding:0 0 20px 15px;position:relative}
+  .fase::before{content:"";position:absolute;left:-5px;top:5px;width:8px;height:8px;
+    border-radius:50%;background:var(--ground);border:2px solid currentColor}
+  .fase h3{margin:0 0 3px;font-size:13px;font-weight:600}
+  .fase .q{color:var(--ink-2);font-size:11.5px;margin:0 0 8px;font-style:italic}
+  .fase .quien{font-size:10.5px;color:var(--ink-3)}
+  .veredicto{border:1px solid var(--oro);border-left-width:3px;padding:16px 18px;margin-top:8px}
+  .veredicto h3{color:var(--oro);margin:0 0 10px;font-size:13px;letter-spacing:.04em;
+    text-transform:uppercase}
+  .noafirma{color:var(--alerta);font-size:11.5px;line-height:1.6;margin:4px 0 0;padding-left:14px;
+    position:relative}
+  .noafirma::before{content:"×";position:absolute;left:0}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+  @media (max-width:900px){.capa{grid-template-columns:1fr}.lat{display:none}}
+</style>
+<div class="capa">
+  <div id="escena">
+    <canvas id="lienzo"></canvas>
+    <div class="cabecera">
+      <h1 class="serif">El sistema de <em>Diego</em></h1>
+      <div class="sub" id="sub">16 órganos · 34 mensajes · 50 conexiones reales de una ronda</div>
+    </div>
+    <div class="pestanas" role="tablist">
+      <button role="tab" aria-selected="true" data-v="mapa">El sistema</button>
+      <button role="tab" aria-selected="false" data-v="problema">Cómo resuelve</button>
+    </div>
+    <div class="ayuda" id="ayuda">arrastra para girar · clic en un órgano</div>
+  </div>
+  <aside class="lat" id="lat"></aside>
+</div>
+<script>
+const RONDA={"traza": "latido-20260809T070615+0000", "ev": [{"id": 140, "g": "G3_accion", "t": "senal", "m": "cuerpo", "c": null, "en": 7, "lk": [], "d": {"episodios": 4, "pasos": 3200, "modo": "normal"}}, {"id": 141, "g": "sentido_propiocepcion", "t": "respuesta", "m": "cuerpo", "c": 140, "en": 7, "lk": [], "d": {"canales": 6, "rango_angular": 5.104}}, {"id": 142, "g": "sentido_tacto", "t": "respuesta", "m": "cuerpo", "c": 140, "en": 7, "lk": [], "d": {"canales": 3, "fraccion_con_contacto": 0.0001}}, {"id": 143, "g": "G7_juego", "t": "decision", "m": "cuerpo", "c": 140, "en": 7, "lk": [], "d": {"balbuceo": "suave", "amplitud_media": 0.447}}, {"id": 144, "g": "G3_accion", "t": "pregunta", "m": "frontera", "c": null, "en": 4, "lk": [], "d": {"pregunta": "cual de estos canales soy yo"}}, {"id": 145, "g": "G4_contingencia", "t": "respuesta", "m": "frontera", "c": 144, "en": 4, "lk": [], "d": {"canales_mios": [0, 1, 2, 3, 4, 5], "de": 9, "sobre": "propiocepcion+tacto"}}, {"id": 146, "g": "G13_poder", "t": "respuesta", "m": "frontera", "c": 144, "en": 4, "lk": [], "d": {"sobre": "cuanto de eso controlo"}}, {"id": 147, "g": "G6_memoria", "t": "respuesta", "m": "frontera", "c": 144, "en": 4, "lk": [], "d": {"aporta": false, "motivo": "sin nada que decir sobre #frontera esta ronda"}}, {"id": 148, "g": "G8_atencion", "t": "respuesta", "m": "frontera", "c": 144, "en": 4, "lk": [], "d": {"aporta": false, "motivo": "sin nada que decir sobre #frontera esta ronda"}}, {"id": 149, "g": "sentido_vision", "t": "senal", "m": "mundo", "c": null, "en": 4, "lk": [], "d": {"estado": "certificacion estructural", "predice_el_cuerpo": false, "acta": "INFORME-38 — prereg-27 NO CONCLUYENTE POR INSTRUMENTO"}}, {"id": 150, "g": "G14_incertidumbre", "t": "respuesta", "m": "mundo", "c": 149, "en": 4, "lk": [], "d": {"epistemica": "alta sobre la vista", "aleatoria": "separada por examen conductual"}}, {"id": 151, "g": "G1_prediccion", "t": "medicion", "m": "mundo", "c": 149, "en": 4, "lk": [], "d": {"lee": "escena", "no_certificado": "movimiento del propio brazo"}}, {"id": 152, "g": "G10_interocepcion", "t": "medicion", "m": "recursos", "c": null, "en": 5, "lk": [], "d": {"episodios": 4, "pasos_por_episodio": 3200, "canales_sensoriales": 9}}, {"id": 153, "g": "G13_poder", "t": "medicion", "m": "recursos", "c": null, "en": 5, "lk": [], "d": {"lazo_abierto": 0.0191, "lazo_cerrado": 0.0297, "subestima": 0.0106}}, {"id": 154, "g": "G2_curiosidad", "t": "pregunta", "m": "recursos", "c": null, "en": 5, "lk": [], "d": {"pregunta": "donde vale la pena mirar"}}, {"id": 155, "g": "G8_atencion", "t": "respuesta", "m": "recursos", "c": 154, "en": 5, "lk": [], "d": {"reparto": "sin cifras esta ronda"}}, {"id": 156, "g": "G10_interocepcion", "t": "respuesta", "m": "recursos", "c": 154, "en": 5, "lk": [], "d": {"aporta": false, "motivo": "sin nada que decir sobre #recursos esta ronda"}}, {"id": 157, "g": "G13_poder", "t": "respuesta", "m": "recursos", "c": 154, "en": 5, "lk": [], "d": {"aporta": false, "motivo": "sin nada que decir sobre #recursos esta ronda"}}, {"id": 158, "g": "G6_memoria", "t": "respuesta", "m": "recursos", "c": 154, "en": 5, "lk": [], "d": {"aporta": false, "motivo": "sin nada que decir sobre #recursos esta ronda"}}, {"id": 159, "g": "G7_juego", "t": "respuesta", "m": "recursos", "c": 154, "en": 5, "lk": [], "d": {"aporta": false, "motivo": "sin nada que decir sobre #recursos esta ronda"}}, {"id": 160, "g": "G14_incertidumbre", "t": "medicion", "m": "leyes", "c": null, "en": 7, "lk": [], "d": {"abandona_el_tv": true, "sigue_explorando": true}}, {"id": 161, "g": "G6_memoria", "t": "senal", "m": "descanso", "c": null, "en": 2, "lk": [], "d": {"recuerdos_en_archivo": 35}}, {"id": 162, "g": "G9_sueno", "t": "respuesta", "m": "descanso", "c": 161, "en": 2, "lk": [], "d": {"fases": ["conservadora", "generativa"], "filtro_de_vigilia": "una ley soñada no pasa sola"}}, {"id": 163, "g": "G5_composicion", "t": "medicion", "m": "leyes", "c": null, "en": 7, "lk": [], "d": {"motores": ["descubrir", "sindy2", "sindy3"], "sobre": "campanas, no gimnasio"}}, {"id": 164, "g": "G1_prediccion", "t": "pregunta", "m": "revision", "c": null, "en": 8, "lk": [], "d": {"pregunta": "que tan seguro estas de lo tuyo"}}, {"id": 165, "g": "G15_metacognicion", "t": "respuesta", "m": "revision", "c": 164, "en": 8, "lk": [], "d": {"auc": 0.8292, "nulo_techo": 0.5883, "supera": true}}, {"id": 166, "g": "G2_curiosidad", "t": "respuesta", "m": "revision", "c": 164, "en": 8, "lk": [], "d": {"progreso": "medido por region"}}, {"id": 167, "g": "G6_memoria", "t": "respuesta", "m": "revision", "c": 164, "en": 8, "lk": [], "d": {"guarda": "todos los temas"}}, {"id": 168, "g": "G14_incertidumbre", "t": "respuesta", "m": "revision", "c": 164, "en": 8, "lk": [], "d": {"aporta": false, "motivo": "sin nada que decir sobre #revision esta ronda"}}, {"id": 169, "g": "G5_composicion", "t": "respuesta", "m": "revision", "c": 164, "en": 8, "lk": [], "d": {"aporta": false, "motivo": "sin nada que decir sobre #revision esta ronda"}}, {"id": 170, "g": "G8_atencion", "t": "respuesta", "m": "revision", "c": 164, "en": 8, "lk": [], "d": {"aporta": false, "motivo": "sin nada que decir sobre #revision esta ronda"}}, {"id": 171, "g": "G9_sueno", "t": "respuesta", "m": "revision", "c": 164, "en": 8, "lk": [], "d": {"aporta": false, "motivo": "sin nada que decir sobre #revision esta ronda"}}, {"id": 172, "g": "sentido_vision", "t": "respuesta", "m": "revision", "c": 164, "en": 8, "lk": [], "d": {"aporta": false, "motivo": "sin nada que decir sobre #revision esta ronda"}}, {"id": 173, "g": "G1_prediccion", "t": "respuesta", "m": "revision", "c": null, "en": 8, "lk": [141, 142, 143, 145, 146, 147, 148, 150, 151, 152, 153, 155, 156, 157, 158, 159, 160, 162, 163, 165, 166, 167, 168, 169, 170, 171, 172], "d": {"veredicto": "ronda coherente", "voces": 15, "testigos_independientes": 27, "aportes_con_dato": 16, "aportes_vacios": 11, "lo_que_se_afirma": {"canales_mios": [0, 1, 2, 3, 4, 5], "vista": "certificacion estructural — NO predice el cuerpo (INFORME-38)", "poder": {"lazo_abierto": 0.0191, "lazo_cerrado": 0.0297}, "metacognicion_auc": 0.8292}, "lo_que_NO_se_afirma": ["que la vista sirva para hallar el cuerpo (el torneo quedo no concluyente por instrumento)", "ninguna ley del universo: esto es PyBullet haciendo de mundo", "que la conducta siga a la deteccion: Diego detecta contingencia y aun no actua sobre ella"]}}], "cx": [["G3_accion", "sentido_propiocepcion", "cuerpo", "senal->respuesta"], ["G3_accion", "sentido_tacto", "cuerpo", "senal->respuesta"], ["G3_accion", "G7_juego", "cuerpo", "senal->decision"], ["G3_accion", "G4_contingencia", "frontera", "pregunta->respuesta"], ["G3_accion", "G13_poder", "frontera", "pregunta->respuesta"], ["G3_accion", "G6_memoria", "frontera", "pregunta->respuesta"], ["G3_accion", "G8_atencion", "frontera", "pregunta->respuesta"], ["sentido_vision", "G14_incertidumbre", "mundo", "senal->respuesta"], ["sentido_vision", "G1_prediccion", "mundo", "senal->medicion"], ["G2_curiosidad", "G8_atencion", "recursos", "pregunta->respuesta"], ["G2_curiosidad", "G10_interocepcion", "recursos", "pregunta->respuesta"], ["G2_curiosidad", "G13_poder", "recursos", "pregunta->respuesta"], ["G2_curiosidad", "G6_memoria", "recursos", "pregunta->respuesta"], ["G2_curiosidad", "G7_juego", "recursos", "pregunta->respuesta"], ["G6_memoria", "G9_sueno", "descanso", "senal->respuesta"], ["G1_prediccion", "G15_metacognicion", "revision", "pregunta->respuesta"], ["G1_prediccion", "G2_curiosidad", "revision", "pregunta->respuesta"], ["G1_prediccion", "G6_memoria", "revision", "pregunta->respuesta"], ["G1_prediccion", "G14_incertidumbre", "revision", "pregunta->respuesta"], ["G1_prediccion", "G5_composicion", "revision", "pregunta->respuesta"], ["G1_prediccion", "G8_atencion", "revision", "pregunta->respuesta"], ["G1_prediccion", "G9_sueno", "revision", "pregunta->respuesta"], ["G1_prediccion", "sentido_vision", "revision", "pregunta->respuesta"], ["sentido_propiocepcion", "G1_prediccion", "revision", "aporta a la sintesis"], ["sentido_tacto", "G1_prediccion", "revision", "aporta a la sintesis"], ["G7_juego", "G1_prediccion", "revision", "aporta a la sintesis"], ["G4_contingencia", "G1_prediccion", "revision", "aporta a la sintesis"], ["G13_poder", "G1_prediccion", "revision", "aporta a la sintesis"], ["G6_memoria", "G1_prediccion", "revision", "aporta a la sintesis"], ["G8_atencion", "G1_prediccion", "revision", "aporta a la sintesis"], ["G14_incertidumbre", "G1_prediccion", "revision", "aporta a la sintesis"], ["G1_prediccion", "G1_prediccion", "revision", "aporta a la sintesis"], ["G10_interocepcion", "G1_prediccion", "revision", "aporta a la sintesis"], ["G13_poder", "G1_prediccion", "revision", "aporta a la sintesis"], ["G8_atencion", "G1_prediccion", "revision", "aporta a la sintesis"], ["G10_interocepcion", "G1_prediccion", "revision", "aporta a la sintesis"], ["G13_poder", "G1_prediccion", "revision", "aporta a la sintesis"], ["G6_memoria", "G1_prediccion", "revision", "aporta a la sintesis"], ["G7_juego", "G1_prediccion", "revision", "aporta a la sintesis"], ["G14_incertidumbre", "G1_prediccion", "revision", "aporta a la sintesis"], ["G9_sueno", "G1_prediccion", "revision", "aporta a la sintesis"], ["G5_composicion", "G1_prediccion", "revision", "aporta a la sintesis"], ["G15_metacognicion", "G1_prediccion", "revision", "aporta a la sintesis"], ["G2_curiosidad", "G1_prediccion", "revision", "aporta a la sintesis"], ["G6_memoria", "G1_prediccion", "revision", "aporta a la sintesis"], ["G14_incertidumbre", "G1_prediccion", "revision", "aporta a la sintesis"], ["G5_composicion", "G1_prediccion", "revision", "aporta a la sintesis"], ["G8_atencion", "G1_prediccion", "revision", "aporta a la sintesis"], ["G9_sueno", "G1_prediccion", "revision", "aporta a la sintesis"], ["sentido_vision", "G1_prediccion", "revision", "aporta a la sintesis"]]};
+const GEN={"G1_prediccion": {"modo": "decide", "esc": ["mundo", "leyes", "revision"], "comp": ["predecir", "modelar"]}, "G2_curiosidad": {"modo": "propone", "esc": ["leyes", "recursos", "revision"], "comp": ["priorizar", "explorar"]}, "G3_accion": {"modo": "decide", "esc": ["cuerpo", "frontera"], "comp": ["actuar", "intervenir"]}, "G4_contingencia": {"modo": "mide", "esc": ["cuerpo", "frontera"], "comp": ["separar_yo_mundo", "medir_obediencia"]}, "G5_composicion": {"modo": "decide", "esc": ["leyes", "revision"], "comp": ["componer", "simplificar"]}, "G6_memoria": {"modo": "decide", "esc": ["cuerpo", "mundo", "frontera", "leyes", "recursos", "descanso", "revision"], "comp": ["recordar", "consolidar"]}, "G7_juego": {"modo": "decide", "esc": ["cuerpo", "recursos"], "comp": ["actuar", "explorar"]}, "G8_atencion": {"modo": "mide", "esc": ["frontera", "leyes", "recursos", "revision"], "comp": ["priorizar", "repartir_esfuerzo"]}, "G9_sueno": {"modo": "mide", "esc": ["leyes", "descanso", "revision"], "comp": ["consolidar", "reminar"]}, "G10_interocepcion": {"modo": "mide", "esc": ["recursos", "descanso"], "comp": ["medir_coste", "repartir_esfuerzo"]}, "G11_temple": {"modo": "inactivo", "esc": [], "comp": []}, "G12_reflejos": {"modo": "inactivo", "esc": [], "comp": []}, "G13_poder": {"modo": "mide", "esc": ["cuerpo", "frontera", "recursos"], "comp": ["medir_control", "intervenir"]}, "G14_incertidumbre": {"modo": "mide", "esc": ["mundo", "leyes", "revision"], "comp": ["medir_incertidumbre", "separar_ruido"]}, "sentido_vision": {"modo": "decide", "esc": ["mundo", "cuerpo", "revision"], "comp": ["percibir", "modelar"]}, "sentido_propiocepcion": {"modo": "mide", "esc": ["cuerpo"], "comp": ["percibir", "sentir_cuerpo"]}, "sentido_tacto": {"modo": "mide", "esc": ["cuerpo", "mundo"], "comp": ["percibir", "sentir_contacto"]}, "G15_metacognicion": {"modo": "mide", "esc": ["leyes", "revision"], "comp": ["medir_confianza", "revisar"]}};
+// QUE HACE CADA ORGANO, en una frase que un humano entiende.
+const HACE = {
+ G3_accion:["Acción","Mueve el brazo. Es quien EMPIEZA cada ronda: convoca al cuerpo y luego pregunta la cosa más importante que Diego puede preguntarse — cuál de todas estas señales soy yo."],
+ G7_juego:["Juego","El balbuceo. Manda impulsos suaves y sin objetivo, como un bebé que agita los brazos antes de saber para qué sirven. Sin este ruido no habría nada que correlacionar."],
+ sentido_propiocepcion:["Propiocepción","Siente dónde está su cuerpo: seis canales de ángulo y velocidad. Se le dio a priori, como al bebé en el útero — antes de que madure la vista."],
+ sentido_tacto:["Tacto","Siente el contacto: tres canales binarios, uno por eslabón. Toca o no toca. También dado a priori."],
+ sentido_vision:["Visión","Sus ojos. El órgano con más historial de fracasos del proyecto: lee escena pero no ha podido demostrar que lea su propio movimiento. En esta ronda lo primero que dijo fue justamente eso."],
+ G4_contingencia:["Contingencia","El detector del yo. Mira qué canales obedecen a las órdenes de Diego por encima de un nulo con órdenes barajadas. Es quien contesta 'estos seis son míos'."],
+ G13_poder:["Poder","Mide cuánto controla de lo que le rodea. Descubrió que medirlo con órdenes fijas subestima el control real: con ruido, el lazo cerrado ve el doble."],
+ G14_incertidumbre:["Incertidumbre","Separa 'no sé pero puedo aprender' de 'esto es ruido puro'. Su examen exige las dos cosas: abandonar el televisor ruidoso Y seguir explorando lo aprendible."],
+ G15_metacognicion:["Metacognición","Sabe si sabe. Mide si su confianza discrimina sus propios aciertos. Con confianza informada acierta 0.83; con confianza ciega, 0.51 — y no supera su nulo."],
+ G2_curiosidad:["Curiosidad","Decide dónde vale la pena mirar, por progreso de aprendizaje y no por error crudo. Así el ruido irreducible no la engaña."],
+ G8_atencion:["Atención","Reparte el esfuerzo entre lo desconocido y lo controlable. No elige: reparte."],
+ G10_interocepción:["Interocepción","Siente lo que le cuesta. Cuántos episodios, cuántos pasos, cuánto cómputo."],
+ G10_interocepcion:["Interocepción","Siente lo que le cuesta. Cuántos episodios, cuántos pasos, cuánto cómputo."],
+ G6_memoria:["Memoria","Escucha TODOS los temas y guarda. Es el único suscrito a los siete. Append-only: nada se borra jamás."],
+ G9_sueno:["Sueño","Consolida en dos fases: repasa lo vivido y luego sueña. Con un guardián entre ambas — una ley soñada no pasa sin confirmarse despierto."],
+ G1_prediccion:["Predicción","Modela lo que viene. Es quien cierra la ronda: pregunta a todos qué tan seguros están, y con lo que recibe arma la SÍNTESIS."],
+ G5_composicion:["Composición","El motor simbólico. Compone leyes desde primitivas. Trabaja sobre campañas, no sobre el cuerpo — pero aporta lo suyo igual."],
+ G11_temple:["Temple","Diseñado, sin encender. Un gen a la vez."],
+ G12_reflejos:["Reflejos","Diseñado, sin encender. Solo se activaría si el hito 0 hubiera fallado por razones motoras — no fue el caso."],
+};
+const FASES = [
+ ["cuerpo","1 · Actuar y sentir","¿Qué pasa cuando muevo?","G3_accion convoca al tema del cuerpo. Propiocepción y tacto contestan lo que sintieron; el juego decide cómo balbucear."],
+ ["frontera","2 · Preguntar quién soy","¿Cuál de estos canales soy yo?","La pregunta central. Contingencia responde con los seis canales propios; poder aporta cuánto controla; los demás acusan recibo."],
+ ["mundo","3 · Mirar","¿Qué veo, y qué puedo demostrar de lo que veo?","La visión habla — y lo primero que dice es lo que NO puede demostrar, citando su propia acta."],
+ ["recursos","4 · Repartir el esfuerzo","¿Dónde vale la pena mirar ahora?","Interocepción dice lo que costó, poder dice cuánto controla, curiosidad pregunta y atención reparte."],
+ ["descanso","5 · Consolidar","¿Qué de todo esto merece quedarse?","Memoria convoca al descanso. Sueño responde con sus dos fases y su filtro de vigilia."],
+ ["revision","6 · Revisarse","¿Qué tan seguro estás de lo tuyo?","Predicción pregunta a los nueve suscritos. Contestan todos — con dato o diciendo que no tienen nada."],
+];
+const COLTEMA = t => getComputedStyle(document.documentElement).getPropertyValue("--"+(t||"line")).trim()||"#888";
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+
+const ORG = Object.keys(GEN).filter(g=>GEN[g].modo!=="inactivo");
+const ALT = {inactivo:0,mide:1,propone:2,decide:3};
+const pos={}; 
+ORG.concat(Object.keys(GEN).filter(g=>GEN[g].modo==="inactivo")).forEach((g,i,a)=>{
+  const ang=(i/a.length)*Math.PI*2, r= GEN[g].modo==="inactivo"?90:215;
+  pos[g]={x:Math.cos(ang)*r, z:Math.sin(ang)*r, y:ALT[GEN[g].modo]*80};
+});
+const lienzo=document.getElementById("lienzo"), ctx=lienzo.getContext("2d");
+let W,H,DPR,yaw=-0.5,pitch=0.42,zoom=1,girar=true,vista="mapa",sel=null,t0=performance.now();
+function medir(){DPR=Math.min(devicePixelRatio||1,2);const r=lienzo.parentElement.getBoundingClientRect();
+  W=r.width;H=r.height;lienzo.width=W*DPR;lienzo.height=H*DPR;lienzo.style.height=H+"px";
+  ctx.setTransform(DPR,0,0,DPR,0,0);}
+addEventListener("resize",medir);medir();
+
+function proy(p){const cy=Math.cos(yaw),sy=Math.sin(yaw),cp=Math.cos(pitch),sp=Math.sin(pitch);
+  const x=p.x*cy-p.z*sy, z0=p.x*sy+p.z*cy, y=p.y*cp-z0*sp, z=p.y*sp+z0*cp;
+  const k=1000/(1000-z*0.5)*zoom;return{sx:W/2+x*k,sy:H/2-y*k+30,k,z};}
+
+// los mensajes en vuelo: cada uno viaja de su causa a su emisor
+const VUELOS = RONDA.ev.filter(e=>e.c!==null).map(e=>{
+  const p=RONDA.ev.find(x=>x.id===e.c);
+  return p?{de:p.g,a:e.g,tema:e.m||p.m,id:e.id,vacio:!!(e.d&&e.d.aporta===false)}:null;
+}).filter(Boolean);
+RONDA.ev.forEach(e=>(e.lk||[]).forEach(l=>{const p=RONDA.ev.find(x=>x.id===l);
+  if(p)VUELOS.push({de:p.g,a:e.g,tema:e.m,id:e.id,sintesis:true});}));
+
+function dibujar(){
+  const T=(performance.now()-t0)/1000;
+  ctx.clearRect(0,0,W,H);
+  ["inactivo","mide","propone","decide"].forEach((m,i)=>{
+    ctx.strokeStyle=css("--"+m);ctx.globalAlpha=.17;ctx.lineWidth=1;ctx.beginPath();
+    for(let j=0;j<=64;j++){const a=j/64*Math.PI*2,p=proy({x:Math.cos(a)*250,y:i*80,z:Math.sin(a)*250});
+      j?ctx.lineTo(p.sx,p.sy):ctx.moveTo(p.sx,p.sy);}
+    ctx.stroke();
+    const q=proy({x:250,y:i*80,z:0});ctx.globalAlpha=.6;ctx.fillStyle=css("--"+m);
+    ctx.font="9.5px ui-monospace,monospace";ctx.fillText(m.toUpperCase(),q.sx+8,q.sy+3);ctx.globalAlpha=1;});
+  // la espina
+  const a0=proy({x:0,y:-12,z:0}),a1=proy({x:0,y:265,z:0});
+  const gr=ctx.createLinearGradient(a0.sx,a0.sy,a1.sx,a1.sy);
+  gr.addColorStop(0,css("--espina"));gr.addColorStop(1,"transparent");
+  ctx.strokeStyle=gr;ctx.lineWidth=2.5;ctx.globalAlpha=.8;
+  ctx.beginPath();ctx.moveTo(a0.sx,a0.sy);ctx.lineTo(a1.sx,a1.sy);ctx.stroke();ctx.globalAlpha=1;
+  ctx.fillStyle=css("--ink-3");ctx.font="9px ui-monospace,monospace";
+  ctx.fillText("SINAPSIS",a1.sx-22,a1.sy-10);
+
+  const act = vista==="problema" ? Math.floor(T/2.2)%FASES.length : -1;
+  const temaActivo = act>=0 ? FASES[act][0] : null;
+
+  VUELOS.forEach((v,i)=>{
+    if(!pos[v.de]||!pos[v.a])return;
+    const rel = temaActivo? (v.tema===temaActivo?1:.06) : (sel? ((v.de===sel||v.a===sel)?1:.07):.34);
+    if(rel<.1&&!v.sintesis)return;
+    const A=proy(pos[v.de]),B=proy(pos[v.a]);
+    ctx.strokeStyle=v.sintesis?css("--oro"):COLTEMA(v.tema);
+    ctx.globalAlpha=rel*(v.sintesis?.5:.75);ctx.lineWidth=v.sintesis?.8:1.2;
+    if(v.vacio)ctx.setLineDash([2,4]);
+    ctx.beginPath();ctx.moveTo(A.sx,A.sy);
+    ctx.quadraticCurveTo((A.sx+B.sx)/2,(A.sy+B.sy)/2-38,B.sx,B.sy);ctx.stroke();ctx.setLineDash([]);
+    if(rel>.5&&!v.vacio){ // el paquete viajando
+      const f=((T*.55+i*.11)%1), mx=(A.sx+B.sx)/2, my=(A.sy+B.sy)/2-38;
+      const px=(1-f)*(1-f)*A.sx+2*(1-f)*f*mx+f*f*B.sx, py=(1-f)*(1-f)*A.sy+2*(1-f)*f*my+f*f*B.sy;
+      ctx.fillStyle=v.sintesis?css("--oro"):COLTEMA(v.tema);ctx.globalAlpha=rel;
+      ctx.beginPath();ctx.arc(px,py,v.sintesis?1.8:2.6,0,7);ctx.fill();}
+    ctx.globalAlpha=1;});
+
+  const pts=Object.keys(pos).map(g=>({g,p:proy(pos[g])})).sort((a,b)=>a.p.z-b.p.z);
+  pts.forEach(({g,p})=>{
+    const m=GEN[g].modo, act2 = temaActivo? GEN[g].esc.includes(temaActivo)||RONDA.ev.some(e=>e.g===g&&e.m===temaActivo) : true;
+    const r=(m==="inactivo"?4.5:7.5)*p.k*(g===sel?1.35:1);
+    ctx.globalAlpha=act2?1:.22;
+    if(m==="inactivo"){ctx.strokeStyle=css("--"+m);ctx.lineWidth=1.2;ctx.setLineDash([2,3]);
+      ctx.beginPath();ctx.arc(p.sx,p.sy,r,0,7);ctx.stroke();ctx.setLineDash([]);}
+    else{ctx.fillStyle=css("--"+m);ctx.beginPath();ctx.arc(p.sx,p.sy,r,0,7);ctx.fill();}
+    if(g===sel){ctx.strokeStyle=css("--ink");ctx.globalAlpha=.6;ctx.lineWidth=1;
+      ctx.beginPath();ctx.arc(p.sx,p.sy,r+8,0,7);ctx.stroke();}
+    ctx.globalAlpha=act2?(g===sel?1:.82):.22;
+    ctx.fillStyle=css("--ink");ctx.font=(g===sel?"600 ":"")+"10.5px ui-monospace,monospace";
+    ctx.fillText((HACE[g]||[g])[0],p.sx+r+6,p.sy+4);ctx.globalAlpha=1;
+    pos[g]._sx=p.sx;pos[g]._sy=p.sy;pos[g]._r=r+8;});
+}
+const lat=document.getElementById("lat");
+const esc=s=>String(s).replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+function panelOrgano(g){
+  const G=GEN[g], h=HACE[g]||[g,""];
+  const emitidos=RONDA.ev.filter(e=>e.g===g);
+  const recibidos=RONDA.ev.filter(e=>e.c!==null&&emitidos.some(x=>false)||false);
+  const respondioA=emitidos.filter(e=>e.c!==null).map(e=>RONDA.ev.find(x=>x.id===e.c)).filter(Boolean);
+  const convoco=RONDA.cx.filter(c=>c[0]===g);
+  const leRespondieron=RONDA.cx.filter(c=>c[1]===g);
+  return `<section>
+    <p class="eyebrow">El órgano</p>
+    <h2>${esc(h[0])}</h2>
+    <div class="modo" style="color:var(--${G.modo})">${esc(g)} · ${G.modo}</div>
+    <p class="hace">${esc(h[1]||"")}</p>
+    <dl>
+      <dt>Sabe hacer</dt><dd>${(G.comp.length?G.comp:["—"]).map(c=>`<span class="chip">${esc(c)}</span>`).join("")}</dd>
+      <dt>Escucha</dt><dd>${(G.esc.length?G.esc:["nada"]).map(t=>`<span class="chip" style="color:var(--${t})">${esc(t)}</span>`).join("")}</dd>
+      <dt>Habló</dt><dd>${emitidos.length} veces</dd>
+      <dt>Llegó a</dt><dd>${convoco.length} órganos</dd>
+      <dt>Le contestaron</dt><dd>${leRespondieron.length}</dd>
+    </dl>
+  </section>
+  <section><p class="eyebrow">Lo que dijo en esta ronda</p>
+  ${emitidos.length?emitidos.map(e=>{
+    const vac=e.d&&e.d.aporta===false;
+    return `<div class="msg" style="border-color:var(--${e.m||'line'})">
+      <div class="cab"><span>${esc(e.t)}</span><span style="color:var(--${e.m||'ink-3'})">#${esc(e.m||"—")}</span>
+      ${e.c!==null?`<span>↩ al ${e.c}</span>`:""}${e.lk&&e.lk.length?`<span>⇢ enlaza ${e.lk.length}</span>`:""}</div>
+      <div class="cuerpo ${vac?"vacio":""}">${esc(JSON.stringify(e.d).slice(0,230))}</div></div>`;}).join("")
+    :'<p class="hace vacio">No habló en esta ronda.</p>'}
+  </section>`;
+}
+function panelMapa(){
+  const porModo=m=>Object.keys(GEN).filter(g=>GEN[g].modo===m);
+  return `<section>
+    <p class="eyebrow">Cómo leer esto</p>
+    <p class="hace"><b>La altura es la autoridad.</b> Un órgano sube de estrato solo con un prerregistro firmado, y <code>sinapsis.py</code> lo impone en cada mensaje: los que <b>miden</b> pueden responder, pero no convocar. La autoridad para llamar a los demás viene con la autoridad para decidir.</p>
+    <p class="hace"><b>El eje central es la sinapsis</b> — el único canal. Las curvas de colores son los mensajes reales de una ronda; su color es el tema. Las líneas punteadas son acuses de recibo: un órgano diciendo que no tiene nada que aportar. Las doradas son los aportes a la síntesis final.</p>
+    <p class="hace"><b>Nadie habla con todos.</b> Cada órgano solo recibe los temas que declara escuchar. Conectar todo con todo no haría a Diego más listo — propagaría sus errores con la misma eficacia que sus aciertos, y borraría el rastro de quién causó qué.</p>
+  </section>
+  <section><p class="eyebrow">Los cuatro estratos</p>
+  ${["decide","propone","mide","inactivo"].map(m=>`<dl style="margin-bottom:6px">
+    <dt style="color:var(--${m})">${m}</dt><dd>${porModo(m).map(g=>esc((HACE[g]||[g])[0])).join(", ")||"—"}</dd></dl>`).join("")}
+  </section>
+  <section><p class="eyebrow">Los siete temas</p>
+  <p class="hace">${["cuerpo","mundo","frontera","leyes","recursos","descanso","revision"].map(t=>
+    `<span class="chip" style="color:var(--${t})">${t} · ${Object.keys(GEN).filter(g=>GEN[g].esc.includes(t)).length}</span>`).join(" ")}</p>
+  <p class="hace" style="color:var(--ink-2)">El número es cuántos órganos escuchan ese tema. Ninguno queda en cero: un tema sin oyentes sería un nervio tendido a ninguna parte, y el trazador lo marca como error de diseño.</p>
+  </section>
+  <section><p class="eyebrow">Clic en cualquier órgano</p>
+  <p class="hace" style="color:var(--ink-2)">Para ver qué hace, qué escucha, qué dijo en esta ronda y a quién llegó.</p></section>`;
+}
+function panelProblema(){
+  const sint=RONDA.ev.find(e=>e.lk&&e.lk.length);
+  const d=sint?sint.d:{};
+  return `<section>
+    <p class="eyebrow">El problema de esta ronda</p>
+    <h2 class="serif">¿Cuál de estas señales soy yo?</h2>
+    <p class="hace">Diego recibe cuatro episodios en su Gimnasio y nueve canales sensoriales mezclados: ángulos, velocidades, contactos. Nadie le dice cuáles son su cuerpo. Tiene que averiguarlo — y para eso pasa por seis fases, convocando en cada una a los órganos que le hacen falta.</p>
+  </section>
+  <section><p class="eyebrow">Las seis fases</p><div class="fases">
+  ${FASES.map(([tema,tit,q,txt])=>{
+    const ev=RONDA.ev.filter(e=>e.m===tema);
+    const quien=[...new Set(ev.map(e=>(HACE[e.g]||[e.g])[0]))];
+    return `<div class="fase" style="color:var(--${tema});border-color:var(--${tema})">
+      <h3 style="color:var(--ink)">${esc(tit)}</h3>
+      <p class="q">${esc(q)}</p>
+      <p class="hace" style="margin:0 0 6px">${esc(txt)}</p>
+      <p class="quien">${ev.length} mensajes · ${quien.map(esc).join(" · ")}</p></div>`;}).join("")}
+  </div></section>
+  <section><p class="eyebrow">La respuesta que Diego arma</p>
+  <div class="veredicto">
+    <h3>Síntesis</h3>
+    <dl>
+      <dt>Voces</dt><dd>${d.voces||"—"}</dd>
+      <dt>Testigos independientes</dt><dd>${d.testigos_independientes||"—"}</dd>
+      <dt>Aportes enlazados</dt><dd>${sint?sint.lk.length:0}</dd>
+      <dt>Acuses sin dato</dt><dd>${d.aportes_vacios!=null?d.aportes_vacios:"—"}</dd>
+    </dl>
+    <p class="hace" style="margin:14px 0 4px"><b>Lo que afirma:</b> los seis canales de propiocepción son suyos. Los halló por contingencia, no porque nadie se lo dijera.</p>
+    <p class="eyebrow" style="margin:14px 0 6px">Lo que NO afirma</p>
+    ${(d.lo_que_NO_se_afirma||[]).map(x=>`<p class="noafirma">${esc(x)}</p>`).join("")}
+    <p class="hace" style="margin-top:14px;color:var(--ink-2)">Una síntesis que siempre concluye algo es un blanqueador de evidencia, no una mente. Ésta cuenta <b>testigos independientes</b>, no voces — ocho órganos repitiendo a un noveno son un testigo, no ocho — y tiene permitido decir <b>no sé</b>.</p>
+  </div></section>`;
+}
+function pintarLat(){lat.innerHTML = sel?panelOrgano(sel):(vista==="mapa"?panelMapa():panelProblema());
+  lat.scrollTop=0;}
+pintarLat();
+
+let arr=false,lx=0,ly=0,movio=false;
+lienzo.addEventListener("pointerdown",e=>{arr=true;movio=false;girar=false;lx=e.clientX;ly=e.clientY;
+  lienzo.classList.add("arr");document.getElementById("ayuda").style.opacity=0;});
+addEventListener("pointerup",e=>{
+  if(arr&&!movio){const r=lienzo.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top;
+    let c=null,dm=1e9;Object.keys(pos).forEach(g=>{const d=Math.hypot(pos[g]._sx-mx,pos[g]._sy-my);
+      if(d<pos[g]._r+12&&d<dm){dm=d;c=g;}});
+    sel=(c===sel)?null:c;pintarLat();}
+  arr=false;lienzo.classList.remove("arr");});
+addEventListener("pointermove",e=>{if(!arr)return;
+  if(Math.abs(e.clientX-lx)+Math.abs(e.clientY-ly)>3)movio=true;
+  yaw+=(e.clientX-lx)*.006;pitch=Math.max(-.2,Math.min(1.1,pitch+(e.clientY-ly)*.004));
+  lx=e.clientX;ly=e.clientY;});
+lienzo.addEventListener("wheel",e=>{e.preventDefault();
+  zoom=Math.max(.6,Math.min(2.2,zoom*(e.deltaY>0?.93:1.075)));},{passive:false});
+document.querySelectorAll(".pestanas button").forEach(b=>b.addEventListener("click",()=>{
+  document.querySelectorAll(".pestanas button").forEach(x=>x.setAttribute("aria-selected",x===b));
+  vista=b.dataset.v;sel=null;t0=performance.now();pintarLat();
+  document.getElementById("sub").textContent = vista==="mapa"
+    ? "16 órganos · 34 mensajes · 50 conexiones reales de una ronda"
+    : "el problema recorre seis fases y termina en una síntesis que sabe lo que no sabe";}));
+const lento=matchMedia("(prefers-reduced-motion:reduce)").matches;
+(function bucle(){if(girar&&!lento&&vista==="mapa")yaw+=.0018;dibujar();requestAnimationFrame(bucle);})();
+matchMedia("(prefers-color-scheme:dark)").addEventListener("change",dibujar);
+</script>
