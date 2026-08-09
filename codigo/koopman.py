@@ -35,10 +35,34 @@ def _diccionario(X):
     return np.column_stack(cols)
 
 
-def invariantes(trayectorias, umbral_ratio=0.05, umbral_entre=0.2):
+# EL RESIDUO (añadido el 9-ago-2026, prerregistro-33). Está DEMOSTRADO matemáticamente que la
+# discretización finita del operador de Koopman produce, además de los autovalores reales,
+# FANTASMAS: autovalores espurios que son artefactos del truncamiento, no del mundo (polución
+# espectral; el remedio publicado es calcular el residuo del operador infinito-dimensional).
+# Para cada candidato λ con autofunción g se calcula
+#       residuo^2 = ||(K − λI)g||^2 / ||g||^2
+# estimado directamente de los datos. Un invariante REAL tiene residuo bajo; un fantasma no.
+# Es nuestra Regla 31 con teorema incluido: la herramienta ya no solo pasa el nulo, ahora también
+# certifica cuánto de fantasma tiene cada cosa que declara.
+RESIDUO_MAXIMO = 0.10
+
+
+def _residuo(Psi0, Psi1, v, lam):
+    """||(K − λI)g|| / ||g|| estimado de los datos: g(x_t) = Psi(x_t)·v, y (Kg)(x_t) = g(x_{t+1}).
+    Si g fuese autofunción exacta, g(x_{t+1}) = λ·g(x_t) y el residuo sería cero."""
+    g0 = Psi0 @ v
+    g1 = Psi1 @ v
+    n0 = float(np.sqrt(np.mean(np.abs(g0) ** 2)))
+    if n0 < 1e-12:
+        return float("inf")
+    return float(np.sqrt(np.mean(np.abs(g1 - lam * g0) ** 2)) / n0)
+
+
+def invariantes(trayectorias, umbral_ratio=0.05, umbral_entre=0.2,
+                residuo_maximo=RESIDUO_MAXIMO):
     """trayectorias: lista de arrays (T, d) — réplicas con condiciones iniciales distintas.
     Devuelve candidatos a cantidad conservada: autofunciones de K con |λ|≈1 cuya varianza
-    dentro-de-trayectoria / entre-trayectorias sea < umbral_ratio."""
+    dentro-de-trayectoria / entre-trayectorias sea < umbral_ratio Y cuyo RESIDUO sea bajo."""
     Psi0 = np.vstack([_diccionario(t[:-1]) for t in trayectorias])
     Psi1 = np.vstack([_diccionario(t[1:]) for t in trayectorias])
     K, *_ = np.linalg.lstsq(Psi0, Psi1, rcond=None)
@@ -55,8 +79,12 @@ def invariantes(trayectorias, umbral_ratio=0.05, umbral_entre=0.2):
         escala = float(np.var(np.concatenate(valores))) + 1e-12
         # constante DENTRO, distinta ENTRE — si no distingue trayectorias, es la constante trivial
         if entre / escala > umbral_entre and dentro / (entre + 1e-12) < umbral_ratio:
+            res = _residuo(Psi0, Psi1, v, lam[k])
+            if res > residuo_maximo:
+                continue          # FANTASMA: artefacto del truncamiento, no del mundo
             out.append({"lambda": complex(lam[k]), "coefs": np.round(v, 4),
-                        "ratio_dentro_entre": round(dentro / (entre + 1e-12), 5)})
+                        "ratio_dentro_entre": round(dentro / (entre + 1e-12), 5),
+                        "residuo": round(res, 5)})
     return out
 
 

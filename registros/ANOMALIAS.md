@@ -1,7 +1,14 @@
 # ANOMALÍAS — el mapa de dónde cavar (Regla 21)
-**Creado el 8-ago-2026 (AUDITORIA-TOTAL-02).** La Regla 21 dice *"el proyecto mantiene un archivo
-`arbol/ANOMALIAS.md`"* y el archivo no existía: una regla que menciona un archivo inexistente
-miente. Se crea **declaradamente vacío** — un catálogo vacío es honesto; una regla incumplida no.
+**Creado el 8-ago-2026 (AUDITORIA-TOTAL-02).** La Regla 21 decía entonces *"el proyecto mantiene
+un archivo `arbol/ANOMALIAS.md`"* y el archivo no existía: una regla que menciona un archivo
+inexistente miente. Se creó **declaradamente vacío** — un catálogo vacío es honesto; una regla
+incumplida no.
+
+**MUDADO A `registros/` el 9-ago-2026 por decisión del director (PROTOCOLO-MEMORIA §4, Regla 34).**
+Razón: este archivo está DISEÑADO para contener predicciones de la física humana. Vivía dentro de
+`arbol/`, la carpeta de la memoria de Diego. No había fuga (ningún módulo lo leía), pero un
+catálogo de física humana alojado en la mente del ente es una mina enterrada esperando a la
+primera herramienta que lea la carpeta entera. La Regla 21 fue enmendada para citar la ruta nueva.
 
 ## Qué entra aquí, y qué NO
 Entra: pares **(predicción humana, dato medido, tamaño del residuo)** documentados, **con su

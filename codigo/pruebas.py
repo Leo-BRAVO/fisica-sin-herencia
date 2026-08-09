@@ -402,6 +402,168 @@ _gd = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "arbol
 caso("ranuras: el genoma sigue SIN activarla como gen (solo torneo)",
      "G13" in _gd and "ranuras" in _gd.lower() and "NO ENTRA AL GENOMA" in _gd)
 
+print("== SINDy en forma debil + bootstrap (prereg-28): la cura del ruido de sensor ==")
+import sindy3 as _s3
+caso("sindy3: APRUEBA su Regla 31 (4/4, incluido el oscilador con sensor ruidoso)",
+     _s3.regla31(verbose=False) == 0)
+# LA LECCION QUE JUSTIFICA EL MODULO, CONGELADA: la derivada numerica muere con 0.5% de ruido de
+# sensor; la forma debil sobrevive. Si alguien "simplifica" sindy3 volviendo a derivar, esto grita.
+_Xr, _dtr = _s3._oscilador(ruido=0.02)
+caso("sindy3: recupera la ley con ruido de sensor donde la derivada numerica ya fracasa",
+     _s3._es_la_ley(_s3.descubrir(_Xr, dt=_dtr)) and not (
+         lambda l: l is not None and [n for n, _ in l["dx/dt"]] == ["v"]
+     )(_sydesc(_Xr, dt=_dtr)))
+caso("sindy3: una ley vacia jamas cuenta como replicada (bootstrap sobre ruido puro calla)",
+     _s3.descubrir(__import__("numpy").random.default_rng(3).normal(size=(4000, 2)), dt=0.02) is None)
+
+print("== panel de jueces diversos (prereg-31): ningun juez unico corona ==")
+import panel_jueces as _pj
+caso("panel: APRUEBA su Regla 31 (5/5: gemelos, oraculo, asterisco, ruido, sin suelo)",
+     _pj.regla31(verbose=False) == 0)
+# EL BUG DE LA CORRIDA 13, CONGELADO: la aptitud vieja recorta el margen a cero con max(.,0),
+# asi que CUALQUIER par de representaciones bajo el piso empata en 0.0000 exacto. Si alguien
+# vuelve a poner un suelo en el ordenamiento del panel, esto grita.
+_cero = _pj.veredicto([{"nombre": "a", "puntajes": {"contingencia": 0.0, "flecha": 0.0,
+                                                    "robustez": 0.0}},
+                       {"nombre": "b", "puntajes": {"contingencia": 0.0, "flecha": 0.0,
+                                                    "robustez": 0.0}}])
+caso("panel: cuatro ceros identicos JAMAS producen un ganador (el torneo viejo si lo hacia)",
+     "ganador" not in _cero or "EMPATE" in _cero["fallo"])
+caso("panel: gana con ASTERISCO quien gana una lectura y pierde otra (no reemplaza los ojos)",
+     "ASTERISCO" in _pj.veredicto(
+         [{"nombre": "x", "puntajes": {"contingencia": 1.0, "flecha": 0.0, "robustez": 0.0}},
+          {"nombre": "y", "puntajes": {"contingencia": 0.0, "flecha": 1.0, "robustez": 1.0}}]
+     )["fallo"] or "GANA y" in _pj.veredicto(
+         [{"nombre": "x", "puntajes": {"contingencia": 1.0, "flecha": 0.0, "robustez": 0.0}},
+          {"nombre": "y", "puntajes": {"contingencia": 0.0, "flecha": 1.0, "robustez": 1.0}}]
+     )["fallo"])
+
+print("== la escalera de soporte (prereg-29): el primer no-yo por definicion POSITIVA ==")
+import soporte as _sop
+caso("soporte: APRUEBA su Regla 31 (7/7: escalones, senuelo, sin gravedad, VOE, nulos)",
+     _sop.regla31(verbose=False) == 0)
+# LA LECCION DEL NIVEL B FRACASADO, CONGELADA: definir el no-yo solo como "no me obedece" deja
+# entrar al ruido puro. El senuelo de ruido debe ser rechazado por ILEGAL (impredecible), no por
+# obediente. Si alguien quita el requisito de legalidad, esto grita.
+_c, _x, _n, _k = _sop.escena("cae", semilla=1, pasos=_sop.PASOS_MINIMOS)
+_e1 = _sop.escalon1(_c, _x, _n, cortes=_k)
+caso("soporte: el ruido puro NO puede ser el primer no-yo (legalidad exigida, no solo ausencia)",
+     "ruido" not in (_e1.get("candidatos_aptos") or []) and _e1["candidato"] == "altura")
+caso("soporte: sin potencia estadistica no hay veredicto (guarda de pasos minimos)",
+     _sop.PASOS_MINIMOS >= 900)
+
+print("== el gemelo y las firmas del bebe (prereg-30): el control de oro del espejo ==")
+import espejo2 as _e2
+caso("espejo2: APRUEBA su Regla 31 (6/6: gemelo, apariencia, firmas positivas y negativas)",
+     _e2.regla31(verbose=False) == 0)
+# CONGELADO: el cuerpo del GEMELO jamas puede declararse propio. Si alguien afloja el criterio
+# del espejo hasta que la apariencia baste, esto grita.
+_up, _ua, _sp, _sa, _ = _e2.escena_gemelo(semilla=1, pasos=1200)
+caso("espejo2: el cuerpo del gemelo NO se declara mio (apariencia no basta)",
+     not _e2.prueba_gemelo(_sa, _up, _ua)["se_reconoce"]
+     and _e2.prueba_gemelo(_sp, _up, _ua)["se_reconoce"])
+# CONGELADO: el balbuceo ciego de HOY no puede exhibir la firma conductual. Un instrumento que
+# la ve donde no la hay esta midiendo su propio ruido.
+caso("espejo2: el balbuceo ciego NO alcanza el criterio 1.5x (control negativo vivo)",
+     not _e2.firmas(_e2.paradigma_movil(semilla=2, pasos_fase=400,
+                                        politica="ciega"))["criterio_clasico_1.5x"])
+
+print("== el observador pasivo (prereg-32): el control que podria refutarnos ==")
+import observador_pasivo as _op
+caso("observador pasivo: APRUEBA su Regla 31 (4/4: control positivo, gemelos, ventaja plantada)",
+     _op.regla31(verbose=False) == 0)
+# CONGELADO: la comparacion NO puede ser tautologica. Si las medidas de soporte dejan de
+# consultar los comandos, encarnado y pasivo dan el MISMO numero por construccion y el "empate"
+# no significa nada. Este caso exige que la copia eferente entre de verdad al modelo del mundo.
+import inspect as _insp
+caso("observador pasivo: la copia eferente ENTRA al modelo del encarnado (no es empate trivial)",
+     "comandos" in _insp.signature(_op.fisica_de_soporte).parameters
+     and "comandos=u" in _insp.getsource(_op.comparar))
+
+print("== residuos en Koopman y chaperon causal (prereg-33) ==")
+import koopman as _kp
+
+
+def _osc(E, T=400, w=0.15):
+    _t = np.arange(T)
+    return np.column_stack([np.sqrt(E) * np.cos(w * _t + 0.3 * E),
+                            -np.sqrt(E) * np.sin(w * _t + 0.3 * E)])
+
+
+_tr = [_osc(E) for E in (0.5, 1.0, 1.5, 2.0, 2.5, 3.0)]
+_inv = _kp.invariantes(_tr)
+caso("koopman: el invariante REAL tiene residuo ~0 (no es fantasma del truncamiento)",
+     len(_inv) == 1 and _inv[0]["residuo"] < 0.01)
+_P0 = np.vstack([_kp._diccionario(x[:-1]) for x in _tr])
+_P1 = np.vstack([_kp._diccionario(x[1:]) for x in _tr])
+_rr = np.random.default_rng(3)
+caso("koopman: un vector cualquiera NO pasa el filtro de residuo (asi se matan los fantasmas)",
+     all(_kp._residuo(_P0, _P1, _rr.normal(size=_P0.shape[1]), 1.0) > _kp.RESIDUO_MAXIMO
+         for _ in range(5)))
+
+import entropia_transferencia as _et
+_r2 = np.random.default_rng(11)
+_n = 6000
+_a = _r2.normal(0, 1, _n)
+_b = 0.98 * _a + 0.02 * _r2.normal(0, 1, _n)
+_c = np.zeros(_n)
+for _i in range(1, _n):
+    _c[_i] = 0.98 * _b[_i - 1] + 0.02 * _r2.normal()
+_red = _et.reduccion_por_chaperon(_a, _c, _b, nulos=6)
+# LA LECCION CONGELADA: la bivariada declara una flecha a->c que NO EXISTE (a no toca a c).
+# El chaperon debe derrumbarla al menos un 90%. No se exige que la anule: no puede, y decirlo
+# es parte del instrumento.
+caso("entropia: el chaperon derrumba >=90% una arista indirecta que la bivariada declaraba",
+     _red["arista_indirecta"] and _red["bivariada"] > 0.5)
+caso("entropia: sin muestras suficientes la TE condicional se NIEGA a opinar (bins^4 celdas)",
+     _et.medir_condicional(_a[:200], _c[:200], _b[:200])["medicion_invalida"] is not None)
+
+print("== el cerebro motivacional (prereg-33): G13 lazo, G14 conductual, G2 blindada, G15 meta ==")
+import cerebro as _cb
+caso("cerebro: APRUEBA su Regla 31 (6/6: lazo, examen doble, curiosidad blindada, meta y su nulo)",
+     _cb.regla31(verbose=False) == 0)
+# CONGELADO: el lazo abierto SUBESTIMA el poder cuando el efecto depende del estado. Medido:
+# con ruido 0.6 el lazo cerrado ve el doble. Si alguien "simplifica" quitando las interacciones,
+# esto grita.
+_dg = _cb.diagnostico_g13()
+caso("cerebro: el lazo abierto subestima el poder en TODOS los niveles de ruido probados",
+     all(f["subestima"] >= 0 for f in _dg) and _dg[-1]["lazo_cerrado"] > _dg[-1]["lazo_abierto"])
+# CONGELADO: la metacognicion con confianza BARAJADA no puede superar su nulo. Es el nulo
+# natural del gen nuevo: sin conocimiento, sin credito.
+_rr3 = np.random.default_rng(77)
+_ac = _rr3.uniform(size=400) > 0.5
+caso("cerebro: metacognicion con confianza ciega NO supera su nulo (sin credito gratis)",
+     not _cb.meta_con_nulo(_ac, _rr3.normal(size=400))["supera_al_nulo"])
+_gen = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..",
+                                   "arbol", "GENOMA.json"), encoding="utf-8"))
+caso("cerebro: G15 metacognicion entra al genoma en modo 'mide' (no decide sin firma)",
+     _gen["genes"]["G15_metacognicion"]["modo"] == "mide")
+
+print("== el sueño en DOS FASES con guardian (prereg-33) ==")
+import sueno as _su
+caso("sueño 2 fases: APRUEBA su Regla 31 (conservadora, guardian, generativa, mundo de ruido)",
+     _su.regla31_dos_fases(verbose=False) == 0)
+# CONGELADO: una ley soñada JAMAS pasa sin coincidir en soporte con una ley de vigilia. El filtro
+# es mecanico, no una promesa escrita: si alguien lo quita, esto grita.
+caso("sueño 2 fases: el filtro de vigilia es MECANICO (una ley soñada no pasa sola)",
+     "soportes_vigilia" in _insp.getsource(_su.dormir))
+# CONGELADO: la guarda de muestras de sindy3, hallada persiguiendo la alarma del guardian.
+caso("sindy3: guarda de muestras minimas viva (ruido corto ya no produce leyes falsas)",
+     _s3.MUESTRAS_MINIMAS >= 2000
+     and _s3.descubrir(np.random.default_rng(4).normal(size=(600, 2)), dt=0.02) is None)
+
+print("== auditoria de interconexion: UNA sola vara de obediencia, no tres ==")
+# HALLAZGO DE LA AUDITORIA FINAL DEL 9-ago-2026: habia TRES implementaciones de "cuanto ayuda
+# conocer el comando", y una de ellas (el panel) medía a UN paso mientras las otras medían a OCHO
+# — justo el error que el prereg-29 habia diagnosticado. El panel subestimaba a todos los
+# competidores por igual. Ahora las tres usan la MISMA funcion. Este caso impide que vuelvan a
+# divergir en silencio.
+caso("interconexion: panel, espejo y soporte usan el MISMO horizonte de obediencia",
+     _pj.HORIZONTE == _sop.HORIZONTE == _e2.HORIZONTE)
+caso("interconexion: panel y espejo NO reimplementan la medida, la importan de soporte",
+     "_ganancia_canal" in _insp.getsource(_pj._ganancia_obediencia)
+     and "_ganancia_canal" in _insp.getsource(_e2._obediencia))
+
 print("== canonizar: tarjeta de identidad ==")
 t = tarjeta("(v1 + v2) * 0.5 + 3.0", 4)
 caso("desplazamiento = f(0)", abs(t["desplazamiento"] - 3.0) < 1e-6)

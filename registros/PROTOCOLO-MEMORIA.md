@@ -45,7 +45,10 @@ regenera solo, es suyo. Sus nodos y su genoma: él propone con evidencia, nosotr
 
 ## 3. LOS CARTELES — documentos nuestros que viven en `arbol/` y Diego NO lee
 
-| Cartel | Qué contiene | Riesgo si Diego lo leyera |
+**Todos mudados a `registros/` el 9-ago-2026 (Regla 34).** La tabla se conserva porque el
+razonamiento del riesgo sigue siendo la razón de que la frontera exista.
+
+| Cartel (hoy en `registros/`) | Qué contiene | Riesgo si Diego lo leyera |
 |---|---|---|
 | `ECUACIONES-COMPARADAS.md` | Comparación de NUESTROS métodos de curiosidad con Oudeyer/Schmidhuber (lleva su propia nota de cortafuegos: "el núcleo de Diego no lee esto") | MEDIO — métodos, no física, pero es literatura humana |
 | `INVESTIGACION-LABS.md` | Cómo construyen los grandes laboratorios y qué técnicas tomamos | MEDIO — técnicas neutras, pero escritas desde conocimiento humano |
@@ -54,7 +57,23 @@ regenera solo, es suyo. Sus nodos y su genoma: él propone con evidencia, nosotr
 | `PLAN-EDUCACION.md`, `PLATAFORMA-Y-FRONTERA.md`, `DISENO-CONSTRUCCION.md`, `FRONTERA-INOBSERVABLE.md` | Planes y diseño del proyecto | BAJO-MEDIO — gobernanza |
 | `pesos/LEEME.md` | Procedencia y tolerancias de los pesos canónicos | BAJO |
 
-## 4. LA TENSIÓN LATENTE ENCONTRADA EN ESTA AUDITORÍA (honestidad primero)
+## 4. LA TENSIÓN LATENTE ENCONTRADA — Y RESUELTA EL MISMO DÍA (Regla 34)
+
+**AUTORIZADO POR EL DIRECTOR el 9-ago-2026 ("autorizado"): las dos propuestas se ejecutaron y la
+frontera es hoy la carpeta misma, no una convención.** Lo que sigue documenta el hallazgo original
+y lo que se hizo.
+
+- **Mudanza hecha:** los ocho carteles (`ANOMALIAS.md`, `ECUACIONES-COMPARADAS.md`,
+  `INVESTIGACION-LABS.md`, `CURRICULO-DATOS.md`, `PLAN-EDUCACION.md`, `PLATAFORMA-Y-FRONTERA.md`,
+  `DISENO-CONSTRUCCION.md`, `FRONTERA-INOBSERVABLE.md`) viven ahora en `registros/`. `arbol/`
+  quedó con hojas y nada más. La Regla 21 fue enmendada para citar la ruta nueva de `ANOMALIAS.md`.
+- **Guardián de frontera hecho:** `coherencia.py` verifica en CADA commit, para siempre, tres
+  cosas: que ningún cartel viva en `arbol/`, que ningún módulo de `codigo/` abra un cartel como
+  datos, y que ningún módulo lea `arbol/` como carpeta completa. Los tres guardianes quedan
+  exentos por declaración — nombran los carteles justamente para vigilarlos.
+- **Regla 34 escrita en la constitución**, con el régimen de escritura de cada hoja.
+
+### El hallazgo original (se conserva: nada se borra)
 
 La Regla 29 dice "la mente ve TODAS sus hojas" y la carpeta se llama `arbol/` — pero hoy `arbol/`
 mezcla hojas con carteles. **Hoy no hay fuga:** se verificó que ningún módulo de Diego lee los
@@ -68,14 +87,7 @@ decida. La independencia no se recupera una vez perdida (Regla 27).
 nombrar HOJAS de la tabla §2. Un cartel jamás se convierte en hoja sin decisión firmada del
 director.
 
-**Propuestas al director (solo propuestas — Regla 15, él decide):**
-1. **Mudanza:** mover los carteles de `arbol/` a `registros/` (su lugar natural), dejando en
-   `arbol/` únicamente las hojas. La frontera pasaría de ser una convención a ser la carpeta
-   misma. `ANOMALIAS.md` es el urgente: la Regla 21 lo menciona por ruta, así que su mudanza
-   requiere enmienda de la regla con firma.
-2. **Guardián de la frontera:** un caso nuevo en `coherencia.py` que verifique que ningún módulo
-   de `codigo/` abre un cartel como datos (hoy se verificó a mano; el guardián lo verificaría en
-   cada commit para siempre).
+**Las dos propuestas — AMBAS FIRMADAS Y EJECUTADAS el 9-ago-2026 (ver arriba).**
 
 ## 5. CÓMO LEER CADA HOJA (el protocolo práctico, para el director)
 
