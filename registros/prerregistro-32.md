@@ -12,6 +12,10 @@ Queremos saberlo nosotros, y antes que un tercero. Este prerregistro se firma **
 refutar una parte de nuestra tesis**, y comprometiendo por escrito que el resultado se publica
 salga como salga.
 
+## Qué se construye
+`codigo/observador_pasivo.py` — las tres condiciones, sus dos capacidades y el veredicto que se
+escribe gane quien gane.
+
 ## El experimento, en una línea
 Mismo mundo, misma dieta sensorial; la única diferencia es el acceso a las propias órdenes.
 

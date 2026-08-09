@@ -48,10 +48,18 @@ LECTURAS = ("contingencia", "flecha", "robustez")
 
 
 # ----------------------------------------------------------------------------- lectura A
-def _ganancia_obediencia(latentes, comandos, jidx):
-    """CUANTO AYUDA CONOCER EL COMANDO a predecir el proximo latente, medido de forma CONTINUA.
-    Para cada canal: error de predecir z_{t+1} desde z_t solo, contra hacerlo desde [z_t, u_t].
-    ganancia = 1 - err_con/err_sin, promediada sobre canales y episodios-juez.
+# EL HORIZONTE, IMPORTADO DE UNA SOLA FUENTE. La auditoria del 9-ago-2026 encontro que este
+# modulo media la obediencia a UN PASO mientras `soporte.py` la medida a OCHO — y la leccion del
+# prereg-29 es justamente que a un paso la obediencia es INVISIBLE (lo que el torque agrega en un
+# paso es del orden de a*dt^2). El panel estaba subestimando sistematicamente a todos los
+# competidores por igual. Se corrige usando la MISMA funcion, no una copia parecida: tres
+# implementaciones distintas de "cuanto ayuda conocer el comando" eran tres oportunidades de
+# divergir en silencio.
+from soporte import HORIZONTE, _ganancia_comando as _ganancia_canal
+
+
+def _ganancia_obediencia(latentes, comandos, jidx, h=HORIZONTE):
+    """CUANTO AYUDA CONOCER EL COMANDO a predecir el latente a horizonte h, de forma CONTINUA.
     Por que existe: el criterio del prereg-23 UMBRALIZA dos veces (por ventana y por fraccion),
     y bajo el piso todo se aplasta al mismo numero — dos representaciones distintas y ambas
     flojas dan identico -0.4000. Umbralizar es correcto para DECIDIR 'este canal es mio';
@@ -62,19 +70,10 @@ def _ganancia_obediencia(latentes, comandos, jidx):
             continue                       # SOLO episodios-juez: la muralla intacta
         Z = np.asarray(Z, dtype=float)
         u = np.asarray(u, dtype=float)
-        n = min(len(Z), len(u)) - 1
-        if n < 30:
+        if len(Z) < 40:
             continue
-        sin_u = np.column_stack([Z[:n], np.ones(n)])
-        con_u = np.column_stack([Z[:n], u[:n], np.ones(n)])
-        B = Z[1:n + 1]
-        for M in (sin_u, con_u):
-            if np.linalg.matrix_rank(M) < M.shape[1]:
-                return 0.0
-        e_sin = np.mean((B - sin_u @ np.linalg.lstsq(sin_u, B, rcond=None)[0]) ** 2, axis=0)
-        e_con = np.mean((B - con_u @ np.linalg.lstsq(con_u, B, rcond=None)[0]) ** 2, axis=0)
-        e_sin[e_sin == 0] = 1e-12
-        gs.append(float(np.mean(1.0 - e_con / e_sin)))
+        gs.append(float(np.mean([_ganancia_canal(Z[:, c], u, h=h)
+                                 for c in range(Z.shape[1])])))
     return float(np.mean(gs)) if gs else 0.0
 
 

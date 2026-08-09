@@ -131,22 +131,18 @@ def escena_gemelo(semilla=1, pasos=1200, render=False, gemelo=True):
         p.disconnect(physicsClientId=cliente)
 
 
-def _obediencia(Z, u, h=8, retardos=3):
-    """Cuanto ayuda conocer ESAS ordenes a predecir esa senal a horizonte h. Mismo instrumento
-    continuo del prereg-29: la obediencia se ve cuando el efecto se acumula, no en un paso."""
+# UNA SOLA FUENTE para "cuanto ayuda conocer las ordenes" (auditoria del 9-ago-2026: habia tres
+# copias parecidas en tres modulos, y una de ellas medía a un horizonte distinto).
+from soporte import HORIZONTE, _ganancia_comando as _ganancia_canal
+
+
+def _obediencia(Z, u, h=HORIZONTE):
+    """Cuanto ayuda conocer ESAS ordenes a predecir esa senal a horizonte h, promediado sobre
+    canales. Mismo instrumento del prereg-29: la obediencia se ve cuando el efecto se acumula."""
     Z = np.asarray(Z, dtype=float)
-    u = np.asarray(u, dtype=float)
-    n = len(Z) - retardos - h + 1
-    if n < 30:
-        return 0.0
-    A = np.column_stack([Z[retardos - k - 1:retardos - k - 1 + n] for k in range(retardos)]
-                        + [np.ones(n)])
-    B = Z[retardos + h - 1: retardos + h - 1 + n]
-    U = np.array([u[retardos - 1 + i: retardos - 1 + i + h].mean(axis=0) for i in range(n)])
-    Au = np.column_stack([A, U])
-    e0 = np.mean((B - A @ np.linalg.lstsq(A, B, rcond=None)[0]) ** 2)
-    e1 = np.mean((B - Au @ np.linalg.lstsq(Au, B, rcond=None)[0]) ** 2)
-    return float(max(0.0, 1.0 - e1 / max(e0, 1e-12)))
+    if Z.ndim == 1:
+        Z = Z[:, None]
+    return float(np.mean([_ganancia_canal(Z[:, c], u, h=h) for c in range(Z.shape[1])]))
 
 
 def prueba_gemelo(latentes_o_sentidos, u_propios, u_ajenos, semilla=30, nulos=6):

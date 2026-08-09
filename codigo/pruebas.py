@@ -552,6 +552,18 @@ caso("sindy3: guarda de muestras minimas viva (ruido corto ya no produce leyes f
      _s3.MUESTRAS_MINIMAS >= 2000
      and _s3.descubrir(np.random.default_rng(4).normal(size=(600, 2)), dt=0.02) is None)
 
+print("== auditoria de interconexion: UNA sola vara de obediencia, no tres ==")
+# HALLAZGO DE LA AUDITORIA FINAL DEL 9-ago-2026: habia TRES implementaciones de "cuanto ayuda
+# conocer el comando", y una de ellas (el panel) medía a UN paso mientras las otras medían a OCHO
+# — justo el error que el prereg-29 habia diagnosticado. El panel subestimaba a todos los
+# competidores por igual. Ahora las tres usan la MISMA funcion. Este caso impide que vuelvan a
+# divergir en silencio.
+caso("interconexion: panel, espejo y soporte usan el MISMO horizonte de obediencia",
+     _pj.HORIZONTE == _sop.HORIZONTE == _e2.HORIZONTE)
+caso("interconexion: panel y espejo NO reimplementan la medida, la importan de soporte",
+     "_ganancia_canal" in _insp.getsource(_pj._ganancia_obediencia)
+     and "_ganancia_canal" in _insp.getsource(_e2._obediencia))
+
 print("== canonizar: tarjeta de identidad ==")
 t = tarjeta("(v1 + v2) * 0.5 + 3.0", 4)
 caso("desplazamiento = f(0)", abs(t["desplazamiento"] - 3.0) < 1e-6)
