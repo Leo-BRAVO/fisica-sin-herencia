@@ -47,6 +47,81 @@ def _te(u, y, bins=3):
     return float(te)
 
 
+def _te_condicional(u, y, z, bins=3):
+    """TE(U→Y | Z): el flujo de u a y que SOBREVIVE cuando ya se conoce z. Es el chaperon.
+    Por que hace falta: si A causa a B y B causa a C, la TE bivariada dibuja una flecha directa
+    A→C que NO existe. El consenso causal 2024-2026 es que un metodo bivariado sin condicionar
+    produce aristas indirectas y confundidas. Aqui cada arista debe sobrevivir con los demas
+    canales presentes en la sala."""
+    yf = _discretizar(y[1:], bins)
+    yp = _discretizar(y[:-1], bins)
+    up = _discretizar(u[:-1], bins)
+    zp = _discretizar(z[:-1], bins)
+    n = len(yf)
+    te = 0.0
+    for a in range(bins):
+        for b in range(bins):
+            for c in range(bins):
+                for d in range(bins):
+                    m = (yf == a) & (yp == b) & (up == c) & (zp == d)
+                    p_abcd = m.sum() / n
+                    if p_abcd == 0:
+                        continue
+                    p_bcd = ((yp == b) & (up == c) & (zp == d)).sum() / n
+                    p_abd = ((yf == a) & (yp == b) & (zp == d)).sum() / n
+                    p_bd = ((yp == b) & (zp == d)).sum() / n
+                    if p_bcd == 0 or p_abd == 0 or p_bd == 0:
+                        continue
+                    te += p_abcd * np.log2((p_abcd / p_bcd) / (p_abd / p_bd))
+    return float(te)
+
+
+# GUARDA DE MUESTRAS. La TE condicional cuenta en una tabla de bins^4 celdas (81 con bins=3):
+# con pocas muestras cada celda queda casi vacia y el estimador se sesga HACIA ARRIBA — es decir,
+# inventa flujo. Se exige un minimo de muestras por celda antes de opinar. Misma disciplina que el
+# minimo de 20 ventanas del detector de contingencia: un instrumento sin potencia no opina.
+MUESTRAS_POR_CELDA = 40
+
+
+def medir_condicional(u, y, z, bins=3, nulos=20, semilla=0):
+    """TE(U→Y|Z) NETA, con el mismo nulo por desplazamiento. Si la arista era indirecta a traves
+    de z, esta cifra se DERRUMBA aunque la bivariada gritara.
+
+    HONESTIDAD SOBRE LO QUE PUEDE Y NO PUEDE: el chaperon no anula la arista espuria, la reduce.
+    Medido el 9-ago-2026 en una cadena a->b->c construida a proposito: la bivariada declaraba
+    +1.4774 bits de a a c (flecha FALSA, a no toca a c) y la condicional la dejo en +0.0111 —
+    una reduccion del 99.2%. Por eso el criterio de la casa NO es "la condicional da cero" sino
+    "la condicional REDUCE la arista en al menos 90%"; y una arista solo se acepta como directa
+    si ademas sobrevive comparada con las demas del grafo."""
+    if len(u) < MUESTRAS_POR_CELDA * bins ** 4:
+        return {"te_condicional": None, "nulo_techo": None, "neta": None,
+                "hay_flujo_directo": None,
+                "medicion_invalida": f"{len(u)} muestras; minimo "
+                                     f"{MUESTRAS_POR_CELDA * bins ** 4} para bins={bins}"}
+    rng = np.random.default_rng(semilla)
+    real = _te_condicional(u, y, z, bins)
+    falsas = []
+    for _ in range(nulos):
+        k = int(rng.integers(len(u) // 8, 7 * len(u) // 8))
+        falsas.append(_te_condicional(np.roll(u, k), y, z, bins))
+    techo = float(np.max(falsas))
+    return {"te_condicional": round(real, 4), "nulo_techo": round(techo, 4),
+            "neta": round(real - techo, 4), "hay_flujo_directo": bool(real > techo),
+            "medicion_invalida": None}
+
+
+def reduccion_por_chaperon(u, y, z, bins=3, nulos=10, semilla=0):
+    """Cuanto se derrumba una arista al meter al chaperon. >=0.9 significa que la arista era
+    (casi toda) indirecta. Es la cifra que se reporta, no el binario."""
+    biv = medir(u, y, bins=bins, nulos=nulos, semilla=semilla)
+    con = medir_condicional(u, y, z, bins=bins, nulos=nulos, semilla=semilla)
+    if con.get("medicion_invalida") or biv["neta"] <= 0:
+        return {"reduccion": None, "bivariada": biv, "condicional": con}
+    return {"reduccion": round(1.0 - max(0.0, con["neta"]) / biv["neta"], 4),
+            "bivariada": biv["neta"], "condicional": con["neta"],
+            "arista_indirecta": bool(1.0 - max(0.0, con["neta"]) / biv["neta"] >= 0.9)}
+
+
 def medir(u, y, bins=3, nulos=20, semilla=0):
     """TE NETA = TE(real) − max(TE(desplazados)): lo que sobreviva al nulo es información real."""
     rng = np.random.default_rng(semilla)

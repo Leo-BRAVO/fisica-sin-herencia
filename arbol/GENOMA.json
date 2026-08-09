@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "fecha": "2026-08-08",
+  "fecha": "2026-08-09",
   "nota": "El genoma ejecutable (Regla 33). Cada organo consulta aqui su modo. Cambiarlo = commit visible + firma del director. Los modos: 'mide' (produce numeros, no toca nada), 'propone' (puede escribir propuestas para humanos/cola), 'decide' (puede actuar solo; exige prerregistro firmado que lo cablee).",
   "genes": {
     "G1_prediccion": {
@@ -87,6 +87,12 @@
       "modo": "mide",
       "modulo": "gimnasio.py (sensores)",
       "prerregistro": "26-borrador"
+    },
+    "G15_metacognicion": {
+      "modo": "mide",
+      "modulo": "cerebro.py",
+      "prerregistro": null,
+      "nota": "sensibilidad metacognitiva (AUC tipo 2) con nulo por confianza barajada. MIDE: no decide nada hasta que un prerregistro firmado suba su modo."
     }
   }
 }

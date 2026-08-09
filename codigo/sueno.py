@@ -73,6 +73,163 @@ def consolidar_memoria(registros, umbral=3):
             for (c, t), n in llaves.items() if n >= umbral]
 
 
+# =========================================================== LAS DOS FASES (prerregistro-33)
+# Anadido el 9-ago-2026. El campo (wake-sleep 2024-2026, consolidacion semi-parametrica) maduro
+# hacia lo que ya teniamos a medias: consolidar no es REPETIR, es REESTRUCTURAR. Dos fases:
+#   CONSERVADORA — re-mineria sobre episodios REALMENTE VIVIDOS. Riesgo bajo: es repaso.
+#   GENERATIVA   — el modelo del mundo GENERA episodios imaginados y se mina tambien ahi; asi
+#                  aparecen abstracciones que ningun episodio suelto mostraba.
+# EL GUARDIAN QUE EL CAMPO NO TIENE Y NOSOTROS SI: un modelo entrenado en RUIDO tambien suena, y
+# sus suenos tienen estructura falsa. Antes de aceptar cualquier ley nacida de un sueno, la
+# re-mineria debe FRACASAR LIMPIAMENTE sobre los suenos del modelo-de-ruido. Y regla dura: una
+# ley sonada JAMAS es nodo sin confirmarse despues en vigilia. El sueno propone, la vigilia
+# confirma, el director firma.
+FASES_SUENO = ("conservadora", "generativa")
+
+
+def _modelo_del_mundo(episodios, retardos=2):
+    """Modelo lineal del mundo aprendido de lo vivido: predice el proximo estado."""
+    A, B = [], []
+    for X in episodios:
+        X = np.asarray(X, dtype=float)
+        for t in range(retardos, len(X)):
+            A.append(np.concatenate([X[t - k - 1] for k in range(retardos)] + [[1.0]]))
+            B.append(X[t])
+    A, B = np.array(A), np.array(B)
+    W, *_ = np.linalg.lstsq(A, B, rcond=None)
+    resid = B - A @ W
+    return {"W": W, "retardos": retardos, "sigma": np.std(resid, axis=0)}
+
+
+def sonar_episodios(modelo, semilla_estado, n=4, pasos=2600, semilla=9, con_ruido=True):
+    """La FASE GENERATIVA: el modelo se sueña a si mismo hacia adelante. No es memoria: es lo que
+    su modelo cree que pasaria. Por eso necesita guardian.
+    `pasos` por defecto supera MUESTRAS_MINIMAS de sindy3: un sueno corto no puede ser minado, y
+    minar sin potencia es justo lo que el motor tiene prohibido."""
+    rng = np.random.default_rng(semilla)
+    W, r = modelo["W"], modelo["retardos"]
+    sig = modelo["sigma"] if con_ruido else np.zeros_like(modelo["sigma"])
+    suenos = []
+    for e in range(n):
+        X = list(np.asarray(semilla_estado, dtype=float)[:r])
+        for _ in range(pasos):
+            v = np.concatenate([X[-k - 1] for k in range(r)] + [[1.0]])
+            X.append(v @ W + rng.normal(0, sig))
+        suenos.append(np.array(X))
+    return suenos
+
+
+def mineria_en_suenos(suenos, dt=1.0):
+    """Re-mineria sobre lo soñado, con el motor mas robusto de la casa (forma debil + bootstrap).
+    Devuelve la ley SOLO si el motor la declara; el motor ya trae su propia disciplina."""
+    import sindy3
+    leyes = []
+    for s in suenos:
+        if s.shape[1] < 2:
+            continue
+        ley = sindy3.descubrir(s[:, :2], dt=dt)
+        if ley is not None:
+            leyes.append(ley["terminos"])
+    return leyes
+
+
+def dormir(episodios_vividos, dt=1.0, semilla=9):
+    """Las dos fases seguidas, con el guardian entre ellas. Devuelve PROPUESTAS, jamas nodos."""
+    modelo = _modelo_del_mundo(episodios_vividos)
+    # --- fase conservadora: re-mineria sobre lo REALMENTE vivido
+    import sindy3
+    conserv = [sindy3.descubrir(np.asarray(X)[:, :2], dt=dt) for X in episodios_vividos]
+    conserv = [c["terminos"] for c in conserv if c is not None]
+    # --- guardian: ¿un modelo de RUIDO tambien produciria leyes al soñar?
+    rng = np.random.default_rng(semilla)
+    ruido_eps = [rng.normal(size=np.asarray(episodios_vividos[0]).shape)
+                 for _ in range(len(episodios_vividos))]
+    modelo_ruido = _modelo_del_mundo(ruido_eps)
+    suenos_ruido = sonar_episodios(modelo_ruido, ruido_eps[0], semilla=semilla)
+    leyes_del_ruido = mineria_en_suenos(suenos_ruido, dt=dt)
+    guardian_ok = len(leyes_del_ruido) == 0
+    # --- fase generativa: solo se abre si el guardian aprobo
+    suenos = sonar_episodios(modelo, episodios_vividos[0], semilla=semilla)
+    generativas_crudas = mineria_en_suenos(suenos, dt=dt)
+
+    # EL FILTRO DE VIGILIA, mecanico y no solo escrito: una ley soñada SOLO pasa si su SOPORTE
+    # (que terminos gobiernan cada derivada) coincide con una ley hallada despierto.
+    # HISTORIA HONESTA DEL 9-ago-2026, porque el hallazgo cambio de forma al investigarlo:
+    #   (1) La primera corrida del guardian encontro 4 LEYES en los suenos de un modelo ajustado a
+    #       ruido puro. Alarma real.
+    #   (2) Al perseguir la causa NO era el mecanismo del sueno: era sindy3 declarando leyes sobre
+    #       series cortas. Medido en 6 semillas de ruido: n=600 -> 2/6 falsas, n=2000 -> 0/6. Se
+    #       le puso a sindy3 su guarda de MUESTRAS_MINIMAS y la alarma se apago.
+    #   (3) El filtro se conserva igual, como defensa en profundidad: un modelo lineal ajustado a
+    #       cualquier cosa ES un sistema lineal, y soñado hacia adelante genera trayectorias con
+    #       estructura — la estructura DEL MODELO, no la del mundo. Que hoy el guardian de cero
+    #       no significa que el riesgo no exista; significa que la primera puerta lo detuvo.
+    def _soporte(ley):
+        return tuple(sorted((k, tuple(sorted(n for n, _, _ in v))) for k, v in ley.items()))
+
+    soportes_vigilia = {_soporte(l) for l in conserv}
+    generativas = [l for l in generativas_crudas if _soporte(l) in soportes_vigilia]
+    falsas_del_ruido = [l for l in leyes_del_ruido if _soporte(l) in soportes_vigilia]
+    return {"fase_conservadora": conserv,
+            "guardian_suenos_de_ruido": {
+                "leyes_crudas_del_ruido": len(leyes_del_ruido),
+                "sobreviven_al_filtro_de_vigilia": len(falsas_del_ruido),
+                "aprueba": len(falsas_del_ruido) == 0},
+            "fase_generativa_cruda": len(generativas_crudas),
+            "fase_generativa": generativas,
+            "nota": "PROPUESTAS. Una ley soñada jamas es nodo: debe coincidir en soporte con una "
+                    "ley de vigilia (filtro mecanico de arriba) y llevar la firma del director."}
+
+
+def regla31_dos_fases(verbose=True):
+    fallos = []
+    # mundo real con verdad conocida: oscilador amortiguado
+    import sindy3
+    X, dt = sindy3._oscilador(T=15000, dt=0.02)
+    vividos = [X[i * 3000:(i + 1) * 3000] for i in range(5)]
+    r = dormir(vividos, dt=dt)
+
+    c1 = len(r["fase_conservadora"]) > 0
+    if verbose:
+        print(f"  {'ok  ' if c1 else 'FALLO'} FASE CONSERVADORA: re-mina lo vivido "
+              f"({len(r['fase_conservadora'])} leyes de {len(vividos)} episodios)")
+    if not c1:
+        fallos.append("conservadora")
+
+    g = r["guardian_suenos_de_ruido"]
+    c2 = g["aprueba"]
+    if verbose:
+        print(f"  {'ok  ' if c2 else 'FALLO'} GUARDIAN: los suenos del modelo-de-RUIDO producen "
+              f"{g['leyes_crudas_del_ruido']} leyes crudas y "
+              f"{g['sobreviven_al_filtro_de_vigilia']} sobreviven al filtro de vigilia")
+    if not c2:
+        fallos.append("guardian")
+
+    c3 = len(r["fase_generativa"]) > 0
+    if verbose:
+        print(f"  {'ok  ' if c3 else 'FALLO'} FASE GENERATIVA: sonando su propio mundo halla "
+              f"{len(r['fase_generativa'])} leyes")
+    if not c3:
+        fallos.append("generativa")
+
+    # 4) EL GUARDIAN MANDA: si el modelo-de-ruido colara leyes, la fase generativa NO se abre
+    rng = np.random.default_rng(4)
+    puro = [rng.normal(size=(3000, 2)) for _ in range(5)]
+    rp = dormir(puro, dt=dt)
+    c4 = len(rp["fase_generativa"]) == 0 and len(rp["fase_conservadora"]) == 0
+    if verbose:
+        print(f"  {'ok  ' if c4 else 'FALLO'} MUNDO DE RUIDO: ni vigilia ni sueno producen ley "
+              f"(conservadora {len(rp['fase_conservadora'])}, generativa "
+              f"{len(rp['fase_generativa'])})")
+    if not c4:
+        fallos.append("mundo-ruido")
+
+    if verbose:
+        print("\nREGLA 31 (dos fases): " + ("APRUEBA — suena donde hay mundo y calla donde hay "
+                                            "ruido." if not fallos else f"REPRUEBA en {fallos}"))
+    return 0 if not fallos else 1
+
+
 def regla31(verbose=True):
     fallos = []
     # MUNDO 1: redundancia PLANTADA — la ley simple 'L1' explica la campaña 'c2' cuyo dueño

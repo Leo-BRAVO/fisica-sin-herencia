@@ -84,12 +84,23 @@ def _stlsq(A, b, umbral=0.05, pasadas=8):
     return W
 
 
+# GUARDA DE MUESTRAS. HALLAZGO DEL 9-ago-2026, encontrado al construir el sueño en dos fases:
+# con series cortas el bootstrap declara leyes sobre RUIDO PURO. Medido, 6 semillas de ruido:
+#   n=600 -> 2/6 leyes falsas | n=1000 -> 1/6 | n=1500 -> 1/6 | n=2000 -> 0/6 | n=3000 -> 0/6
+# El remuestreo con reemplazo repite ventanas, y con pocas ventanas distintas la "replicacion"
+# se vuelve un eco de si misma. Por debajo del minimo el motor NO OPINA: es la misma disciplina
+# que el minimo de 20 ventanas del detector de contingencia.
+MUESTRAS_MINIMAS = 2000
+
+
 def descubrir(X, dt=1.0, umbral=0.05, ventana=None, salto=None,
               remuestreos=200, piso_inclusion=0.9, semilla=28):
     """La ley SOLO si cada termino supera el piso de inclusion del bootstrap Y el ajuste final
     sobre todas las ventanas confirma ese mismo soporte. Devuelve tambien las probabilidades,
     porque un numero que no se puede auditar no sirve de evidencia."""
     T = len(X)
+    if T < MUESTRAS_MINIMAS:
+        return None            # sin potencia no se opina (ver MUESTRAS_MINIMAS)
     ventana = ventana or max(20, T // 25)
     salto = salto or max(1, ventana // 4)
     A, b = _sistema_debil(X, dt, ventana, salto)
