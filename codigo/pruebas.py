@@ -438,6 +438,20 @@ caso("panel: gana con ASTERISCO quien gana una lectura y pierde otra (no reempla
           {"nombre": "y", "puntajes": {"contingencia": 0.0, "flecha": 1.0, "robustez": 1.0}}]
      )["fallo"])
 
+print("== la escalera de soporte (prereg-29): el primer no-yo por definicion POSITIVA ==")
+import soporte as _sop
+caso("soporte: APRUEBA su Regla 31 (7/7: escalones, senuelo, sin gravedad, VOE, nulos)",
+     _sop.regla31(verbose=False) == 0)
+# LA LECCION DEL NIVEL B FRACASADO, CONGELADA: definir el no-yo solo como "no me obedece" deja
+# entrar al ruido puro. El senuelo de ruido debe ser rechazado por ILEGAL (impredecible), no por
+# obediente. Si alguien quita el requisito de legalidad, esto grita.
+_c, _x, _n, _k = _sop.escena("cae", semilla=1, pasos=_sop.PASOS_MINIMOS)
+_e1 = _sop.escalon1(_c, _x, _n, cortes=_k)
+caso("soporte: el ruido puro NO puede ser el primer no-yo (legalidad exigida, no solo ausencia)",
+     "ruido" not in (_e1.get("candidatos_aptos") or []) and _e1["candidato"] == "altura")
+caso("soporte: sin potencia estadistica no hay veredicto (guarda de pasos minimos)",
+     _sop.PASOS_MINIMOS >= 900)
+
 print("== canonizar: tarjeta de identidad ==")
 t = tarjeta("(v1 + v2) * 0.5 + 3.0", 4)
 caso("desplazamiento = f(0)", abs(t["desplazamiento"] - 3.0) < 1e-6)
