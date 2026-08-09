@@ -82,9 +82,33 @@ def invariantes(trayectorias, umbral_ratio=0.05, umbral_entre=0.2,
             res = _residuo(Psi0, Psi1, v, lam[k])
             if res > residuo_maximo:
                 continue          # FANTASMA: artefacto del truncamiento, no del mundo
+            # DEDUPLICACION POR SUBESPACIO. HALLAZGO DEL 9-ago-2026, cazado por el banco al
+            # correr EN LA NUBE lo que aqui pasaba: con una perturbacion del orden de 1e-12 —es
+            # decir, con otra version de BLAS— la descomposicion devuelve DOS autovectores que
+            # generan el MISMO observable, y el modulo los reportaba como dos invariantes.
+            # No son dos: es uno visto dos veces. Contarlos por separado inflaria cualquier
+            # recuento futuro de "cuantas cantidades conserva este mundo", que es justo la clase
+            # de cifra sobre la que se construyen nodos.
+            # Se comparan los OBSERVABLES (no los coeficientes): dos autovectores distintos
+            # pueden dar la misma funcion sobre los datos.
+            obs = np.concatenate(valores)
+            obs = obs - obs.mean()
+            n_obs = np.linalg.norm(obs)
+            repetido = False
+            for y in out:
+                d = y["_obs"]
+                if n_obs > 1e-12 and np.linalg.norm(d) > 1e-12:
+                    coseno = abs(float(obs @ d) / (n_obs * np.linalg.norm(d)))
+                    if coseno > 0.99:      # mismo observable salvo escala y signo
+                        repetido = True
+                        break
+            if repetido:
+                continue
             out.append({"lambda": complex(lam[k]), "coefs": np.round(v, 4),
                         "ratio_dentro_entre": round(dentro / (entre + 1e-12), 5),
-                        "residuo": round(res, 5)})
+                        "residuo": round(res, 5), "_obs": obs})
+    for y in out:
+        y.pop("_obs", None)
     return out
 
 

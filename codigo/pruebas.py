@@ -497,6 +497,16 @@ caso("koopman: el invariante REAL tiene residuo ~0 (no es fantasma del truncamie
 _P0 = np.vstack([_kp._diccionario(x[:-1]) for x in _tr])
 _P1 = np.vstack([_kp._diccionario(x[1:]) for x in _tr])
 _rr = np.random.default_rng(3)
+# LA LECCION QUE COSTO UNA CORRIDA EN ROJO (9-ago-2026): este caso pasaba en local y FALLABA
+# en la nube. No era un test fragil: era un bug real. Con una perturbacion del orden de 1e-12
+# —otra version de BLAS— la descomposicion devolvia DOS autovectores del MISMO observable y el
+# modulo los contaba como dos invariantes. Uno visto dos veces no son dos. Ahora se deduplica
+# por subespacio, y este caso lo verifica BAJO PERTURBACION, no solo en el caso limpio.
+_rk = np.random.default_rng(1)
+for _eps in (1e-12, 1e-9, 1e-7):
+    _trp = [x + _eps * _rk.normal(size=x.shape) for x in _tr]
+    caso(f"koopman: sigue hallando UN solo invariante con perturbacion {_eps:g} (dedup por subespacio)",
+         len(_kp.invariantes(_trp)) == 1)
 caso("koopman: un vector cualquiera NO pasa el filtro de residuo (asi se matan los fantasmas)",
      all(_kp._residuo(_P0, _P1, _rr.normal(size=_P0.shape[1]), 1.0) > _kp.RESIDUO_MAXIMO
          for _ in range(5)))
