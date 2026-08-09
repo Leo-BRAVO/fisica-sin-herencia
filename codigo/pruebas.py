@@ -674,6 +674,27 @@ caso("sinapsis 2.0: un organo que mide lo suyo cuenta como testigo INDEPENDIENTE
          [{"id": 1, "genealogia": [1]}, {"id": 2, "genealogia": [2]}]) == 2
      and _sinapsis.testigos_independientes(
          [{"id": 1, "genealogia": [9]}, {"id": 2, "genealogia": [9]}]) == 1)
+# EL CASO QUE NACE DE UN ERROR MIO (9-ago-2026): dije "anadidos los enlaces" cuando solo habia
+# anadido el CAMPO, vacio en los 33 eventos. El campo sin mecanismo no sirve de nada. Estos casos
+# exigen el mecanismo, no la declaracion.
+_sint = [e for e in _ult["eventos"] if e.get("enlaces")]
+caso("sinapsis 2.0: la sintesis ENLAZA a todos sus contribuyentes (el campo no puede ir vacio)",
+     len(_sint) >= 1 and len(_sint[0]["enlaces"]) >= 10)
+caso("sinapsis 2.0: los enlaces aparecen como conexiones reales en la autopsia",
+     len(_tz.conexiones(_ult)) > 2 * len([e for e in _ult["eventos"] if e.get("causa")]) // 3)
+# LA SINTESIS NO PUEDE SER UN BLANQUEADOR DE EVIDENCIA: tiene que llevar lo que NO afirma.
+caso("sintesis: declara explicitamente lo que NO se puede afirmar",
+     any("lo_que_NO_se_afirma" in (e.get("contenido") or {}) for e in _ult["eventos"]
+         if isinstance(e.get("contenido"), dict)))
+caso("sintesis: cuenta TESTIGOS independientes, no voces",
+     any("testigos_independientes" in (e.get("contenido") or {}) for e in _ult["eventos"]
+         if isinstance(e.get("contenido"), dict)))
+# CONVOCATORIA POR NECESIDAD (prereg-34): acotada duro y por competencia FUNCIONAL.
+caso("convocatoria: Diego elige por competencia funcional, no por dominio fisico",
+     _sinapsis.convocar_por_necesidad(["consolidar", "reminar"])[0][:1] == ["G9_sueno"])
+caso("convocatoria: JAMAS puede convocar a todos (techo duro del canal global)",
+     len(_sinapsis.convocar_por_necesidad(["percibir", "actuar", "modelar"], k=99)[0])
+     <= _sinapsis.K_MAXIMO < 18)
 caso("nervio: en la ultima ronda hablaron los 16 organos activos",
      len({e["gen"] for e in _ult["eventos"]}) >= 16)
 

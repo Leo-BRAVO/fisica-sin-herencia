@@ -218,6 +218,47 @@ def latir(pasos=900, verbose=True, traza=None):
     contestaron = {e["gen"] for e in eventos if e.get("causa") == p_rev["id"]}
     silencios = [g for g in destinos if g not in contestaron]
 
+    # ═══ FASE 7 · LA SINTESIS — Diego arma UNA respuesta con todo lo que sus organos dijeron.
+    # Aqui es donde `enlaces` deja de ser un campo vacio: la sintesis enlaza a TODOS sus
+    # contribuyentes, porque `causa` solo puede apuntar a uno y los demas desapareceria del
+    # arbol causal. Una sintesis de veinte voces conectada a una sola es una traza que miente.
+    #
+    # LO QUE LA SINTESIS **NO** HACE, y es deliberado: no convierte evidencia debil en una
+    # respuesta segura. Lleva su propia incertidumbre, cuenta TESTIGOS INDEPENDIENTES (no voces),
+    # y tiene permitido decir "no se". Una sintesis que siempre concluye algo es un blanqueador
+    # de evidencia, no una mente.
+    from sinapsis import agregar, testigos_independientes
+    aportes = [e for e in eventos if e["tipo"] in ("respuesta", "medicion", "decision")]
+    voces = sorted({e["gen"] for e in aportes})
+    testigos = testigos_independientes(aportes)
+    con_dato = [e for e in aportes if not (isinstance(e["contenido"], dict)
+                                           and e["contenido"].get("aporta") is False)]
+    lo_afirmado = {
+        "canales_mios": mias,
+        "vista": "certificacion estructural — NO predice el cuerpo (INFORME-38)",
+        "poder": {"lazo_abierto": d13[-1]["lazo_abierto"], "lazo_cerrado": d13[-1]["lazo_cerrado"]},
+        "metacognicion_auc": m["auc"],
+    }
+    lo_no_afirmado = [
+        "que la vista sirva para hallar el cuerpo (el torneo quedo no concluyente por instrumento)",
+        "ninguna ley del universo: esto es PyBullet haciendo de mundo",
+        "que la conducta siga a la deteccion: Diego detecta contingencia y aun no actua sobre ella",
+    ]
+    sintesis = agregar("G1_prediccion", "revision",
+                       {"veredicto": "ronda coherente",
+                        "voces": len(voces), "testigos_independientes": testigos,
+                        "aportes_con_dato": len(con_dato), "aportes_vacios":
+                            len(aportes) - len(con_dato),
+                        "lo_que_se_afirma": lo_afirmado,
+                        "lo_que_NO_se_afirma": lo_no_afirmado},
+                       contribuyentes=aportes, traza=_traza(), cuando=_ahora())
+    eventos.append(sintesis)
+    if verbose:
+        print(f"\n  ★ SINTESIS de G1_prediccion — {len(voces)} voces, {testigos} testigos "
+              f"independientes, {len(sintesis['enlaces'])} aportes enlazados")
+        for l in lo_no_afirmado:
+            print(f"      no afirma: {l}")
+
     # ═══ LA PRUEBA VIVA DEL PORTERO: un gen que MIDE intentando DECIDIR y otro intentando
     # CONVOCAR. Los dos deben quedar bloqueados, en produccion, cada ronda.
     _pub("G13_poder", "decision", {"intento": "cambiar la politica motora"})
@@ -226,6 +267,7 @@ def latir(pasos=900, verbose=True, traza=None):
 
     return {"eventos": len(eventos), "bloqueos": bloqueos, "sin_oyente": sin_oyente,
             "silencios": silencios, "canales_mios": mias, "traza": _traza(),
+            "sintesis": sintesis, "voces": len(voces), "testigos": testigos,
             "cuando": _ahora()}
 
 

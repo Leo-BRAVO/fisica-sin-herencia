@@ -62,6 +62,12 @@ PERMISOS = {"mide": {"medicion", "respuesta"},
 # lo caza. Un organo solo recibe lo que declara escuchar en el genoma (campo "escucha").
 TEMAS = ("cuerpo", "mundo", "frontera", "leyes", "recursos", "descanso", "revision")
 
+# EL TECHO DEL RECLUTAMIENTO. No es una optimizacion: es el mecanismo. La evidencia de 2025 sobre
+# topologias de comunicacion es que la densidad es un parametro de CORRECCION, no de eficiencia —
+# una malla completa propaga los errores igual de bien que los aciertos. Diego puede modular a
+# cuantos llama, pero nunca a todos.
+K_MAXIMO = 7
+
 
 def _genoma():
     return json.load(open(GENOMA, encoding="utf-8"))["genes"]
@@ -273,6 +279,70 @@ if __name__ == "__main__":
     if a.regla31:
         sys.exit(regla31())
     print("uso: --regla31")
+
+
+def convocar_por_necesidad(necesidad, k=4, _genes=None):
+    """DIEGO ELIGE A QUIEN LLAMAR (prerregistro-34). Puntua cada organo por cuanto encaja su
+    COMPETENCIA con lo que hace falta ahora, y recluta a los k mejores.
+
+    `necesidad` es una lista de capacidades funcionales ("medir_incertidumbre", "actuar"...),
+    nunca un dominio fisico. La diferencia importa: reclutar por "esto va de gravedad" seria
+    usar conocimiento del mundo para decidir, y esa es justo la contaminacion que el proyecto
+    existe para impedir.
+
+    k ESTA ACOTADO DURO y por una razon medida, no estetica: el canal global tiene que ser
+    escaso. Si Diego convoca a los dieciocho cada vez, no piensa mejor — difunde sus errores con
+    la misma eficacia con que difunde sus aciertos, y deja de poder saberse quien causo que.
+    """
+    genes = _genes or _genoma()
+    nec = set(necesidad or [])
+    k = max(1, min(int(k), K_MAXIMO))
+    puntajes = []
+    for g, v in genes.items():
+        if v.get("modo") == "inactivo":
+            continue
+        comp = set(v.get("competencia") or [])
+        if not comp:
+            continue
+        encaje = len(nec & comp) / len(nec) if nec else 0.0
+        if encaje > 0:
+            puntajes.append((encaje, len(nec & comp), g))
+    puntajes.sort(reverse=True)
+    return [g for _, _, g in puntajes[:k]], [{"gen": g, "encaje": round(e, 3)}
+                                             for e, _, g in puntajes]
+
+
+def agregar(gen, tema, contenido, contribuyentes, causa=None, cuando=None, traza=None,
+            tipo="respuesta", _ruta=None):
+    """VARIOS A UNO, con los ENLACES poblados de verdad.
+
+    POR QUE EXISTE (y por que el campo `enlaces` vacio no servia de nada): un evento solo puede
+    tener UN padre. Cuando doce organos contribuyen a una sintesis, `causa` solo puede apuntar a
+    uno de ellos y los otros once desaparecen del arbol causal. La traza se ve completa y ha
+    perdido once relaciones — el fallo mas insidioso que existe en auditoria, porque produce una
+    autopsia con apariencia de completitud. `enlaces` carga a TODOS los contribuyentes.
+
+    REGLA DURA, verificada por el trazador: una agregacion con menos enlaces que contribuyentes
+    es un error de coordinacion. Si Diego sintetiza doce voces y solo enlaza ocho, cuatro organos
+    hablaron y su aporte no consta en ninguna parte.
+    """
+    ids = [c["id"] if isinstance(c, dict) else int(c) for c in contribuyentes]
+    ev = publicar(gen, tipo, contenido, cuando=cuando, _ruta=_ruta, tema=tema,
+                  causa=causa, traza=traza)
+    ev["enlaces"] = ids
+    # la genealogia de una sintesis es la UNION de las de sus contribuyentes: asi el contador de
+    # testigos independientes sigue funcionando aguas abajo.
+    raices = set()
+    todos = leer(_ruta=_ruta)
+    for i in ids:
+        p = [x for x in todos if x.get("id") == i]
+        raices.update(p[0].get("genealogia") or [i] if p else [i])
+    ev["genealogia"] = sorted(raices)
+    # se reescribe la linea (append-only: se anade la version definitiva y la parcial queda como
+    # historia; el trazador siempre lee la ULTIMA version de cada id)
+    with open(_ruta or SINAPSIS, "a", encoding="utf-8") as f:
+        f.write(json.dumps(ev, ensure_ascii=False) + "\n")
+    return ev
 
 
 def testigos_independientes(eventos):

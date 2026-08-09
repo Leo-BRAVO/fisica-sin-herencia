@@ -11,6 +11,10 @@
         "mundo",
         "leyes",
         "revision"
+      ],
+      "competencia": [
+        "predecir",
+        "modelar"
       ]
     },
     "G2_curiosidad": {
@@ -21,6 +25,10 @@
         "leyes",
         "recursos",
         "revision"
+      ],
+      "competencia": [
+        "priorizar",
+        "explorar"
       ]
     },
     "G3_accion": {
@@ -30,6 +38,10 @@
       "escucha": [
         "cuerpo",
         "frontera"
+      ],
+      "competencia": [
+        "actuar",
+        "intervenir"
       ]
     },
     "G4_contingencia": {
@@ -39,6 +51,10 @@
       "escucha": [
         "cuerpo",
         "frontera"
+      ],
+      "competencia": [
+        "separar_yo_mundo",
+        "medir_obediencia"
       ]
     },
     "G5_composicion": {
@@ -48,6 +64,10 @@
       "escucha": [
         "leyes",
         "revision"
+      ],
+      "competencia": [
+        "componer",
+        "simplificar"
       ]
     },
     "G6_memoria": {
@@ -62,6 +82,10 @@
         "recursos",
         "descanso",
         "revision"
+      ],
+      "competencia": [
+        "recordar",
+        "consolidar"
       ]
     },
     "G7_juego": {
@@ -71,6 +95,10 @@
       "escucha": [
         "cuerpo",
         "recursos"
+      ],
+      "competencia": [
+        "actuar",
+        "explorar"
       ]
     },
     "G8_atencion": {
@@ -82,6 +110,10 @@
         "leyes",
         "recursos",
         "revision"
+      ],
+      "competencia": [
+        "priorizar",
+        "repartir_esfuerzo"
       ]
     },
     "G9_sueno": {
@@ -92,6 +124,10 @@
         "leyes",
         "descanso",
         "revision"
+      ],
+      "competencia": [
+        "consolidar",
+        "reminar"
       ]
     },
     "G10_interocepcion": {
@@ -101,19 +137,25 @@
       "escucha": [
         "recursos",
         "descanso"
+      ],
+      "competencia": [
+        "medir_coste",
+        "repartir_esfuerzo"
       ]
     },
     "G11_temple": {
       "modo": "inactivo",
       "modulo": null,
       "prerregistro": null,
-      "escucha": []
+      "escucha": [],
+      "competencia": []
     },
     "G12_reflejos": {
       "modo": "inactivo",
       "modulo": null,
       "prerregistro": null,
-      "escucha": []
+      "escucha": [],
+      "competencia": []
     },
     "G13_poder": {
       "modo": "mide",
@@ -123,6 +165,10 @@
         "cuerpo",
         "frontera",
         "recursos"
+      ],
+      "competencia": [
+        "medir_control",
+        "intervenir"
       ]
     },
     "G14_incertidumbre": {
@@ -133,6 +179,10 @@
         "mundo",
         "leyes",
         "revision"
+      ],
+      "competencia": [
+        "medir_incertidumbre",
+        "separar_ruido"
       ]
     },
     "sentido_vision": {
@@ -143,6 +193,10 @@
         "mundo",
         "cuerpo",
         "revision"
+      ],
+      "competencia": [
+        "percibir",
+        "modelar"
       ]
     },
     "sentido_propiocepcion": {
@@ -151,6 +205,10 @@
       "prerregistro": "26-borrador",
       "escucha": [
         "cuerpo"
+      ],
+      "competencia": [
+        "percibir",
+        "sentir_cuerpo"
       ]
     },
     "sentido_tacto": {
@@ -160,6 +218,10 @@
       "escucha": [
         "cuerpo",
         "mundo"
+      ],
+      "competencia": [
+        "percibir",
+        "sentir_contacto"
       ]
     },
     "G15_metacognicion": {
@@ -170,8 +232,13 @@
       "escucha": [
         "leyes",
         "revision"
+      ],
+      "competencia": [
+        "medir_confianza",
+        "revisar"
       ]
     }
   },
-  "nota_escucha": "Suscripcion por tema (sinapsis 2.0, 9-ago-2026). Un organo solo recibe lo que declara escuchar. Conectar todo con todo no es un cerebro: es ruido que se retroalimenta y borra la trazabilidad de quien causo que."
+  "nota_escucha": "Suscripcion por tema (sinapsis 2.0, 9-ago-2026). Un organo solo recibe lo que declara escuchar. Conectar todo con todo no es un cerebro: es ruido que se retroalimenta y borra la trazabilidad de quien causo que.",
+  "nota_competencia": "Competencia FUNCIONAL, jamas por dominio fisico. Un enrutador que reclutara por 'sabe de gravedad' usaria conocimiento del mundo para decidir: la contaminacion entrando por la puerta de atras."
 }
