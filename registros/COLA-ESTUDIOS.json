@@ -162,12 +162,13 @@
     {
       "id": "p26-hito0-mm-s3",
       "tipo": "gimnasio",
-      "estado": "pendiente",
+      "estado": "hecha",
       "datos": "codigo/hito0_multimodal.py",
       "salida": "resultados/p26-hito0-multimodal-s3",
       "args": "--episodios 12 --pasos 1500 --epocas 12 --semilla 3",
       "prerregistro": 26,
-      "nota": "replica 3/5 — el hito exige >=4/5 semillas"
+      "nota": "replica 3/5 — el hito exige >=4/5 semillas",
+      "resultado": "corrida por latido-nube (Actions)"
     },
     {
       "id": "p26-hito0-mm-s4",
