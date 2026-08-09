@@ -361,9 +361,10 @@
       "prerregistro": 32,
       "datos": "codigo/observador_pasivo.py",
       "args": "--semilla 1 --pasos 1800",
-      "estado": "pendiente",
+      "estado": "hecha",
       "nota": "encarnado vs pasivo: el control que podria refutarnos",
-      "salida": "resultados/p32-observador-pasivo-s1"
+      "salida": "resultados/p32-observador-pasivo-s1",
+      "resultado": "corrida por latido-nube (Actions)"
     },
     {
       "id": "p32-observador-pasivo-s2",

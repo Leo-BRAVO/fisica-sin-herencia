@@ -25,3 +25,4 @@
 {"campana": "p30-espejo-gemelo-s3", "segundos": 3.0, "semillas": 1, "replicas": 1, "trabajo_motor": 0.2, "coste_sentido": 0.2, "tiempo_fiable": true, "es_nulo": false}
 {"campana": "p30-espejo-gemelo-s4", "segundos": 3.0, "semillas": 1, "replicas": 1, "trabajo_motor": 0.2, "coste_sentido": 0.2, "tiempo_fiable": true, "es_nulo": false}
 {"campana": "p30-espejo-gemelo-s5", "segundos": 3.0, "semillas": 1, "replicas": 1, "trabajo_motor": 0.2, "coste_sentido": 0.2, "tiempo_fiable": true, "es_nulo": false}
+{"campana": "p32-observador-pasivo-s1", "segundos": 4.0, "semillas": 1, "replicas": 1, "trabajo_motor": 0.2, "coste_sentido": 0.2, "tiempo_fiable": true, "es_nulo": false}
