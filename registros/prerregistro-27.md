@@ -1,4 +1,9 @@
 # Prerregistro 27 — El torneo de sus ojos: A vs B vs C vs Ranuras, con acta de la Regla 33 — 9 de agosto de 2026
+> **CERRADO el 9-ago-2026 — FALLO: NO CONCLUYENTE POR INSTRUMENTO.** Acta completa en
+> `resultados/INFORME-38.md`. La funcion de aptitud (`max(margen,0)`) es ciega en el regimen donde
+> se corrio: 12 corridas oficiales, 4 arquitecturas, el mismo 0.0000 exacto. No hay ganador, no
+> hay empate: la vara no midio. Ninguna arquitectura reemplaza los ojos oficiales. La segunda
+> vuelta usa el panel de jueces del prerregistro-31.
 **Estado: FIRMADO por el director el 9-ago-2026 ("adelante con todo") — aprobación en la
 conversación donde pidió el plan para arreglar los ojos y dio luz verde a ejecutarlo completo.**
 

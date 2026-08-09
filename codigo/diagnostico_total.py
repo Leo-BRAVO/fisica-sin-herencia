@@ -66,7 +66,14 @@ def main():
     # ---------- 2. la Regla 31 de cada instrumento ----------
     instrumentos = [("contingencia.py", "detector de la frontera yo/mundo (G4)"),
                     ("verdugo_escala.py", "verdugo por reescalado"),
-                    ("ganancia_honesta.py", "ganancia honesta (sonda, degradada)")]
+                    ("ganancia_honesta.py", "ganancia honesta (sonda, degradada)"),
+                    # los seis del 9-ago-2026: cada uno con su prerregistro firmado
+                    ("sindy3.py", "SINDy forma debil + bootstrap (prereg-28)"),
+                    ("soporte.py", "escalera de soporte + examen VOE (prereg-29)"),
+                    ("espejo2.py", "el gemelo y las firmas del bebe (prereg-30)"),
+                    ("panel_jueces.py", "panel de jueces diversos (prereg-31)"),
+                    ("observador_pasivo.py", "control del observador pasivo (prereg-32)"),
+                    ("cerebro.py", "cerebro motivacional G13/G14/G2/G15 (prereg-33)")]
     if not a.rapido:
         instrumentos.append(("gimnasio.py", "el mundo con sus cuatro controles"))
     for mod, nombre in instrumentos:
