@@ -35,8 +35,8 @@ def episodios_completos(n, pasos, modo, semilla0=1000):
     return coms, sens, vids, sentidos, verdad
 
 
-def vector_multimodal(vids, sentidos, jidx, epocas):
-    modelo = entrenar_ojos(vids, jidx, latente=N_VIS, epocas=epocas)
+def vector_multimodal(vids, sentidos, jidx, epocas, semilla=1):
+    modelo = entrenar_ojos(vids, jidx, latente=N_VIS, epocas=epocas, semilla=semilla)
     lat = p2.codificar(modelo, vids, jidx)
     tren = np.vstack([s for i, s in enumerate(sentidos) if i not in jidx])
     mu, sd = tren.mean(0), tren.std(0)
@@ -62,14 +62,18 @@ def main():
     ap.add_argument("--pasos", type=int, default=1500)
     ap.add_argument("--epocas", type=int, default=12)
     ap.add_argument("--jueces", nargs="+", type=int, default=[10, 11, 12])
+    ap.add_argument("--semilla", type=int, default=1,
+                    help="semilla de replica (prereg-26: el hito exige >=4/5 semillas)")
     a = ap.parse_args()
     jidx = {j - 1 for j in a.jueces}
     salida = {"prerregistro": 26, "episodios": a.episodios, "pasos": a.pasos,
-              "epocas": a.epocas, "jueces": a.jueces}
+              "epocas": a.epocas, "jueces": a.jueces, "semilla": a.semilla}
+    base_n = 1000 + 20000 * (a.semilla - 1)
+    base_g = 3000 + 20000 * (a.semilla - 1)
 
     print(f"=== PREREG-26 MULTIMODAL — {a.episodios} ep x {a.pasos} cuadros ===", flush=True)
-    coms, sens, vids, sentidos, verdad = episodios_completos(a.episodios, a.pasos, "normal")
-    vec, lat_vis, cuerpo_std = vector_multimodal(vids, sentidos, jidx, a.epocas)
+    coms, sens, vids, sentidos, verdad = episodios_completos(a.episodios, a.pasos, "normal", semilla0=base_n)
+    vec, lat_vis, cuerpo_std = vector_multimodal(vids, sentidos, jidx, a.epocas, semilla=a.semilla)
 
     res = medir(list(zip(coms, vec)), a.jueces, nulos=10)
     mias = resumen_medicion("NIVEL A multimodal (normal)", res)
@@ -78,8 +82,8 @@ def main():
 
     print("\n[control obligatorio] sin_agencia: el brazo cae por gravedad, cero agencia", flush=True)
     comsG, sensG, vidsG, sentidosG, _ = episodios_completos(a.episodios, a.pasos, "sin_agencia",
-                                                            semilla0=3000)
-    vecG, _, _ = vector_multimodal(vidsG, sentidosG, jidx, a.epocas)
+                                                            semilla0=base_g)
+    vecG, _, _ = vector_multimodal(vidsG, sentidosG, jidx, a.epocas, semilla=a.semilla)
     resG = medir(list(zip(comsG, vecG)), a.jueces, nulos=10)
     miasG = resumen_medicion("CONTROL sin agencia", resG)
     salida["control_sin_agencia"] = {"canales_mios": miasG, "detalle": resG}
@@ -97,7 +101,8 @@ def main():
         print(f"NIVEL B: fuerza {nb['fuerza']:.4f} vs nulo {nb['nulo_techo']:.4f} "
               f"→ {'SUPERA' if nb['supera_al_nulo'] else 'no supera'}", flush=True)
 
-    out = os.path.join(BASE, "resultados", "p26-hito0-multimodal")
+    sufijo = "" if a.semilla == 1 else f"-s{a.semilla}"
+    out = os.path.join(BASE, "resultados", f"p26-hito0-multimodal{sufijo}")
     os.makedirs(out, exist_ok=True)
     with open(os.path.join(out, "resumen.json"), "w", encoding="utf-8") as f:
         json.dump(salida, f, indent=2, ensure_ascii=False, default=str)
