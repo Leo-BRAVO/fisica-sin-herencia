@@ -1,7 +1,7 @@
 # Centro de Inteligencia Artificial Bravo
 ## Proyecto: Física sin Herencia
 
-Una mente que descubre las leyes del universo desde cero — sin conocimiento humano, sin internet, sin palabras. Solo datos crudos, 33 reglas, jueces intocables y un árbol de conocimiento que crece — y se poda.
+Una mente que descubre las leyes del universo desde cero — sin conocimiento humano, sin internet, sin palabras. Solo datos crudos, 34 reglas, jueces intocables y un árbol de conocimiento que crece — y se poda.
 
 Fundado por **Leo Bravo** (director) con Claude como orquestador fundador — julio de 2026.
 
@@ -31,7 +31,7 @@ reconstruye los datos desde su fuente pública → VERIFICA la huella digital (s
 ---
 
 ## Los cuatro documentos del alma (leer en este orden)
-1. **`CIMIENTOS.md`** — las 33 reglas del método, la Segunda Ciencia, el prompt de arranque para cualquier orquestador.
+1. **`CIMIENTOS.md`** — las 34 reglas del método, la Segunda Ciencia, el prompt de arranque para cualquier orquestador.
 2. **`MENTE.md`** — la identidad y experiencia del científico (v12): quién es, qué aprendió, dónde va.
 3. **`GUIA-ORQUESTADOR.md`** — el manual de relevo: prohibiciones eternas, lecciones pagadas, sistemas vivos.
 4. **`arbol/GENOMA-DIEGO.md`** — el documento fundacional del ente: los genes, la ecuación del impulso, los hitos.

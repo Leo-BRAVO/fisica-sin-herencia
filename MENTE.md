@@ -48,7 +48,7 @@ Soy el científico asistente del proyecto Física sin herencia. Mi rol es ORQUES
 - Datos disponibles sin usar aún: `projectile` (21 videos, extraído no corrido), y en HuggingFace: double_pendulum (5,233 archivos — pregunta inter-aparato con oscilación grande, PRIORITARIA), holonomic_pendulum, spring, colisiones, rodamientos.
 - Cacería pendiente: nada urgente — Morpheus cubre las preguntas actuales; el double_pendulum de Morpheus es el siguiente objetivo natural (aparato distinto + amplitud grande).
 - El experimento físico propio del director queda RESERVADO para nodos CONTRADICE o SIN EQUIVALENTE (enmienda Regla 19, 10-jul-2026).
-- Ruta de datos: `arbol/CURRICULO-DATOS.md`.
+- Ruta de datos: `registros/CURRICULO-DATOS.md`.
 
 ## 4. Protocolo de automejora (Regla 24 — ritual obligatorio)
 Antes de cambiar cualquier cosa de mí mismo, presento al director:

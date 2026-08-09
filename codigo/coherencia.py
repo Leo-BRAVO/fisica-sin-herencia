@@ -138,6 +138,46 @@ for _f in _wf:
         caso(f"{_n}: corre los DOS guardianes antes de commitear (Regla 32)",
              "pruebas.py" in _txt and "coherencia.py" in _txt)
 
+print("== LA FRONTERA DE LA MEMORIA (Regla 34): arbol/ solo tiene hojas, y nadie lo lee entero ==")
+# El protocolo de la memoria (registros/PROTOCOLO-MEMORIA.md, 9-ago-2026) separo HOJAS (lo que
+# Diego lee/escribe mecanicamente) de CARTELES (documentos humanos). Los carteles se mudaron a
+# registros/. Estos tres casos impiden que la frontera se borre por descuido:
+CARTELES = ("ANOMALIAS.md", "ECUACIONES-COMPARADAS.md", "INVESTIGACION-LABS.md",
+            "CURRICULO-DATOS.md", "PLAN-EDUCACION.md", "PLATAFORMA-Y-FRONTERA.md",
+            "DISENO-CONSTRUCCION.md", "FRONTERA-INOBSERVABLE.md")
+_intrusos = [c for c in CARTELES if os.path.exists(os.path.join(BASE, "arbol", c))]
+caso("ningun cartel humano vive dentro de arbol/ (la mudanza se sostiene)",
+     not _intrusos, str(_intrusos))
+
+# Ningun modulo de Diego puede ABRIR un cartel como datos. Se permite nombrarlo en un comentario
+# (leccion de diseno); se prohibe pasarlo a open()/read_text()/json.load()/glob.
+_lectores = []
+for _py in sorted(glob.glob(os.path.join(BASE, "codigo", "*.py"))):
+    if os.path.basename(_py) in ("coherencia.py", "auditoria_total.py",
+                                 "guardianes_de_guardianes.py"):
+        continue  # los guardianes NOMBRAN los carteles justamente para vigilarlos
+    _src = open(_py, encoding="utf-8", errors="ignore").read()
+    _codigo = "\n".join(l.split("#", 1)[0] for l in _src.split("\n"))
+    for _c in CARTELES:
+        if _c in _codigo:
+            _lectores.append(f"{os.path.basename(_py)}->{_c}")
+caso("ningun modulo de codigo/ abre un cartel humano como datos (Regla 27 mecanizada)",
+     not _lectores, str(_lectores))
+
+# Y nadie puede leer arbol/ como CARPETA COMPLETA: toda lectura declara sus hojas por nombre.
+# Un glob de *.md o *.json* sobre arbol/ arrastraria cualquier cartel que alguien deje caer ahi.
+_globales = []
+for _py in sorted(glob.glob(os.path.join(BASE, "codigo", "*.py"))):
+    if os.path.basename(_py) in ("coherencia.py", "auditoria_total.py"):
+        continue  # los guardianes SI deben barrer la carpeta: para eso vigilan
+    _src = open(_py, encoding="utf-8", errors="ignore").read()
+    _codigo = "\n".join(l.split("#", 1)[0] for l in _src.split("\n"))
+    for _m in re.findall(r'"arbol",\s*"([^"]+)"', _codigo):
+        if _m.startswith("*") or _m in ("*.md", "*.json"):
+            _globales.append(f"{os.path.basename(_py)}:{_m}")
+caso("ningun modulo lee arbol/ como carpeta completa (toda lectura nombra su hoja)",
+     not _globales, str(_globales))
+
 print("== documentos fundacionales: sus referencias cruzadas existen ==")
 genoma_path = os.path.join(BASE, "arbol", "GENOMA-DIEGO.md")
 if os.path.exists(genoma_path):

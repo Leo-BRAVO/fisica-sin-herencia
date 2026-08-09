@@ -84,9 +84,25 @@ jobs:
               python3 codigo/boleta.py || true
               echo "--- LOS TRES GUARDIANES (Regla 32) ---"
               python3 codigo/pruebas.py && python3 codigo/coherencia.py && python3 codigo/auditoria_total.py
+              GUARDIANES=$?
+              if [ "$GUARDIANES" -ne 0 ]; then FALLOS=$((FALLOS+1)); echo "::endgroup::"; break; fi
+              git add -A && git commit -q -m "latido-nube: $ID (gimnasio; los tres guardianes OK)"
               if [ $? -ne 0 ]; then FALLOS=$((FALLOS+1)); echo "::endgroup::"; break; fi
-              git add -A && git commit -m "latido-nube: $ID (gimnasio; los tres guardianes OK)" && git push origin main
-              if [ $? -ne 0 ]; then FALLOS=$((FALLOS+1)); echo "::endgroup::"; break; fi
+              # BUG CAZADO 9-ago-2026 (corrida 13): esta rama hacia 'git push origin main' pelado,
+              # sin el pull--rebase-con-reintentos que SI tiene la rama general de abajo. Bastó que
+              # el director subiera un commit a main mientras el latido corria para que la semilla 4
+              # —ya calculada y con los guardianes verdes— fuera RECHAZADA y el latido muriera en
+              # rojo con el trabajo hecho. El resultado no se perdio (el commit local existia), pero
+              # la corrida se detuvo. Misma cura que la rama general: rebase y cuatro reintentos.
+              SUBIDO=1
+              for i in 1 2 3 4; do
+                git pull --rebase -q origin main && git push -q origin main && { SUBIDO=0; break; }
+                echo "push fallo, reintento $i"; sleep $((2**i))
+              done
+              if [ "$SUBIDO" -ne 0 ]; then
+                echo "::error::No se pudo subir $ID a main tras 4 reintentos — el latido se detiene."
+                FALLOS=$((FALLOS+1)); echo "::endgroup::"; break
+              fi
               echo "::endgroup::"
               continue
             fi

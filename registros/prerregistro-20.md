@@ -1,5 +1,5 @@
 # Prerregistro 20 — G2 corregido: progreso CON SIGNO sobre auditoría SELLADA, con coste real (G10) — 8 de agosto de 2026
-**Estado: FIRMADO — 8-ago-2026, con UNA CORRECCION del orquestador antes de firmar (abajo). Nace de `arbol/ECUACIONES-COMPARADAS.md`: la crítica formal de 2026 a la teoría de Schmidhuber nombra cuatro canales de Goodhart, y nuestra ecuación tenía DOS de ellos abiertos. G10 (interocepción) ya está construido y MIDE; este prerregistro decide si puede DECIDIR.**
+**Estado: FIRMADO — 8-ago-2026, con UNA CORRECCION del orquestador antes de firmar (abajo). Nace de `registros/ECUACIONES-COMPARADAS.md`: la crítica formal de 2026 a la teoría de Schmidhuber nombra cuatro canales de Goodhart, y nuestra ecuación tenía DOS de ellos abiertos. G10 (interocepción) ya está construido y MIDE; este prerregistro decide si puede DECIDIR.**
 
 - **Qué cambia (tres correcciones, ninguna cosmética):**
   1. **Progreso CON SIGNO:** desaparece el `max(0, ·)`. Cierra el canal nº2 (olvidar-y-reaprender),
