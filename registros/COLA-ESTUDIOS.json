@@ -217,12 +217,13 @@
     {
       "id": "p27-torneo-ojos-s3",
       "tipo": "gimnasio",
-      "estado": "pendiente",
+      "estado": "hecha",
       "datos": "codigo/torneo_ojos.py",
       "salida": "resultados/p27-torneo-ojos-s3",
       "args": "--episodios 12 --pasos 1500 --epocas 12 --semilla 3",
       "prerregistro": 27,
-      "nota": "torneo A/B/C/Ranuras, replica 3/5 — el veredicto se calcula con las 5 juntas"
+      "nota": "torneo A/B/C/Ranuras, replica 3/5 — el veredicto se calcula con las 5 juntas",
+      "resultado": "corrida por latido-nube (Actions)"
     },
     {
       "id": "p27-torneo-ojos-s4",

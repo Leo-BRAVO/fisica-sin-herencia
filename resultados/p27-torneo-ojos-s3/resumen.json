@@ -1,0 +1,33 @@
+{
+  "prerregistro": 27,
+  "semilla": 3,
+  "episodios": 12,
+  "pasos": 1500,
+  "epocas": 12,
+  "resultados": {
+    "A-pixel": {
+      "variables_mias": [],
+      "n_mias": 0,
+      "margen_medio": 0.0,
+      "puntaje": 0.0
+    },
+    "B-predictivo": {
+      "variables_mias": [],
+      "n_mias": 0,
+      "margen_medio": 0.0,
+      "puntaje": 0.0
+    },
+    "C-corolario": {
+      "variables_mias": [],
+      "n_mias": 0,
+      "margen_medio": 0.0,
+      "puntaje": 0.0
+    },
+    "R-ranuras": {
+      "variables_mias": [],
+      "n_mias": 0,
+      "margen_medio": 0.0,
+      "puntaje": 0.0
+    }
+  }
+}
