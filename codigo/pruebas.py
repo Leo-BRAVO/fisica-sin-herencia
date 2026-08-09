@@ -452,6 +452,22 @@ caso("soporte: el ruido puro NO puede ser el primer no-yo (legalidad exigida, no
 caso("soporte: sin potencia estadistica no hay veredicto (guarda de pasos minimos)",
      _sop.PASOS_MINIMOS >= 900)
 
+print("== el gemelo y las firmas del bebe (prereg-30): el control de oro del espejo ==")
+import espejo2 as _e2
+caso("espejo2: APRUEBA su Regla 31 (6/6: gemelo, apariencia, firmas positivas y negativas)",
+     _e2.regla31(verbose=False) == 0)
+# CONGELADO: el cuerpo del GEMELO jamas puede declararse propio. Si alguien afloja el criterio
+# del espejo hasta que la apariencia baste, esto grita.
+_up, _ua, _sp, _sa, _ = _e2.escena_gemelo(semilla=1, pasos=1200)
+caso("espejo2: el cuerpo del gemelo NO se declara mio (apariencia no basta)",
+     not _e2.prueba_gemelo(_sa, _up, _ua)["se_reconoce"]
+     and _e2.prueba_gemelo(_sp, _up, _ua)["se_reconoce"])
+# CONGELADO: el balbuceo ciego de HOY no puede exhibir la firma conductual. Un instrumento que
+# la ve donde no la hay esta midiendo su propio ruido.
+caso("espejo2: el balbuceo ciego NO alcanza el criterio 1.5x (control negativo vivo)",
+     not _e2.firmas(_e2.paradigma_movil(semilla=2, pasos_fase=400,
+                                        politica="ciega"))["criterio_clasico_1.5x"])
+
 print("== canonizar: tarjeta de identidad ==")
 t = tarjeta("(v1 + v2) * 0.5 + 3.0", 4)
 caso("desplazamiento = f(0)", abs(t["desplazamiento"] - 3.0) < 1e-6)
