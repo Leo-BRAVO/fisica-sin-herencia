@@ -402,6 +402,20 @@ _gd = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "arbol
 caso("ranuras: el genoma sigue SIN activarla como gen (solo torneo)",
      "G13" in _gd and "ranuras" in _gd.lower() and "NO ENTRA AL GENOMA" in _gd)
 
+print("== SINDy en forma debil + bootstrap (prereg-28): la cura del ruido de sensor ==")
+import sindy3 as _s3
+caso("sindy3: APRUEBA su Regla 31 (4/4, incluido el oscilador con sensor ruidoso)",
+     _s3.regla31(verbose=False) == 0)
+# LA LECCION QUE JUSTIFICA EL MODULO, CONGELADA: la derivada numerica muere con 0.5% de ruido de
+# sensor; la forma debil sobrevive. Si alguien "simplifica" sindy3 volviendo a derivar, esto grita.
+_Xr, _dtr = _s3._oscilador(ruido=0.02)
+caso("sindy3: recupera la ley con ruido de sensor donde la derivada numerica ya fracasa",
+     _s3._es_la_ley(_s3.descubrir(_Xr, dt=_dtr)) and not (
+         lambda l: l is not None and [n for n, _ in l["dx/dt"]] == ["v"]
+     )(_sydesc(_Xr, dt=_dtr)))
+caso("sindy3: una ley vacia jamas cuenta como replicada (bootstrap sobre ruido puro calla)",
+     _s3.descubrir(__import__("numpy").random.default_rng(3).normal(size=(4000, 2)), dt=0.02) is None)
+
 print("== canonizar: tarjeta de identidad ==")
 t = tarjeta("(v1 + v2) * 0.5 + 3.0", 4)
 caso("desplazamiento = f(0)", abs(t["desplazamiento"] - 3.0) < 1e-6)
