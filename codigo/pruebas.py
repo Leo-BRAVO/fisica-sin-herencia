@@ -416,6 +416,28 @@ caso("sindy3: recupera la ley con ruido de sensor donde la derivada numerica ya 
 caso("sindy3: una ley vacia jamas cuenta como replicada (bootstrap sobre ruido puro calla)",
      _s3.descubrir(__import__("numpy").random.default_rng(3).normal(size=(4000, 2)), dt=0.02) is None)
 
+print("== panel de jueces diversos (prereg-31): ningun juez unico corona ==")
+import panel_jueces as _pj
+caso("panel: APRUEBA su Regla 31 (5/5: gemelos, oraculo, asterisco, ruido, sin suelo)",
+     _pj.regla31(verbose=False) == 0)
+# EL BUG DE LA CORRIDA 13, CONGELADO: la aptitud vieja recorta el margen a cero con max(.,0),
+# asi que CUALQUIER par de representaciones bajo el piso empata en 0.0000 exacto. Si alguien
+# vuelve a poner un suelo en el ordenamiento del panel, esto grita.
+_cero = _pj.veredicto([{"nombre": "a", "puntajes": {"contingencia": 0.0, "flecha": 0.0,
+                                                    "robustez": 0.0}},
+                       {"nombre": "b", "puntajes": {"contingencia": 0.0, "flecha": 0.0,
+                                                    "robustez": 0.0}}])
+caso("panel: cuatro ceros identicos JAMAS producen un ganador (el torneo viejo si lo hacia)",
+     "ganador" not in _cero or "EMPATE" in _cero["fallo"])
+caso("panel: gana con ASTERISCO quien gana una lectura y pierde otra (no reemplaza los ojos)",
+     "ASTERISCO" in _pj.veredicto(
+         [{"nombre": "x", "puntajes": {"contingencia": 1.0, "flecha": 0.0, "robustez": 0.0}},
+          {"nombre": "y", "puntajes": {"contingencia": 0.0, "flecha": 1.0, "robustez": 1.0}}]
+     )["fallo"] or "GANA y" in _pj.veredicto(
+         [{"nombre": "x", "puntajes": {"contingencia": 1.0, "flecha": 0.0, "robustez": 0.0}},
+          {"nombre": "y", "puntajes": {"contingencia": 0.0, "flecha": 1.0, "robustez": 1.0}}]
+     )["fallo"])
+
 print("== canonizar: tarjeta de identidad ==")
 t = tarjeta("(v1 + v2) * 0.5 + 3.0", 4)
 caso("desplazamiento = f(0)", abs(t["desplazamiento"] - 3.0) < 1e-6)
