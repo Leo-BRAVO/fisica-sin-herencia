@@ -295,9 +295,10 @@
       "prerregistro": 29,
       "datos": "codigo/soporte.py",
       "args": "--semilla 5 --pasos 1800",
-      "estado": "pendiente",
+      "estado": "hecha",
       "nota": "escalera de soporte: el primer no-yo por definicion positiva",
-      "salida": "resultados/p29-soporte-s5"
+      "salida": "resultados/p29-soporte-s5",
+      "resultado": "corrida por latido-nube (Actions)"
     },
     {
       "id": "p30-espejo-gemelo-s1",
