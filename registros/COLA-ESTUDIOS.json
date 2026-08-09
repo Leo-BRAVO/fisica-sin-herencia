@@ -350,9 +350,10 @@
       "prerregistro": 30,
       "datos": "codigo/espejo2.py",
       "args": "--semilla 5 --pasos 1500 --pasos-fase 500",
-      "estado": "pendiente",
+      "estado": "hecha",
       "nota": "el gemelo en la escena + firmas conductuales del bebe",
-      "salida": "resultados/p30-espejo-gemelo-s5"
+      "salida": "resultados/p30-espejo-gemelo-s5",
+      "resultado": "corrida por latido-nube (Actions)"
     },
     {
       "id": "p32-observador-pasivo-s1",
