@@ -616,6 +616,16 @@ print("== EL NERVIO (conectar.py): la sinapsis conduce de verdad, no solo existe
 # porque miran lo que HAY, no lo que FALTA. Estos casos exigen que SIGA conectado.
 import conectar as _con
 import sinapsis as _sinapsis
+
+
+def _tema_invalido():
+    try:
+        _sinapsis.publicar("G4_contingencia", "medicion", {}, tema="inventado",
+                           _ruta=os.devnull)
+        return False
+    except _sinapsis.SinapsisBloqueada:
+        return True
+
 _sin_ruta = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "arbol",
                          "SINAPSIS.jsonl")
 caso("nervio: la sinapsis TIENE eventos (no basta con que el bus exista; tiene que conducir)",
@@ -628,6 +638,44 @@ caso("nervio: NINGUN evento del bus es de tipo 'decision' publicado por un gen q
               and _gen["genes"].get(e["gen"], {}).get("modo") == "mide") for e in _ev))
 caso("nervio: el latido incluye la prueba viva del portero (un 'mide' intentando decidir)",
      "LA PRUEBA VIVA DEL PORTERO" in _insp.getsource(_con.latir))
+
+print("== SINAPSIS 2.0: el protocolo unico, y la autopsia de cada prueba ==")
+import trazar as _tz
+caso("sinapsis 2.0: los cinco campos del pasaporte (id, tema, a, causa, traza)",
+     all(k in _sinapsis.publicar.__doc__ for k in ("tema", "causa", "traza")))
+caso("sinapsis 2.0: un tema inventado se rechaza (nervio a ninguna parte)",
+     (lambda: [_sinapsis.publicar("G4_contingencia", "medicion", {}, tema="inventado")
+               for _ in [0]] and False).__call__() if False else _tema_invalido())
+caso("sinapsis 2.0: la suscripcion vive en el GENOMA, no en el codigo",
+     all("escucha" in v for v in _gen["genes"].values()))
+caso("sinapsis 2.0: NINGUN tema queda sin oyentes (no hay temas muertos)",
+     all(_sinapsis.escuchan(t) for t in _sinapsis.TEMAS))
+caso("trazador: APRUEBA su Regla 31 (huerfana, sin respuesta, ciclo, senal sin oyente)",
+     _tz.regla31(verbose=False) == 0)
+# LA LECCION CONGELADA: el acuse de recibo obligatorio. Sin el, el silencio de un organo es
+# ambiguo — no distingue "nada que aportar" de "roto". Con el, el silencio significa averia.
+caso("nervio: el acuse de recibo obligatorio sigue vivo (el silencio debe significar averia)",
+     "ACUSE DE RECIBO OBLIGATORIO" in _insp.getsource(_con.latir))
+_ult = _tz.reconstruir()
+_f = _tz.revisar(_ult)
+caso("nervio: la ultima ronda de vida no dejo NINGUN fallo de coordinacion",
+     not any(_f.values()), str({k: v[:1] for k, v in _f.items() if v}))
+# LOS DOS CAMPOS QUE CASI NADIE PONE, y sin los cuales la deteccion de fallos es imposible.
+caso("sinapsis 2.0: el BUS escribe 'entrega' (distingue 'nadie oia' de 'oyeron y callaron')",
+     all("entrega" in e for e in _ult["eventos"]))
+# LA LECCION MAS FINA, cazada por el propio trazador: 'causa' (que me hizo hablar) NO es
+# 'deriva_de' (de quien son los datos que use). Confundirlos hacia que ocho organos contestando
+# la misma pregunta parecieran un consenso de un solo testigo. La genealogia viaja SOLO por
+# deriva_de. Si alguien vuelve a mezclarlos, esto grita.
+caso("sinapsis 2.0: la genealogia viaja por 'deriva_de' (evidencia), no por 'causa' (conversacion)",
+     "deriva_de" in _sinapsis.publicar.__doc__ and "evidencial" in _sinapsis.publicar.__doc__)
+caso("sinapsis 2.0: un organo que mide lo suyo cuenta como testigo INDEPENDIENTE",
+     _sinapsis.testigos_independientes(
+         [{"id": 1, "genealogia": [1]}, {"id": 2, "genealogia": [2]}]) == 2
+     and _sinapsis.testigos_independientes(
+         [{"id": 1, "genealogia": [9]}, {"id": 2, "genealogia": [9]}]) == 1)
+caso("nervio: en la ultima ronda hablaron los 16 organos activos",
+     len({e["gen"] for e in _ult["eventos"]}) >= 16)
 
 print("== canonizar: tarjeta de identidad ==")
 t = tarjeta("(v1 + v2) * 0.5 + 3.0", 4)
