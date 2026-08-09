@@ -1,0 +1,323 @@
+<title>La mente de Diego — mapa 3D</title>
+<style>
+  :root{
+    --ground:#EDF0EF; --ground-2:#E3E8E7; --ink:#0E1618; --ink-2:#4A5C60;
+    --line:#C6D0CF;
+    --decide:#C4762A; --propone:#2F8878; --mide:#5C767F; --inactivo:#93A3A6;
+    --espina:#8A9A9E; --mudo:#A8503A;
+    --panel:rgba(255,255,255,.82);
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --ground:#070D0F; --ground-2:#0C1417; --ink:#D9E4E4; --ink-2:#7D9299;
+      --line:#1B282C;
+      --decide:#E8A050; --propone:#4FC0AA; --mide:#7A98A2; --inactivo:#3B4A4E;
+      --espina:#48595E; --mudo:#D06A4E;
+      --panel:rgba(10,18,21,.82);
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#070D0F; --ground-2:#0C1417; --ink:#D9E4E4; --ink-2:#7D9299;
+    --line:#1B282C;
+    --decide:#E8A050; --propone:#4FC0AA; --mide:#7A98A2; --inactivo:#3B4A4E;
+    --espina:#48595E; --mudo:#D06A4E;
+    --panel:rgba(10,18,21,.82);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--ground); color:var(--ink);
+    font-family:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+    font-size:13px; line-height:1.5; overflow:hidden;
+  }
+  .serif{font-family:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;}
+  #lienzo{display:block; width:100vw; height:100vh; cursor:grab;}
+  #lienzo.arrastrando{cursor:grabbing}
+
+  .rail{
+    position:fixed; top:0; left:0; height:100vh; width:270px; padding:26px 22px;
+    display:flex; flex-direction:column; gap:20px; pointer-events:none;
+    background:linear-gradient(to right,var(--ground) 55%,transparent);
+  }
+  h1{font-size:23px; line-height:1.15; margin:0; font-weight:600; letter-spacing:-.01em; text-wrap:balance}
+  h1 em{font-style:italic; color:var(--ink-2)}
+  .sub{color:var(--ink-2); font-size:11.5px; letter-spacing:.02em; margin-top:7px}
+  .eyebrow{
+    font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-2);
+    border-bottom:1px solid var(--line); padding-bottom:6px; margin-bottom:10px;
+  }
+  .estrato{display:flex; align-items:baseline; gap:9px; padding:3px 0}
+  .pip{width:9px; height:9px; border-radius:50%; flex:none; transform:translateY(1px)}
+  .estrato b{font-weight:600; font-size:12px}
+  .estrato .n{margin-left:auto; color:var(--ink-2); font-variant-numeric:tabular-nums}
+  .nota{color:var(--ink-2); font-size:11px; line-height:1.55}
+  .rail section{pointer-events:auto}
+
+  .lectura{
+    position:fixed; right:24px; bottom:24px; width:330px; padding:18px 20px;
+    background:var(--panel); backdrop-filter:blur(9px);
+    border:1px solid var(--line); border-radius:2px;
+    opacity:0; transform:translateY(6px); transition:opacity .18s, transform .18s;
+  }
+  .lectura.viva{opacity:1; transform:none}
+  .lectura h2{margin:0 0 3px; font-size:16px; font-weight:600; letter-spacing:-.01em}
+  .lectura .modo{font-size:10px; letter-spacing:.14em; text-transform:uppercase}
+  .lectura dl{display:grid; grid-template-columns:auto 1fr; gap:5px 14px; margin:13px 0 0}
+  .lectura dt{color:var(--ink-2); font-size:11px}
+  .lectura dd{margin:0; font-size:11.5px; text-align:right; font-variant-numeric:tabular-nums}
+  .si{color:var(--propone)} .no{color:var(--mudo)}
+
+  .ayuda{
+    position:fixed; left:50%; bottom:22px; transform:translateX(-50%);
+    color:var(--ink-2); font-size:10.5px; letter-spacing:.09em; text-transform:uppercase;
+    transition:opacity .5s;
+  }
+  @media (prefers-reduced-motion:reduce){ .lectura{transition:none} }
+  @media (max-width:760px){ .rail{width:100vw; height:auto; background:var(--ground)}
+    .lectura{right:12px; left:12px; width:auto} }
+</style>
+
+<canvas id="lienzo"></canvas>
+
+<div class="rail">
+  <section>
+    <h1 class="serif">La mente de <em>Diego</em></h1>
+    <div class="sub">Genoma del 9-ago-2026 · 18 genes · 17 eventos en la sinapsis</div>
+  </section>
+
+  <section>
+    <div class="eyebrow">La altura es la autoridad</div>
+    <div class="estrato"><span class="pip" style="background:var(--decide)"></span>
+      <b>Decide</b><span class="n" id="c-decide">·</span></div>
+    <div class="estrato"><span class="pip" style="background:var(--propone)"></span>
+      <b>Propone</b><span class="n" id="c-propone">·</span></div>
+    <div class="estrato"><span class="pip" style="background:var(--mide)"></span>
+      <b>Mide</b><span class="n" id="c-mide">·</span></div>
+    <div class="estrato"><span class="pip" style="background:var(--inactivo)"></span>
+      <b>Inactivo</b><span class="n" id="c-inactivo">·</span></div>
+    <p class="nota" style="margin:12px 0 0">Un gen sube de estrato solo con un prerregistro
+      firmado. <code>sinapsis.py</code> lo impone en cada publicación — no es una convención.</p>
+  </section>
+
+  <section>
+    <div class="eyebrow">La espina</div>
+    <p class="nota">El eje central es el bus de sinapsis. Un órgano <b>conectado</b> le tiende un
+      nervio; uno <b>mudo</b> flota sin tocarlo.</p>
+    <div class="estrato" style="margin-top:9px">
+      <span class="pip" style="background:var(--espina)"></span><b>Conectados</b>
+      <span class="n" id="c-habla">·</span></div>
+    <div class="estrato">
+      <span class="pip" style="background:var(--mudo)"></span><b>Mudos</b>
+      <span class="n" id="c-mudo">·</span></div>
+  </section>
+</div>
+
+<div class="lectura" id="lectura">
+  <h2 id="l-nom">—</h2>
+  <div class="modo" id="l-modo">—</div>
+  <dl>
+    <dt>Módulo</dt><dd id="l-mod">—</dd>
+    <dt>Prerregistro</dt><dd id="l-p">—</dd>
+    <dt>Regla 31</dt><dd id="l-r31">—</dd>
+    <dt>Casos en el banco</dt><dd id="l-banco">—</dd>
+    <dt>Habla por la sinapsis</dt><dd id="l-habla">—</dd>
+  </dl>
+</div>
+
+<div class="ayuda" id="ayuda">arrastra para girar · rueda para acercar · pasa por encima de un gen</div>
+
+<script>
+const GENES = [
+ {id:"sentido_vision",corto:"visión",modo:"decide",mods:["percepcion.py","percepcion2.py"],p:"25",r31:true,banco:true,habla:false,cl:0},
+ {id:"sentido_propiocepcion",corto:"propiocepción",modo:"mide",mods:["gimnasio.py"],p:"26-borrador",r31:true,banco:true,habla:true,cl:0},
+ {id:"sentido_tacto",corto:"tacto",modo:"mide",mods:["gimnasio.py"],p:"26-borrador",r31:true,banco:true,habla:true,cl:0},
+ {id:"G4_contingencia",corto:"contingencia",modo:"mide",mods:["contingencia.py"],p:"23",r31:true,banco:true,habla:true,cl:1},
+ {id:"G3_accion",corto:"acción",modo:"decide",mods:["gimnasio.py"],p:"19",r31:true,banco:true,habla:true,cl:2},
+ {id:"G7_juego",corto:"juego",modo:"decide",mods:["gimnasio.py"],p:"19",r31:true,banco:true,habla:true,cl:2},
+ {id:"G1_prediccion",corto:"predicción",modo:"decide",mods:["percepcion.py","descubrir.py"],p:"13",r31:false,banco:true,habla:false,cl:3},
+ {id:"G5_composicion",corto:"composición",modo:"decide",mods:["descubrir.py"],p:"02",r31:false,banco:true,habla:false,cl:3},
+ {id:"G6_memoria",corto:"memoria",modo:"decide",mods:["memoria.py"],p:"append-only",r31:false,banco:true,habla:false,cl:3},
+ {id:"G2_curiosidad",corto:"curiosidad",modo:"propone",mods:["curiosidad2.py"],p:"18b",r31:false,banco:true,habla:false,cl:4},
+ {id:"G8_atencion",corto:"atención",modo:"mide",mods:["atencion.py"],p:null,r31:true,banco:true,habla:false,cl:4},
+ {id:"G13_poder",corto:"poder",modo:"mide",mods:["poder.py"],p:null,r31:true,banco:true,habla:true,cl:4},
+ {id:"G14_incertidumbre",corto:"incertidumbre",modo:"mide",mods:["incertidumbre.py"],p:null,r31:true,banco:true,habla:true,cl:4},
+ {id:"G15_metacognicion",corto:"metacognición",modo:"mide",mods:["cerebro.py"],p:null,r31:true,banco:true,habla:true,cl:4},
+ {id:"G9_sueno",corto:"sueño",modo:"mide",mods:["sueno.py"],p:null,r31:true,banco:true,habla:false,cl:5},
+ {id:"G10_interocepcion",corto:"interocepción",modo:"mide",mods:["interocepcion.py"],p:null,r31:false,banco:true,habla:true,cl:5},
+ {id:"G11_temple",corto:"temple",modo:"inactivo",mods:[],p:null,r31:false,banco:false,habla:false,cl:5},
+ {id:"G12_reflejos",corto:"reflejos",modo:"inactivo",mods:[],p:null,r31:false,banco:false,habla:false,cl:5},
+];
+const LAZOS = [
+ ["G3_accion","G4_contingencia"],["G7_juego","G4_contingencia"],
+ ["sentido_propiocepcion","G4_contingencia"],["sentido_tacto","G4_contingencia"],
+ ["sentido_vision","G1_prediccion"],
+];
+const ALTURA = {inactivo:0, mide:1, propone:2, decide:3};
+const RADIO_CL = [190,120,175,200,215,185];
+
+// --- geometría: cada gen en su anillo de sistema, a la altura de lo que le está permitido
+const enCluster = {};
+GENES.forEach(g=>{ (enCluster[g.cl] = enCluster[g.cl]||[]).push(g); });
+GENES.forEach(g=>{
+  const hermanos = enCluster[g.cl], i = hermanos.indexOf(g);
+  const base = (g.cl/6)*Math.PI*2;
+  const abre = hermanos.length>1 ? (i/(hermanos.length-1)-0.5)*0.62 : 0;
+  const a = base + abre, r = RADIO_CL[g.cl] + (i%2)*22;
+  g.x = Math.cos(a)*r; g.z = Math.sin(a)*r; g.y = ALTURA[g.modo]*86;
+});
+
+const lienzo = document.getElementById("lienzo"), ctx = lienzo.getContext("2d");
+let W=0,H=0,DPR=1;
+function medir(){
+  DPR = Math.min(window.devicePixelRatio||1, 2);
+  W = lienzo.clientWidth; H = lienzo.clientHeight;
+  lienzo.width = W*DPR; lienzo.height = H*DPR;
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+}
+window.addEventListener("resize", medir); medir();
+
+let yaw=-0.62, pitch=0.42, zoom=1, girando=true;
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+
+function proy(p){
+  const cy=Math.cos(yaw), sy=Math.sin(yaw), cp=Math.cos(pitch), sp=Math.sin(pitch);
+  const x = p.x*cy - p.z*sy;
+  const z0 = p.x*sy + p.z*cy;
+  const y = p.y*cp - z0*sp;
+  const z = p.y*sp + z0*cp;
+  const d = 1000, k = d/(d - z*0.55) * zoom;
+  return {sx: W/2 + x*k + 92, sy: H/2 - y*k + 46, k, z};
+}
+
+function anillo(altura, color, alpha){
+  ctx.strokeStyle=color; ctx.globalAlpha=alpha; ctx.lineWidth=1;
+  ctx.beginPath();
+  for(let i=0;i<=72;i++){
+    const a=(i/72)*Math.PI*2, p=proy({x:Math.cos(a)*250, y:altura, z:Math.sin(a)*250});
+    i? ctx.lineTo(p.sx,p.sy) : ctx.moveTo(p.sx,p.sy);
+  }
+  ctx.stroke(); ctx.globalAlpha=1;
+}
+
+function dibujar(){
+  const col = {decide:css("--decide"),propone:css("--propone"),mide:css("--mide"),inactivo:css("--inactivo")};
+  ctx.clearRect(0,0,W,H);
+
+  // los cuatro estratos, del suelo hacia arriba
+  ["inactivo","mide","propone","decide"].forEach((m,i)=>{
+    anillo(i*86, col[m], m==="inactivo"?0.16:0.24);
+    const p = proy({x:250,y:i*86,z:0});
+    ctx.fillStyle=col[m]; ctx.globalAlpha=.72;
+    ctx.font='10px ui-monospace,monospace';
+    ctx.fillText(m.toUpperCase(), p.sx+9, p.sy+3);
+    ctx.globalAlpha=1;
+  });
+
+  // la espina: el bus de sinapsis
+  const a0=proy({x:0,y:-14,z:0}), a1=proy({x:0,y:3*86+30,z:0});
+  const grad=ctx.createLinearGradient(a0.sx,a0.sy,a1.sx,a1.sy);
+  grad.addColorStop(0,css("--espina")); grad.addColorStop(1,"transparent");
+  ctx.strokeStyle=grad; ctx.lineWidth=2.5; ctx.globalAlpha=.85;
+  ctx.beginPath(); ctx.moveTo(a0.sx,a0.sy); ctx.lineTo(a1.sx,a1.sy); ctx.stroke();
+  ctx.globalAlpha=1;
+  ctx.fillStyle=css("--ink-2"); ctx.font='9.5px ui-monospace,monospace';
+  ctx.fillText("SINAPSIS", a1.sx-24, a1.sy-11);
+
+  const pts = GENES.map(g=>({g, p:proy(g)}));
+
+  // nervios al bus (solo los que publican de verdad)
+  pts.forEach(({g,p})=>{
+    if(!g.habla) return;
+    const eje = proy({x:0,y:g.y,z:0});
+    ctx.strokeStyle=css("--espina"); ctx.globalAlpha=.42; ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(p.sx,p.sy); ctx.lineTo(eje.sx,eje.sy); ctx.stroke();
+    ctx.globalAlpha=1;
+  });
+
+  // dependencias reales entre genes
+  LAZOS.forEach(([a,b])=>{
+    const pa=pts.find(o=>o.g.id===a), pb=pts.find(o=>o.g.id===b);
+    if(!pa||!pb) return;
+    ctx.strokeStyle=css("--ink-2"); ctx.globalAlpha=.3; ctx.lineWidth=1;
+    ctx.setLineDash([3,4]);
+    ctx.beginPath(); ctx.moveTo(pa.p.sx,pa.p.sy); ctx.lineTo(pb.p.sx,pb.p.sy); ctx.stroke();
+    ctx.setLineDash([]); ctx.globalAlpha=1;
+  });
+
+  // plomadas al suelo: la altura tiene que leerse sin ambigüedad
+  pts.forEach(({g,p})=>{
+    if(g.y===0) return;
+    const s=proy({x:g.x,y:0,z:g.z});
+    ctx.strokeStyle=col[g.modo]; ctx.globalAlpha=.2; ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(p.sx,p.sy); ctx.lineTo(s.sx,s.sy); ctx.stroke();
+    ctx.globalAlpha=1;
+  });
+
+  // genes, de atrás hacia adelante
+  pts.sort((a,b)=>a.p.z-b.p.z).forEach(({g,p})=>{
+    const r = (g.modo==="inactivo"?5:7.5) * p.k;
+    const c = col[g.modo];
+    if(g.modo==="inactivo"){
+      ctx.strokeStyle=c; ctx.globalAlpha=.75; ctx.lineWidth=1.2; ctx.setLineDash([2,3]);
+      ctx.beginPath(); ctx.arc(p.sx,p.sy,r,0,7); ctx.stroke(); ctx.setLineDash([]);
+    }else{
+      ctx.fillStyle=c; ctx.globalAlpha=g===seleccion?1:.92;
+      ctx.beginPath(); ctx.arc(p.sx,p.sy,r,0,7); ctx.fill();
+    }
+    if(!g.habla && g.modo!=="inactivo"){
+      ctx.strokeStyle=css("--mudo"); ctx.globalAlpha=.95; ctx.lineWidth=1.6;
+      ctx.beginPath(); ctx.arc(p.sx,p.sy,r+4.5,0,7); ctx.stroke();
+    }
+    if(g===seleccion){
+      ctx.strokeStyle=css("--ink"); ctx.globalAlpha=.55; ctx.lineWidth=1;
+      ctx.beginPath(); ctx.arc(p.sx,p.sy,r+9,0,7); ctx.stroke();
+    }
+    ctx.globalAlpha=1;
+    ctx.fillStyle=css("--ink");
+    ctx.font=(g===seleccion?'600 ':'')+'11px ui-monospace,monospace';
+    ctx.globalAlpha = g===seleccion?1:.78;
+    ctx.fillText(g.corto, p.sx+r+7, p.sy+4);
+    ctx.globalAlpha=1;
+    g._sx=p.sx; g._sy=p.sy; g._r=r+7;
+  });
+}
+
+let seleccion=null;
+const L=id=>document.getElementById(id);
+function leer(g){
+  const el=L("lectura");
+  if(!g){ el.classList.remove("viva"); return; }
+  el.classList.add("viva");
+  L("l-nom").textContent=g.corto;
+  L("l-modo").textContent=g.id+" · "+g.modo;
+  L("l-modo").style.color=css("--"+g.modo);
+  L("l-mod").textContent=g.mods.length?g.mods.join(", "):"—";
+  L("l-p").textContent=g.p||"—";
+  L("l-r31").innerHTML = g.r31?'<span class="si">aprobada</span>':'<span class="no">sin Regla 31</span>';
+  L("l-banco").innerHTML = g.banco?'<span class="si">congelados</span>':'<span class="no">ninguno</span>';
+  L("l-habla").innerHTML = g.habla?'<span class="si">sí</span>':'<span class="no">mudo</span>';
+}
+
+let arr=false, lx=0, ly=0;
+lienzo.addEventListener("pointerdown",e=>{arr=true;girando=false;lx=e.clientX;ly=e.clientY;
+  lienzo.classList.add("arrastrando"); L("ayuda").style.opacity=0;});
+addEventListener("pointerup",()=>{arr=false;lienzo.classList.remove("arrastrando");});
+addEventListener("pointermove",e=>{
+  if(arr){ yaw+=(e.clientX-lx)*0.006; pitch=Math.max(-0.25,Math.min(1.15,pitch+(e.clientY-ly)*0.004));
+    lx=e.clientX; ly=e.clientY; dibujar(); return; }
+  const r=lienzo.getBoundingClientRect(), mx=e.clientX-r.left, my=e.clientY-r.top;
+  let cerca=null, dm=1e9;
+  GENES.forEach(g=>{ const d=Math.hypot(g._sx-mx,g._sy-my); if(d<g._r+14 && d<dm){dm=d;cerca=g;} });
+  if(cerca!==seleccion){ seleccion=cerca; leer(cerca); dibujar(); }
+});
+lienzo.addEventListener("wheel",e=>{e.preventDefault();
+  zoom=Math.max(.55,Math.min(2.4,zoom*(e.deltaY>0?.93:1.075))); dibujar();},{passive:false});
+
+const cuenta = m => GENES.filter(g=>g.modo===m).length;
+["decide","propone","mide","inactivo"].forEach(m=>L("c-"+m).textContent=cuenta(m));
+L("c-habla").textContent = GENES.filter(g=>g.habla).length;
+L("c-mudo").textContent = GENES.filter(g=>!g.habla && g.modo!=="inactivo").length;
+
+const lento = matchMedia("(prefers-reduced-motion:reduce)").matches;
+(function girar(){ if(girando && !lento){ yaw+=0.0022; } dibujar(); requestAnimationFrame(girar); })();
+matchMedia("(prefers-color-scheme:dark)").addEventListener("change",dibujar);
+</script>
