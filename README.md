@@ -19,6 +19,11 @@ si la cola tiene trabajo lo ejecuta y commitea los resultados; si está vacía, 
 *Run workflow*. Los valores por defecto ya son correctos; el campo `reconstruir` debe decir
 `mendeley_epoca2` o `caida` (en la nube nunca hay datos locales: se reconstruyen de la fuente).
 
+**4. ¿Cómo se ve la mente por dentro?** `python codigo/mente.py` — el mapa: qué genes tiene, en
+qué modo, quién cuelga de quién y qué está suelto. `python codigo/conectar.py --estado` — qué ha
+dicho cada órgano por el bus de sinapsis. `python codigo/diagnostico_total.py` — la lista
+priorizada de todo lo que está mal, corriendo la Regla 31 de cada instrumento.
+
 **Qué pasa en cada corrida, sin manos:**
 ```
 reconstruye los datos desde su fuente pública → VERIFICA la huella digital (si no coincide, se detiene)
@@ -29,6 +34,16 @@ reconstruye los datos desde su fuente pública → VERIFICA la huella digital (s
 ```
 
 ---
+
+## LOS CUATRO GUARDIANES — el orden exacto que corre antes de cada commit
+```
+1. pruebas.py                  el banco congelado: 118 casos que la ciencia ya aprendió
+2. coherencia.py               la casa dice la verdad sobre sí misma (y la frontera de la Regla 34)
+3. auditoria_total.py          dictamen de prevuelo: reglas, no-contaminación, nube, árbol
+4. guardianes_de_guardianes.py rompe el proyecto a propósito: 9 daños que DEBEN ser cazados
+```
+Un fallo de cualquiera **bloquea el commit**. El cuarto existe porque un guardián que siempre dice
+"ok" es indistinguible de uno que funciona hasta el día en que hace falta.
 
 ## Los cuatro documentos del alma (leer en este orden)
 1. **`CIMIENTOS.md`** — las 34 reglas del método, la Segunda Ciencia, el prompt de arranque para cualquier orquestador.

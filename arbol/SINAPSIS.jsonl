@@ -1,0 +1,17 @@
+{"gen": "G3_accion", "tipo": "decision", "contenido": {"episodio": "normal", "pasos": 400, "articulaciones": 3}, "cuando": "2026-08-09T06:21:13+00:00"}
+{"gen": "G7_juego", "tipo": "decision", "contenido": {"balbuceo": "suave", "amplitud_media": 0.4791}, "cuando": "2026-08-09T06:21:13+00:00"}
+{"gen": "sentido_propiocepcion", "tipo": "medicion", "contenido": {"canales": 6, "rango_angular": 5.0818}, "cuando": "2026-08-09T06:21:13+00:00"}
+{"gen": "sentido_tacto", "tipo": "medicion", "contenido": {"canales": 3, "fraccion_con_contacto": 0.0008}, "cuando": "2026-08-09T06:21:13+00:00"}
+{"gen": "G3_accion", "tipo": "decision", "contenido": {"episodio": "normal", "pasos": 400, "articulaciones": 3}, "cuando": "2026-08-09T06:21:27+00:00"}
+{"gen": "G7_juego", "tipo": "decision", "contenido": {"balbuceo": "suave", "amplitud_media": 0.4179}, "cuando": "2026-08-09T06:21:27+00:00"}
+{"gen": "sentido_propiocepcion", "tipo": "medicion", "contenido": {"canales": 6, "rango_angular": 5.0721}, "cuando": "2026-08-09T06:21:27+00:00"}
+{"gen": "sentido_tacto", "tipo": "medicion", "contenido": {"canales": 3, "fraccion_con_contacto": 0.0008}, "cuando": "2026-08-09T06:21:27+00:00"}
+{"gen": "G3_accion", "tipo": "decision", "contenido": {"episodio": "normal", "pasos": 3200, "articulaciones": 3}, "cuando": "2026-08-09T06:21:43+00:00"}
+{"gen": "G7_juego", "tipo": "decision", "contenido": {"balbuceo": "suave", "amplitud_media": 0.447}, "cuando": "2026-08-09T06:21:43+00:00"}
+{"gen": "sentido_propiocepcion", "tipo": "medicion", "contenido": {"canales": 6, "rango_angular": 5.104}, "cuando": "2026-08-09T06:21:43+00:00"}
+{"gen": "sentido_tacto", "tipo": "medicion", "contenido": {"canales": 3, "fraccion_con_contacto": 0.0001}, "cuando": "2026-08-09T06:21:43+00:00"}
+{"gen": "G4_contingencia", "tipo": "medicion", "contenido": {"canales_mios": [0, 1, 2, 3, 4, 5], "de": 9, "sobre": "propiocepcion+tacto"}, "cuando": "2026-08-09T06:21:44+00:00"}
+{"gen": "G10_interocepcion", "tipo": "medicion", "contenido": {"episodios": 4, "pasos_por_episodio": 3200, "canales_sensoriales": 9}, "cuando": "2026-08-09T06:21:44+00:00"}
+{"gen": "G13_poder", "tipo": "medicion", "contenido": {"lazo_abierto": 0.0191, "lazo_cerrado": 0.0297, "subestima": 0.0106}, "cuando": "2026-08-09T06:21:44+00:00"}
+{"gen": "G14_incertidumbre", "tipo": "medicion", "contenido": {"abandona_el_tv": true, "sigue_explorando": true, "fraccion_tv_final": 0.0}, "cuando": "2026-08-09T06:21:44+00:00"}
+{"gen": "G15_metacognicion", "tipo": "medicion", "contenido": {"auc": 0.8292, "nulo_techo": 0.5883, "supera": true}, "cuando": "2026-08-09T06:21:44+00:00"}

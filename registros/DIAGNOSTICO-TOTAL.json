@@ -11,36 +11,8 @@
       "gravedad": "IMPORTA",
       "sistema": "ojos_gimnasio.py",
       "problema": "HITO 0 nivel B (el primer no-yo) no supera su nulo",
-      "evidencia": "fuerza 0.00046 contra techo del nulo 0.00049",
+      "evidencia": "fuerza 0.00048 contra techo del nulo 0.00054",
       "arreglo": "depende del nivel A: sin cuerpo identificado no hay 'no-yo' que aislar"
-    },
-    {
-      "gravedad": "DEUDA",
-      "sistema": "gobernanza",
-      "problema": "Regla 31: el nulo 'aud01-nulo-p14-final' falsifico el mundo de verdad (base cambia >10%)",
-      "evidencia": "declarada por el dictamen de prevuelo",
-      "arreglo": "decisión del director o trabajo pendiente"
-    },
-    {
-      "gravedad": "DEUDA",
-      "sistema": "gobernanza",
-      "problema": "Regla 11: las campanas insignia tienen un verdugo VALIDO con su propia tuberia",
-      "evidencia": "declarada por el dictamen de prevuelo",
-      "arreglo": "decisión del director o trabajo pendiente"
-    },
-    {
-      "gravedad": "DEUDA",
-      "sistema": "gobernanza",
-      "problema": "Regla 16: repositorio publico (prioridad fuerte)",
-      "evidencia": "declarada por el dictamen de prevuelo",
-      "arreglo": "decisión del director o trabajo pendiente"
-    },
-    {
-      "gravedad": "DEUDA",
-      "sistema": "gobernanza",
-      "problema": "Regla 19 nivel 3: replica independiente por un tercero",
-      "evidencia": "declarada por el dictamen de prevuelo",
-      "arreglo": "decisión del director o trabajo pendiente"
     }
   ],
   "bloquean": 0

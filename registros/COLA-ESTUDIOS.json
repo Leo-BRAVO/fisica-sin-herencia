@@ -200,7 +200,7 @@
       "salida": "resultados/p27-torneo-ojos-s1",
       "args": "--episodios 12 --pasos 1500 --epocas 12 --semilla 1",
       "prerregistro": 27,
-      "nota": "torneo A/B/C/Ranuras, replica 1/5 — el veredicto se calcula con las 5 juntas",
+      "nota": "prereg-27 CERRADO: NO CONCLUYENTE POR INSTRUMENTO (acta en INFORME-38)",
       "resultado": "corrida por latido-nube (Actions)"
     },
     {
@@ -211,7 +211,7 @@
       "salida": "resultados/p27-torneo-ojos-s2",
       "args": "--episodios 12 --pasos 1500 --epocas 12 --semilla 2",
       "prerregistro": 27,
-      "nota": "torneo A/B/C/Ranuras, replica 2/5 — el veredicto se calcula con las 5 juntas",
+      "nota": "prereg-27 CERRADO: NO CONCLUYENTE POR INSTRUMENTO (acta en INFORME-38)",
       "resultado": "corrida por latido-nube (Actions)"
     },
     {
@@ -222,28 +222,178 @@
       "salida": "resultados/p27-torneo-ojos-s3",
       "args": "--episodios 12 --pasos 1500 --epocas 12 --semilla 3",
       "prerregistro": 27,
-      "nota": "torneo A/B/C/Ranuras, replica 3/5 — el veredicto se calcula con las 5 juntas",
+      "nota": "prereg-27 CERRADO: NO CONCLUYENTE POR INSTRUMENTO (acta en INFORME-38)",
       "resultado": "corrida por latido-nube (Actions)"
     },
     {
       "id": "p27-torneo-ojos-s4",
       "tipo": "gimnasio",
-      "estado": "pendiente",
+      "estado": "hecha",
       "datos": "codigo/torneo_ojos.py",
       "salida": "resultados/p27-torneo-ojos-s4",
       "args": "--episodios 12 --pasos 1500 --epocas 12 --semilla 4",
       "prerregistro": 27,
-      "nota": "torneo A/B/C/Ranuras, replica 4/5 — el veredicto se calcula con las 5 juntas"
+      "nota": "prereg-27 CERRADO: NO CONCLUYENTE POR INSTRUMENTO (acta en INFORME-38)"
     },
     {
       "id": "p27-torneo-ojos-s5",
       "tipo": "gimnasio",
-      "estado": "pendiente",
+      "estado": "espera-al-director",
       "datos": "codigo/torneo_ojos.py",
       "salida": "resultados/p27-torneo-ojos-s5",
       "args": "--episodios 12 --pasos 1500 --epocas 12 --semilla 5",
       "prerregistro": 27,
-      "nota": "torneo A/B/C/Ranuras, replica 5/5 — el veredicto se calcula con las 5 juntas"
+      "nota": "prereg-27 CERRADO por acta (INFORME-38): NO CONCLUYENTE POR INSTRUMENTO. Esta semilla NO se corre: correrla con la vara ciega no anadiria informacion. La segunda vuelta usara el panel de jueces del prereg-31."
+    },
+    {
+      "id": "p29-soporte-s1",
+      "tipo": "gimnasio",
+      "prerregistro": 29,
+      "datos": "codigo/soporte.py",
+      "args": "--semilla 1 --pasos 1800",
+      "estado": "pendiente",
+      "nota": "escalera de soporte: el primer no-yo por definicion positiva",
+      "salida": "resultados/p29-soporte-s1"
+    },
+    {
+      "id": "p29-soporte-s2",
+      "tipo": "gimnasio",
+      "prerregistro": 29,
+      "datos": "codigo/soporte.py",
+      "args": "--semilla 2 --pasos 1800",
+      "estado": "pendiente",
+      "nota": "escalera de soporte: el primer no-yo por definicion positiva",
+      "salida": "resultados/p29-soporte-s2"
+    },
+    {
+      "id": "p29-soporte-s3",
+      "tipo": "gimnasio",
+      "prerregistro": 29,
+      "datos": "codigo/soporte.py",
+      "args": "--semilla 3 --pasos 1800",
+      "estado": "pendiente",
+      "nota": "escalera de soporte: el primer no-yo por definicion positiva",
+      "salida": "resultados/p29-soporte-s3"
+    },
+    {
+      "id": "p29-soporte-s4",
+      "tipo": "gimnasio",
+      "prerregistro": 29,
+      "datos": "codigo/soporte.py",
+      "args": "--semilla 4 --pasos 1800",
+      "estado": "pendiente",
+      "nota": "escalera de soporte: el primer no-yo por definicion positiva",
+      "salida": "resultados/p29-soporte-s4"
+    },
+    {
+      "id": "p29-soporte-s5",
+      "tipo": "gimnasio",
+      "prerregistro": 29,
+      "datos": "codigo/soporte.py",
+      "args": "--semilla 5 --pasos 1800",
+      "estado": "pendiente",
+      "nota": "escalera de soporte: el primer no-yo por definicion positiva",
+      "salida": "resultados/p29-soporte-s5"
+    },
+    {
+      "id": "p30-espejo-gemelo-s1",
+      "tipo": "gimnasio",
+      "prerregistro": 30,
+      "datos": "codigo/espejo2.py",
+      "args": "--semilla 1 --pasos 1500 --pasos-fase 500",
+      "estado": "pendiente",
+      "nota": "el gemelo en la escena + firmas conductuales del bebe",
+      "salida": "resultados/p30-espejo-gemelo-s1"
+    },
+    {
+      "id": "p30-espejo-gemelo-s2",
+      "tipo": "gimnasio",
+      "prerregistro": 30,
+      "datos": "codigo/espejo2.py",
+      "args": "--semilla 2 --pasos 1500 --pasos-fase 500",
+      "estado": "pendiente",
+      "nota": "el gemelo en la escena + firmas conductuales del bebe",
+      "salida": "resultados/p30-espejo-gemelo-s2"
+    },
+    {
+      "id": "p30-espejo-gemelo-s3",
+      "tipo": "gimnasio",
+      "prerregistro": 30,
+      "datos": "codigo/espejo2.py",
+      "args": "--semilla 3 --pasos 1500 --pasos-fase 500",
+      "estado": "pendiente",
+      "nota": "el gemelo en la escena + firmas conductuales del bebe",
+      "salida": "resultados/p30-espejo-gemelo-s3"
+    },
+    {
+      "id": "p30-espejo-gemelo-s4",
+      "tipo": "gimnasio",
+      "prerregistro": 30,
+      "datos": "codigo/espejo2.py",
+      "args": "--semilla 4 --pasos 1500 --pasos-fase 500",
+      "estado": "pendiente",
+      "nota": "el gemelo en la escena + firmas conductuales del bebe",
+      "salida": "resultados/p30-espejo-gemelo-s4"
+    },
+    {
+      "id": "p30-espejo-gemelo-s5",
+      "tipo": "gimnasio",
+      "prerregistro": 30,
+      "datos": "codigo/espejo2.py",
+      "args": "--semilla 5 --pasos 1500 --pasos-fase 500",
+      "estado": "pendiente",
+      "nota": "el gemelo en la escena + firmas conductuales del bebe",
+      "salida": "resultados/p30-espejo-gemelo-s5"
+    },
+    {
+      "id": "p32-observador-pasivo-s1",
+      "tipo": "gimnasio",
+      "prerregistro": 32,
+      "datos": "codigo/observador_pasivo.py",
+      "args": "--semilla 1 --pasos 1800",
+      "estado": "pendiente",
+      "nota": "encarnado vs pasivo: el control que podria refutarnos",
+      "salida": "resultados/p32-observador-pasivo-s1"
+    },
+    {
+      "id": "p32-observador-pasivo-s2",
+      "tipo": "gimnasio",
+      "prerregistro": 32,
+      "datos": "codigo/observador_pasivo.py",
+      "args": "--semilla 2 --pasos 1800",
+      "estado": "pendiente",
+      "nota": "encarnado vs pasivo: el control que podria refutarnos",
+      "salida": "resultados/p32-observador-pasivo-s2"
+    },
+    {
+      "id": "p32-observador-pasivo-s3",
+      "tipo": "gimnasio",
+      "prerregistro": 32,
+      "datos": "codigo/observador_pasivo.py",
+      "args": "--semilla 3 --pasos 1800",
+      "estado": "pendiente",
+      "nota": "encarnado vs pasivo: el control que podria refutarnos",
+      "salida": "resultados/p32-observador-pasivo-s3"
+    },
+    {
+      "id": "p32-observador-pasivo-s4",
+      "tipo": "gimnasio",
+      "prerregistro": 32,
+      "datos": "codigo/observador_pasivo.py",
+      "args": "--semilla 4 --pasos 1800",
+      "estado": "pendiente",
+      "nota": "encarnado vs pasivo: el control que podria refutarnos",
+      "salida": "resultados/p32-observador-pasivo-s4"
+    },
+    {
+      "id": "p32-observador-pasivo-s5",
+      "tipo": "gimnasio",
+      "prerregistro": 32,
+      "datos": "codigo/observador_pasivo.py",
+      "args": "--semilla 5 --pasos 1800",
+      "estado": "pendiente",
+      "nota": "encarnado vs pasivo: el control que podria refutarnos",
+      "salida": "resultados/p32-observador-pasivo-s5"
     }
   ]
 }

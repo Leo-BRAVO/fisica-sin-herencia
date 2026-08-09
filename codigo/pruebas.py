@@ -564,6 +564,71 @@ caso("interconexion: panel y espejo NO reimplementan la medida, la importan de s
      "_ganancia_canal" in _insp.getsource(_pj._ganancia_obediencia)
      and "_ganancia_canal" in _insp.getsource(_e2._obediencia))
 
+print("== EL GIMNASIO: su mundo, su cuerpo y sus sentidos (G3, G7, propiocepcion, tacto) ==")
+# HALLAZGO DEL MAPA DE LA MENTE (mente.py, 9-ago-2026): el Gimnasio —el mundo donde Diego vive,
+# el cuerpo que tiene y los sentidos que se le dieron a priori— NO TENIA UN SOLO CASO en el banco
+# congelado. Cuatro genes activos (G3 accion, G7 juego, propiocepcion, tacto) descansaban sobre
+# codigo que nadie protegia. Los guardianes no lo veian porque miran lo que hay, no lo que falta.
+import gimnasio as _gim
+caso("gimnasio: el diseno del cuerpo es el GANADOR del torneo del prereg-24 (tope 2.5, sin amortiguacion)",
+     _gim.DISENO["limite"] == 2.5 and _gim.DISENO["amortiguacion"] == 0.0)
+caso("gimnasio: los cuatro controles de la Regla 31 siguen existiendo en el mundo",
+     all(m in _gim.MODOS for m in ("sin_agencia", "un_grado", "tv_ruidoso", "sin_gravedad")))
+_c31, _s31g, _v31 = _gim.episodio(1000, pasos=200, modo="normal")
+caso("gimnasio: un episodio normal declara las 3 articulaciones como cuerpo (verdad de los jueces)",
+     _v31 == {0, 1, 2} and _s31g.shape[1] == 7)
+_cA, _sA, _vA = _gim.episodio(1000, pasos=200, modo="sin_agencia")
+caso("gimnasio: el control sin_agencia declara CERO cuerpo (el brazo cae, pero no obedece)",
+     _vA == set())
+_cU, _sU, _vU = _gim.episodio(1000, pasos=200, modo="un_grado")
+caso("gimnasio: el control un_grado declara SOLO la articulacion 0", _vU == {0})
+_cT, _sT, _vT = _gim.episodio(1000, pasos=200, modo="tv_ruidoso")
+caso("gimnasio: el televisor ruidoso NO cuenta como agencia (la articulacion 1 queda fuera)",
+     _vT == {0, 2})
+_c9, _s9, _v9, _sen9 = _gim.episodio(1000, pasos=200, modo="normal", sensores=True)
+caso("sentidos: propiocepcion y tacto entregan 9 canales (3 angulos + 3 velocidades + 3 contactos)",
+     _sen9.shape[1] == 9)
+caso("sentidos: el tacto es binario y la propiocepcion no (son sentidos distintos, no copias)",
+     set(np.unique(_sen9[:, 6:9])) <= {0.0, 1.0} and len(np.unique(_sen9[:, 0:3])) > 2)
+
+print("== sentido_vision: los ojos, el gen que mas veces nos ha fallado ==")
+# HALLAZGO DEL MAPA DE LA MENTE: sentido_vision esta en modo 'decide' —el modo mas alto— y no
+# tenia UN SOLO caso en el banco. Es el gen con el historial mas accidentado del proyecto
+# (INFORMES 27, 30-33, 36 y el acta del prereg-27), y era el menos protegido.
+import percepcion2 as _p2
+import ojos_gimnasio as _og
+caso("vision: percepcion2 ofrece las dos arquitecturas del torneo (predictiva y con corolario)",
+     "comandos" in _insp.signature(_p2.entrenar).parameters)
+caso("vision: el codificador entrega un latente por episodio, no uno global",
+     "def codificar" in _insp.getsource(_p2))
+# EL LIMITE CONFESADO, congelado como caso: la vista NO esta certificada como predictiva del
+# cuerpo. Si alguien lo proclama en el arbol sin corrida oficial nueva, esto grita.
+_gd2 = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..",
+                         "resultados", "INFORME-38.md"), encoding="utf-8").read()
+caso("vision: el acta del prereg-27 sigue declarandolo NO CONCLUYENTE POR INSTRUMENTO",
+     "NO CONCLUYENTE POR INSTRUMENTO" in _gd2)
+
+print("== EL NERVIO (conectar.py): la sinapsis conduce de verdad, no solo existe ==")
+# EL BUG DE DISENO MAS GRAVE HALLADO (mapa de la mente, 9-ago-2026): `sinapsis.py` —el bus de
+# comunicacion de la mente, con su portero, su Regla 31 aprobada y sus casos aqui mismo— NUNCA
+# HABIA SIDO USADO POR NINGUN ORGANO. arbol/SINAPSIS.jsonl no existia: cero eventos en toda la
+# vida del proyecto. Un sistema nervioso perfecto y desconectado. Los guardianes no lo veian
+# porque miran lo que HAY, no lo que FALTA. Estos casos exigen que SIGA conectado.
+import conectar as _con
+import sinapsis as _sinapsis
+_sin_ruta = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "arbol",
+                         "SINAPSIS.jsonl")
+caso("nervio: la sinapsis TIENE eventos (no basta con que el bus exista; tiene que conducir)",
+     os.path.exists(_sin_ruta) and len(_sinapsis.leer()) > 0)
+_ev = _sinapsis.leer()
+caso("nervio: han hablado al menos 6 organos distintos por el bus",
+     len({e["gen"] for e in _ev}) >= 6)
+caso("nervio: NINGUN evento del bus es de tipo 'decision' publicado por un gen que solo MIDE",
+     all(not (e["tipo"] == "decision"
+              and _gen["genes"].get(e["gen"], {}).get("modo") == "mide") for e in _ev))
+caso("nervio: el latido incluye la prueba viva del portero (un 'mide' intentando decidir)",
+     "LA PRUEBA VIVA DEL PORTERO" in _insp.getsource(_con.latir))
+
 print("== canonizar: tarjeta de identidad ==")
 t = tarjeta("(v1 + v2) * 0.5 + 3.0", 4)
 caso("desplazamiento = f(0)", abs(t["desplazamiento"] - 3.0) < 1e-6)

@@ -17,3 +17,12 @@ para quien audite el proyecto — el `codigo/` de arriba solo contiene lo VIVO.*
 ## Si la laptop revive
 Los `.ps1` siguen siendo válidos para Windows, pero **no los enciendas junto con el latido de la
 nube**: habría dos corazones ejecutando la misma cola. Una sola casa para el latido.
+
+## Archivados el 9-ago-2026 por el mapa de la mente (`mente.py`)
+El mapa los declaro **huerfanos**: ni cuelgan de un gen, ni los importa nadie, ni los ejecuta la
+cola. No estan rotos ni desmentidos — son herramientas de prerregistros ya cerrados que dejaron de
+usarse. Se archivan **sin borrarse** (nada se borra en esta casa) para que `codigo/` contenga solo
+lo que esta vivo:
+- `ojos_ganados.py` — prerregistro-21, los ojos que se ganan su dimension.
+- `transferir.py` — prerregistro-05, prueba de transferencia entre trials.
+Si algun prerregistro futuro los necesita, vuelven a `codigo/` con su firma.
