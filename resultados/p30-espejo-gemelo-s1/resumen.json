@@ -1,0 +1,35 @@
+{
+  "prerregistro": 30,
+  "semilla": 1,
+  "pasos": 1500,
+  "gemelo_propio": {
+    "obedece_a_mis_ordenes": 0.2363,
+    "obedece_al_gemelo": 0.012,
+    "diferencia": 0.2243,
+    "nulo_techo": 0.0068,
+    "se_reconoce": true
+  },
+  "gemelo_ajeno": {
+    "obedece_a_mis_ordenes": 0.0098,
+    "obedece_al_gemelo": 0.2218,
+    "diferencia": -0.212,
+    "nulo_techo": 0.0054,
+    "se_reconoce": false
+  },
+  "firmas_diego_hoy": {
+    "razon_contingencia_sobre_base": 1.2478,
+    "criterio_clasico_1.5x": false,
+    "rafaga_de_extincion": 1.4366,
+    "hay_rafaga": true,
+    "razon_otras_articulaciones": 0.8224,
+    "especifica": true
+  },
+  "firmas_control_positivo": {
+    "razon_contingencia_sobre_base": 1.342,
+    "criterio_clasico_1.5x": false,
+    "rafaga_de_extincion": 1.2617,
+    "hay_rafaga": true,
+    "razon_otras_articulaciones": 0.7664,
+    "especifica": true
+  }
+}
