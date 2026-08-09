@@ -468,6 +468,18 @@ caso("espejo2: el balbuceo ciego NO alcanza el criterio 1.5x (control negativo v
      not _e2.firmas(_e2.paradigma_movil(semilla=2, pasos_fase=400,
                                         politica="ciega"))["criterio_clasico_1.5x"])
 
+print("== el observador pasivo (prereg-32): el control que podria refutarnos ==")
+import observador_pasivo as _op
+caso("observador pasivo: APRUEBA su Regla 31 (4/4: control positivo, gemelos, ventaja plantada)",
+     _op.regla31(verbose=False) == 0)
+# CONGELADO: la comparacion NO puede ser tautologica. Si las medidas de soporte dejan de
+# consultar los comandos, encarnado y pasivo dan el MISMO numero por construccion y el "empate"
+# no significa nada. Este caso exige que la copia eferente entre de verdad al modelo del mundo.
+import inspect as _insp
+caso("observador pasivo: la copia eferente ENTRA al modelo del encarnado (no es empate trivial)",
+     "comandos" in _insp.signature(_op.fisica_de_soporte).parameters
+     and "comandos=u" in _insp.getsource(_op.comparar))
+
 print("== canonizar: tarjeta de identidad ==")
 t = tarjeta("(v1 + v2) * 0.5 + 3.0", 4)
 caso("desplazamiento = f(0)", abs(t["desplazamiento"] - 3.0) < 1e-6)
