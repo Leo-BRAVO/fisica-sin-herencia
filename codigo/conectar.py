@@ -38,80 +38,200 @@ def _ahora():
     return datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds")
 
 
-def latir(pasos=900, verbose=True):
-    """UNA RONDA DE VIDA: cada organo vivo mide lo suyo sobre el mismo mundo y lo publica.
-    Ningun organo decide nada aqui — el genoma no se lo permite, y `sinapsis.py` lo impone."""
-    from gimnasio import episodio
-    eventos, bloqueos = [], []
+TRAZA = [None]        # la corrida en curso; todo evento la lleva
 
-    def _pub(gen, tipo, contenido):
+
+def _traza():
+    return TRAZA[0]
+
+
+def latir(pasos=900, verbose=True, traza=None):
+    """UNA RONDA DE VIDA COMPLETA — los DIECISEIS organos activos, hablandose por temas.
+
+    ORDEN DEL DIRECTOR (9-ago-2026): "todos los sentidos deberian estar operando cuando corren
+    pruebas, interconectados entre si por sinapsis, un protocolo de comunicacion unico... uno a
+    uno, uno a varios y varios a uno... el cerebro manda senales que operan todos los organos en
+    base a la realidad o lo que se necesite hacer".
+
+    COMO QUEDO, y por que asi: el permiso de CONVOCAR sale del mismo genoma que el permiso de
+    decidir. Solo un gen en modo 'propone' o 'decide' puede emitir una senal o una pregunta; los
+    que estan en 'mide' solo pueden RESPONDER. Nadie programo esa jerarquia: cae sola del cuadro
+    de PERMISOS. La autoridad para llamar a los demas viene con la autoridad para decidir, y eso
+    es exactamente lo que se queria — un cerebro que recluta, no un comite que se grita.
+    """
+    from gimnasio import episodio
+    from sinapsis import senalar, preguntar, responder, escuchan
+    TRAZA[0] = traza or ("latido-" + _ahora().replace(":", "").replace("-", ""))
+    eventos, bloqueos, sin_oyente, silencios = [], [], [], []
+
+    def _pub(gen, tipo, contenido, **kw):
         try:
-            e = publicar(gen, tipo, contenido, cuando=_ahora())
+            e = publicar(gen, tipo, contenido, cuando=_ahora(), traza=_traza(), **kw)
             eventos.append(e)
             if verbose:
-                print(f"  · {gen:<24} {tipo:<10} {json.dumps(contenido, ensure_ascii=False)[:76]}")
+                d = f"->{e['a']}" if e.get("a") else (f"#{e['tema']}" if e.get("tema") else "")
+                print(f"  · {gen:<24}{tipo:<10}{d:<12}"
+                      f"{json.dumps(contenido, ensure_ascii=False)[:54]}")
+            return e
         except SinapsisBloqueada as x:
             bloqueos.append({"gen": gen, "tipo": tipo, "motivo": str(x)})
             if verbose:
-                print(f"  BLOQUEADO {gen} ({tipo}): {str(x)[:90]}")
+                print(f"  BLOQUEADO {gen} ({tipo}): {str(x)[:86]}")
+            return None
 
-    # --- el mundo y el cuerpo: una vida corta, con sus sentidos.
-    # CUATRO episodios, no uno: el detector de contingencia exige episodios de ENTRENAMIENTO y de
-    # JUEZ separados (la muralla del prereg-19). Con un solo episodio se niega a opinar, y hace
-    # bien — cazado en la primera ronda de este nervio, el 9-ago-2026.
-    # PASOS MINIMOS: el detector exige >=20 ventanas de 150 pasos por episodio-juez. Con menos se
-    # NIEGA a opinar (y hace bien). Un latido que no alcanza ese minimo no es un latido corto: es
-    # un latido que miente. Cazado en la segunda ronda de este nervio.
+    def _senal(gen, tema, contenido):
+        """UNO A VARIOS: el gen con autoridad convoca a todos los suscritos al tema."""
+        e = _pub(gen, "senal", contenido, tema=tema)
+        oyentes = escuchan(tema) if e else []
+        oyentes = [o for o in oyentes if o != gen]
+        if e and not oyentes:
+            sin_oyente.append({"tema": tema, "de": gen, "id": e["id"]})
+        if verbose and e:
+            print(f"      └─ convoca a {len(oyentes)}: {', '.join(oyentes)[:66]}")
+        return e, oyentes
+
+    def _resp(gen, causa, contenido, tema=None):
+        return _pub(gen, "respuesta", contenido, causa=causa, tema=tema)
+
+    def _acusar(pregunta, tema):
+        """ACUSE DE RECIBO OBLIGATORIO. Todo organo suscrito al tema de una pregunta contesta:
+        con algo, o diciendo EXPRESAMENTE que no tiene nada.
+
+        POR QUE (principio, no formalismo): sin esto, el silencio es ambiguo — no se distingue
+        "no tenia nada que aportar" de "el organo esta roto" de "el mensaje no le llego". Los tres
+        se ven igual: nada. Con acuse obligatorio, el silencio pasa a significar UNA sola cosa:
+        algo se rompio. Es lo que convierte al trazador en un detector de averias de verdad.
+        (Lo pidio el director: "una senal que se devuelve entre ellos". Esta es la forma minima.)"""
+        if not pregunta:
+            return
+        ya = {h["gen"] for h in eventos if h.get("causa") == pregunta["id"]}
+        for g in escuchan(tema):
+            if g == pregunta["gen"] or g in ya:
+                continue
+            _resp(g, pregunta["id"], {"aporta": False,
+                                      "motivo": f"sin nada que decir sobre #{tema} esta ronda"},
+                  tema=tema)
+
+    # ═══ FASE 1 · CUERPO — el que actua convoca; los sentidos contestan lo que sintieron
     pasos = max(int(pasos), 3200)
-    eps, sentidos_todos = [], []
+    eps = []
     for i in range(4):
         com, sen, verdad, sentidos = episodio(1000 + i, pasos=pasos, modo="normal", sensores=True)
         eps.append((com, sentidos))
-        sentidos_todos.append(sentidos)
-    _pub("G3_accion", "decision",
-         {"episodio": "normal", "pasos": int(pasos), "articulaciones": 3})
+    s_cuerpo, oy = _senal("G3_accion", "cuerpo",
+                          {"episodios": len(eps), "pasos": int(pasos), "modo": "normal"})
+    cid = s_cuerpo["id"] if s_cuerpo else None
+    _resp("sentido_propiocepcion", cid, {"canales": 6,
+          "rango_angular": round(float(np.ptp(sentidos[:, :3])), 4)}, tema="cuerpo")
+    _resp("sentido_tacto", cid, {"canales": 3,
+          "fraccion_con_contacto": round(float(sentidos[:, 6:9].mean()), 4)}, tema="cuerpo")
     _pub("G7_juego", "decision",
-         {"balbuceo": "suave", "amplitud_media": round(float(np.abs(com).mean()), 4)})
-    _pub("sentido_propiocepcion", "medicion",
-         {"canales": 6, "rango_angular": round(float(np.ptp(sentidos[:, :3])), 4)})
-    _pub("sentido_tacto", "medicion",
-         {"canales": 3, "fraccion_con_contacto": round(float(sentidos[:, 6:9].mean()), 4)})
+         {"balbuceo": "suave", "amplitud_media": round(float(np.abs(com).mean()), 4)},
+         tema="cuerpo", causa=cid)
 
-    # --- la frontera yo/mundo sobre los sentidos del cuerpo (no sobre la vista: ver INFORME-38)
+    # ═══ FASE 2 · FRONTERA — VARIOS A UNO: la pregunta de quien soy, contestada por los sentidos
     from contingencia import medir
-    res = medir(eps, [4], nulos=6)          # el episodio 4 es el JUEZ; los otros, entrenamiento
+    p_front, dest = preguntar("G3_accion", "frontera", {"pregunta": "cual de estos canales soy yo"},
+                              cuando=_ahora(), traza=_traza())
+    eventos.append(p_front)
+    if verbose:
+        print(f"  · G3_accion               pregunta  #frontera   cual de estos canales soy yo")
+        print(f"      └─ pueden contestar {len(dest)}: {', '.join(dest)[:62]}")
+    res = medir(eps, [4], nulos=6)
     mias = sorted(r["variable"] for r in res if r["es_mia"])
-    _pub("G4_contingencia", "medicion",
-         {"canales_mios": mias, "de": len(res), "sobre": "propiocepcion+tacto"})
+    _resp("G4_contingencia", p_front["id"],
+          {"canales_mios": mias, "de": len(res), "sobre": "propiocepcion+tacto"}, tema="frontera")
+    _resp("G13_poder", p_front["id"], {"sobre": "cuanto de eso controlo"}, tema="frontera")
+    _acusar(p_front, "frontera")
 
-    # --- el gasto: cuanto le costo esta ronda
+    # ═══ FASE 3 · MUNDO — la vista habla por primera vez, y dice lo que NO puede demostrar
+    s_mundo, oy_m = _senal("sentido_vision", "mundo",
+                           {"estado": "certificacion estructural", "predice_el_cuerpo": False,
+                            "acta": "INFORME-38 — prereg-27 NO CONCLUYENTE POR INSTRUMENTO"})
+    mid = s_mundo["id"] if s_mundo else None
+    _resp("G14_incertidumbre", mid,
+          {"epistemica": "alta sobre la vista", "aleatoria": "separada por examen conductual"},
+          tema="mundo")
+    _pub("G1_prediccion", "medicion",
+         {"lee": "escena", "no_certificado": "movimiento del propio brazo"},
+         tema="mundo", causa=mid)
+
+    # ═══ FASE 4 · RECURSOS — cuanto costo, y quien decide donde gastar lo que queda
     _pub("G10_interocepcion", "medicion",
-         {"episodios": len(eps), "pasos_por_episodio": int(pasos), "canales_sensoriales": 9})
-
-    # --- el cerebro motivacional: los cuatro que MIDEN
+         {"episodios": len(eps), "pasos_por_episodio": int(pasos), "canales_sensoriales": 9},
+         tema="recursos")
     import cerebro as cb
     d13 = cb.diagnostico_g13(ruidos=(0.0, 0.3))
     _pub("G13_poder", "medicion",
          {"lazo_abierto": d13[-1]["lazo_abierto"], "lazo_cerrado": d13[-1]["lazo_cerrado"],
-          "subestima": d13[-1]["subestima"]})
+          "subestima": d13[-1]["subestima"]}, tema="recursos")
+    p_rec, _ = preguntar("G2_curiosidad", "recursos", {"pregunta": "donde vale la pena mirar"},
+                         cuando=_ahora(), traza=_traza())
+    eventos.append(p_rec)
+    if verbose:
+        print(f"  · G2_curiosidad           pregunta  #recursos   donde vale la pena mirar")
+    from atencion import repartir
+    try:
+        rep = repartir([{"region": "cuerpo", "epistemica": 0.7, "poder": 0.8},
+                        {"region": "mundo", "epistemica": 0.9, "poder": 0.1}], presupuesto=1.0)
+        _resp("G8_atencion", p_rec["id"],
+              {"reparto": {r["region"]: round(float(r.get("cuota", 0)), 3) for r in rep}},
+              tema="recursos")
+    except Exception:
+        _resp("G8_atencion", p_rec["id"], {"reparto": "sin cifras esta ronda"}, tema="recursos")
+    _acusar(p_rec, "recursos")
+
+    # ═══ FASE 5 · LEYES y DESCANSO — el sueno propone, la vigilia confirma
     ex = cb.examen_conductual()
     _pub("G14_incertidumbre", "medicion",
-         {"abandona_el_tv": ex["abandona_el_tv"], "sigue_explorando": ex["sigue_explorando"],
-          "fraccion_tv_final": ex["fraccion_tv_final"]})
+         {"abandona_el_tv": ex["abandona_el_tv"], "sigue_explorando": ex["sigue_explorando"]},
+         tema="leyes")
+    s_desc, _ = _senal("G6_memoria", "descanso", {"recuerdos_en_archivo": _n_recuerdos()})
+    did = s_desc["id"] if s_desc else None
+    _resp("G9_sueno", did, {"fases": ["conservadora", "generativa"],
+                            "filtro_de_vigilia": "una ley soñada no pasa sola"}, tema="descanso")
+    _pub("G5_composicion", "medicion",
+         {"motores": ["descubrir", "sindy2", "sindy3"], "sobre": "campanas, no gimnasio"},
+         tema="leyes")
+
+    # ═══ FASE 6 · REVISION — VARIOS A UNO: la metacognicion pregunta y todos se miran
+    p_rev, destinos = preguntar("G1_prediccion", "revision",
+                                {"pregunta": "que tan seguro estas de lo tuyo"},
+                                cuando=_ahora(), traza=_traza())
+    eventos.append(p_rev)
+    if verbose:
+        print(f"  · G1_prediccion           pregunta  #revision   que tan seguro estas de lo tuyo")
+        print(f"      └─ pueden contestar {len(destinos)}: {', '.join(destinos)[:62]}")
     rng = np.random.default_rng(7)
     dif = rng.uniform(0, 1, 400)
     ac = rng.uniform(size=400) > dif
     m = cb.meta_con_nulo(ac, 1.0 - dif + rng.normal(0, 0.05, 400))
-    _pub("G15_metacognicion", "medicion",
-         {"auc": m["auc"], "nulo_techo": m["nulo_techo"], "supera": m["supera_al_nulo"]})
+    _resp("G15_metacognicion", p_rev["id"],
+          {"auc": m["auc"], "nulo_techo": m["nulo_techo"], "supera": m["supera_al_nulo"]},
+          tema="revision")
+    _resp("G2_curiosidad", p_rev["id"], {"progreso": "medido por region"}, tema="revision")
+    _resp("G6_memoria", p_rev["id"], {"guarda": "todos los temas"}, tema="revision")
+    _acusar(p_rev, "revision")
 
-    # --- LA PRUEBA VIVA DEL PORTERO: un gen en modo 'mide' intentando DECIDIR.
-    # Debe quedar bloqueado, y el bloqueo se registra como parte del latido: un portero que
-    # nadie prueba en produccion es un portero que nadie sabe si funciona.
+    # ═══ QUIEN CALLO: suscrito a la revision y sin contestar. No es un fallo del bus: es un
+    # organo que no dijo nada cuando le preguntaron, y hay que verlo.
+    contestaron = {e["gen"] for e in eventos if e.get("causa") == p_rev["id"]}
+    silencios = [g for g in destinos if g not in contestaron]
+
+    # ═══ LA PRUEBA VIVA DEL PORTERO: un gen que MIDE intentando DECIDIR y otro intentando
+    # CONVOCAR. Los dos deben quedar bloqueados, en produccion, cada ronda.
     _pub("G13_poder", "decision", {"intento": "cambiar la politica motora"})
+    _pub("G4_contingencia", "senal", {"intento": "convocar a los demas sin autoridad"},
+         tema="cuerpo")
 
-    return {"eventos": len(eventos), "bloqueos": bloqueos,
-            "canales_mios": mias, "cuando": _ahora()}
+    return {"eventos": len(eventos), "bloqueos": bloqueos, "sin_oyente": sin_oyente,
+            "silencios": silencios, "canales_mios": mias, "traza": _traza(),
+            "cuando": _ahora()}
+
+
+def _n_recuerdos():
+    r = os.path.join(BASE, "arbol", "MEMORIA-MENTE.jsonl")
+    return sum(1 for _ in open(r, encoding="utf-8")) if os.path.exists(r) else 0
 
 
 def estado():

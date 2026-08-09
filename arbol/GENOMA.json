@@ -6,93 +6,172 @@
     "G1_prediccion": {
       "modo": "decide",
       "modulo": "percepcion.py/descubrir.py",
-      "prerregistro": "13"
+      "prerregistro": "13",
+      "escucha": [
+        "mundo",
+        "leyes",
+        "revision"
+      ]
     },
     "G2_curiosidad": {
       "modo": "propone",
       "modulo": "curiosidad2.py",
-      "prerregistro": "18b"
+      "prerregistro": "18b",
+      "escucha": [
+        "leyes",
+        "recursos",
+        "revision"
+      ]
     },
     "G3_accion": {
       "modo": "decide",
       "modulo": "gimnasio.py",
-      "prerregistro": "19"
+      "prerregistro": "19",
+      "escucha": [
+        "cuerpo",
+        "frontera"
+      ]
     },
     "G4_contingencia": {
       "modo": "mide",
       "modulo": "contingencia.py",
-      "prerregistro": "23"
+      "prerregistro": "23",
+      "escucha": [
+        "cuerpo",
+        "frontera"
+      ]
     },
     "G5_composicion": {
       "modo": "decide",
       "modulo": "descubrir.py",
-      "prerregistro": "02"
+      "prerregistro": "02",
+      "escucha": [
+        "leyes",
+        "revision"
+      ]
     },
     "G6_memoria": {
       "modo": "decide",
       "modulo": "memoria.py",
-      "prerregistro": "append-only"
+      "prerregistro": "append-only",
+      "escucha": [
+        "cuerpo",
+        "mundo",
+        "frontera",
+        "leyes",
+        "recursos",
+        "descanso",
+        "revision"
+      ]
     },
     "G7_juego": {
       "modo": "decide",
       "modulo": "gimnasio.py (balbuceo)",
-      "prerregistro": "19"
+      "prerregistro": "19",
+      "escucha": [
+        "cuerpo",
+        "recursos"
+      ]
     },
     "G8_atencion": {
       "modo": "mide",
       "modulo": "atencion.py",
-      "prerregistro": null
+      "prerregistro": null,
+      "escucha": [
+        "frontera",
+        "leyes",
+        "recursos",
+        "revision"
+      ]
     },
     "G9_sueno": {
       "modo": "mide",
       "modulo": "sueno.py",
-      "prerregistro": null
+      "prerregistro": null,
+      "escucha": [
+        "leyes",
+        "descanso",
+        "revision"
+      ]
     },
     "G10_interocepcion": {
       "modo": "mide",
       "modulo": "interocepcion.py",
-      "prerregistro": null
+      "prerregistro": null,
+      "escucha": [
+        "recursos",
+        "descanso"
+      ]
     },
     "G11_temple": {
       "modo": "inactivo",
       "modulo": null,
-      "prerregistro": null
+      "prerregistro": null,
+      "escucha": []
     },
     "G12_reflejos": {
       "modo": "inactivo",
       "modulo": null,
-      "prerregistro": null
+      "prerregistro": null,
+      "escucha": []
     },
     "G13_poder": {
       "modo": "mide",
       "modulo": "poder.py",
-      "prerregistro": null
+      "prerregistro": null,
+      "escucha": [
+        "cuerpo",
+        "frontera",
+        "recursos"
+      ]
     },
     "G14_incertidumbre": {
       "modo": "mide",
       "modulo": "incertidumbre.py",
-      "prerregistro": null
+      "prerregistro": null,
+      "escucha": [
+        "mundo",
+        "leyes",
+        "revision"
+      ]
     },
     "sentido_vision": {
       "modo": "decide",
       "modulo": "percepcion.py/percepcion2.py",
-      "prerregistro": "25"
+      "prerregistro": "25",
+      "escucha": [
+        "mundo",
+        "cuerpo",
+        "revision"
+      ]
     },
     "sentido_propiocepcion": {
       "modo": "mide",
       "modulo": "gimnasio.py (sensores)",
-      "prerregistro": "26-borrador"
+      "prerregistro": "26-borrador",
+      "escucha": [
+        "cuerpo"
+      ]
     },
     "sentido_tacto": {
       "modo": "mide",
       "modulo": "gimnasio.py (sensores)",
-      "prerregistro": "26-borrador"
+      "prerregistro": "26-borrador",
+      "escucha": [
+        "cuerpo",
+        "mundo"
+      ]
     },
     "G15_metacognicion": {
       "modo": "mide",
       "modulo": "cerebro.py",
       "prerregistro": null,
-      "nota": "sensibilidad metacognitiva (AUC tipo 2) con nulo por confianza barajada. MIDE: no decide nada hasta que un prerregistro firmado suba su modo."
+      "nota": "sensibilidad metacognitiva (AUC tipo 2) con nulo por confianza barajada. MIDE: no decide nada hasta que un prerregistro firmado suba su modo.",
+      "escucha": [
+        "leyes",
+        "revision"
+      ]
     }
-  }
+  },
+  "nota_escucha": "Suscripcion por tema (sinapsis 2.0, 9-ago-2026). Un organo solo recibe lo que declara escuchar. Conectar todo con todo no es un cerebro: es ruido que se retroalimenta y borra la trazabilidad de quien causo que."
 }
