@@ -273,9 +273,10 @@
       "prerregistro": 29,
       "datos": "codigo/soporte.py",
       "args": "--semilla 3 --pasos 1800",
-      "estado": "pendiente",
+      "estado": "hecha",
       "nota": "escalera de soporte: el primer no-yo por definicion positiva",
-      "salida": "resultados/p29-soporte-s3"
+      "salida": "resultados/p29-soporte-s3",
+      "resultado": "corrida por latido-nube (Actions)"
     },
     {
       "id": "p29-soporte-s4",
