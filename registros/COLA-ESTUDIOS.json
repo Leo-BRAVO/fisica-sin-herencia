@@ -317,9 +317,10 @@
       "prerregistro": 30,
       "datos": "codigo/espejo2.py",
       "args": "--semilla 2 --pasos 1500 --pasos-fase 500",
-      "estado": "pendiente",
+      "estado": "hecha",
       "nota": "el gemelo en la escena + firmas conductuales del bebe",
-      "salida": "resultados/p30-espejo-gemelo-s2"
+      "salida": "resultados/p30-espejo-gemelo-s2",
+      "resultado": "corrida por latido-nube (Actions)"
     },
     {
       "id": "p30-espejo-gemelo-s3",
