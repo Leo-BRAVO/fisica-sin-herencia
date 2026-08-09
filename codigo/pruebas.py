@@ -394,6 +394,14 @@ caso("espejo intermodal: APRUEBA (refleja al que se mueve, no al que se parece)"
 caso("SINDy: una ley vacia no es una ley replicada (hueco cazado y congelado)",
      "no es vacío" in _insp.getsource(_sydesc) or "sop_a.sum() == 0" in _insp.getsource(_sydesc))
 
+print("== ranuras: entra al torneo (frontera gris), no al genoma ==")
+from ranuras import regla31 as _rn31
+caso("ranuras: APRUEBA su Regla 31 (una ranura por cosa, o nada)", _rn31(epocas=3, verbose=False) == 0)
+_gd = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "arbol", "GENOMA-DIEGO.md"),
+           encoding="utf-8").read()
+caso("ranuras: el genoma sigue SIN activarla como gen (solo torneo)",
+     "G13" in _gd and "ranuras" in _gd.lower() and "NO ENTRA AL GENOMA" in _gd)
+
 print("== canonizar: tarjeta de identidad ==")
 t = tarjeta("(v1 + v2) * 0.5 + 3.0", 4)
 caso("desplazamiento = f(0)", abs(t["desplazamiento"] - 3.0) < 1e-6)
