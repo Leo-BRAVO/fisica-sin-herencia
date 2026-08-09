@@ -83,13 +83,21 @@ def _siguiente_id(ruta):
 
 
 def publicar(gen, tipo, contenido, cuando=None, _ruta=None,
-             tema=None, a=None, causa=None, traza=None):
+             tema=None, a=None, causa=None, traza=None, deriva_de=None):
     """Publica un evento en la sinapsis. El genoma decide si este gen PUEDE decir esto.
 
     tema  — de que habla (uno de TEMAS). Quien este suscrito al tema lo recibe.
     a     — destinatario concreto: convierte la publicacion en UNO A UNO.
     causa — id del evento que provoco este. Es lo que permite reconstruir el arbol causal.
     traza — identificador de la corrida entera, para separar una prueba de otra.
+
+    deriva_de — id del evento cuya EVIDENCIA se uso para producir este. NO es lo mismo que
+      `causa`, y confundirlos fue un error propio cazado el 9-ago-2026 por este mismo trazador:
+        · `causa`      = QUE ME HIZO HABLAR   (conversacional: me preguntaron)
+        · `deriva_de`  = DE QUIEN SON LOS DATOS QUE USE  (evidencial: mire lo que el midio)
+      Ocho organos contestando la misma pregunta NO son un consenso de un solo testigo: cada uno
+      midio lo suyo y respondio por su cuenta. Ocho organos repitiendo lo que dijo un noveno SI
+      lo son. La genealogia —lo que cuenta testigos independientes— viaja SOLO por `deriva_de`.
     """
     genes = _genoma()
     if gen not in genes:
@@ -110,8 +118,39 @@ def publicar(gen, tipo, contenido, cuando=None, _ruta=None,
             f"tema '{tema}' desconocido. Los temas son {TEMAS}: inventar temas sueltos es como "
             f"tender un nervio a ninguna parte — nadie lo escucha y nadie lo sabe.")
     ruta = _ruta or SINAPSIS
+    # ENTREGA — LA ESCRIBE EL BUS, NUNCA EL EMISOR. Sin este campo es IMPOSIBLE distinguir
+    # "nadie estaba escuchando" de "escucharon y se callaron", y ese es el modo de fallo numero
+    # uno documentado en la taxonomia MAST (NeurIPS 2025) sobre 1600 trazas reales: un modulo
+    # que ignora la entrada de otro. Los dos casos se ven identicos —silencio— y se arreglan en
+    # sitios opuestos: uno es error de diseno del mapa, el otro es un organo averiado.
+    # (Hallazgo de la investigacion del 9-ago-2026, que encontro este hueco en la version de
+    # esta misma manana.)
+    if a is not None:
+        entrega = [a]
+    elif tema is not None:
+        entrega = [o for o in escuchan(tema, genes) if o != gen]
+    else:
+        entrega = []
+    # ENLACES — para difusion (uno a varios) y agregacion (varios a uno). La convencion de
+    # OpenTelemetry para mensajeria es tajante: el modelo padre-hijo MIENTE en cuanto hay
+    # difusion, porque un evento solo puede tener UN padre. Una convocatoria a nueve organos
+    # trazada con padre-hijo se ve completa y ha perdido ocho de nueve relaciones causales. Es el
+    # fallo mas insidioso que existe en auditoria: produce una autopsia con apariencia de
+    # completitud. `causa` queda para las cadenas 1:1; `enlaces` carga el resto.
     evento = {"id": _siguiente_id(ruta), "gen": gen, "tipo": tipo, "contenido": contenido,
-              "cuando": cuando, "tema": tema, "a": a, "causa": causa, "traza": traza}
+              "cuando": cuando, "tema": tema, "a": a, "causa": causa, "traza": traza,
+              "entrega": entrega, "enlaces": [], "deriva_de": deriva_de}
+    # GENEALOGIA — de que mensajes ORIGINALES desciende esto. Sirve para contar TESTIGOS
+    # INDEPENDIENTES, no mensajes: si cuatro organos coinciden pero los cuatro derivan del mismo
+    # ancestro, no hay cuatro testigos, hay uno repetido cuatro veces. Es el "consenso falso" que
+    # la literatura de cascadas de error (2026) senala como el fallo que se vuelve incorregible.
+    if deriva_de is not None:
+        padres = [e for e in leer(_ruta=ruta) if e.get("id") == deriva_de]
+        evento["genealogia"] = ((padres[0].get("genealogia") or [deriva_de])
+                                if padres else [deriva_de])
+    else:
+        # testigo PROPIO: midio lo suyo. Su genealogia es el mismo, y por eso cuenta como uno.
+        evento["genealogia"] = [evento["id"]]
     with open(ruta, "a", encoding="utf-8") as f:
         f.write(json.dumps(evento, ensure_ascii=False) + "\n")
     return evento
@@ -132,7 +171,7 @@ def senalar(gen, tema, contenido, cuando=None, traza=None, causa=None, _ruta=Non
     error de diseno que debe quedar registrado, no silenciado."""
     ev = publicar(gen, "senal", contenido, cuando=cuando, _ruta=_ruta,
                   tema=tema, causa=causa, traza=traza)
-    return ev, escuchan(tema)
+    return ev, ev["entrega"]
 
 
 def preguntar(gen, tema, contenido, a=None, cuando=None, traza=None, _ruta=None):
@@ -140,14 +179,15 @@ def preguntar(gen, tema, contenido, a=None, cuando=None, traza=None, _ruta=None)
     escucha todo el que este suscrito al tema (y entonces sera VARIOS A UNO al contestar)."""
     ev = publicar(gen, "pregunta", contenido, cuando=cuando, _ruta=_ruta,
                   tema=tema, a=a, traza=traza)
-    return ev, ([a] if a else escuchan(tema))
+    return ev, ev["entrega"]
 
 
-def responder(gen, causa, contenido, cuando=None, traza=None, tema=None, a=None, _ruta=None):
+def responder(gen, causa, contenido, cuando=None, traza=None, tema=None, a=None, _ruta=None,
+              deriva_de=None):
     """La senal que se devuelve. `causa` es el id de la pregunta o senal que la provoco — sin eso
     la respuesta es huerfana y el trazador la marca como fallo de protocolo."""
     return publicar(gen, "respuesta", contenido, cuando=cuando, _ruta=_ruta,
-                    tema=tema, a=a, causa=causa, traza=traza)
+                    tema=tema, a=a, causa=causa, traza=traza, deriva_de=deriva_de)
 
 
 def leer(gen=None, tipo=None, _ruta=None, tema=None, traza=None, causa=None, a=None):
@@ -233,3 +273,15 @@ if __name__ == "__main__":
     if a.regla31:
         sys.exit(regla31())
     print("uso: --regla31")
+
+
+def testigos_independientes(eventos):
+    """CUANTOS TESTIGOS DE VERDAD hay detras de un conjunto de eventos que coinciden.
+    Cuenta genealogias distintas, no mensajes. Cuatro organos que dicen lo mismo derivando todos
+    del mismo ancestro son UN testigo repetido cuatro veces — y tratarlo como cuatro es como se
+    fabrica un consenso falso que despues nadie puede corregir."""
+    raices = set()
+    for e in eventos:
+        g = e.get("genealogia") or []
+        raices.add(tuple(g) if g else ("propio", e["id"]))
+    return len(raices)

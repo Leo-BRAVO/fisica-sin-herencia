@@ -660,6 +660,20 @@ _ult = _tz.reconstruir()
 _f = _tz.revisar(_ult)
 caso("nervio: la ultima ronda de vida no dejo NINGUN fallo de coordinacion",
      not any(_f.values()), str({k: v[:1] for k, v in _f.items() if v}))
+# LOS DOS CAMPOS QUE CASI NADIE PONE, y sin los cuales la deteccion de fallos es imposible.
+caso("sinapsis 2.0: el BUS escribe 'entrega' (distingue 'nadie oia' de 'oyeron y callaron')",
+     all("entrega" in e for e in _ult["eventos"]))
+# LA LECCION MAS FINA, cazada por el propio trazador: 'causa' (que me hizo hablar) NO es
+# 'deriva_de' (de quien son los datos que use). Confundirlos hacia que ocho organos contestando
+# la misma pregunta parecieran un consenso de un solo testigo. La genealogia viaja SOLO por
+# deriva_de. Si alguien vuelve a mezclarlos, esto grita.
+caso("sinapsis 2.0: la genealogia viaja por 'deriva_de' (evidencia), no por 'causa' (conversacion)",
+     "deriva_de" in _sinapsis.publicar.__doc__ and "evidencial" in _sinapsis.publicar.__doc__)
+caso("sinapsis 2.0: un organo que mide lo suyo cuenta como testigo INDEPENDIENTE",
+     _sinapsis.testigos_independientes(
+         [{"id": 1, "genealogia": [1]}, {"id": 2, "genealogia": [2]}]) == 2
+     and _sinapsis.testigos_independientes(
+         [{"id": 1, "genealogia": [9]}, {"id": 2, "genealogia": [9]}]) == 1)
 caso("nervio: en la ultima ronda hablaron los 16 organos activos",
      len({e["gen"] for e in _ult["eventos"]}) >= 16)
 

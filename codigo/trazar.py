@@ -58,6 +58,7 @@ def reconstruir(traza=None):
     ts = trazas()
     traza = traza or (ts[-1] if ts else None)
     ev = leer(traza=traza) if traza else []
+    ev = [e for e in ev if e.get("id") is not None]   # eventos previos al pasaporte
     por_id = {e["id"]: e for e in ev}
     hijos = defaultdict(list)
     for e in ev:
@@ -80,6 +81,30 @@ def conexiones(t):
         elif e.get("a"):
             out.append({"de": e["gen"], "a": e["a"], "tema": e.get("tema"),
                         "via": f"{e['tipo']} dirigido", "ids": [e["id"]]})
+    return out
+
+
+def consenso_falso(t, tema=None):
+    """¿HAY TANTOS TESTIGOS COMO VOCES? Agrupa las respuestas por la pregunta que las provoco y
+    compara cuantos organos contestaron contra cuantas genealogias INDEPENDIENTES hay detras.
+    Si cuatro organos coinciden pero los cuatro descienden del mismo mensaje, no son cuatro
+    testigos: es uno repetido cuatro veces, y asi es como un error menor se vuelve un consenso
+    del sistema entero que despues ya nadie puede corregir."""
+    from sinapsis import testigos_independientes
+    out = []
+    for e in t["eventos"]:
+        if e["tipo"] != "pregunta":
+            continue
+        if tema and e.get("tema") != tema:
+            continue
+        resp = [h for h in t["eventos"] if h.get("causa") == e["id"]]
+        if len(resp) < 2:
+            continue
+        voces = len({h["gen"] for h in resp})
+        testigos = testigos_independientes(resp)
+        out.append({"pregunta": e["id"], "tema": e.get("tema"), "voces": voces,
+                    "testigos_independientes": testigos,
+                    "consenso_de_un_solo_testigo": bool(voces > 1 and testigos == 1)})
     return out
 
 
@@ -109,7 +134,12 @@ def revisar(t, bloqueos=None):
     temas_usados = {e.get("tema") for e in ev if e.get("tema")}
     for e in ev:
         if e["tipo"] in ("senal", "pregunta") and e.get("tema"):
-            oyentes = [o for o in escuchan(e["tema"], genes) if o != e["gen"]]
+            # SE LEE `entrega` (lo que el BUS registro), no lo que el mapa dice hoy: si alguien
+            # cambia las suscripciones despues de la corrida, la autopsia debe seguir contando
+            # lo que paso entonces, no lo que pasaria ahora.
+            oyentes = e.get("entrega")
+            if oyentes is None:
+                oyentes = [o for o in escuchan(e["tema"], genes) if o != e["gen"]]
             if not oyentes:
                 fallos["diseno"].append(
                     f"senal de {e['gen']} al tema '{e['tema']}' que NADIE escucha (evento {e['id']})")
@@ -126,8 +156,10 @@ def revisar(t, bloqueos=None):
     for e in ev:
         if e["tipo"] != "pregunta":
             continue
-        destinos = [e["a"]] if e.get("a") else [o for o in escuchan(e.get("tema") or "", genes)
-                                                if o != e["gen"]]
+        destinos = e.get("entrega")
+        if destinos is None:
+            destinos = ([e["a"]] if e.get("a")
+                        else [o for o in escuchan(e.get("tema") or "", genes) if o != e["gen"]])
         contestaron = {h["gen"] for h in ev if h.get("causa") == e["id"]}
         mudos = [d for d in destinos if d not in contestaron]
         if mudos:
@@ -145,6 +177,11 @@ def revisar(t, bloqueos=None):
         if e["tipo"] == "pregunta" and not any(h.get("causa") == e["id"] for h in ev):
             fallos["cerebro"].append(
                 f"pregunta {e['id']} de {e['gen']} (#{e.get('tema')}) SIN NINGUNA respuesta")
+    for c in consenso_falso(t):
+        if c["consenso_de_un_solo_testigo"]:
+            fallos["cerebro"].append(
+                f"CONSENSO FALSO en la pregunta {c['pregunta']} (#{c['tema']}): "
+                f"{c['voces']} voces pero UN SOLO testigo independiente detras")
     for c in _ciclos(t):
         fallos["cerebro"].append(f"CICLO causal entre los eventos {c}: el pensamiento se muerde la cola")
     for b in (bloqueos or []):
@@ -175,6 +212,13 @@ def imprimir(t, fallos=None):
     for c in cx:
         print(f"    {c['de']:<22} -> {c['a']:<22} #{str(c['tema'] or '—'):<10} {c['via']}")
     print(f"\n    ({len(cx)} conexiones)")
+    cf = consenso_falso(t)
+    if cf:
+        print("\n### TESTIGOS DETRAS DE CADA ACUERDO (voces != testigos)\n")
+        for c in cf:
+            marca = "  <-- CONSENSO DE UN SOLO TESTIGO" if c["consenso_de_un_solo_testigo"] else ""
+            print(f"    pregunta {c['pregunta']:<4} #{str(c['tema']):<10} "
+                  f"{c['voces']} voces / {c['testigos_independientes']} testigos{marca}")
 
     print("\n### QUE USO CADA ORGANO (temas en que participo)\n")
     part = defaultdict(set)
@@ -261,7 +305,30 @@ def regla31(verbose=True):
     if not c4:
         fallos.append("ciclo")
 
-    # 5) SENAL SIN OYENTE: un tema real, emitido por el unico gen que lo escucha
+    # 5) CONSENSO FALSO plantado: tres organos que repiten lo que dijo un cuarto (todos derivan
+    #    del MISMO evento) frente a tres que midieron cada uno lo suyo.
+    eco = _t([{"id": 1, "gen": "G3_accion", "tipo": "pregunta", "tema": "revision",
+               "causa": None, "a": None, "entrega": ["G4_contingencia", "G13_poder", "G8_atencion"],
+               "contenido": {}, "genealogia": [1], "deriva_de": None},
+              {"id": 2, "gen": "G4_contingencia", "tipo": "respuesta", "tema": "revision",
+               "causa": 1, "a": None, "contenido": {}, "genealogia": [99], "deriva_de": 99},
+              {"id": 3, "gen": "G13_poder", "tipo": "respuesta", "tema": "revision",
+               "causa": 1, "a": None, "contenido": {}, "genealogia": [99], "deriva_de": 99},
+              {"id": 4, "gen": "G8_atencion", "tipo": "respuesta", "tema": "revision",
+               "causa": 1, "a": None, "contenido": {}, "genealogia": [99], "deriva_de": 99}])
+    c_eco = any("CONSENSO FALSO" in f for f in revisar(eco)["cerebro"])
+    propios = _t([eco["eventos"][0]] + [dict(e, genealogia=[e["id"]], deriva_de=None)
+                                        for e in eco["eventos"][1:]])
+    c_prop = not any("CONSENSO FALSO" in f for f in revisar(propios)["cerebro"])
+    c6 = c_eco and c_prop
+    if verbose:
+        print(f"  {'ok  ' if c6 else 'FALLO'} CONSENSO FALSO: caza el eco de un solo testigo "
+              f"({'si' if c_eco else 'NO'}) y NO acusa a tres testigos propios "
+              f"({'correcto' if c_prop else 'FALSO POSITIVO'})")
+    if not c6:
+        fallos.append("consenso-falso")
+
+    # 5b) SENAL SIN OYENTE: un tema real, emitido por el unico gen que lo escucha
     solos = [t for t in TEMAS if len(escuchan(t)) == 1]
     if solos:
         tema = solos[0]
