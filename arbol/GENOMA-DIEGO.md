@@ -131,6 +131,12 @@ irreducible: el límite universal de su voluntad.** Así se experimenta sin que 
 
 ## 3. LA CARTILLA DE DESARROLLO (hitos prerregistrables) y EL TRIBUNAL DE BEBÉS
 
+> **HITO 0 — CONSEGUIDO el 9-ago-2026 (INFORME-36).** La frontera yo/mundo emergió por
+> contingencia multimodal (propiocepción 6/6 en **5/5 semillas**, controles sin agencia limpios
+> 5/5, espejo 4/5), corrida por el latido en la nube contra el criterio firmado de los
+> prerregistros 19/23/26. `sobre-el-simulador`. La visión-que-se-une NO replicó (1/5) y el nivel
+> B (el primer no-yo) fracasó 0/5 — ambos registrados; el nodo H-000 espera la firma del director.
+
 Como la cartilla pediátrica: cada hito con criterio numérico firmado ANTES. Lo aprendido en el
 Gimnasio es conocimiento SOBRE NUESTRO SIMULADOR (regla del Gimnasio intacta): entrena la AGENCIA;
 el árbol de física se gana con realidad.
