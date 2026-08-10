@@ -397,10 +397,15 @@ caso("SINDy: una ley vacia no es una ley replicada (hueco cazado y congelado)",
 print("== ranuras: entra al torneo (frontera gris), no al genoma ==")
 from ranuras import regla31 as _rn31
 caso("ranuras: APRUEBA su Regla 31 (una ranura por cosa, o nada)", _rn31(epocas=3, verbose=False) == 0)
-_gd = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "arbol", "GENOMA-DIEGO.md"),
-           encoding="utf-8").read()
-caso("ranuras: el genoma sigue SIN activarla como gen (solo torneo)",
-     "G13" in _gd and "ranuras" in _gd.lower() and "NO ENTRA AL GENOMA" in _gd)
+# Se pregunta a la HOJA MECANICA, no al cartel en prosa. Antes esto leia GENOMA-DIEGO.md, que
+# desde el 10-ago-2026 vive en registros/ por ser un documento humano — y ademas la prosa no es la
+# fuente de verdad: el genoma que se ejecuta es GENOMA.json. Si alguien activara las ranuras de
+# verdad, lo haria ahi, no en un parrafo.
+import json as _json
+_gj = _json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..",
+                                   "arbol", "GENOMA.json"), encoding="utf-8"))
+caso("ranuras: el genoma EJECUTABLE sigue sin activarlas como gen (solo torneo)",
+     "ranuras" not in _json.dumps(_gj, ensure_ascii=False).lower())
 
 print("== SINDy en forma debil + bootstrap (prereg-28): la cura del ruido de sensor ==")
 import sindy3 as _s3

@@ -71,9 +71,11 @@ ok("los CSV que entran al motor tienen columnas neutras (t, sN, x_px, y_px)",
    not malos_csv, str(malos_csv[:2]))
 # B4 Regla 27: el cortafuegos — los veredictos del comparador NO viven del lado de la mente
 lado_mente = glob.glob(os.path.join(BASE, "arbol", "*.md")) + glob.glob(os.path.join(BASE, "arbol", "*.json*"))
+# SIN EXCEPCIONES desde el 10-ago-2026: GENOMA-DIEGO.md estaba exceptuado por vivir en arbol/, y
+# esa excepcion era el sintoma de que un cartel seguia dentro de las hojas. Se mudo a registros/ y
+# la excepcion desaparecio con el. Un cortafuegos con una puerta nombrada no es un cortafuegos.
 fugas = [os.path.basename(f) for f in lado_mente
-         if "COMPARADOR-01" in open(f, encoding="utf-8", errors="ignore").read()
-         and os.path.basename(f) != "GENOMA-DIEGO.md"]  # PLAN-EDUCACION vive en registros/ desde la Regla 34
+         if "COMPARADOR-01" in open(f, encoding="utf-8", errors="ignore").read()]
 ok("Regla 27: ningun veredicto del comparador dentro del lado de la mente", not fugas, str(fugas))
 ok("Regla 27: los informes del comparador viven en registros/ (lado humano)",
    os.path.exists(os.path.join(BASE, "registros", "COMPARADOR-01.md")))

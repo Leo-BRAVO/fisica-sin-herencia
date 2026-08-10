@@ -31,9 +31,10 @@ independientes**, superando en cada una su nulo por desplazamiento y el piso fir
 - Nada de esto es física del universo. Es código nuestro (PyBullet) haciendo de mundo.
 
 ## Qué preguntas nuevas abre
-1. ¿Por qué la visión no se une de forma estable? → torneo de la filogenia (ver `arbol/GIMNASIO.md`
-   §2, `PLAN-VALIDACION-SISTEMAS.md`): A (píxel) vs B (predictivo/JEPA) vs C (descarga corolaria)
-   vs R (ranuras). En marcha.
+1. ¿Por qué la visión no se une de forma estable? → torneo de la filogenia (prerregistro 27):
+   A (píxel) vs B (predictivo) vs C (descarga corolaria) vs R (ranuras). Cerrado como **NO
+   CONCLUYENTE POR INSTRUMENTO**: la vara medía su propio suelo y las cuatro empataban en 0.0000
+   exacto. Espera segunda vuelta con el panel de jueces del prerregistro 31.
 2. ¿Cómo se rediseña el nivel B usando la pista del reescalado?
 3. ¿Qué otros hitos de la cartilla (permanencia de objeto, causalidad por contacto) emergen ahora
    que el ente tiene un "yo" sobre el cual definirlos?
