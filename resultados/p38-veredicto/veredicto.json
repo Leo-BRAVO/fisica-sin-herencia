@@ -1,6 +1,7 @@
 {
  "prerregistro": 38,
  "semillas_incluidas": [
+  1,
   2,
   3,
   4,
@@ -8,24 +9,24 @@
  ],
  "medias_por_competidor": {
   "A-pixel": {
-   "contingencia": 0.00541,
-   "flecha": -0.02057,
-   "robustez": -0.00046
+   "contingencia": 0.00544,
+   "flecha": -0.00454,
+   "robustez": -0.0004
   },
   "B-predictivo": {
-   "contingencia": 0.00168,
-   "flecha": -0.01378,
-   "robustez": 0.00081
+   "contingencia": 0.00391,
+   "flecha": -0.01071,
+   "robustez": 0.00145
   },
   "C-corolario": {
-   "contingencia": 0.00161,
-   "flecha": -0.01262,
-   "robustez": 0.00146
+   "contingencia": 0.0045,
+   "flecha": -0.01096,
+   "robustez": 0.0015
   },
   "R-ranuras": {
-   "contingencia": 0.0071,
-   "flecha": -0.01098,
-   "robustez": 2e-05
+   "contingencia": 0.00569,
+   "flecha": -0.00112,
+   "robustez": 0.00015
   }
  },
  "calibracion_de_la_vara": {
