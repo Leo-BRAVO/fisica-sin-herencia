@@ -1,0 +1,231 @@
+{
+ "prerregistro": 44,
+ "semillas": [
+  101,
+  103,
+  107,
+  109,
+  113
+ ],
+ "mundos": [
+  {
+   "semilla": 101,
+   "filas": [
+    {
+     "articulacion": "art0",
+     "obediencia_neta": 0.0563,
+     "no_mio": false,
+     "varianza_propia": 134.270641,
+     "fraccion_de_contacto": 0.7833,
+     "obediencia_neta_horizonte_doble": 0.1392
+    },
+    {
+     "articulacion": "art1",
+     "obediencia_neta": 0.0624,
+     "no_mio": false,
+     "varianza_propia": 0.113388,
+     "fraccion_de_contacto": 0.7833,
+     "obediencia_neta_horizonte_doble": 0.1572
+    },
+    {
+     "articulacion": "art2",
+     "obediencia_neta": 0.6029,
+     "no_mio": false,
+     "varianza_propia": 244.323183,
+     "fraccion_de_contacto": 0.7833,
+     "obediencia_neta_horizonte_doble": 0.773
+    }
+   ],
+   "aptos": [
+    "altura"
+   ]
+  },
+  {
+   "semilla": 103,
+   "filas": [
+    {
+     "articulacion": "art0",
+     "obediencia_neta": 0.0893,
+     "no_mio": false,
+     "varianza_propia": 18.900299,
+     "fraccion_de_contacto": 0.7833,
+     "obediencia_neta_horizonte_doble": 0.2599
+    },
+    {
+     "articulacion": "art1",
+     "obediencia_neta": 0.2223,
+     "no_mio": false,
+     "varianza_propia": 0.126068,
+     "fraccion_de_contacto": 0.7833,
+     "obediencia_neta_horizonte_doble": 0.4175
+    },
+    {
+     "articulacion": "art2",
+     "obediencia_neta": 0.5876,
+     "no_mio": false,
+     "varianza_propia": 36.53276,
+     "fraccion_de_contacto": 0.7833,
+     "obediencia_neta_horizonte_doble": 0.7387
+    }
+   ],
+   "aptos": [
+    "altura"
+   ]
+  },
+  {
+   "semilla": 107,
+   "filas": [
+    {
+     "articulacion": "art0",
+     "obediencia_neta": 0.1266,
+     "no_mio": false,
+     "varianza_propia": 115.46816,
+     "fraccion_de_contacto": 0.75,
+     "obediencia_neta_horizonte_doble": 0.2806
+    },
+    {
+     "articulacion": "art1",
+     "obediencia_neta": 0.0365,
+     "no_mio": true,
+     "varianza_propia": 0.104903,
+     "fraccion_de_contacto": 0.75,
+     "obediencia_neta_horizonte_doble": 0.083
+    },
+    {
+     "articulacion": "art2",
+     "obediencia_neta": 0.6995,
+     "no_mio": false,
+     "varianza_propia": 75.171318,
+     "fraccion_de_contacto": 0.75,
+     "obediencia_neta_horizonte_doble": 0.8271
+    }
+   ],
+   "aptos": [
+    "art1",
+    "altura"
+   ]
+  },
+  {
+   "semilla": 109,
+   "filas": [
+    {
+     "articulacion": "art0",
+     "obediencia_neta": 0.1221,
+     "no_mio": false,
+     "varianza_propia": 132.779081,
+     "fraccion_de_contacto": 0.7667,
+     "obediencia_neta_horizonte_doble": 0.2624
+    },
+    {
+     "articulacion": "art1",
+     "obediencia_neta": 0.0444,
+     "no_mio": true,
+     "varianza_propia": 0.125642,
+     "fraccion_de_contacto": 0.7667,
+     "obediencia_neta_horizonte_doble": 0.1154
+    },
+    {
+     "articulacion": "art2",
+     "obediencia_neta": 0.7106,
+     "no_mio": false,
+     "varianza_propia": 156.870224,
+     "fraccion_de_contacto": 0.7667,
+     "obediencia_neta_horizonte_doble": 0.8267
+    }
+   ],
+   "aptos": [
+    "art1",
+    "altura"
+   ]
+  },
+  {
+   "semilla": 113,
+   "filas": [
+    {
+     "articulacion": "art0",
+     "obediencia_neta": 0.0852,
+     "no_mio": false,
+     "varianza_propia": 51.807216,
+     "fraccion_de_contacto": 0.75,
+     "obediencia_neta_horizonte_doble": 0.2285
+    },
+    {
+     "articulacion": "art1",
+     "obediencia_neta": 0.0256,
+     "no_mio": true,
+     "varianza_propia": 0.118628,
+     "fraccion_de_contacto": 0.75,
+     "obediencia_neta_horizonte_doble": 0.0397
+    },
+    {
+     "articulacion": "art2",
+     "obediencia_neta": 0.727,
+     "no_mio": false,
+     "varianza_propia": 901.38835,
+     "fraccion_de_contacto": 0.75,
+     "obediencia_neta_horizonte_doble": 0.8419
+    }
+   ],
+   "aptos": [
+    "art1",
+    "altura"
+   ]
+  }
+ ],
+ "mal_clasificadas": 3,
+ "de": 15,
+ "contacto_medio_mal_clasificadas": 0.7555666666666667,
+ "contacto_medio_bien_clasificadas": 0.7694333333333333,
+ "varianza_media_mal_clasificadas": 0.11639100000000001,
+ "varianza_media_bien_clasificadas": 155.64589066666667,
+ "confirma_A_el_mando_no_lo_explica_todo": false,
+ "confirma_C_estaba_casi_quieta": true,
+ "confirma_D_brazo_acoplado_NO_estaba_listada": true,
+ "acoplamiento": {
+  "por_canal": [
+   {
+    "canal_desconectado": 0,
+    "articulacion_suya": "art0",
+    "cae_la_suya": 0.0203,
+    "cae_mas_una_ajena": 0.009,
+    "atribuye_bien": true,
+    "caidas": {
+     "art0": 0.0203,
+     "art1": 0.009,
+     "art2": 0.0011
+    }
+   },
+   {
+    "canal_desconectado": 1,
+    "articulacion_suya": "art1",
+    "cae_la_suya": 0.0062,
+    "cae_mas_una_ajena": 0.0402,
+    "atribuye_bien": false,
+    "caidas": {
+     "art0": 0.0402,
+     "art1": 0.0062,
+     "art2": -0.0016
+    }
+   },
+   {
+    "canal_desconectado": 2,
+    "articulacion_suya": "art2",
+    "cae_la_suya": 0.5175,
+    "cae_mas_una_ajena": 0.0073,
+    "atribuye_bien": true,
+    "caidas": {
+     "art0": 0.0073,
+     "art1": 0.0067,
+     "art2": 0.5175
+    }
+   }
+  ],
+  "acoplado": true,
+  "obediencia_con_todo_conectado": {
+   "art0": 0.0563,
+   "art1": 0.0265,
+   "art2": 0.5175
+  }
+ },
+ "veredicto": "SE CONFIRMA C y D (acoplamiento, NO estaba listada)"
+}

@@ -1,0 +1,365 @@
+{
+ "prerregistro": 45,
+ "exponentes": [
+  -3.0,
+  -2.75,
+  -2.5,
+  -2.25,
+  -2.0,
+  -1.75,
+  -1.5,
+  -1.25,
+  -1.0,
+  -0.75,
+  -0.5,
+  -0.25,
+  0.0,
+  0.25,
+  0.5,
+  0.75,
+  1.0,
+  1.25,
+  1.5,
+  1.75,
+  2.0,
+  2.25,
+  2.5,
+  2.75,
+  3.0
+ ],
+ "semillas": [
+  23,
+  29,
+  31,
+  37,
+  41
+ ],
+ "muestras": 4000,
+ "dt": 0.02,
+ "ruido_relativo": 0.002,
+ "barrido": {
+  "oscilador": [
+   {
+    "exponente": -3.0,
+    "escala": 0.001,
+    "ve_en": 5,
+    "de": 5
+   },
+   {
+    "exponente": -2.75,
+    "escala": 0.0017782794100389228,
+    "ve_en": 5,
+    "de": 5
+   },
+   {
+    "exponente": -2.5,
+    "escala": 0.0031622776601683794,
+    "ve_en": 5,
+    "de": 5
+   },
+   {
+    "exponente": -2.25,
+    "escala": 0.005623413251903491,
+    "ve_en": 4,
+    "de": 5
+   },
+   {
+    "exponente": -2.0,
+    "escala": 0.01,
+    "ve_en": 2,
+    "de": 5
+   },
+   {
+    "exponente": -1.75,
+    "escala": 0.01778279410038923,
+    "ve_en": 0,
+    "de": 5
+   },
+   {
+    "exponente": -1.5,
+    "escala": 0.03162277660168379,
+    "ve_en": 0,
+    "de": 5
+   },
+   {
+    "exponente": -1.25,
+    "escala": 0.05623413251903491,
+    "ve_en": 0,
+    "de": 5
+   },
+   {
+    "exponente": -1.0,
+    "escala": 0.1,
+    "ve_en": 0,
+    "de": 5
+   },
+   {
+    "exponente": -0.75,
+    "escala": 0.1778279410038923,
+    "ve_en": 1,
+    "de": 5
+   },
+   {
+    "exponente": -0.5,
+    "escala": 0.31622776601683794,
+    "ve_en": 3,
+    "de": 5
+   },
+   {
+    "exponente": -0.25,
+    "escala": 0.5623413251903491,
+    "ve_en": 5,
+    "de": 5
+   },
+   {
+    "exponente": 0.0,
+    "escala": 1.0,
+    "ve_en": 5,
+    "de": 5
+   },
+   {
+    "exponente": 0.25,
+    "escala": 1.7782794100389228,
+    "ve_en": 5,
+    "de": 5
+   },
+   {
+    "exponente": 0.5,
+    "escala": 3.1622776601683795,
+    "ve_en": 5,
+    "de": 5
+   },
+   {
+    "exponente": 0.75,
+    "escala": 5.623413251903491,
+    "ve_en": 5,
+    "de": 5
+   },
+   {
+    "exponente": 1.0,
+    "escala": 10.0,
+    "ve_en": 5,
+    "de": 5
+   },
+   {
+    "exponente": 1.25,
+    "escala": 17.78279410038923,
+    "ve_en": 5,
+    "de": 5
+   },
+   {
+    "exponente": 1.5,
+    "escala": 31.622776601683793,
+    "ve_en": 3,
+    "de": 5
+   },
+   {
+    "exponente": 1.75,
+    "escala": 56.23413251903491,
+    "ve_en": 2,
+    "de": 5
+   },
+   {
+    "exponente": 2.0,
+    "escala": 100.0,
+    "ve_en": 2,
+    "de": 5
+   },
+   {
+    "exponente": 2.25,
+    "escala": 177.82794100389228,
+    "ve_en": 1,
+    "de": 5
+   },
+   {
+    "exponente": 2.5,
+    "escala": 316.22776601683796,
+    "ve_en": 3,
+    "de": 5
+   },
+   {
+    "exponente": 2.75,
+    "escala": 562.341325190349,
+    "ve_en": 3,
+    "de": 5
+   },
+   {
+    "exponente": 3.0,
+    "escala": 1000.0,
+    "ve_en": 4,
+    "de": 5
+   }
+  ],
+  "caida_con_roce": [
+   {
+    "exponente": -3.0,
+    "escala": 0.001,
+    "ve_en": 4,
+    "de": 5
+   },
+   {
+    "exponente": -2.75,
+    "escala": 0.0017782794100389228,
+    "ve_en": 4,
+    "de": 5
+   },
+   {
+    "exponente": -2.5,
+    "escala": 0.0031622776601683794,
+    "ve_en": 4,
+    "de": 5
+   },
+   {
+    "exponente": -2.25,
+    "escala": 0.005623413251903491,
+    "ve_en": 5,
+    "de": 5
+   },
+   {
+    "exponente": -2.0,
+    "escala": 0.01,
+    "ve_en": 4,
+    "de": 5
+   },
+   {
+    "exponente": -1.75,
+    "escala": 0.01778279410038923,
+    "ve_en": 2,
+    "de": 5
+   },
+   {
+    "exponente": -1.5,
+    "escala": 0.03162277660168379,
+    "ve_en": 2,
+    "de": 5
+   },
+   {
+    "exponente": -1.25,
+    "escala": 0.05623413251903491,
+    "ve_en": 1,
+    "de": 5
+   },
+   {
+    "exponente": -1.0,
+    "escala": 0.1,
+    "ve_en": 1,
+    "de": 5
+   },
+   {
+    "exponente": -0.75,
+    "escala": 0.1778279410038923,
+    "ve_en": 2,
+    "de": 5
+   },
+   {
+    "exponente": -0.5,
+    "escala": 0.31622776601683794,
+    "ve_en": 5,
+    "de": 5
+   },
+   {
+    "exponente": -0.25,
+    "escala": 0.5623413251903491,
+    "ve_en": 5,
+    "de": 5
+   },
+   {
+    "exponente": 0.0,
+    "escala": 1.0,
+    "ve_en": 5,
+    "de": 5
+   },
+   {
+    "exponente": 0.25,
+    "escala": 1.7782794100389228,
+    "ve_en": 4,
+    "de": 5
+   },
+   {
+    "exponente": 0.5,
+    "escala": 3.1622776601683795,
+    "ve_en": 5,
+    "de": 5
+   },
+   {
+    "exponente": 0.75,
+    "escala": 5.623413251903491,
+    "ve_en": 3,
+    "de": 5
+   },
+   {
+    "exponente": 1.0,
+    "escala": 10.0,
+    "ve_en": 3,
+    "de": 5
+   },
+   {
+    "exponente": 1.25,
+    "escala": 17.78279410038923,
+    "ve_en": 4,
+    "de": 5
+   },
+   {
+    "exponente": 1.5,
+    "escala": 31.622776601683793,
+    "ve_en": 4,
+    "de": 5
+   },
+   {
+    "exponente": 1.75,
+    "escala": 56.23413251903491,
+    "ve_en": 5,
+    "de": 5
+   },
+   {
+    "exponente": 2.0,
+    "escala": 100.0,
+    "ve_en": 5,
+    "de": 5
+   },
+   {
+    "exponente": 2.25,
+    "escala": 177.82794100389228,
+    "ve_en": 5,
+    "de": 5
+   },
+   {
+    "exponente": 2.5,
+    "escala": 316.22776601683796,
+    "ve_en": 5,
+    "de": 5
+   },
+   {
+    "exponente": 2.75,
+    "escala": 562.341325190349,
+    "ve_en": 5,
+    "de": 5
+   },
+   {
+    "exponente": 3.0,
+    "escala": 1000.0,
+    "ve_en": 5,
+    "de": 5
+   }
+  ]
+ },
+ "detalle": {
+  "oscilador": {
+   "banda_desde_10e": -0.25,
+   "banda_hasta_10e": 1.25,
+   "decadas": 1.5,
+   "tramos_contiguos": 3,
+   "fuera_de_la_banda_no_ve": false,
+   "ve_en_todas_las_escalas": false
+  },
+  "caida_con_roce": {
+   "banda_desde_10e": 1.25,
+   "banda_hasta_10e": 3.0,
+   "decadas": 1.75,
+   "tramos_contiguos": 3,
+   "fuera_de_la_banda_no_ve": false,
+   "ve_en_todas_las_escalas": false
+  }
+ },
+ "veredicto": "ERRATICO — el motor ve y deja de ver en tramos SEPARADOS, no en una banda. Es PEOR que una banda: una banda se rodea normalizando; un patron erratico hace que el veredicto dependa de las unidades de forma impredecible"
+}
