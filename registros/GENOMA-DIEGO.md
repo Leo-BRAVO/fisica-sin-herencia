@@ -52,7 +52,7 @@ el registro de procedencia del genoma — la Regla 2 aplicada al recién nacido.
 | **G14 — Incertidumbre** (`incertidumbre.py`) | epistémica (curable, cae al doblar datos) vs aleatoria (azar, no cae) por conjunto bootstrap | **3/3**, con una lección: mi primer mundo de prueba tenía ley exacta y el estimador dijo epistémica=0 — **y tenía razón él** | ídem — su firma falsable quedó congelada en el banco |
 
 ### Genes candidatos restantes (PROPUESTOS, sin activar)
-Salidos de la investigación del Gimnasio (`arbol/GIMNASIO.md` §2). Ninguno entra sin su Regla 31 y
+Salidos de la investigación del Gimnasio (`registros/GIMNASIO.md` §2). Ninguno entra sin su Regla 31 y
 la firma del director; se listan aquí para que el genoma diga lo que le falta, no solo lo que tiene.
 
 | Gen | Qué es | Por qué | Legalidad |

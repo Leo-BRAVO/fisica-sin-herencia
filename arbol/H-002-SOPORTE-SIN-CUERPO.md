@@ -41,9 +41,9 @@ el que más puntúa.
 Esto no es "no alcanzó por poco". Es que **no hay efecto**.
 
 ## Lo que este nodo afirma
-**La física de soporte se aprende MIRANDO. El cuerpo no aporta aquí.** Llegamos por camino
-independiente, en nuestro propio mundo y con nuestro propio instrumento, a lo que la línea de
-física intuitiva desde video pasivo encontró en 2025.
+**La física de soporte se aprende MIRANDO. El cuerpo no aporta aquí.** Medido en nuestro propio
+mundo, con nuestro propio instrumento, y contra el control positivo que demuestra que la
+comparación sí ve diferencias cuando las hay.
 
 **Lo que el cuerpo sí aporta es la frontera yo/mundo**, y en un sentido preciso: **no como mérito
 medido, sino como hecho lógico**. El pasivo no sacó 0 porque le fuera mal; sacó 0 porque **la

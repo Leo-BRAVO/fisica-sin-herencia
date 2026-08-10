@@ -49,7 +49,7 @@ Un fallo de cualquiera **bloquea el commit**. El cuarto existe porque un guardi�
 1. **`CIMIENTOS.md`** — las 34 reglas del método, la Segunda Ciencia, el prompt de arranque para cualquier orquestador.
 2. **`MENTE.md`** — la identidad y experiencia del científico (v12): quién es, qué aprendió, dónde va.
 3. **`GUIA-ORQUESTADOR.md`** — el manual de relevo: prohibiciones eternas, lecciones pagadas, sistemas vivos.
-4. **`arbol/GENOMA-DIEGO.md`** — el documento fundacional del ente: los genes, la ecuación del impulso, los hitos.
+4. **`registros/GENOMA-DIEGO.md`** — el documento fundacional del ente: los genes, la ecuación del impulso, los hitos.
 
 Auditorías clave: **`registros/AUDITORIA-EXTERNA-01.md`** (la Regla 11 aplicada a las herramientas) y
 **`registros/DICTAMEN-PREVUELO-01.md`** (la validación total: reglas, no-contaminación, nube, árbol).

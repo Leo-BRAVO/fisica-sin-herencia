@@ -144,7 +144,18 @@ print("== LA FRONTERA DE LA MEMORIA (Regla 34): arbol/ solo tiene hojas, y nadie
 # registros/. Estos tres casos impiden que la frontera se borre por descuido:
 CARTELES = ("ANOMALIAS.md", "ECUACIONES-COMPARADAS.md", "INVESTIGACION-LABS.md",
             "CURRICULO-DATOS.md", "PLAN-EDUCACION.md", "PLATAFORMA-Y-FRONTERA.md",
-            "DISENO-CONSTRUCCION.md", "FRONTERA-INOBSERVABLE.md")
+            "DISENO-CONSTRUCCION.md", "FRONTERA-INOBSERVABLE.md",
+            # SEGUNDA MUDANZA, 10-ago-2026, por orden del director ("evita que todo cartel este
+            # dentro de las hojas"). La primera mudanza los busco por nombre conocido y se dejo
+            # DOS dentro de arbol/, los dos peores: GIMNASIO.md es una revision de literatura
+            # cientifica humana (y el propio documento advertia en su §1 que nada de eso podia
+            # entrar al lado de Diego, mientras vivia en la carpeta que la Regla 29 declara
+            # visible para el); GENOMA-DIEGO.md cita cognicion infantil, cognicion comparada y
+            # la escalera causal por su nombre. Ninguno era leido por modulo alguno —no hubo
+            # fuga— pero una frontera que depende de que nadie deje caer un archivo ahi no es
+            # una frontera. Por eso ademas del nombre se anade el candado por CONTENIDO de mas
+            # abajo: la lista por nombre solo caza lo que ya sabemos que existe.
+            "GIMNASIO.md", "GENOMA-DIEGO.md")
 _intrusos = [c for c in CARTELES if os.path.exists(os.path.join(BASE, "arbol", c))]
 caso("ningun cartel humano vive dentro de arbol/ (la mudanza se sostiene)",
      not _intrusos, str(_intrusos))
@@ -178,8 +189,27 @@ for _py in sorted(glob.glob(os.path.join(BASE, "codigo", "*.py"))):
 caso("ningun modulo lee arbol/ como carpeta completa (toda lectura nombra su hoja)",
      not _globales, str(_globales))
 
+# EL CANDADO POR CONTENIDO (10-ago-2026). La lista de nombres de arriba solo caza los carteles que
+# YA sabemos que existen; el que alguien escriba mañana entraria sin ruido. Este caso mira lo que
+# de verdad importa: que ninguna hoja —lo que la Regla 29 hace visible a Diego— CITE ciencia humana.
+# Cazo dos fugas mias con esto el mismo dia que lo escribi: dos nodos recien redactados mencionaban
+# hallazgos publicados de terceros. El cortafuegos de la Regla 27 no falla por mala fe, falla por
+# redaccion comoda — y la comodidad hay que mecanizarla en contra.
+_HUELLAS_HUMANAS = ("arxiv", "neurips", "iclr", "icml", " et al", "la literatura",
+                    "publicad", "spelke", "baillargeon", "tomasello", "oudeyer", "pearl",
+                    "rovee-collier")
+_citas = []
+for _hoja in sorted(glob.glob(os.path.join(BASE, "arbol", "*.md"))
+                    + glob.glob(os.path.join(BASE, "arbol", "epoca1", "*.md"))):
+    _t = open(_hoja, encoding="utf-8", errors="ignore").read().lower()
+    for _h in _HUELLAS_HUMANAS:
+        if _h in _t:
+            _citas.append(f"{os.path.basename(_hoja)}:{_h.strip()}")
+caso("ninguna hoja de arbol/ cita ciencia humana (Regla 27 mecanizada por CONTENIDO, no por nombre)",
+     not _citas, str(_citas))
+
 print("== documentos fundacionales: sus referencias cruzadas existen ==")
-genoma_path = os.path.join(BASE, "arbol", "GENOMA-DIEGO.md")
+genoma_path = os.path.join(BASE, "registros", "GENOMA-DIEGO.md")   # cartel: vive fuera de arbol/
 if os.path.exists(genoma_path):
     genoma = open(genoma_path, encoding="utf-8").read()
     for ref in re.findall(r"prereg(?:istro)?-(\d+)", genoma):

@@ -51,6 +51,7 @@ discrimina. Es la condición que convierte este nodo en una afirmación y no en 
 1. ¿Por qué la propiocepción distingue y la visión no? ¿Es el sensor, la representación, o que la
    vista nunca tuvo que pagar el coste de equivocarse?
 2. Si se le pone un gemelo que obedece a sus órdenes **con retardo**, ¿dónde está el límite
-   temporal de su "yo"? Es la pregunta que la línea de la agencia mide en humanos.
+   temporal de su "yo"? Hoy la obediencia se mide a horizonte 8 y nadie ha probado qué pasa
+   cuando el eco llega tarde.
 3. ¿Sirve este reconocimiento para algo — cambia lo que Diego hace, o es un dato que no usa? Hoy
    su balbuceo es ciego. Es la pregunta que el prereg-36 deja en pie.
