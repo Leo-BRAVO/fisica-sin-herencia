@@ -106,7 +106,13 @@ que vi— pierdo, y el prereg-35 se queda PARCIAL para siempre.
 - **No revive el prereg-35.** Gane lo que gane, aquel estudio se queda como quedó: su acta no se
   reescribe (Regla 8). Lo que cambia, si acaso, es el criterio de los estudios **futuros**.
 
-## 9. NIVEL Y FIRMA
+## 9. EN QUÉ PELDAÑO ESTAMOS (Regla 9)
+**Fase 1 — sistemas con respuesta conocida.** El mundo es PyBullet y la respuesta la conoce el
+simulador; lo que se examina es **nuestro instrumento**, no el universo. **No se sube de peldaño con
+este estudio**, y no se subirá mientras la Fase 1 no funcione de punta a punta: hoy no funciona —
+el prereg-39 acaba de salir negativo.
+
+## 10. NIVEL Y FIRMA
 **Nivel 1** — correlación en simulador. No sube de nivel: no hay experimento físico aquí.
 **Firmado por el director** (10-ago-2026, *"la 1 sí"*), que es lo que lo hace legítimo: el criterio
 lo movió quien tenía potestad para moverlo, y no yo después de ver los datos.

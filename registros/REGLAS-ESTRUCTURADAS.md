@@ -1,113 +1,95 @@
-# LAS 34 REGLAS, CON ESTRUCTURA — versión estructurada, 10 de agosto de 2026
-**Pedido del director: *"cada regla debería tener estructura: la regla, el porqué, qué evita y su
-objetivo... pero debe existir investigación científica que nos ayude a redactarlas mejor"*.**
+# LAS REGLAS, CON ESTRUCTURA — **documento GENERADO, no escrito a mano**
+**Pedido del director (10-ago-2026): *"cada regla debería tener estructura: la regla, el porqué,
+qué evita y su objetivo... pero debe existir investigación científica que nos ayude a redactarlas
+mejor"*. Firmado el mismo día: *"la 3 sí a las preguntas"*.**
 
-**Esto NO reemplaza a `CIMIENTOS.md`.** Es su índice estructurado: la misma constitución, ordenada
-para poder auditarla de un vistazo. El texto completo, con su historia, sigue donde estaba.
+> **Este archivo lo genera `codigo/tabla_reglas.py` leyendo `CIMIENTOS.md`.** No se edita a mano.
+> Su primera versión SÍ se escribió a mano y quedó rancia en horas: seguía diciendo *"14 reglas sin
+> guardián"* cuando ya tenían uno. **Todo número escrito a mano caduca en silencio; lo que se
+> cuenta, no.** `coherencia.py` comprueba en cada commit que este documento coincida con la
+> constitución.
 
 ---
 
-## LOS TRES PRINCIPIOS QUE LA INVESTIGACIÓN APORTA
-La literatura sobre diseño de reglas y cumplimiento da tres, y los tres nos cambian algo:
+## LOS TRES PRINCIPIOS QUE LA INVESTIGACIÓN APORTA, y qué cambió cada uno
 
 **1. La RAZÓN importa más que el enunciado.** *La gente cumple de forma más consistente las reglas
 que ENTIENDE que las reglas que solo CONOCE, y una regla que incluye su razón produce cumplimiento
-más robusto y generalizable a situaciones nuevas.*
-→ Es exactamente lo que el director propuso por su cuenta. **27 de nuestras 34 no dicen su razón.**
+más generalizable a situaciones nuevas.*
+→ Es lo que el director propuso por su cuenta al pedir "el porqué". **Y es el campo que yo me
+salté** en el primer intento: puse *qué evita* y no *por qué existe*, que no son lo mismo — uno
+mira adelante, el otro mira atrás, al daño concreto que la hizo nacer. Hoy las 34 lo llevan.
 
 **2. FORMULAR EN POSITIVO.** *Las reglas que dicen qué SÍ hacer producen cumplimiento más fiable
 que las que solo dicen qué no hacer.*
-→ Casi todas las nuestras están en negativo ("prohibido", "jamás", "ningún"). Por eso esta tabla
-añade una columna **OBJETIVO** en positivo, que antes no existía en ninguna.
+→ Casi todas las nuestras nacieron en negativo ("prohibido", "jamás", "ningún"). Por eso cada una
+tiene ahora un campo **OBJETIVO** redactado en positivo, que antes no existía en ninguna.
 
-**3. ESPECIFICIDAD CON HOLGURA.** *Suficientemente específicas para aplicarse de forma
-determinista dentro de su alcance, suficientemente generales para cubrir casos no previstos.*
-→ Es el equilibrio que nos falta: 17 reglas no dicen **cómo** se comprueban, así que no se aplican
-de forma determinista — se aplican como uno se acuerde.
+**3. ESPECIFICIDAD CON HOLGURA.** *Suficientemente específicas para aplicarse de forma determinista
+dentro de su alcance, suficientemente generales para cubrir casos no previstos.*
+→ Es lo que daba el campo **CÓMO SE COMPRUEBA**: sin él, una regla se aplica "como uno se acuerde".
 
-**Y hoy pagué esa factura.** Al construir G12 reflejos medí un acuerdo de 0.907 que parecía
-excelente; la línea base tonta sacaba 0.887. **Incumplí la Regla 12 sin darme cuenta**, porque la
-Regla 12 dice *qué* hacer y no *cómo se comprueba que lo hice*.
+**Y la factura de no tenerlo, medida:** al construir G12 reflejos medí un acuerdo de 0.907 que
+parecía excelente; la línea base tonta sacaba 0.887. **Incumplí la Regla 12 sin darme cuenta**,
+porque la Regla 12 decía *qué* hacer y no *cómo se comprueba que lo hice*. De ahí salieron las tres
+fusiones y los cuatro endurecimientos.
+
+---
+
+## EL ESTADO DE HOY, contado (no escrito)
+
+| | |
+|---|---|
+| Reglas numeradas | **34** |
+| Vigentes | **31** |
+| Fundidas (conservan su número para no romper referencias) | **3** — R12→R11, R14→R7, R28→R30 |
+| **BLOQUEAN el commit** si se incumplen | **28 de 31** |
+| **BLOQUEAN EN PARTE** — una mitad mecanizada, la otra es un juicio | **2** — R9, R19 |
+| Solo se **CUENTAN** (deuda medida, no bloquea) | **0** — ninguna |
+| **NO MECANIZABLES**, declarado y no fingido | **1** — R22 |
+
+**Decir NO MECANIZABLE es honesto y útil: marca dónde el proyecto depende de disciplina humana. Fingir que todo se comprueba solo sería peor que no comprobarlo.** La Regla 22 (doble uso) es el ejemplo claro: es del director, no es delegable, y una revisión moral que una máquina firma no es una revisión moral.
 
 ---
 
 ## LA TABLA
 
-| # | LA REGLA | OBJETIVO (en positivo) | QUÉ EVITA | CÓMO SE COMPRUEBA |
-|---|---|---|---|---|
-| **1** | Datos, no teorías | usar solo lo que se midió | que una teoría heredada decida qué se busca | **NO MECANIZADA** |
-| **2** | Los datos también están contaminados: exigir el nivel más crudo posible | partir del dato más crudo disponible | que el preprocesado de otro traiga sus supuestos dentro | auditoria_total.py |
-| **3** | El descubridor no puede ser un modelo de lenguaje | descubrir con sistemas entrenados solo en los datos del experimento | importar toda la física humana por la puerta del lenguaje | auditoria_total.py |
-| **4** | Prohibido nombrar antes de validar | nombrar solo lo ya validado | que un nombre familiar haga creer que ya entendemos | auditoria_total.py |
-| **5** | El único juez es la predicción prospectiva | juzgar por predicción de datos ocultos | aprobar por ajuste bonito sobre lo ya visto | **NO MECANIZADA** |
-| **6** | La simplicidad se mide en bits, no en elegancia | medir la simplicidad en bits | confundir elegancia con verdad | **NO MECANIZADA** |
-| **7** | Reiniciar muchas veces y estudiar la diversidad | correr muchas semillas y estudiar su diversidad | tomar una corrida afortunada por un hallazgo | **NO MECANIZADA** |
-| **8** | Registro inmutable y prerregistro | dejar registro inmutable y prerregistro previo | decidir el criterio después de ver el resultado | auditoria_total.py |
-| **9** | Escalera de dificultad: ganarse cada peldaño | declarar cada supuesto del montaje | que un supuesto invisible sostenga la conclusión | **NO MECANIZADA** |
-| **10** | La realidad tiene el veto | mantener separados los datos de entrenamiento y de juicio | juzgarse con lo que ya se estudió | **NO MECANIZADA** |
-| **11** | Intentar destruir cada resultado antes de creerlo | intentar destruir cada resultado antes de creerlo | creer un patrón que también aparece en el ruido | auditoria_total.py, guardianes_de_guardianes.py |
-| **12** | Todo resultado se mide contra una línea base tonta | medir contra una línea base tonta | celebrar un acierto que un tonto también consigue | pruebas.py |
-| **13** | Criterios de abandono escritos de antemano | escribir de antemano cuándo se abandona | perseguir una idea muerta por no haber dicho cuándo parar | **NO MECANIZADA** |
-| **14** | Replicabilidad total | hacer todo reproducible por otro | un resultado que solo existe en una máquina | **NO MECANIZADA** |
-| **15** | La máquina propone, el humano decide | proponer con evidencia y decidir con firma | que una recomendación se vuelva hecho consumado | auditoria_total.py, coherencia.py |
-| **16** | Prioridad demostrable y apertura | registrar prioridad con commits fechados | perder la autoría de lo que se pensó primero | auditoria_total.py |
-| **17** | El proyecto debe ser operable por un no-programador | mantener el proyecto operable por un no-programador | que el director dependa de mí para entender su propio proyecto | auditoria_total.py |
-| **18** | El árbol de conocimiento: nada se descubre suelto | hacer nacer cada corrida de una pregunta abierta | acumular resultados sueltos que no responden nada | **NO MECANIZADA** |
-| **19** | El puente a la realidad: toda ley candidata debe poder morir en un experimento físico | subir la escalera de confianza hasta el experimento físico | llamar conocimiento a una compresión que solo vive en la computadora | auditoria_total.py |
-| **20** | El camino inverso: de ley a tecnología | diseñar tecnología solo con leyes del árbol | colar intuición de ingeniería humana como si fuera nuestra | **NO MECANIZADA** |
-| **21** | El mapa de anomalías: dónde cavar para contradecir | cavar donde la teoría humana deja residuos | buscar contradicciones opinando en vez de midiendo | guardianes_de_guardianes.py |
-| **22** | Doble uso: el descubrimiento también se audita moralmente | revisar el doble uso antes de compartir | publicar algo peligroso sin haberlo pensado | guardianes_de_guardianes.py |
-| **23** | El motor tampoco cree en sí mismo | someter los nodos viejos a las varas nuevas | un árbol que solo crece y nunca se poda | **NO MECANIZADA** |
-| **24** | El científico del proyecto vive en el repositorio, no en un modelo | mantener al científico en el repositorio, no en un modelo | que el conocimiento viva en un sitio que no se puede auditar | **NO MECANIZADA** |
-| **25** | El mundo ya está grabado: datos de video existentes | usar grabaciones reales con procedencia clara | datos de origen dudoso sosteniendo un nodo | auditoria_total.py |
-| **26** | Ingeniería desde cero: los documentos que no existen | escribir los documentos que faltan antes de construir | construir sin saber qué se está construyendo | **NO MECANIZADA** |
-| **27** | El comparador y el cortafuegos: cómo se corrige el conocimiento humano | mantener el cortafuegos del comparador | que la física humana entre por la puerta de atrás | auditoria_total.py, coherencia.py, metodo.py, pruebas.py, sanidad.py, temple.py |
-| **28** | El bucle interior: automejora de las VARIABLES, jamás de los JUECES | automejorar las variables, jamás los jueces | que el ente ajuste su propia vara hasta aprobar | **NO MECANIZADA** |
-| **29** | El conectoma: la mente ve TODAS sus hojas | dejar que la mente vea todas sus hojas | una mente ciega a su propia memoria | auditoria_total.py, coherencia.py |
-| **30** | Automejora total POR PROPUESTA: código, conectoma y entendimiento | automejorar por propuesta con commit visible | código que se edita a sí mismo en silencio | pruebas.py, temple.py |
-| **31** | Toda herramienta debe fallar donde no hay nada | hacer que toda herramienta falle donde no hay nada | una herramienta que encuentra algo hasta en un mundo vacío | auditoria_total.py, guardianes_de_guardianes.py, metodo.py, pruebas.py, sanidad.py |
-| **32** | La autoauditoría permanente: todo interconectado, salvo lo que la mente no ve | autoauditar la casa en cada commit | que los documentos digan una cosa y el disco otra | auditoria_total.py, coherencia.py |
-| **33** | La filogenia: el genoma solo cambia entre generaciones, jamás dentro de una vida | cambiar el genoma solo entre generaciones | que el ente se modifique a mitad de una vida y nada sea comparable | pruebas.py, sinapsis.py, temple.py |
-| **34** | La frontera de la memoria: `arbol/` son sus HOJAS; los carteles humanos viven fuera | guardar en arbol/ solo las hojas del ente | que un cartel humano acabe donde el ente lo puede leer | coherencia.py |
+| # | LA REGLA | POR QUÉ EXISTE | OBJETIVO (en positivo) | QUÉ EVITA | CÓMO SE COMPRUEBA | SI SE VIOLA |
+|---|---|---|---|---|---|---|
+| **1** | Datos, no teorías | es la regla fundacional del proyecto: si el descubridor recibe una ecuacion humana, todo lo que encuentre despues es un eco de lo que ya sabiamos. Si… | que el descubridor reciba solo mediciones | que una teoría heredada decida de antemano qué se puede encontrar | `reglas.py` → ningún módulo descubridor lleva física humana escrita dentro | commit bloqueado |
+| **2** | Los datos también están contaminados: exigir el nivel más crudo posib… | una columna llamada 'energia (julios)' ya paso por una teoria humana. Descubrimos que el dato limpio de otro trae los supuestos de otro dentro, y que… | partir siempre del dato más crudo que exista | heredar en silencio los supuestos del que procesó los datos antes que nosotros | `auditoria_total.py` → procedencia y clasificación cruda/derivada de cada dataset | el nodo se marca contaminado |
+| **3** | El descubridor no puede ser un modelo de lenguaje | un modelo de lenguaje esta entrenado sobre toda la fisica humana escrita: es contaminacion total por construccion, no por descuido. Es la razon de qu… | que las hipótesis salgan de sistemas entrenados solo con los datos del experimento | importar toda la física humana por la puerta del lenguaje | `auditoria_total.py` → ningún LLM en la cadena de descubrimiento; `coherencia.py` → ningún módulo abre un cartel humano como datos | el resultado queda invalidado entero |
+| **4** | Prohibido nombrar antes de validar | nombrar importa supuestos. En julio llamamos 'k' a una constante y durante dias razonamos sobre ella como si supieramos que era; el nombre nos habia … | nombrar solo lo que ya está validado | que un nombre familiar haga creer que ya entendemos lo que solo medimos | `auditoria_total.py` → los nodos usan V1, V2… hasta la validación | el nodo se revoca hasta renombrarlo |
+| **5** | El único juez es la predicción prospectiva | explicar lo ya visto es ajuste, no descubrimiento. La primera campaña del proyecto 'encontro' una ley que la media de los datos vencia — la vara sin … | juzgar toda ley por lo que predice sobre datos que nunca vio | aprobar por ajuste bonito sobre lo ya visto, que es la forma más común de autoengaño | `reglas.py` → todo nodo de física declara con qué datos NO VISTOS se juzgó | commit bloqueado |
+| **6** | La simplicidad se mide en bits, no en elegancia | 'simple' y 'elegante' son juicios esteticos humanos, y la estetica es contaminacion. Se adopto la longitud minima de descripcion porque es un numero … | medir la simplicidad en bits, que es un número | confundir elegancia con verdad — la estética es contaminación humana | `reglas.py` → ninguna afirmación de simplicidad va sin número al lado | commit bloqueado |
+| **7** | Reiniciar muchas veces y estudiar la diversidad | hallazgo de Columbia y factura propia: en julio una corrida afortunada produjo un resultado que ninguna otra semilla reprodujo. La 14 se fundio aqui … | **FUNDIDA CON LA REGLA 14** — replicabilidad: muchas semillas y todo reproducible | tomar una corrida afortunada por un hallazgo | `reglas.py` → todo nodo cita su evidencia de replicación CON NÚMERO | commit bloqueado |
+| **8** | Registro inmutable y prerregistro | un resultado sin registro completo no se puede auditar hacia atras, y la contaminacion solo se caza hacia atras. La gobernanza de enmiendas se agrego… | dejar registro inmutable y prerregistro previo de todo | decidir el criterio después de ver el resultado | `auditoria_total.py` → cada nodo cita prerregistros que existen; `coherencia.py` → la cadena documental completa | commit bloqueado |
+| **9** | Escalera de dificultad: ganarse cada peldaño | saltar a lo dificil hace imposible distinguir el fallo del metodo del tamaño del problema. Si el pendulo no sale, la culpa no es de la mecanica cuant… | subir un peldaño solo cuando el anterior funcione de punta a punta | saltar a lo difícil y confundir el fallo del método con la dificultad del problema | `reglas.py` → todo prerregistro desde el 42 **declara en qué peldaño está** (bloquea el commit). Lo que sigue siendo **NO MECANIZABLE** es decidir que un peldaño *funcio… | commit bloqueado si el prerregistro no declara su peldaño; … |
+| **10** | La realidad tiene el veto | ninguna simulacion es el mundo. Todo lo que corre hoy es PyBullet haciendo de universo, y esta regla existe para que nunca se nos olvide al escribir … | terminar toda ley candidata en una predicción verificable en el mundo físico | que una compresión que solo vive en la computadora se llame descubrimiento | `reglas.py` → ningún nodo se proclama descubrimiento sin el nivel 3 de la Regla 19 | commit bloqueado |
+| **11** | Intentar destruir cada resultado antes de creerlo | el investigador que quiere que funcione es la mayor fuente de error del proyecto. La 12 se fundio aqui el 10-ago por daño medido: ese dia corri el nu… | **FUNDIDA CON LA REGLA 12** — destruir cada resultado antes de creerlo: nulo válido Y lín… | creer un hallazgo que el azar también produce, o que un predictor ingenuo ya lograba | `pruebas.py` → el nulo debe destruir de verdad; `auditoria_total.py` → un verdugo que no cambia el mundo se marca INVÁLIDO; `reglas.py` → línea base tonta obligatoria de… | el resultado no entra al registro como hallazgo |
+| ~~12~~ | Todo resultado se mide contra una línea base tonta | la misma razon que la **Regla 11**, en la que se fundio el 10-ago-2026 | ver la **Regla 11**, que ahora la contiene | lo mismo que la Regla 11 | en la Regla 11 | la sanción es la de la Regla 11 |
+| **13** | Criterios de abandono escritos de antemano | el pozo del costo hundido. Se endurecio el 10-ago porque 'no concluyente' se decidio tres veces despues de ver los datos: un criterio escrito con adj… | declarar de antemano, con número, cuándo se abandona | el pozo del costo hundido: seguir intentándolo hasta que salga | `reglas.py` → todo prerregistro desde el 42 declara cuándo SE ABANDONA, con número **(ENDURECIDA 10-ago-2026)** | commit bloqueado |
+| ~~14~~ | Replicabilidad total | la misma razon que la **Regla 7**, en la que se fundio el 10-ago-2026 | ver la **Regla 7**, que ahora la contiene | lo mismo que la Regla 7 | en la Regla 7 | la sanción es la de la Regla 7 |
+| **15** | La máquina propone, el humano decide | un bucle sin supervision optimiza hacia donde nadie miro. La enmienda del 8-ago la reconcilio con la practica; la del 10-ago paso al director a obser… | que el humano decida el diseño del ciclo, y el orquestador avance dentro de él | un bucle sin supervisión que optimiza hacia donde nadie miró | `coherencia.py` → todo nodo lleva firma, y todo nodo de FIRMA DELEGADA enumera su quórum adversarial completo | el nodo no se escribe |
+| **16** | Prioridad demostrable y apertura | para que el trabajo cuente como legado debe ser demostrable que fue tuyo y cuando. El director decidio el 8-ago que sigue privado, con razon dada: pu… | que la prioridad quede demostrable con commits fechados | que otro pueda reclamar lo que este proyecto pensó primero | `auditoria_total.py` → la decisión de seguir privado está escrita en la constitución. **RESERVADA AL DIRECTOR:** hacer público el repositorio no es delegable | no aplica: es decisión del director |
+| **17** | El proyecto debe ser operable por un no-programador | el director dirige y no programa. Si el informe no se entiende, el informe esta mal — la carga de la claridad es del orquestador. El trozo del Word s… | que el director pueda dirigir el proyecto sin leer una línea de código | que el orquestador se refugie en lo técnico y el humano pierda el control real | `auditoria_total.py` → toda corrida termina en un `resultados/INFORME-NN.md` en español llano | la corrida no se da por terminada |
+| **18** | El árbol de conocimiento: nada se descubre suelto | sin arbol, cada corrida es un evento suelto y el conocimiento no compone. El proyecto entero apuesta a que lo que crece no es la maquina sino el arbol | que cada resultado nazca de una pregunta abierta y deje preguntas nuevas | corridas sueltas que no componen: conocimiento que no se acumula | `reglas.py` → todo nodo abre al menos una pregunta nueva | commit bloqueado |
+| **19** | El puente a la realidad: toda ley candidata debe poder morir en un ex… | una compresion que solo vive en la computadora no es conocimiento. Se endurecio el 10-ago con un dato incomodo delante: en 42 prerregistros, CERO nod… | que toda ley candidata pueda morir en un experimento físico | que una correlación de simulador se confunda con una ley del universo | `reglas.py` → ningún nodo declara NIVEL 2 sin datos que nadie había visto **(ENDURECIDA 10-ago-2026)**; y DEUDA MEDIDA: 0 de 4 nodos llegaron al nivel 2 | el nodo se queda en nivel 1 |
+| **20** | El camino inverso: de ley a tecnología | la antena evolucionada de la NASA (2006) la diseño una busqueda automatica con una forma que ningun ingeniero habria dibujado, y funciono mejor. La n… | diseñar tecnología usando ÚNICAMENTE las leyes del árbol | que la intuición ingenieril humana entre por la puerta de atrás del diseño | `reglas.py` → condicional: hoy no hay diseños, así que no hay nada que vigilar; en cuanto exista `ingenieria/`, cada afirmación deberá citar su nodo | el diseño no se acepta |
+| **21** | El mapa de anomalías: dónde cavar para contradecir | contradecir el conocimiento humano no se hace opinando: se hace cavando donde las teorias ya dejan residuos medidos. Y una afirmacion extraordinaria … | cavar donde las teorías humanas ya dejan residuos medidos | opinar contra las teorías en vez de medir contra ellas | `coherencia.py` → `ANOMALIAS.md` vive del lado humano (Regla 34) y solo guarda números y procedencia | el catálogo se rechaza si trae explicaciones humanas |
+| **22** | Doble uso: el descubrimiento también se audita moralmente | toda fisica potente es de doble filo: energia nueva es tambien arma potencial. Un proyecto que nace para la paz debe poder demostrar que lo penso des… | pensar el peor uso posible antes de compartir cualquier nodo aplicable | descubrir algo peligroso y enterarse de que lo era por el titular de otro | **NO MECANIZABLE Y NO DELEGABLE.** Es del director, y debe seguir siéndolo: una revisión moral que una máquina firma no es una revisión moral. `reglas.py` cuenta cuántos… | el nodo no se comparte fuera del repositorio |
+| **23** | El motor tampoco cree en sí mismo | un arbol que solo crece y nunca se poda es dogma con formato de carpeta. En agosto N-004 entro en cuarentena y N-002 y N-003 se degradaron de PREDICT… | re-someter los nodos viejos a los métodos nuevos, y podar el que falle | un árbol que solo crece: dogma con formato de carpeta | `reglas.py` → todo nodo declara ESTADO explícito, que es lo que permite degradarlo o podarlo | commit bloqueado |
+| **24** | El científico del proyecto vive en el repositorio, no en un modelo | el cientifico del proyecto no puede ser un modelo concreto, o el proyecto muere con el proveedor. El ritual QUE/POR QUE/COMPRENSION/RIESGO existe par… | que el científico del proyecto viva en el repositorio y no en un modelo | depender de un proveedor, y perder la experiencia acumulada al cambiar de modelo | `reglas.py` → MENTE.md conserva su ritual y su historial de versiones append-only | commit bloqueado; y sin OK del director, MENTE.md no se toca |
+| **25** | El mundo ya está grabado: datos de video existentes | internet esta lleno de fisica real ya grabada, y eso multiplica los datos sin presupuesto. Pero el video generado por IA es fisica inventada por una … | usar grabaciones reales del mundo, con procedencia verificable | entrenar sobre física inventada: animaciones, CGI o video generado por IA | `auditoria_total.py` → cada dataset entra con fuente, fecha y huella; `reconstruir_datos.py` verifica la huella antes de permitir un veredicto | los datos se descartan |
+| **26** | Ingeniería desde cero: los documentos que no existen | un documento de ingenieria trazable hasta los datos que lo sostienen es en si mismo una de las invenciones del proyecto: casi ningun documento humano… | que cada documento de ingeniería sea trazable hasta los datos que lo sostienen | afirmar por 'todos saben que' en un documento que presume de no heredar nada | `reglas.py` → condicional, como la Regla 20: activa el día que exista `ingenieria/` | el documento no se publica |
+| **27** | El comparador y el cortafuegos: cómo se corrige el conocimiento humano | corregir a la humanidad exige independencia de la humanidad, y la independencia no se recupera una vez perdida. Por eso el comparador y el descubrido… | que el conocimiento humano solo se use DESPUÉS de validar, y solo del lado del director | que el descubridor sepa qué opina la humanidad y pierda la independencia que le da sentido | `coherencia.py` → ninguna hoja de `arbol/` cita ciencia humana (candado por CONTENIDO, con señuelo), ningún módulo abre un cartel humano como datos | commit bloqueado; y el nodo contaminado se revoca |
+| ~~28~~ | El bucle interior: automejora de las VARIABLES, jamás de los JUECES | la misma razon que la **Regla 30**, en la que se fundio el 10-ago-2026 | ver la **Regla 30**, que ahora la contiene | lo mismo que la Regla 30 | en la Regla 30 | la sanción es la de la Regla 30 |
+| **29** | El conectoma: la mente ve TODAS sus hojas | idea del director (12-jul): el conocimiento acumulado debe estar CONECTADO, no archivado. Un hallazgo que nadie recuerda es un hallazgo que no existe | que la mente vea todo su conocimiento conectado, no archivado | que un hallazgo viejo se pierda porque nadie lo recordó | `coherencia.py` → el conectoma no está fosilizado y coincide con los nodos que existen | commit bloqueado |
+| **30** | Automejora total POR PROPUESTA: código, conectoma y entendimiento | codigo que se edita a si mismo en silencio es inauditable por construccion; el commit visible preserva la esencia de la Regla 15 sin frenar el crecim… | automejora total por propuesta, con commit visible y jueces intocables | código que se edita a sí mismo en silencio: inauditable por construcción | `pruebas.py` → banco congelado; `temple.py` → el coste intrínseco es cableado e inmutable | el cambio se revierte |
+| **31** | Toda herramienta debe fallar donde no hay nada | nacio el 8-ago de un daño real: el control negativo de la herramienta F3 aceptaba mundos vacios, y con el un nodo entero (N-004) se habia dado por bu… | que toda herramienta falle donde no hay nada Y apruebe donde sí lo hay | un instrumento que encuentra señal en el vacío y produce nodos falsos | `pruebas.py` → los casos congelados; `metodo.py` → no sella un módulo sin su Regla 31; `reglas.py` → todo prerregistro desde el 42 declara LOS DOS LADOS **(ENDURECIDA 10… | la herramienta no puede producir nodos |
+| **32** | La autoauditoría permanente: todo interconectado, salvo lo que la men… | pregunta del director el 8-ago: 'la mente se automejora, pero que automejora lo que esta ATRAS de la mente'. La respuesta honesta era: nada. Ya habia… | que todo lo que se agrega quede interconectado y vigilado | un guardián que siempre dice ok, indistinguible de uno que funciona | `guardianes_de_guardianes.py` → rompe el proyecto a propósito y exige que el guardián grite; un daño que ya no se puede aplicar cuenta como FALLO | commit bloqueado |
+| **33** | La filogenia: el genoma solo cambia entre generaciones, jamás dentro … | ningun ser vivo edita su genoma mientras vive: el individuo aprende, la especie evoluciona. Confundir los dos niveles es dejar que el examinado corri… | que el genoma solo cambie entre generaciones, con la firma del director | que el individuo edite su genoma mientras vive: confundir aprender con evolucionar | `coherencia.py` → el genoma coincide con los módulos que existen; activar un gen exige firma | el cambio de genoma no se aplica |
+| **34** | La frontera de la memoria: `arbol/` son sus HOJAS; los carteles human… | una auditoria del arbol encontro que arbol/ mezclaba la memoria del ente con documentos humanos — entre ellos ANOMALIAS.md, que por diseño contiene p… | que `arbol/` contenga solo hojas del ente, y los carteles humanos vivan fuera | que un documento humano acabe dentro de la memoria del ente por redacción cómoda | `coherencia.py` → ningún cartel vive en `arbol/`, ningún módulo lee la carpeta entera, ninguna hoja cita ciencia humana | commit bloqueado |
 
----
+*Las filas tachadas son las tres fusiones: el número se conserva vacío porque renumerar rompería toda referencia del código, los nodos y los informes.*
 
-## LO QUE ESTA TABLA DEJA A LA VISTA
-
-**14 de 34 reglas no tienen ningún guardián que las nombre.** No significa que se incumplan:
-significa que **si se incumplieran, nada avisaría**. Son las que dependen enteramente de mi
-disciplina, y ahora se sabe cuáles son:
-
-> **1, 5, 6, 7, 9, 10, 13, 14, 18, 20, 23, 24, 26, 28**
-
-Entre ellas hay tres que me preocupan de verdad, y digo por qué:
-- **R13 — criterios de abandono escritos de antemano.** Llevamos **tres** veredictos de *"no
-  concluyente"* decididos después de ver los datos. Ninguno fue deshonesto, pero ninguno estaba
-  escrito antes.
-- **R18 — cada corrida nace de una pregunta abierta.** Hoy encolo estudios porque se me ocurren.
-- **R23 — los nodos viejos se re-someten a las varas nuevas.** Lo hicimos una vez, en agosto, y
-  porque el director lo pidió.
-
-## LAS TRES FUSIONES PROPUESTAS (34 → 31)
-| Fusión | Por qué |
-|---|---|
-| **R11 + R12** | son la misma idea —intentar destruir el resultado antes de creerlo— y separarlas hizo que cumpliera una mientras incumplía la otra |
-| **R28 + R30** | R28 es el caso particular de R30 |
-| **R7 + R14** | reiniciar muchas veces y ser reproducible son la misma exigencia |
-
-## LOS CUATRO ENDURECIMIENTOS PROPUESTOS, todos por daño ya sufrido
-| Regla | Endurecimiento | Daño |
-|---|---|---|
-| **R12** | línea base tonta **obligatoria y automática** en todo puntaje | 0.907 parecía bueno; el tonto sacaba 0.887 |
-| **R31** | fallar con vacío **Y** aprobar con control positivo | un caso mío aprobaba con una medida ciega |
-| **R13** | criterios de abandono **con número**, no con adjetivos | tres "no concluyente" decididos a posteriori |
-| **R19** | ningún nodo pasa de nivel 1 sin **datos que nadie ha visto** | 40 prerregistros, cero nodos fuera del nivel 1 |
-
-## LO QUE NECESITO DEL DIRECTOR
-**No toco `CIMIENTOS.md` sin su palabra** — cambiar las reglas es lo único que la enmienda de la
-Regla 15 dejó explícitamente fuera de mi alcance. Con una palabra por punto:
-1. **¿Aplico la estructura de cuatro campos al texto de las 34?**
-2. **¿Aplico las 3 fusiones?**
-3. **¿Aplico los 4 endurecimientos?**
-4. **¿Construyo guardián para las 14 sin mecanizar**, o las marcamos como *"depende de la
-   disciplina del orquestador"* y se acepta?

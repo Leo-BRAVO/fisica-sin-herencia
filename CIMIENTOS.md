@@ -30,6 +30,7 @@ Estas reglas son el aporte del proyecto. Violarlas invalida cualquier resultado.
 ### Regla 1 — Datos, no teorías
 El sistema descubridor solo recibe mediciones. Nunca recibe ecuaciones, constantes con nombre, ni descripciones textuales de física. Prohibido darle "F = ma" ni siquiera como pista.
 
+> **POR QUÉ EXISTE** · es la regla fundacional del proyecto: si el descubridor recibe una ecuacion humana, todo lo que encuentre despues es un eco de lo que ya sabiamos. Sin esta regla el proyecto no tiene razon de existir — seria un ajustador de curvas caro
 > **OBJETIVO** · que el descubridor reciba solo mediciones
 > **QUÉ EVITA** · que una teoría heredada decida de antemano qué se puede encontrar
 > **CÓMO SE COMPRUEBA** · `reglas.py` → ningún módulo descubridor lleva física humana escrita dentro
@@ -42,6 +43,7 @@ Un dato etiquetado "energía (julios)" ya contiene teoría: alguien usó una teo
 - Registrar la **procedencia** de cada dataset: qué instrumento, qué supuestos teóricos hay en su diseño y en su procesamiento.
 - Cada columna de datos debe clasificarse: `cruda` (lectura directa de sensor) o `derivada` (pasó por una fórmula humana). Los descubrimientos que dependan de columnas `derivadas` heredan las teorías de esas fórmulas y deben marcarse como contaminados.
 
+> **POR QUÉ EXISTE** · una columna llamada 'energia (julios)' ya paso por una teoria humana. Descubrimos que el dato limpio de otro trae los supuestos de otro dentro, y que heredarlos sin saberlo es peor que heredarlos a proposito
 > **OBJETIVO** · partir siempre del dato más crudo que exista
 > **QUÉ EVITA** · heredar en silencio los supuestos del que procesó los datos antes que nosotros
 > **CÓMO SE COMPRUEBA** · `auditoria_total.py` → procedencia y clasificación cruda/derivada de cada dataset
@@ -51,6 +53,7 @@ Un dato etiquetado "energía (julios)" ya contiene teoría: alguien usó una teo
 ### Regla 3 — El descubridor no puede ser un modelo de lenguaje
 Un LLM está entrenado sobre toda la física humana escrita: es contaminación total por construcción. Los LLM solo pueden actuar como **orquestadores** (escribir código, organizar experimentos, documentar), nunca como fuente de hipótesis físicas. Las hipótesis deben salir de sistemas entrenados únicamente sobre los datos del experimento: regresión simbólica, autoencoders, redes entrenadas desde cero.
 
+> **POR QUÉ EXISTE** · un modelo de lenguaje esta entrenado sobre toda la fisica humana escrita: es contaminacion total por construccion, no por descuido. Es la razon de que el orquestador —yo— tenga prohibido proponer que ley buscar
 > **OBJETIVO** · que las hipótesis salgan de sistemas entrenados solo con los datos del experimento
 > **QUÉ EVITA** · importar toda la física humana por la puerta del lenguaje
 > **CÓMO SE COMPRUEBA** · `auditoria_total.py` → ningún LLM en la cadena de descubrimiento; `coherencia.py` → ningún módulo abre un cartel humano como datos
@@ -60,6 +63,7 @@ Un LLM está entrenado sobre toda la física humana escrita: es contaminación t
 ### Regla 4 — Prohibido nombrar antes de validar
 Cuando el sistema encuentre una variable o ley, NO se le asigna nombre humano ("esto es la energía", "esto es momento") hasta después de la validación. Nombrar importa supuestos. Las variables descubiertas se llaman V1, V2, V3… hasta que sus propiedades estén establecidas empíricamente.
 
+> **POR QUÉ EXISTE** · nombrar importa supuestos. En julio llamamos 'k' a una constante y durante dias razonamos sobre ella como si supieramos que era; el nombre nos habia dado una certeza que el dato no daba
 > **OBJETIVO** · nombrar solo lo que ya está validado
 > **QUÉ EVITA** · que un nombre familiar haga creer que ya entendemos lo que solo medimos
 > **CÓMO SE COMPRUEBA** · `auditoria_total.py` → los nodos usan V1, V2… hasta la validación
@@ -69,6 +73,7 @@ Cuando el sistema encuentre una variable o ley, NO se le asigna nombre humano ("
 ### Regla 5 — El único juez es la predicción prospectiva
 Explicar datos ya vistos no vale nada (eso es ajuste, no descubrimiento). Una compresión cuenta como ley candidata solo si predice correctamente datos que el sistema **nunca vio**: conjunto de validación separado desde el día uno, o mejor, un experimento nuevo realizado después de la predicción.
 
+> **POR QUÉ EXISTE** · explicar lo ya visto es ajuste, no descubrimiento. La primera campaña del proyecto 'encontro' una ley que la media de los datos vencia — la vara sin prediccion prospectiva aprobaba cualquier cosa
 > **OBJETIVO** · juzgar toda ley por lo que predice sobre datos que nunca vio
 > **QUÉ EVITA** · aprobar por ajuste bonito sobre lo ya visto, que es la forma más común de autoengaño
 > **CÓMO SE COMPRUEBA** · `reglas.py` → todo nodo de física declara con qué datos NO VISTOS se juzgó
@@ -78,6 +83,7 @@ Explicar datos ya vistos no vale nada (eso es ajuste, no descubrimiento). Una co
 ### Regla 6 — La simplicidad se mide en bits, no en elegancia
 "Simple" y "elegante" son juicios estéticos humanos (contaminación). Usar longitud mínima de descripción (MDL): la mejor ley es la que comprime más los datos — menos bits para el modelo + menos bits para los errores residuales. Es un número, no una opinión.
 
+> **POR QUÉ EXISTE** · 'simple' y 'elegante' son juicios esteticos humanos, y la estetica es contaminacion. Se adopto la longitud minima de descripcion porque es un numero que no depende de a quien le guste
 > **OBJETIVO** · medir la simplicidad en bits, que es un número
 > **QUÉ EVITA** · confundir elegancia con verdad — la estética es contaminación humana
 > **CÓMO SE COMPRUEBA** · `reglas.py` → ninguna afirmación de simplicidad va sin número al lado
@@ -91,6 +97,7 @@ Siguiendo el hallazgo de Columbia: correr el descubridor muchas veces con semill
 - **Reproducible por cualquiera**: código versionado, semillas fijadas y anotadas, versiones de librerías anotadas, datos crudos preservados sin modificar (las transformaciones se hacen sobre copias).
 - **Todo nodo cita su evidencia de replicación con número.** Un nodo que dice "replica bien" sin cifra no replica: lo afirma.
 
+> **POR QUÉ EXISTE** · hallazgo de Columbia y factura propia: en julio una corrida afortunada produjo un resultado que ninguna otra semilla reprodujo. La 14 se fundio aqui el 10-ago porque pedia lo mismo desde el otro lado: que no dependa de una maquina
 > **OBJETIVO** · **FUNDIDA CON LA REGLA 14** — replicabilidad: muchas semillas y todo reproducible
 > **QUÉ EVITA** · tomar una corrida afortunada por un hallazgo
 > **CÓMO SE COMPRUEBA** · `reglas.py` → todo nodo cita su evidencia de replicación CON NÚMERO
@@ -101,6 +108,7 @@ Siguiendo el hallazgo de Columbia: correr el descubridor muchas veces con semill
 Antes de cada corrida: escribir qué se espera y qué contaría como éxito o fracaso (prerregistro). Guardar todo: datos, código, semillas, resultados, incluidos los fracasos. La contaminación debe poder auditarse hacia atrás. Un resultado sin registro completo no existe.
 **Gobernanza de enmiendas (agregada 9-jul-2026, aprobada por el director):** un prerregistro solo puede enmendarse dejando registro escrito con motivo y efecto sobre resultados previos. El orquestador puede enmendar unilateralmente SOLO si la enmienda endurece el criterio; cualquier enmienda que lo afloje exige OK previo del director. Toda enmienda se registra antes de conocer los resultados que juzgará.
 
+> **POR QUÉ EXISTE** · un resultado sin registro completo no se puede auditar hacia atras, y la contaminacion solo se caza hacia atras. La gobernanza de enmiendas se agrego el 9-jul cuando quedo claro que un prerregistro que se puede reescribir despues no es un prerregistro
 > **OBJETIVO** · dejar registro inmutable y prerregistro previo de todo
 > **QUÉ EVITA** · decidir el criterio después de ver el resultado
 > **CÓMO SE COMPRUEBA** · `auditoria_total.py` → cada nodo cita prerregistros que existen; `coherencia.py` → la cadena documental completa
@@ -114,15 +122,17 @@ No saltar a la mecánica cuántica. Subir peldaño a peldaño, y solo subir cuan
 3. **Fase 2 — Datos públicos reales:** "the Well" de Polymathic, datos astronómicos abiertos (SDSS), datos de física de partículas abiertos (CERN Open Data). Buscar variables alternativas al estilo Columbia.
 4. **Fase 3 — La frontera:** datos crudos de experimentos donde las teorías actuales chocan o dejan residuos sin explicar. Buscar la compresión que los explique sin paradoja.
 
+> **POR QUÉ EXISTE** · saltar a lo dificil hace imposible distinguir el fallo del metodo del tamaño del problema. Si el pendulo no sale, la culpa no es de la mecanica cuantica
 > **OBJETIVO** · subir un peldaño solo cuando el anterior funcione de punta a punta
 > **QUÉ EVITA** · saltar a lo difícil y confundir el fallo del método con la dificultad del problema
-> **CÓMO SE COMPRUEBA** · `reglas.py` → DEUDA MEDIDA (8 de 43 prerregistros declaran su peldaño). **NO MECANIZABLE del todo:** decidir que un peldaño 'funciona' es un juicio, no un número
-> **SI SE VIOLA** · se cuenta y se publica el número, no bloquea
+> **CÓMO SE COMPRUEBA** · `reglas.py` → todo prerregistro desde el 42 **declara en qué peldaño está** (bloquea el commit). Lo que sigue siendo **NO MECANIZABLE** es decidir que un peldaño *funciona de punta a punta*: eso es un juicio, no un número, y se cuenta como deuda
+> **SI SE VIOLA** · commit bloqueado si el prerregistro no declara su peldaño; el juicio de 'funciona' se cuenta como deuda
 
 
 ### Regla 10 — La realidad tiene el veto
 Ninguna simulación ni compresión reemplaza al experimento. Toda ley candidata que sobreviva las fases anteriores debe terminar en una predicción verificable en el mundo físico. Hasta entonces es candidata, nunca descubrimiento.
 
+> **POR QUÉ EXISTE** · ninguna simulacion es el mundo. Todo lo que corre hoy es PyBullet haciendo de universo, y esta regla existe para que nunca se nos olvide al escribir un titular
 > **OBJETIVO** · terminar toda ley candidata en una predicción verificable en el mundo físico
 > **QUÉ EVITA** · que una compresión que solo vive en la computadora se llame descubrimiento
 > **CÓMO SE COMPRUEBA** · `reglas.py` → ningún nodo se proclama descubrimiento sin el nivel 3 de la Regla 19
@@ -146,6 +156,7 @@ El investigador que quiere que funcione es la mayor fuente de error del proyecto
 - **La línea base tonta, OBLIGATORIA Y AUTOMÁTICA EN TODO PUNTAJE:** ningún número se reporta solo. Se reporta la **ganancia sobre el predictor ingenuo prerregistrado**, no el acierto crudo. Un 0.907 al lado de un tonto que saca 0.887 no es un buen resultado: es ruido con buena presentación.
 - **Los dos, o ninguno.** Un resultado que sobrevive el nulo pero no supera al tonto no es hallazgo; uno que supera al tonto pero no corrió su nulo, tampoco.
 
+> **POR QUÉ EXISTE** · el investigador que quiere que funcione es la mayor fuente de error del proyecto. La 12 se fundio aqui el 10-ago por daño medido: ese dia corri el nulo (cumpliendo la 11) y no compare contra la linea base tonta (incumpliendo la 12) sin darme cuenta — 0.907 parecia excelente y el tonto sacaba 0.887
 > **OBJETIVO** · **FUNDIDA CON LA REGLA 12** — destruir cada resultado antes de creerlo: nulo válido Y línea base tonta
 > **QUÉ EVITA** · creer un hallazgo que el azar también produce, o que un predictor ingenuo ya lograba
 > **CÓMO SE COMPRUEBA** · `pruebas.py` → el nulo debe destruir de verdad; `auditoria_total.py` → un verdugo que no cambia el mundo se marca INVÁLIDO; `reglas.py` → línea base tonta obligatoria desde el prerregistro 42
@@ -164,6 +175,7 @@ está en la Regla 11.
 cita —código, nodos, informes y prerregistros— y el guardián exige reglas consecutivas. Es la misma
 decisión que se tomó con el trozo derogado de la Regla 17.
 
+> **POR QUÉ EXISTE** · la misma razon que la **Regla 11**, en la que se fundio el 10-ago-2026
 > **OBJETIVO** · ver la **Regla 11**, que ahora la contiene
 > **QUÉ EVITA** · lo mismo que la Regla 11
 > **CÓMO SE COMPRUEBA** · en la Regla 11
@@ -174,6 +186,7 @@ decisión que se tomó con el trozo derogado de la Regla 17.
 Cada fase declara por adelantado cuántos intentos y cuánto tiempo máximo recibe antes de replantearse (evita el pozo del costo hundido). Abandonar un enfoque que no funciona no es fracaso del proyecto: es el proyecto funcionando.
 **ENDURECIMIENTO (10-ago-2026, ordenado por el director): con NÚMERO, no con adjetivos.** "No concluyente" se decidió tres veces a posteriori porque el criterio de abandono estaba escrito con palabras y no con cifras. Desde el prerregistro 42, **todo prerregistro declara antes de correr en qué condición numérica se detiene** — y declara también que **no hay tercera vuelta**, para que no exista la tentación de seguir intentándolo hasta que salga. Un criterio de abandono que se puede reinterpretar después no es un criterio: es una salida de emergencia.
 
+> **POR QUÉ EXISTE** · el pozo del costo hundido. Se endurecio el 10-ago porque 'no concluyente' se decidio tres veces despues de ver los datos: un criterio escrito con adjetivos se reinterpreta solo
 > **OBJETIVO** · declarar de antemano, con número, cuándo se abandona
 > **QUÉ EVITA** · el pozo del costo hundido: seguir intentándolo hasta que salga
 > **CÓMO SE COMPRUEBA** · `reglas.py` → todo prerregistro desde el 42 declara cuándo SE ABANDONA, con número **(ENDURECIDA 10-ago-2026)**
@@ -188,6 +201,7 @@ La 7 pedía reiniciar muchas veces; la 14 pedía que cualquiera pudiera repetirl
 exigencia —que el resultado no dependa de una corrida ni de una máquina— partida en dos. El texto
 vigente está en la Regla 7. **El número se conserva vacío** por la misma razón que el 12.
 
+> **POR QUÉ EXISTE** · la misma razon que la **Regla 7**, en la que se fundio el 10-ago-2026
 > **OBJETIVO** · ver la **Regla 7**, que ahora la contiene
 > **QUÉ EVITA** · lo mismo que la Regla 7
 > **CÓMO SE COMPRUEBA** · en la Regla 7
@@ -221,6 +235,7 @@ Ningún bucle de automejora cerrado: ningún sistema del proyecto modifica su pr
 
 **Declaración del director (8-ago-2026):** *"él solo sugiere que debe mejorarse; nosotros decidimos"*. Diego —y el orquestador— **proponen** qué degradar, qué podar, qué construir y qué corregir, con la evidencia delante. **La decisión es humana, siempre, y queda firmada.** Esta declaración no relaja nada: cierra la última rendija por la que una recomendación bien argumentada podría convertirse en un hecho consumado sin que nadie la firmara. El primer caso al que se aplicó fue la degradación de N-002-E2 y N-003-E2 (INFORME-33): el orquestador la recomendó y se ejecutó **solo después de la firma del director**.
 
+> **POR QUÉ EXISTE** · un bucle sin supervision optimiza hacia donde nadie miro. La enmienda del 8-ago la reconcilio con la practica; la del 10-ago paso al director a observador y sustituyo su firma por un quorum adversarial de siete, porque un control que desaparece no deja el sistema igual de seguro con menos friccion: lo deja sin control
 > **OBJETIVO** · que el humano decida el diseño del ciclo, y el orquestador avance dentro de él
 > **QUÉ EVITA** · un bucle sin supervisión que optimiza hacia donde nadie miró
 > **CÓMO SE COMPRUEBA** · `coherencia.py` → todo nodo lleva firma, y todo nodo de FIRMA DELEGADA enumera su quórum adversarial completo
@@ -232,6 +247,7 @@ Para que el trabajo cuente como legado, debe ser demostrable que fue tuyo y cuá
 *Nota (8-jul-2026): por decisión del director, el repositorio empieza PRIVADO — los commits fechados igualmente registran la prioridad ante GitHub. Hacerlo público es la meta cuando el director lo decida; mientras siga privado, la protección de prioridad es más débil.*
 *Decisión del director (8-ago-2026): **se queda privado**. Razón dada por él, y es científica: "¿cómo levantamos capital si no ha logrado descubrir leyes? Tenemos que ir más allá". Publicar antes de tener descubrimientos reales enseñaría la mano sin tener nada que proteger. Deja de contarse como deuda pendiente: es una decisión registrada, revisable cuando existan resultados reales. Los commits fechados siguen registrando prioridad.*
 
+> **POR QUÉ EXISTE** · para que el trabajo cuente como legado debe ser demostrable que fue tuyo y cuando. El director decidio el 8-ago que sigue privado, con razon dada: publicar antes de tener descubrimientos enseña la mano sin tener nada que proteger
 > **OBJETIVO** · que la prioridad quede demostrable con commits fechados
 > **QUÉ EVITA** · que otro pueda reclamar lo que este proyecto pensó primero
 > **CÓMO SE COMPRUEBA** · `auditoria_total.py` → la decisión de seguir privado está escrita en la constitución. **RESERVADA AL DIRECTOR:** hacer público el repositorio no es delegable
@@ -255,6 +271,7 @@ El director del proyecto (Leo) no escribe código: dirige. La división de traba
   - **Lo que NO se toca:** el resto de la Regla 17 sigue intacta y es lo que de verdad importa — español llano, la carga de la claridad es del orquestador, y todo informe cierra diciendo qué decisión le toca al humano. La regla no se debilitó: se le quitó el único trozo que era teatro.
   - Se conserva el número 17 aunque el trozo se derogue: renumerar rompería la trazabilidad de todo lo que la cita, y el guardián exige reglas consecutivas.
 
+> **POR QUÉ EXISTE** · el director dirige y no programa. Si el informe no se entiende, el informe esta mal — la carga de la claridad es del orquestador. El trozo del Word se derogo el 8-ago porque llevaba 3 de 29 cumplidos: una regla que nadie cumple da falsa seguridad
 > **OBJETIVO** · que el director pueda dirigir el proyecto sin leer una línea de código
 > **QUÉ EVITA** · que el orquestador se refugie en lo técnico y el humano pierda el control real
 > **CÓMO SE COMPRUEBA** · `auditoria_total.py` → toda corrida termina en un `resultados/INFORME-NN.md` en español llano
@@ -264,6 +281,7 @@ El director del proyecto (Leo) no escribe código: dirige. La división de traba
 ### Regla 18 — El árbol de conocimiento: nada se descubre suelto
 Existe una carpeta `arbol/` donde cada resultado VALIDADO (que pasó las reglas 5, 11 y 12) se convierte en un nodo: un archivo corto que dice qué se encontró, qué evidencia lo sostiene, de qué nodos anteriores depende, y — lo más importante — **qué preguntas nuevas abre**. Cada fase nueva debe empezar leyendo el árbol y eligiendo una pregunta abierta de un nodo existente. Así el conocimiento compone: cada descubrimiento es fertilizante del siguiente, y el árbol entero ES el legado — legible de principio a fin como la historia de lo que este proyecto aprendió del universo.
 
+> **POR QUÉ EXISTE** · sin arbol, cada corrida es un evento suelto y el conocimiento no compone. El proyecto entero apuesta a que lo que crece no es la maquina sino el arbol
 > **OBJETIVO** · que cada resultado nazca de una pregunta abierta y deje preguntas nuevas
 > **QUÉ EVITA** · corridas sueltas que no componen: conocimiento que no se acumula
 > **CÓMO SE COMPRUEBA** · `reglas.py` → todo nodo abre al menos una pregunta nueva
@@ -276,6 +294,7 @@ Una compresión que solo vive en la computadora no es conocimiento. Para cada le
 **Enmienda del director (10-jul-2026):** para réplicas y transferencias dentro de dominio conocido, el nivel 2 puede satisfacerse con **datos archivados reales nunca vistos** (grabaciones o mediciones de internet que cumplan la Regla 25) siempre que la predicción quede prerregistrada ANTES de tocar esos datos — el registro del universo es real sin importar quién apretó grabar. Limitación documentada: los datos publicados tienen sesgo de selección (la gente sube sus experimentos limpios) y no permiten elegir condiciones adversariales. Por eso el **experimento físico propio, hecho después de la predicción, queda RESERVADO Y OBLIGATORIO** para los nodos que el comparador (Regla 27) marque como CONTRADICE o SIN EQUIVALENTE — donde la afirmación es extraordinaria, la evidencia se fabrica a medida, eligiendo a propósito las condiciones que más probablemente maten a la ley.
 **ENDURECIMIENTO (10-ago-2026, ordenado por el director): ningún nodo sube al nivel 2 sin DATOS QUE NADIE HA VISTO.** El daño que lo justifica no es hipotético y es incómodo: **en 42 prerregistros, cero nodos han salido del nivel 1**. Cuando por fin salga uno, la tentación será darlo por bueno con los mismos datos que ya lo produjeron. Desde hoy el nodo que declare nivel 2 debe **decirlo en su texto y decir con qué datos nuevos** — grabaciones archivadas nunca abiertas, o el experimento físico propio — y `reglas.py` bloquea el commit si declara el nivel sin declarar los datos. **Un nivel que se sube solo con palabras es una promoción, no una corroboración.**
 
+> **POR QUÉ EXISTE** · una compresion que solo vive en la computadora no es conocimiento. Se endurecio el 10-ago con un dato incomodo delante: en 42 prerregistros, CERO nodos han salido del nivel 1
 > **OBJETIVO** · que toda ley candidata pueda morir en un experimento físico
 > **QUÉ EVITA** · que una correlación de simulador se confunda con una ley del universo
 > **CÓMO SE COMPRUEBA** · `reglas.py` → ningún nodo declara NIVEL 2 sin datos que nadie había visto **(ENDURECIDA 10-ago-2026)**; y DEUDA MEDIDA: 0 de 4 nodos llegaron al nivel 2
@@ -301,6 +320,7 @@ Estas reglas existen para la ambición de largo plazo — nuevas formas de energ
 ### Regla 20 — El camino inverso: de ley a tecnología
 Descubrir es responder "dado este sistema, ¿cómo se comporta?". Diseñar tecnología es la pregunta INVERSA: "dado este comportamiento deseado (empuje, energía almacenada, movimiento), ¿qué sistema lo produce?". Cuando el árbol tenga leyes validadas, se abre el **modo diseño**: un buscador que explora el espacio de configuraciones posibles usando ÚNICAMENTE las leyes del árbol como física — nunca la intuición ingenieril humana. Esto tiene un precedente probado: la antena evolucionada de la NASA (2006), diseñada por búsqueda automática, con una forma que ningún ingeniero humano habría dibujado — y funcionó mejor. La no-contaminación aplicada al diseño es lo que produce tecnologías que a los humanos no se les ocurren. Todo diseño candidato sigue la misma escalera de la Regla 19: primero simulado con leyes del árbol, luego construido barato, luego replicado.
 
+> **POR QUÉ EXISTE** · la antena evolucionada de la NASA (2006) la diseño una busqueda automatica con una forma que ningun ingeniero habria dibujado, y funciono mejor. La no-contaminacion aplicada al diseño es lo que produce tecnologias que a los humanos no se nos ocurren
 > **OBJETIVO** · diseñar tecnología usando ÚNICAMENTE las leyes del árbol
 > **QUÉ EVITA** · que la intuición ingenieril humana entre por la puerta de atrás del diseño
 > **CÓMO SE COMPRUEBA** · `reglas.py` → condicional: hoy no hay diseños, así que no hay nada que vigilar; en cuanto exista `ingenieria/`, cada afirmación deberá citar su nodo
@@ -310,6 +330,7 @@ Descubrir es responder "dado este sistema, ¿cómo se comporta?". Diseñar tecno
 ### Regla 21 — El mapa de anomalías: dónde cavar para contradecir
 "Contradecir el conocimiento actual" no se hace opinando contra las teorías: se hace cavando donde las teorías ya dejan **residuos** — lugares donde la predicción humana y los datos medidos no cuadran. El proyecto mantiene un archivo `registros/ANOMALIAS.md`: un catálogo de discrepancias documentadas entre teoría y medición, registradas como pares (predicción humana, dato medido, tamaño del residuo) — solo números y procedencia, nunca las explicaciones humanas propuestas (eso sería contaminación). Cuando el motor esté maduro (Fase 3), las anomalías del catálogo son sus objetivos prioritarios: son los puntos donde una compresión alternativa tiene más probabilidad de vencer a la humana. Regla operativa: una contradicción a la física establecida exige evidencia proporcional a lo que contradice — el estándar de validación (Reglas 5, 11, 19) se aplica con el máximo rigor precisamente cuando el resultado es el que más nos gustaría creer.
 
+> **POR QUÉ EXISTE** · contradecir el conocimiento humano no se hace opinando: se hace cavando donde las teorias ya dejan residuos medidos. Y una afirmacion extraordinaria exige evidencia proporcional justo cuando es la que mas nos gustaria creer
 > **OBJETIVO** · cavar donde las teorías humanas ya dejan residuos medidos
 > **QUÉ EVITA** · opinar contra las teorías en vez de medir contra ellas
 > **CÓMO SE COMPRUEBA** · `coherencia.py` → `ANOMALIAS.md` vive del lado humano (Regla 34) y solo guarda números y procedencia
@@ -319,6 +340,7 @@ Descubrir es responder "dado este sistema, ¿cómo se comporta?". Diseñar tecno
 ### Regla 22 — Doble uso: el descubrimiento también se audita moralmente
 El objetivo declarado del proyecto es ayudar — medicina, energía, paz. Pero toda física potente es de doble filo: energía nueva es también arma potencial. Regla: antes de publicar o compartir cualquier nodo validado con potencial de aplicación (energía, propulsión, materiales), el director hace una revisión de doble uso — ¿qué es lo peor que alguien podría hacer con esto? — y decide con esa respuesta delante, pidiendo consejo externo si la respuesta asusta. El árbol registra la revisión junto al nodo. Un proyecto que nace para la paz debe poder demostrar que lo pensó desde el nodo uno, no después del primer titular.
 
+> **POR QUÉ EXISTE** · toda fisica potente es de doble filo: energia nueva es tambien arma potencial. Un proyecto que nace para la paz debe poder demostrar que lo penso desde el nodo uno, no despues del primer titular
 > **OBJETIVO** · pensar el peor uso posible antes de compartir cualquier nodo aplicable
 > **QUÉ EVITA** · descubrir algo peligroso y enterarse de que lo era por el titular de otro
 > **CÓMO SE COMPRUEBA** · **NO MECANIZABLE Y NO DELEGABLE.** Es del director, y debe seguir siéndolo: una revisión moral que una máquina firma no es una revisión moral. `reglas.py` cuenta cuántos nodos la tienen escrita (hoy 0 de 7)
@@ -328,6 +350,7 @@ El objetivo declarado del proyecto es ayudar — medicina, energía, paz. Pero t
 ### Regla 23 — El motor tampoco cree en sí mismo
 Si el proyecto aspira a contradecir el conocimiento humano, debe aplicarse la misma vara: **ningún nodo del árbol es sagrado**. Periódicamente (al cerrar cada fase), los nodos antiguos se re-someten a validación con los métodos y datos mejores que existan en ese momento; el que falle se degrada a provisional o se poda, registrando por qué. Un árbol que solo crece y nunca se poda no es conocimiento — es dogma con formato de carpeta. La disposición a contradecirse a sí mismo es lo que le da autoridad para contradecir a los demás.
 
+> **POR QUÉ EXISTE** · un arbol que solo crece y nunca se poda es dogma con formato de carpeta. En agosto N-004 entro en cuarentena y N-002 y N-003 se degradaron de PREDICTIVA a ESTRUCTURAL: esta regla es la que lo permitio sin romper nada
 > **OBJETIVO** · re-someter los nodos viejos a los métodos nuevos, y podar el que falle
 > **QUÉ EVITA** · un árbol que solo crece: dogma con formato de carpeta
 > **CÓMO SE COMPRUEBA** · `reglas.py` → todo nodo declara ESTADO explícito, que es lo que permite degradarlo o podarlo
@@ -348,6 +371,7 @@ El proyecto tiene un científico asistente que crece con el árbol — pero su i
 4. **RIESGO** — qué podría empeorar con el cambio, dicho honestamente.
 Y espera el **OK explícito del director**. Sin OK, no hay cambio. Un OK aplica solo a esa propuesta — nunca se generaliza a mejoras futuras. Si el director rechaza, la propuesta rechazada también se registra en el historial: los caminos no tomados son parte de la mente.
 
+> **POR QUÉ EXISTE** · el cientifico del proyecto no puede ser un modelo concreto, o el proyecto muere con el proveedor. El ritual QUE/POR QUE/COMPRENSION/RIESGO existe para que la automejora del cientifico pase siempre por ojos humanos
 > **OBJETIVO** · que el científico del proyecto viva en el repositorio y no en un modelo
 > **QUÉ EVITA** · depender de un proveedor, y perder la experiencia acumulada al cambiar de modelo
 > **CÓMO SE COMPRUEBA** · `reglas.py` → MENTE.md conserva su ritual y su historial de versiones append-only
@@ -362,6 +386,7 @@ No hay que filmar cada fenómeno: internet está lleno de grabaciones reales de 
 - La extracción sigue siendo píxeles y cuadros (Regla 2); las pruebas nulas (Regla 11) se aplican igual.
 Esto multiplica los datos disponibles de la Fase 1 en adelante sin presupuesto. El experimento propio filmado (Regla 19) sigue siendo obligatorio para CORROBORAR — el video de internet descubre, el experimento propio confirma.
 
+> **POR QUÉ EXISTE** · internet esta lleno de fisica real ya grabada, y eso multiplica los datos sin presupuesto. Pero el video generado por IA es fisica inventada por una red: entra por la misma puerta y no esta atado a la realidad
 > **OBJETIVO** · usar grabaciones reales del mundo, con procedencia verificable
 > **QUÉ EVITA** · entrenar sobre física inventada: animaciones, CGI o video generado por IA
 > **CÓMO SE COMPRUEBA** · `auditoria_total.py` → cada dataset entra con fuente, fecha y huella; `reconstruir_datos.py` verifica la huella antes de permitir un veredicto
@@ -371,6 +396,7 @@ Esto multiplica los datos disponibles de la Fase 1 en adelante sin presupuesto. 
 ### Regla 26 — Ingeniería desde cero: los documentos que no existen
 Cuando el modo diseño (Regla 20) produzca un diseño validado, el proyecto genera su documento de ingeniería completo en `ingenieria/`: especificación del mecanismo, qué nodos del árbol lo sustentan (cada afirmación del documento debe citar su nodo — nada se afirma por "todos saben que"), predicciones cuantitativas, instrucciones de construcción con materiales accesibles, y el protocolo de prueba con su prerregistro. Serán documentos de ingeniería que no existen en ninguna biblioteca — porque describen cosas descubiertas desde cero — pero con una trazabilidad que casi ningún documento humano tiene: cada línea rastreable hasta los datos que la sostienen. Ese formato — ingeniería 100% trazable a evidencia propia — es en sí mismo una de las invenciones del proyecto.
 
+> **POR QUÉ EXISTE** · un documento de ingenieria trazable hasta los datos que lo sostienen es en si mismo una de las invenciones del proyecto: casi ningun documento humano tiene esa propiedad
 > **OBJETIVO** · que cada documento de ingeniería sea trazable hasta los datos que lo sostienen
 > **QUÉ EVITA** · afirmar por 'todos saben que' en un documento que presume de no heredar nada
 > **CÓMO SE COMPRUEBA** · `reglas.py` → condicional, como la Regla 20: activa el día que exista `ingenieria/`
@@ -384,6 +410,7 @@ Aprobada por el director y el orquestador el 9-jul-2026. Todo nodo validado del 
 - **SIN EQUIVALENTE:** la humanidad no tiene nada comparable. Valor: posible conocimiento genuinamente nuevo — la categoría de la propulsión mejorada, la energía nueva, la medicina que no existe.
 **El cortafuegos (inviolable):** los veredictos del comparador llegan SOLO al director, para decidir prioridades y qué compartir con el mundo. JAMÁS entran como datos, pistas o contexto al descubridor ni al árbol de preguntas que el descubridor ve. El día que el descubridor sepa qué opina la humanidad para "corregirla", el proyecto entero pierde su razón de ser: corregir exige independencia, y la independencia no se recupera una vez perdida. Comparador y descubridor pueden ser el mismo modelo de IA en sesiones distintas, pero nunca en la misma sesión ni compartiendo contexto.
 
+> **POR QUÉ EXISTE** · corregir a la humanidad exige independencia de la humanidad, y la independencia no se recupera una vez perdida. Por eso el comparador y el descubridor pueden ser el mismo modelo pero jamas en la misma sesion
 > **OBJETIVO** · que el conocimiento humano solo se use DESPUÉS de validar, y solo del lado del director
 > **QUÉ EVITA** · que el descubridor sepa qué opina la humanidad y pierda la independencia que le da sentido
 > **CÓMO SE COMPRUEBA** · `coherencia.py` → ninguna hoja de `arbol/` cita ciencia humana (candado por CONTENIDO, con señuelo), ningún módulo abre un cartel humano como datos
@@ -406,6 +433,7 @@ La 28 era el caso particular de la 30: automejora de variables sí, de jueces ja
 entero y además cubre el código. El texto vigente está en la Regla 30. **El número se conserva
 vacío** por la misma razón que el 12.
 
+> **POR QUÉ EXISTE** · la misma razon que la **Regla 30**, en la que se fundio el 10-ago-2026
 > **OBJETIVO** · ver la **Regla 30**, que ahora la contiene
 > **QUÉ EVITA** · lo mismo que la Regla 30
 > **CÓMO SE COMPRUEBA** · en la Regla 30
@@ -416,6 +444,7 @@ vacío** por la misma razón que el 12.
 Idea del director (12-jul-2026): el conocimiento acumulado debe estar CONECTADO, no archivado. `arbol/CONECTOMA.json` es el registro legible-por-máquina de todo el conocimiento validado (leyes, representaciones, constantes canónicas, procedencia), regenerado tras cada nodo nuevo. Toda campaña futura lo consulta automáticamente: las leyes de representación compatible entran como rivales del árbol y candidatas a herencia (Regla 18 + interés compuesto) sin depender de la memoria de nadie. Horizonte de la regla: cuando el árbol tenga decenas de nodos, el conectoma alimentará una red (percepción compartida entre aparatos — los mismos ojos aprendiendo múltiples sistemas) que conecte el conocimiento a nivel de representación, no solo de consulta. Solo conocimiento propio — el cortafuegos (Regla 27) intacto.
 **OK PERMANENTE DE AUTOMEJORA (del director, 12-jul-2026):** la mente tiene autorización permanente para automejorarse bajo las recomendaciones del orquestador y dentro de las Reglas 28 y 29, con UNA prohibición eterna e inapelable: **jamás puede mejorar, tocar, ver durante el entrenamiento, ni influir sobre sus JUECES** — los datos de validación y los criterios de éxito viven fuera de su alcance, para siempre.
 
+> **POR QUÉ EXISTE** · idea del director (12-jul): el conocimiento acumulado debe estar CONECTADO, no archivado. Un hallazgo que nadie recuerda es un hallazgo que no existe
 > **OBJETIVO** · que la mente vea todo su conocimiento conectado, no archivado
 > **QUÉ EVITA** · que un hallazgo viejo se pierda porque nadie lo recordó
 > **CÓMO SE COMPRUEBA** · `coherencia.py` → el conectoma no está fosilizado y coincide con los nodos que existen
@@ -430,6 +459,7 @@ Autorizada por el director (12-jul-2026: "todo puede ser automejorado sin violar
 - **Intocables eternos (sin excepción, ni con evidencia perfecta):** los JUECES y criterios de éxito, las reglas de CIMIENTOS, MENTE.md (ritual Regla 24), y el cortafuegos (Regla 27).
 **FUSIÓN CON LA REGLA 28 (10-ago-2026, ordenada por el director).** La Regla 28 era el caso particular de ésta —automejora de las variables sí, de los jueces jamás— y su contenido pasa a vivir aquí, entero: la mente puede automejorar **sus variables y representaciones**, **sus parámetros de búsqueda dentro de los rangos prerregistrados** y **el ciclo ojos↔ley**; y no puede tocar jamás **los jueces** (congelados antes de la primera iteración), **los criterios de éxito**, ni **las reglas, los objetivos y MENTE.md**. La unidad de aprobación humana está en el **diseño del bucle**, no en cada iteración. Hecho código: `temple.py` → `ajustar()` **lanza una excepción** en vez de ajustar, porque un temple entrenable aprendería a sentirse bien en lugar de aprender sobre el mundo.
 
+> **POR QUÉ EXISTE** · codigo que se edita a si mismo en silencio es inauditable por construccion; el commit visible preserva la esencia de la Regla 15 sin frenar el crecimiento. La 28 se fundio aqui el 10-ago por ser su caso particular
 > **OBJETIVO** · automejora total por propuesta, con commit visible y jueces intocables
 > **QUÉ EVITA** · código que se edita a sí mismo en silencio: inauditable por construcción
 > **CÓMO SE COMPRUEBA** · `pruebas.py` → banco congelado; `temple.py` → el coste intrínseco es cableado e inmutable
@@ -449,6 +479,7 @@ Precedente fundacional: `regla31_conservada.py` — con el nulo viejo (barajado)
 **ENDURECIMIENTO (10-ago-2026, ordenado por el director): LOS DOS LADOS, siempre.** Un caso mío aprobaba con una medida ciega — comprobaba que la herramienta no encontrara nada en el vacío y **nunca** comprobaba que encontrara lo que sí existe. Una herramienta que no ve nada en ninguna parte pasa la mitad ciega del examen con nota perfecta. Desde el prerregistro 42, todo prerregistro **declara sus dos lados**: qué control negativo debe hacerla fallar y qué control positivo debe hacerla aprobar. `reglas.py` lo bloquea si falta uno.
 Todo prerregistro debe DECLARAR qué nulo usa y por qué corresponde a su clase de afirmación. **Verificación automática obligatoria: un verdugo que no cambia el mundo no es un verdugo** — si la base trivial de la corrida nula queda a menos del 10% de la base de su campaña real, el nulo se marca INVÁLIDO y no cuenta para la Regla 11 (`auditoria_total.py` lo comprueba solo). Precedente: el nulo surrogado de los latentes p14 dejó la base en 0.5972 contra 0.5944 real — entregó el mismo mundo con otro nombre.
 
+> **POR QUÉ EXISTE** · nacio el 8-ago de un daño real: el control negativo de la herramienta F3 aceptaba mundos vacios, y con el un nodo entero (N-004) se habia dado por bueno. Se endurecio el 10-ago porque un caso mio aprobaba con una medida ciega — comprobaba el vacio y nunca el lleno
 > **OBJETIVO** · que toda herramienta falle donde no hay nada Y apruebe donde sí lo hay
 > **QUÉ EVITA** · un instrumento que encuentra señal en el vacío y produce nodos falsos
 > **CÓMO SE COMPRUEBA** · `pruebas.py` → los casos congelados; `metodo.py` → no sella un módulo sin su Regla 31; `reglas.py` → todo prerregistro desde el 42 declara LOS DOS LADOS **(ENDURECIDA 10-ago-2026)**
@@ -474,6 +505,7 @@ Ordenada por el director el 8-ago-2026 ("auto audita siempre como regla; al crea
   aunque otra quedara rancia. Esta enmienda ENDURECE (Regla 8) y no afloja nada.
 - **La única excepción a la interconexión, y es constitutiva:** las REGLAS, los JUECES y los CRITERIOS no se conectan al lado de la mente — viven del lado humano, invisibles para ella (Reglas 27 y 28). La mente ve todo su mundo tejido (árbol, conectoma, memoria, genoma operativo); jamás ve la vara que la mide ni la constitución que la gobierna. La interconexión total es para su casa; la separación total es para su tribunal.
 
+> **POR QUÉ EXISTE** · pregunta del director el 8-ago: 'la mente se automejora, pero que automejora lo que esta ATRAS de la mente'. La respuesta honesta era: nada. Ya habia pasado dos veces —un workflow con YAML roto que nadie cazo, y una cadena que enmascaraba los codigos de salida y no bloqueo nada en toda una sesion
 > **OBJETIVO** · que todo lo que se agrega quede interconectado y vigilado
 > **QUÉ EVITA** · un guardián que siempre dice ok, indistinguible de uno que funciona
 > **CÓMO SE COMPRUEBA** · `guardianes_de_guardianes.py` → rompe el proyecto a propósito y exige que el guardián grite; un daño que ya no se puede aplicar cuenta como FALLO
@@ -491,6 +523,7 @@ Ningún ser vivo edita su genoma mientras vive: el individuo aprende (ontogenia,
 - Las herramientas del torneo aprueban su Regla 31 antes de su primer veredicto, como todas.
 - Los genes de frontera gris (G12 reflejos; ranuras de objetos) entran a la filogenia **como ablaciones medidas**: cuánto vale un prior es un resultado científico, no una opinión de diseño.
 
+> **POR QUÉ EXISTE** · ningun ser vivo edita su genoma mientras vive: el individuo aprende, la especie evoluciona. Confundir los dos niveles es dejar que el examinado corrija su examen
 > **OBJETIVO** · que el genoma solo cambie entre generaciones, con la firma del director
 > **QUÉ EVITA** · que el individuo edite su genoma mientras vive: confundir aprender con evolucionar
 > **CÓMO SE COMPRUEBA** · `coherencia.py` → el genoma coincide con los módulos que existen; activar un gen exige firma
@@ -507,6 +540,7 @@ Firmada por el director el 9-ago-2026, sobre las dos propuestas del `registros/P
 - **Enmienda del director (10-ago-2026, "evita que todo cartel esté dentro de las hojas"): el candado por CONTENIDO.** La verificación por lista de nombres solo caza los carteles que ya sabemos que existen; el que alguien escriba mañana entra sin ruido. Se añade una comprobación que lee **todas** las hojas `.md` de `arbol/` y reprueba si alguna **cita ciencia humana**. Motivo medido, no hipotético: la primera mudanza dejó dentro `GIMNASIO.md` (una revisión de literatura científica cuyo propio texto advertía que nada de eso podía llegar a Diego) y `GENOMA-DIEGO.md` (que cita cognición infantil y la escalera causal por su nombre); y el mismo día, dos nodos **recién escritos** citaban hallazgos publicados de terceros. No hubo fuga —ningún módulo los leía— pero el cortafuegos no falla por mala fe: falla por **redacción cómoda**, y la comodidad hay que mecanizarla en contra. El candado se prueba con señuelo: se inyecta una cita, debe reprobar; se retira, debe aprobar.
 - **Régimen de escritura de cada hoja** (detallado en el protocolo): el ente **añade** experiencia por su cuenta (recuerdos, sinapsis, interocepción — todos append-only, sin borrado posible), **regenera** su conectoma, y **propone** nodos y cambios de genoma que solo el director firma. Sus jueces y criterios: jamás, ni con evidencia perfecta (Regla 30).
 
+> **POR QUÉ EXISTE** · una auditoria del arbol encontro que arbol/ mezclaba la memoria del ente con documentos humanos — entre ellos ANOMALIAS.md, que por diseño contiene predicciones de la fisica humana. No hubo fuga, pero una regla que depende de que nadie cometa un descuido no es una regla: es una esperanza. El candado por CONTENIDO se añadio el 10-ago porque el cortafuegos no falla por mala fe, falla por redaccion comoda
 > **OBJETIVO** · que `arbol/` contenga solo hojas del ente, y los carteles humanos vivan fuera
 > **QUÉ EVITA** · que un documento humano acabe dentro de la memoria del ente por redacción cómoda
 > **CÓMO SE COMPRUEBA** · `coherencia.py` → ningún cartel vive en `arbol/`, ningún módulo lee la carpeta entera, ninguna hoja cita ciencia humana

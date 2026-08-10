@@ -41,9 +41,16 @@ caso(f"README proclama '{max_regla} reglas' (las que CIMIENTOS contiene)",
 # con que UNA mencion siguiera bien para que el chequeo pasara, aunque otra quedara rancia. Un
 # documento que se contradice a si mismo confunde a quien audita — igual que el titulo de un
 # prerregistro firmado que sigue diciendo BORRADOR.
-_rancias = sorted({int(n) for n in re.findall(r"(\d+) reglas", readme)} - {max_regla})
-caso("README sin NINGUNA cifra rancia de reglas (ni una mencion vieja)",
-     not _rancias, f"menciona tambien: {_rancias}")
+# Desde las fusiones del 10-ago hay DOS cifras verdaderas: las numeradas y las vigentes. El
+# chequeo se disparo con "las 31 reglas vigentes" del README, que es correcto — no sabia
+# distinguirlo de una cifra rancia. Se le enseñan las dos formas legitimas en vez de cambiar la
+# redaccion para esquivarlo: reescribir el texto hasta que el detector calle es exactamente como
+# se fabrica un guardian decorativo.
+_fundidas_n = len(re.findall(r"\*\*FUNDIDA EN LA REGLA \d+", cimientos))
+_legitimas = {max_regla, max_regla - _fundidas_n}
+_rancias = sorted({int(n) for n in re.findall(r"(\d+) reglas", readme)} - _legitimas)
+caso("README sin NINGUNA cifra rancia de reglas (solo las dos verdaderas: numeradas y vigentes)",
+     not _rancias, f"menciona tambien: {_rancias}, y las verdaderas son {sorted(_legitimas)}")
 
 # 10-ago-2026: el chequeo de arriba vigilaba el README y NUNCA a CIMIENTOS. Hoy encontre que la
 # constitucion decia "hoy 32" en DOS sitios teniendo 34 reglas — incluido el prompt de arranque, el
@@ -70,6 +77,47 @@ caso(f"CIMIENTOS tiene {_fundidas} reglas FUNDIDAS y {_vigentes} vigentes, y lo 
      f"CIMIENTOS no proclama '{_vigentes} vigentes'")
 caso(f"README proclama las MISMAS dos cifras ({max_regla} numeradas, {_vigentes} vigentes)",
      f"{max_regla} reglas" in readme and f"{_vigentes} vigentes" in readme)
+
+# 10-ago-2026, LA ESTRUCTURA DE LAS REGLAS (orden del director: "cada regla debe tener la regla, el
+# porque, que evita y su objetivo"). Nace de un descuido mio del mismo dia: puse cuatro campos y me
+# salte EL PORQUE — precisamente el que la investigacion sobre diseño de reglas señala como el que
+# mas importa, porque la gente cumple mejor la regla que ENTIENDE que la que solo CONOCE. Si el
+# guardian no exige los cinco, el sexto que se escriba mañana nacera sin ellos y nadie lo notara.
+_CAMPOS = ("POR QUÉ EXISTE", "OBJETIVO", "QUÉ EVITA", "CÓMO SE COMPRUEBA", "SI SE VIOLA")
+_sin_campos = []
+for _n in sorted(set(reglas)):
+    _m = re.search(rf"^### Regla {_n}\b.*?(?=^### |^## |^---)", cimientos, re.M | re.S)
+    _falta = [c for c in _CAMPOS if not _m or f"**{c}**" not in _m.group(0)]
+    if _falta:
+        _sin_campos.append(f"R{_n} sin {_falta}")
+caso(f"las {max_regla} reglas llevan los CINCO campos de estructura",
+     not _sin_campos, "; ".join(_sin_campos[:4]))
+
+# Y que el campo CÓMO SE COMPRUEBA no mienta: si cita un archivo, el archivo debe existir.
+_citas_rotas = []
+for _n in sorted(set(reglas)):
+    _m = re.search(rf"^### Regla {_n}\b.*?(?=^### |^## |^---)", cimientos, re.M | re.S)
+    if not _m:
+        continue
+    _linea = re.search(r"\*\*CÓMO SE COMPRUEBA\*\*[^\n]*", _m.group(0))
+    for _f in re.findall(r"`([\w_]+\.py)`", _linea.group(0) if _linea else ""):
+        if not os.path.exists(os.path.join(BASE, "codigo", _f)):
+            _citas_rotas.append(f"R{_n} cita {_f} y no existe")
+caso("ningun 'CÓMO SE COMPRUEBA' cita un archivo que no existe",
+     not _citas_rotas, "; ".join(_citas_rotas[:4]))
+
+# La tabla de las reglas se GENERA desde CIMIENTOS. Se escribio a mano una vez y quedo rancia en
+# horas: seguia diciendo "14 reglas sin guardian" cuando ya tenian uno. Aqui se comprueba que el
+# documento en disco sea exactamente el que sale de la constitucion de hoy.
+sys.path.insert(0, os.path.join(BASE, "codigo"))
+try:
+    import tabla_reglas as _tabla
+    _al_dia = (os.path.exists(_tabla.SALIDA)
+               and open(_tabla.SALIDA, encoding="utf-8").read() == _tabla.generar())
+    caso("REGLAS-ESTRUCTURADAS.md esta AL DIA con CIMIENTOS (se genera, no se escribe)",
+         _al_dia, "correr: python codigo/tabla_reglas.py")
+except Exception as _e:
+    caso("REGLAS-ESTRUCTURADAS.md se puede generar desde CIMIENTOS", False, str(_e))
 
 print("== arbol: nodos, cuarentena y conectoma cuentan lo mismo ==")
 nodos_e2 = sorted(glob.glob(os.path.join(BASE, "arbol", "N-*-E2.md")))
