@@ -494,6 +494,25 @@ caso("espejo2: el balbuceo ciego NO alcanza el criterio 1.5x (control negativo v
      not _e2.firmas(_e2.paradigma_movil(semilla=2, pasos_fase=400,
                                         politica="ciega"))["criterio_clasico_1.5x"])
 
+print("== la experimentacion dirigida (prereg-37): la primera intervencion de Diego ==")
+import experimentar as _ex
+caso("experimentar: APRUEBA su Regla 31 (7/7: duda real por los dos lados, tocar la resuelve, "
+     "señuelo agitador, mundo sin duda, guarda de potencia)",
+     _ex.regla31(verbose=False) == 0)
+# CONGELADO: el señuelo del agitador. Tocar MUCHO y sin criterio no puede ganarle a elegir. Sin
+# esto, cualquier ventaja de intervenir se confundiria con "actuar informa mas que mirar", que es
+# trivial y no dice nada sobre pensar. Sus dos hermanos (el ruido de la escalera, el agitado del
+# prereg-36) cazaron fallos reales en su primera corrida.
+caso("experimentar: el agitador (toca sin criterio) NO le gana al dirigido",
+     _ex.correr("agitador", semilla=1)["puntaje"]
+     <= _ex.correr("dirigido", semilla=1)["puntaje"])
+# CONGELADO: la medida de "¿se ve la diferencia?" no puede ser ciega. En reposo debe dar ~0 Y con
+# una diferencia plantada debe verla. Cazado el 10-ago: agrupar los tres ejes en un solo std medía
+# la geometria del montaje (y=+0.16 vs y=-0.16) y daba 0.21 con los objetos perfectamente quietos.
+caso("experimentar: la duda es real por los DOS lados (ciega en reposo, no ciega al plantarle algo)",
+     _ex._mirando_sin_tocar(_ex._mundo(1)) < 0.05
+     and _ex._mirando_sin_tocar(_ex._mundo(1), mover_uno=True) > 0.50)
+
 print("== el observador pasivo (prereg-32): el control que podria refutarnos ==")
 import observador_pasivo as _op
 caso("observador pasivo: APRUEBA su Regla 31 (5/5: control positivo, gemelos, ventaja plantada, "
