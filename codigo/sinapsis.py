@@ -88,7 +88,7 @@ def _siguiente_id(ruta):
     return n + 1
 
 
-def publicar(gen, tipo, contenido, cuando=None, _ruta=None,
+def publicar(gen, tipo, contenido, cuando=None, _ruta=None, _genes=None,
              tema=None, a=None, causa=None, traza=None, deriva_de=None):
     """Publica un evento en la sinapsis. El genoma decide si este gen PUEDE decir esto.
 
@@ -105,7 +105,12 @@ def publicar(gen, tipo, contenido, cuando=None, _ruta=None,
       midio lo suyo y respondio por su cuenta. Ocho organos repitiendo lo que dijo un noveno SI
       lo son. La genealogia —lo que cuenta testigos independientes— viaja SOLO por `deriva_de`.
     """
-    genes = _genoma()
+    # `_genes` es SOLO para la Regla 31 de este archivo, y existe por un daño real: la prueba
+    # "un gen inactivo no habla" usaba G11_temple como ejemplo de gen inactivo. El 10-ago-2026 el
+    # director firmo su activacion y la prueba se puso roja — no porque el portero fallara, sino
+    # porque el ejemplo caduco. Una prueba que depende de un hecho del proyecto muere cuando el
+    # proyecto avanza; ahora se trae su propio genoma de juguete y ya no depende de nadie.
+    genes = _genes or _genoma()
     if gen not in genes:
         raise SinapsisBloqueada(f"'{gen}' no existe en el genoma: nadie habla sin estar en el")
     modo = genes[gen]["modo"]
@@ -254,8 +259,11 @@ def regla31(verbose=True):
         caso("un medidor NO publica decisiones (bloqueo mecanico)", False)
     except SinapsisBloqueada:
         caso("un medidor NO publica decisiones (bloqueo mecanico)", True)
+    # GENOMA DE JUGUETE: la prueba trae su propio gen inactivo en vez de señalar a uno del
+    # proyecto. Antes apuntaba a G11_temple y se rompio el dia que el director lo activo.
+    _juguete = {"gen_dormido": {"modo": "inactivo", "escucha": [], "competencia": []}}
     try:
-        publicar("G11_temple", "medicion", {}, _ruta=tmp)
+        publicar("gen_dormido", "medicion", {}, _ruta=tmp, _genes=_juguete)
         caso("un gen inactivo no habla", False)
     except SinapsisBloqueada:
         caso("un gen inactivo no habla", True)

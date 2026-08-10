@@ -49,10 +49,27 @@ caso("README sin NINGUNA cifra rancia de reglas (ni una mencion vieja)",
 # constitucion decia "hoy 32" en DOS sitios teniendo 34 reglas — incluido el prompt de arranque, el
 # texto con el que despierta cada orquestador nuevo. Un documento que se equivoca al contarse a si
 # mismo es peor que un README rancio: es la fuente de la que todos los demas copian.
-_cim_nums = sorted({int(a or b) for a, b in re.findall(r"(\d+) reglas|hoy (\d+)", cimientos)}
+# El patron pide la palabra "reglas" ANTES del numero. La primera version buscaba "hoy (\d+)" a
+# secas y se disparo con una frase mia — "reglas.py cuenta cuantos nodos la tienen escrita (hoy 0
+# de 7)" — dando por rancia una cifra que no contaba reglas. Un detector que caza texto que no le
+# corresponde envenena su propio veredicto: se estrecha hasta que solo mire lo que dice mirar.
+_cim_nums = sorted({int(a or b) for a, b in
+                    re.findall(r"(\d+) reglas|reglas[^(\n]{0,30}\(hoy\s*(\d+)", cimientos)}
                    - {max_regla})
 caso("CIMIENTOS se cuenta bien a SI MISMO (ninguna cifra rancia de reglas)",
      not _cim_nums, f"CIMIENTOS dice tambien: {_cim_nums} teniendo {max_regla}")
+
+# 10-ago-2026, LAS TRES FUSIONES (orden del director). Los numeros fundidos CONSERVAN su slot:
+# renumerar romperia toda referencia del codigo, los nodos y los informes. Consecuencia: hay dos
+# cifras verdaderas a la vez —34 numeradas, 31 vigentes— y las dos pueden quedar rancias por
+# separado. Se cuentan las dos, leyendo los encabezados, para que ninguna se escriba a mano.
+_fundidas = len(re.findall(r"\*\*FUNDIDA EN LA REGLA \d+", cimientos))
+_vigentes = max_regla - _fundidas
+caso(f"CIMIENTOS tiene {_fundidas} reglas FUNDIDAS y {_vigentes} vigentes, y lo dice",
+     f"{_vigentes} vigentes" in cimientos,
+     f"CIMIENTOS no proclama '{_vigentes} vigentes'")
+caso(f"README proclama las MISMAS dos cifras ({max_regla} numeradas, {_vigentes} vigentes)",
+     f"{max_regla} reglas" in readme and f"{_vigentes} vigentes" in readme)
 
 print("== arbol: nodos, cuarentena y conectoma cuentan lo mismo ==")
 nodos_e2 = sorted(glob.glob(os.path.join(BASE, "arbol", "N-*-E2.md")))

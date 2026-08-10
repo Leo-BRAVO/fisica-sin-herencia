@@ -207,6 +207,22 @@ def latir(pasos=900, verbose=True, traza=None):
     _pub("G13_poder", "medicion",
          {"lazo_abierto": d13[-1]["lazo_abierto"], "lazo_cerrado": d13[-1]["lazo_cerrado"],
           "subestima": d13[-1]["subestima"]}, tema="recursos")
+    # G11 TEMPLE — ACTIVADO el 10-ago-2026 con la firma del director ("la 2 si"), genoma v2.
+    # No inventa nada: toma los numeros que los otros organos ACABAN de publicar en esta misma
+    # ronda —el gasto de G10, el error de G13, la sorpresa de G14— y devuelve un solo numero con
+    # su desglose. Mide SU PROPIO ESTADO, jamas propiedades del mundo: por eso puede existir sin
+    # tocar el cortafuegos. Y no decide: modo 'mide', el portero se lo impide.
+    import temple as _temple
+    _gasto = float(len(eps) * pasos) / 10000.0            # cuanto le costo esta ronda
+    _error = float(d13[-1]["subestima"])                  # cuanto se equivoca al predecir su poder
+    _sorpresa = float(1.0 - d13[-1]["lazo_cerrado"])      # cuanto le desconcierta lo que ve
+    _t = _temple.desglose(_gasto, _error, _sorpresa)
+    _pub("G11_temple", "medicion",
+         {"coste": _t["coste"], "de_que_esta_hecho": _t["de_que_esta_hecho"],
+          "inmutable": True,
+          "lo_que_NO_significa": "no dice nada del mundo: es cuanta incomodidad tengo yo"},
+         tema="recursos")
+
     p_rec, _ = preguntar("G2_curiosidad", "recursos", {"pregunta": "donde vale la pena mirar"},
                          cuando=_ahora(), traza=_traza())
     eventos.append(p_rec)
@@ -235,6 +251,25 @@ def latir(pasos=900, verbose=True, traza=None):
     _pub("G5_composicion", "medicion",
          {"motores": ["descubrir", "sindy2", "sindy3"], "sobre": "campanas, no gimnasio"},
          tema="leyes")
+
+    # G12 REFLEJOS — ACTIVADO el 10-ago-2026 con la firma del director ("la 2 si"), genoma v2.
+    # Destila una politica rapida de deliberaciones que Diego YA tomo, y publica si es ADOPTABLE.
+    # Publica la GANANCIA SOBRE LA LINEA BASE TONTA, nunca el acierto crudo: fue justo aqui donde
+    # medi 0.907 creyendolo excelente mientras el tonto sacaba 0.887 (Regla 11, fusionada con la
+    # 12 el 10-ago). Y NINGUN reflejo se escribe a mano — eso seria fisica humana disfrazada de
+    # instinto; politica_limpia() lo comprueba dentro de reflejos.py.
+    import reflejos as _refl
+    _est, _dec = _refl._mundo_de_prueba()
+    _pol = _refl.destilar(_est, _dec)
+    _ex = _refl.examinar(_pol, _est, _dec)
+    _pub("G12_reflejos", "medicion",
+         {"ganancia_sobre_la_linea_base_tonta": _ex["acuerdo_con_la_deliberacion"],
+          "piso_para_adoptar": _refl.PISO_ACUERDO,
+          "fraccion_en_que_dispara": _ex["fraccion_en_que_dispara"],
+          "adoptable": _ex["adoptable"],
+          "de_donde_sale": "destilado de deliberaciones propias, NINGUNO escrito a mano",
+          "lo_que_NO_significa": "un reflejo adoptable no es una ley: es una destreza compilada"},
+         tema="cuerpo")
 
     # ═══ FASE 6 · REVISION — VARIOS A UNO: la metacognicion pregunta y todos se miran
     p_rev, destinos = preguntar("G1_prediccion", "revision",
@@ -340,7 +375,6 @@ def regla31(verbose=True):
     que el portero bloquee de verdad en produccion, y que nada se publique sin permiso."""
     import tempfile
     fallos = []
-    ruta = os.path.join(BASE, "arbol", "SINAPSIS.jsonl")
     antes = len(leer())
 
     r = latir(pasos=3200, verbose=False)

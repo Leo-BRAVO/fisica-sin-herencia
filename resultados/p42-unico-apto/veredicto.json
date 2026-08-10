@@ -1,0 +1,142 @@
+{
+ "semillas": [
+  71,
+  73,
+  79,
+  83,
+  89
+ ],
+ "filas": [
+  {
+   "semilla": 71,
+   "mundo": {
+    "altura_mesa": 0.617,
+    "alto_suelta": 1.411,
+    "masa": 0.323,
+    "x_suelta": 1.044
+   },
+   "aptos": [
+    "altura"
+   ],
+   "elegido": "altura",
+   "auto_objetivo": 0.5748,
+   "auto_por_canal": {
+    "art0": 1.0,
+    "art1": 0.9793,
+    "art2": 0.9996,
+    "altura": 0.5748,
+    "contacto": 0.2771,
+    "vel_z": 0.0733,
+    "ruido": 0.0019
+   },
+   "margen_sobre_el_mejor_ajeno": null
+  },
+  {
+   "semilla": 73,
+   "mundo": {
+    "altura_mesa": 0.653,
+    "alto_suelta": 1.303,
+    "masa": 0.405,
+    "x_suelta": 0.988
+   },
+   "aptos": [
+    "art1",
+    "altura"
+   ],
+   "elegido": "altura",
+   "auto_objetivo": 0.5245,
+   "auto_por_canal": {
+    "art0": 1.0,
+    "art1": 0.9797,
+    "art2": 0.9998,
+    "altura": 0.5245,
+    "contacto": 0.2771,
+    "vel_z": 0.0531,
+    "ruido": 0.0021
+   },
+   "margen_sobre_el_mejor_ajeno": -0.4552
+  },
+  {
+   "semilla": 79,
+   "mundo": {
+    "altura_mesa": 0.59,
+    "alto_suelta": 1.486,
+    "masa": 0.253,
+    "x_suelta": 1.026
+   },
+   "aptos": [
+    "altura",
+    "contacto"
+   ],
+   "elegido": "altura",
+   "auto_objetivo": 0.6211,
+   "auto_por_canal": {
+    "art0": 1.0,
+    "art1": 0.972,
+    "art2": 0.9999,
+    "altura": 0.6211,
+    "contacto": 0.3173,
+    "vel_z": 0.0628,
+    "ruido": 0.0005
+   },
+   "margen_sobre_el_mejor_ajeno": 0.3038
+  },
+  {
+   "semilla": 83,
+   "mundo": {
+    "altura_mesa": 0.552,
+    "alto_suelta": 1.361,
+    "masa": 0.398,
+    "x_suelta": 1.054
+   },
+   "aptos": [
+    "altura"
+   ],
+   "elegido": "altura",
+   "auto_objetivo": 0.5515,
+   "auto_por_canal": {
+    "art0": 0.9998,
+    "art1": 0.9815,
+    "art2": 0.9999,
+    "altura": 0.5515,
+    "contacto": 0.2771,
+    "vel_z": 0.0606,
+    "ruido": 0.006
+   },
+   "margen_sobre_el_mejor_ajeno": null
+  },
+  {
+   "semilla": 89,
+   "mundo": {
+    "altura_mesa": 0.42,
+    "alto_suelta": 1.405,
+    "masa": 0.45,
+    "x_suelta": 0.99
+   },
+   "aptos": [
+    "altura"
+   ],
+   "elegido": "altura",
+   "auto_objetivo": 0.5664,
+   "auto_por_canal": {
+    "art0": 0.9997,
+    "art1": 0.9791,
+    "art2": 0.9996,
+    "altura": 0.5664,
+    "contacto": 0.2771,
+    "vel_z": 0.0712,
+    "ruido": 0.0051
+   },
+   "margen_sobre_el_mejor_ajeno": null
+  }
+ ],
+ "aciertos_de_altura": 5,
+ "de": 5,
+ "linea_base_tonta": 0.1429,
+ "ganancia_sobre_la_linea_base": 0.8571,
+ "mundos_con_un_solo_apto": 3,
+ "mundos_con_margen_suficiente": 4,
+ "gana_h_aislar": false,
+ "gana_h_varios": true,
+ "veredicto": "H-VARIOS"
+}

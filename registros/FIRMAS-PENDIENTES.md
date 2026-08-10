@@ -8,7 +8,15 @@ elegir por usted qué queremos que sea verdad** — que no es lo mismo que decid
 el experimento físico propio (R19 nivel 2) · cambiar las reglas · actuar en su nombre fuera del
 repositorio. Y una que nunca fue suya para concederla: **mover un umbral después de ver los datos**.
 
-**Estado: 3 pendientes, 2 resueltas por quórum, 1 revocada por el director — 10 de agosto de 2026.**
+**Estado: 0 pendientes — el director firmó las tres el 10 de agosto de 2026 (*"la 1 sí, la 2 sí, la 3 sí a las preguntas"*).**
+
+| Lo que esperaba su palabra | Qué firmó | Dónde quedó |
+|---|---|---|
+| La cláusula **"único apto"** del prereg-35 | **preguntar de nuevo** | `registros/prerregistro-42.md` — criterio congelado y **cinco semillas nuevas**, porque los cinco mundos del 35 quedaron quemados al haber generado la hipótesis |
+| **Activar G11 temple y G12 reflejos** | **sí** | `arbol/GENOMA.json` **v2**, los dos en modo `mide`; publican en cada ronda (temple: coste 1.873; reflejos: ganancia 0.681 sobre la línea base tonta, piso 0.35) |
+| Las **cuatro preguntas sobre las reglas** | **sí a las cuatro** | `CIMIENTOS.md` con los 4 campos en las 34 · **3 fusiones** (11+12, 7+14, 30+28) · **4 endurecimientos** · `codigo/reglas.py`, que mecaniza las que no tenían guardián y **cuenta la deuda de las que no se pueden mecanizar** |
+
+**La lista queda vacía. La regla de la puerta sigue en pie: si vuelve a pasar de seis, el lazo para y le escribe.**
 
 ---
 

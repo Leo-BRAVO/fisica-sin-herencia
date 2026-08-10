@@ -219,6 +219,18 @@ ok("Regla 16: la decision de seguir privado esta escrita en la constitucion",
 ok("Regla 19 nivel 3: el diferimiento de la replica esta escrito, con su condicion",
    "se difiere hasta que existan resultados reales" in _c17)
 
+# ==========================================================================================
+# F. LAS REGLAS QUE NO TENIAN GUARDIAN (10-ago-2026, orden del director)
+# ==========================================================================================
+# `reglas.py` vive aparte porque es largo, pero se corre AQUI y no como quinto guardian: la
+# Regla 32 nombra cuatro, y multiplicar guardianes sin necesidad crea la ilusion de mas control
+# del que hay. Sus fallos entran a FALLOS y bloquean igual que cualquier otro.
+print("\n=== F. LAS 14 REGLAS QUE NO TENIAN GUARDIAN (mecanizadas el 10-ago-2026) ===")
+sys.path.insert(0, os.path.join(BASE, "codigo"))
+import reglas as _reglas                                                       # noqa: E402
+for _f in _reglas.informe():
+    FALLOS.append(_f)
+
 print("\n" + "=" * 74)
 if FALLOS:
     print(f"DICTAMEN: {len(FALLOS)} FALLO(S) — NO correr campanas ni mostrar el repo: {FALLOS}")
