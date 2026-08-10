@@ -1,0 +1,120 @@
+{
+  "prerregistro": 35,
+  "semilla": 3,
+  "pasos": 1800,
+  "mundo": {
+    "altura_mesa": 0.6436,
+    "alto_suelta": 1.2096,
+    "masa": 0.2934,
+    "x_suelta": 1.1424
+  },
+  "mundo_varia": true,
+  "escalon1": {
+    "detalle": [
+      {
+        "canal": "art0",
+        "autopredictible": 1.0,
+        "gana_con_mi_comando": 0.1206,
+        "nulo": 0.0039,
+        "obediencia_neta": 0.1167,
+        "legal": true,
+        "no_mio": false
+      },
+      {
+        "canal": "art1",
+        "autopredictible": 0.9668,
+        "gana_con_mi_comando": 0.1501,
+        "nulo": 0.0085,
+        "obediencia_neta": 0.1416,
+        "legal": true,
+        "no_mio": false
+      },
+      {
+        "canal": "art2",
+        "autopredictible": 0.9999,
+        "gana_con_mi_comando": 0.8289,
+        "nulo": 0.0085,
+        "obediencia_neta": 0.8204,
+        "legal": true,
+        "no_mio": false
+      },
+      {
+        "canal": "altura",
+        "autopredictible": 0.4519,
+        "gana_con_mi_comando": 0.0,
+        "nulo": 0.0016,
+        "obediencia_neta": 0.0,
+        "legal": true,
+        "no_mio": true
+      },
+      {
+        "canal": "contacto",
+        "autopredictible": 0.2271,
+        "gana_con_mi_comando": 0.0,
+        "nulo": 0.0037,
+        "obediencia_neta": 0.0,
+        "legal": false,
+        "no_mio": true
+      },
+      {
+        "canal": "vel_z",
+        "autopredictible": 0.0497,
+        "gana_con_mi_comando": 0.0001,
+        "nulo": 0.0058,
+        "obediencia_neta": 0.0,
+        "legal": false,
+        "no_mio": true
+      },
+      {
+        "canal": "ruido",
+        "autopredictible": 0.0045,
+        "gana_con_mi_comando": 0.0026,
+        "nulo": 0.0015,
+        "obediencia_neta": 0.0011,
+        "legal": false,
+        "no_mio": true
+      }
+    ],
+    "candidato": "altura",
+    "autopredictible": 0.4519,
+    "obediencia_neta": 0.0,
+    "candidatos_aptos": [
+      "altura"
+    ],
+    "hallado": true
+  },
+  "escalon2": {
+    "efecto": 2.382,
+    "nulo_techo": 0.1259,
+    "hallado": true,
+    "lectura": "con contacto la caida se detiene"
+  },
+  "examen_flota": {
+    "sorpresa_relativa": 0.2915,
+    "a": 0.185316,
+    "b": 0.337798,
+    "piso_ruido": 0.153915296,
+    "bajo_piso": false
+  },
+  "examen_atraviesa": {
+    "sorpresa_relativa": 0.1325,
+    "a": 0.141201,
+    "b": 0.184336,
+    "piso_ruido": 0.153915296,
+    "bajo_piso": false
+  },
+  "nulo_natural_aire": {
+    "sorpresa_relativa": -0.0204,
+    "a": 0.185316,
+    "b": 0.177921,
+    "piso_ruido": 0.153915296,
+    "bajo_piso": false
+  },
+  "nulo_natural_mesa": {
+    "sorpresa_relativa": 0.0067,
+    "a": 0.141201,
+    "b": 0.143116,
+    "piso_ruido": 0.153915296,
+    "bajo_piso": false
+  }
+}
