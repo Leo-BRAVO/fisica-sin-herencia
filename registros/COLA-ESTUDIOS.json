@@ -251,9 +251,10 @@
       "prerregistro": 29,
       "datos": "codigo/soporte.py",
       "args": "--semilla 1 --pasos 1800",
-      "estado": "pendiente",
+      "estado": "hecha",
       "nota": "escalera de soporte: el primer no-yo por definicion positiva",
-      "salida": "resultados/p29-soporte-s1"
+      "salida": "resultados/p29-soporte-s1",
+      "resultado": "corrida por latido-nube (Actions)"
     },
     {
       "id": "p29-soporte-s2",
@@ -261,9 +262,10 @@
       "prerregistro": 29,
       "datos": "codigo/soporte.py",
       "args": "--semilla 2 --pasos 1800",
-      "estado": "pendiente",
+      "estado": "hecha",
       "nota": "escalera de soporte: el primer no-yo por definicion positiva",
-      "salida": "resultados/p29-soporte-s2"
+      "salida": "resultados/p29-soporte-s2",
+      "resultado": "corrida por latido-nube (Actions)"
     },
     {
       "id": "p29-soporte-s3",
@@ -271,9 +273,10 @@
       "prerregistro": 29,
       "datos": "codigo/soporte.py",
       "args": "--semilla 3 --pasos 1800",
-      "estado": "pendiente",
+      "estado": "hecha",
       "nota": "escalera de soporte: el primer no-yo por definicion positiva",
-      "salida": "resultados/p29-soporte-s3"
+      "salida": "resultados/p29-soporte-s3",
+      "resultado": "corrida por latido-nube (Actions)"
     },
     {
       "id": "p29-soporte-s4",
@@ -281,9 +284,10 @@
       "prerregistro": 29,
       "datos": "codigo/soporte.py",
       "args": "--semilla 4 --pasos 1800",
-      "estado": "pendiente",
+      "estado": "hecha",
       "nota": "escalera de soporte: el primer no-yo por definicion positiva",
-      "salida": "resultados/p29-soporte-s4"
+      "salida": "resultados/p29-soporte-s4",
+      "resultado": "corrida por latido-nube (Actions)"
     },
     {
       "id": "p29-soporte-s5",
@@ -291,9 +295,10 @@
       "prerregistro": 29,
       "datos": "codigo/soporte.py",
       "args": "--semilla 5 --pasos 1800",
-      "estado": "pendiente",
+      "estado": "hecha",
       "nota": "escalera de soporte: el primer no-yo por definicion positiva",
-      "salida": "resultados/p29-soporte-s5"
+      "salida": "resultados/p29-soporte-s5",
+      "resultado": "corrida por latido-nube (Actions)"
     },
     {
       "id": "p30-espejo-gemelo-s1",
@@ -301,9 +306,10 @@
       "prerregistro": 30,
       "datos": "codigo/espejo2.py",
       "args": "--semilla 1 --pasos 1500 --pasos-fase 500",
-      "estado": "pendiente",
+      "estado": "hecha",
       "nota": "el gemelo en la escena + firmas conductuales del bebe",
-      "salida": "resultados/p30-espejo-gemelo-s1"
+      "salida": "resultados/p30-espejo-gemelo-s1",
+      "resultado": "corrida por latido-nube (Actions)"
     },
     {
       "id": "p30-espejo-gemelo-s2",
@@ -311,9 +317,10 @@
       "prerregistro": 30,
       "datos": "codigo/espejo2.py",
       "args": "--semilla 2 --pasos 1500 --pasos-fase 500",
-      "estado": "pendiente",
+      "estado": "hecha",
       "nota": "el gemelo en la escena + firmas conductuales del bebe",
-      "salida": "resultados/p30-espejo-gemelo-s2"
+      "salida": "resultados/p30-espejo-gemelo-s2",
+      "resultado": "corrida por latido-nube (Actions)"
     },
     {
       "id": "p30-espejo-gemelo-s3",
@@ -321,9 +328,10 @@
       "prerregistro": 30,
       "datos": "codigo/espejo2.py",
       "args": "--semilla 3 --pasos 1500 --pasos-fase 500",
-      "estado": "pendiente",
+      "estado": "hecha",
       "nota": "el gemelo en la escena + firmas conductuales del bebe",
-      "salida": "resultados/p30-espejo-gemelo-s3"
+      "salida": "resultados/p30-espejo-gemelo-s3",
+      "resultado": "corrida por latido-nube (Actions)"
     },
     {
       "id": "p30-espejo-gemelo-s4",
@@ -331,9 +339,10 @@
       "prerregistro": 30,
       "datos": "codigo/espejo2.py",
       "args": "--semilla 4 --pasos 1500 --pasos-fase 500",
-      "estado": "pendiente",
+      "estado": "hecha",
       "nota": "el gemelo en la escena + firmas conductuales del bebe",
-      "salida": "resultados/p30-espejo-gemelo-s4"
+      "salida": "resultados/p30-espejo-gemelo-s4",
+      "resultado": "corrida por latido-nube (Actions)"
     },
     {
       "id": "p30-espejo-gemelo-s5",
@@ -341,9 +350,10 @@
       "prerregistro": 30,
       "datos": "codigo/espejo2.py",
       "args": "--semilla 5 --pasos 1500 --pasos-fase 500",
-      "estado": "pendiente",
+      "estado": "hecha",
       "nota": "el gemelo en la escena + firmas conductuales del bebe",
-      "salida": "resultados/p30-espejo-gemelo-s5"
+      "salida": "resultados/p30-espejo-gemelo-s5",
+      "resultado": "corrida por latido-nube (Actions)"
     },
     {
       "id": "p32-observador-pasivo-s1",
@@ -351,9 +361,10 @@
       "prerregistro": 32,
       "datos": "codigo/observador_pasivo.py",
       "args": "--semilla 1 --pasos 1800",
-      "estado": "pendiente",
+      "estado": "hecha",
       "nota": "encarnado vs pasivo: el control que podria refutarnos",
-      "salida": "resultados/p32-observador-pasivo-s1"
+      "salida": "resultados/p32-observador-pasivo-s1",
+      "resultado": "corrida por latido-nube (Actions)"
     },
     {
       "id": "p32-observador-pasivo-s2",
@@ -361,9 +372,10 @@
       "prerregistro": 32,
       "datos": "codigo/observador_pasivo.py",
       "args": "--semilla 2 --pasos 1800",
-      "estado": "pendiente",
+      "estado": "hecha",
       "nota": "encarnado vs pasivo: el control que podria refutarnos",
-      "salida": "resultados/p32-observador-pasivo-s2"
+      "salida": "resultados/p32-observador-pasivo-s2",
+      "resultado": "corrida por latido-nube (Actions)"
     },
     {
       "id": "p32-observador-pasivo-s3",
@@ -371,9 +383,10 @@
       "prerregistro": 32,
       "datos": "codigo/observador_pasivo.py",
       "args": "--semilla 3 --pasos 1800",
-      "estado": "pendiente",
+      "estado": "hecha",
       "nota": "encarnado vs pasivo: el control que podria refutarnos",
-      "salida": "resultados/p32-observador-pasivo-s3"
+      "salida": "resultados/p32-observador-pasivo-s3",
+      "resultado": "corrida por latido-nube (Actions)"
     },
     {
       "id": "p32-observador-pasivo-s4",
@@ -381,9 +394,10 @@
       "prerregistro": 32,
       "datos": "codigo/observador_pasivo.py",
       "args": "--semilla 4 --pasos 1800",
-      "estado": "pendiente",
+      "estado": "hecha",
       "nota": "encarnado vs pasivo: el control que podria refutarnos",
-      "salida": "resultados/p32-observador-pasivo-s4"
+      "salida": "resultados/p32-observador-pasivo-s4",
+      "resultado": "corrida por latido-nube (Actions)"
     },
     {
       "id": "p32-observador-pasivo-s5",
@@ -391,9 +405,10 @@
       "prerregistro": 32,
       "datos": "codigo/observador_pasivo.py",
       "args": "--semilla 5 --pasos 1800",
-      "estado": "pendiente",
+      "estado": "hecha",
       "nota": "encarnado vs pasivo: el control que podria refutarnos",
-      "salida": "resultados/p32-observador-pasivo-s5"
+      "salida": "resultados/p32-observador-pasivo-s5",
+      "resultado": "corrida por latido-nube (Actions)"
     }
   ]
 }
