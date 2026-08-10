@@ -23,7 +23,7 @@ graph TD
     PD["Firmas conductuales: CERRADO en no<br/>concluyente PERMANENTE (prereg-36)<br/>ninguna duración hace fiable la vara"]:::archivo
     PE{"Escalera de soporte: PARCIAL<br/>escalón 2 y examen replican 5/5, pero con<br/>mesa alta el contacto también pasa el piso<br/>¿debe el escalón 1 aislar UN canal, o varios?"}:::parcial
 
-    P1{"¿Nulos surrogados de las campañas<br/>insignia? (mendeley: se corre en la<br/>NUBE vía Actions; p14 espera ojos)"}:::pregunta
+    P1["RESPONDIDA (10-ago, INFORME-45): los 4 nulos<br/>corrieron. Mendeley NO halla ley en el mundo falso<br/>(surrogado y barajado) → N-001-E2 es el ÚNICO nodo<br/>que sobrevivió a sus dos verdugos. p14 SÍ la halló<br/>→ degradado"]:::archivo
     P2{"Dimensión intrínseca: MEDIDA 2/3<br/>(Michigan ~3 · caída ~2.3, INF-22)<br/>falta dp Morpheus (rastreo 2 cuerpos)"}:::parcial
     P3{"¿Los latentes canonizan a los<br/>ángulos físicos o son una carta<br/>alternativa tipo Columbia?"}:::pregunta
     P4{"¿Ojos con pérdida de conservación<br/>verían lo eterno directamente?<br/>(N-004 ya resuelto — pregunta ABIERTA)"}:::pregunta
