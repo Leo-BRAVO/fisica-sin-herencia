@@ -49,6 +49,31 @@ RUIDO_SENSOR = 0.10       # lectura ruidosa: por eso hace falta repetir donde un
 MASA_MIN, MASA_MAX = 0.20, 1.10
 ROCE_MIN, ROCE_MAX = 0.08, 0.85
 
+# ------------------------------------------------------ EL MANIFIESTO DEL METODO (paso 0 y 1)
+# Lo exige `codigo/metodo.py`, LA PUERTA. Sin esto el modulo no se puede encolar.
+# Aqui se declara QUE CLASE DE PRUEBA es esto y CUAL ES LA FORMULA de cada lectura — antes de que
+# nadie corra nada. Las formulas no se creen: se comprueban con relaciones metamorficas (tipo G).
+_BASE_MET = {"masa": 0.5, "roce": 0.4, "fuerza": 26.0}
+METODO = {
+    "tipo_de_medida": "mixta",   # las lecturas son continuas; el puntaje CLASIFICA por umbral
+    "comparten_datos": {
+        "hay": False,
+        "porque": "las tres condiciones actuan por su cuenta. El pasivo ve episodios de OTRO "
+                  "agente, nunca los del dirigido — esa copia fue el fallo 1 del prereg-37 y aqui "
+                  "esta prohibida por diseño.",
+    },
+    "formulas": [
+        {"base": {**_BASE_MET, "cual": "pico"}, "parametro": "masa", "factor": 2.0, "esperado": 0.5,
+         "porque": "v = F*T/m — doblar la masa parte el pico por la mitad"},
+        {"base": {**_BASE_MET, "cual": "pico"}, "parametro": "fuerza", "factor": 2.0,
+         "esperado": 2.0, "porque": "v = F*T/m — doblar la fuerza dobla el pico"},
+        {"base": {**_BASE_MET, "cual": "roce"}, "parametro": "roce", "factor": 2.0, "esperado": 2.0,
+         "porque": "a = mu*g — doblar el rozamiento dobla la desaceleracion"},
+        {"base": {**_BASE_MET, "cual": "roce"}, "parametro": "masa", "factor": 2.0, "esperado": 1.0,
+         "porque": "a = mu*g NO lleva masa dentro — doblarla no debe cambiar la desaceleracion"},
+    ],
+}
+
 
 def _sitio(i):
     ang = 2.0 * np.pi * i / N_OBJ
@@ -401,6 +426,57 @@ def main():
     with open(os.path.join(out, "resumen.json"), "w", encoding="utf-8") as f:
         json.dump(salida, f, indent=2, ensure_ascii=False, default=str)
     print(f"guardado en {out}/resumen.json (parcial — el veredicto exige las 5 semillas juntas)")
+
+# ------------------------------------------------------ LO QUE LA PUERTA EJECUTA (metodo.py)
+def _metodo_medir(masa=0.5, roce=0.4, fuerza=26.0, cual="pico"):
+    """Un toque sobre un objeto de masa y roce dados. Es lo que la puerta usa para comprobar que
+    las formulas declaradas en METODO se cumplen de verdad. Tres repeticiones porque el sensor
+    tiene un 10% de ruido: una sola lectura no distingue una formula rota de una mota de polvo."""
+    import pybullet as p
+    w = {"masas": [masa] * N_OBJ, "roces": [roce] * N_OBJ}
+    global FUERZA
+    viejo, FUERZA = FUERZA, fuerza
+    cliente, objetos = _escena(w)
+    try:
+        rng = np.random.default_rng(0)
+        picos, roces = [], []
+        for _ in range(3):
+            a, b = _leer(cliente, objetos, 0, rng)
+            _reponer(cliente, objetos)
+            picos.append(a)
+            roces.append(b)
+        return float(np.median(picos if cual == "pico" else roces))
+    finally:
+        p.disconnect(physicsClientId=cliente)
+        FUERZA = viejo
+
+
+def _metodo_sanidad():
+    """PASO 3 — la ficha, contra la VERDAD del simulador. Comprueba lo que la Regla 31 no puede:
+    que cada lectura mida lo suyo y no la de al lado, y que las tres condiciones no sean copias."""
+    import sanidad as S
+    import pybullet as p
+    w = mundo(1)
+    cliente, objetos = _escena(w)
+    try:
+        rng = np.random.default_rng(0)
+        picos, roces = [], []
+        for i in range(N_OBJ):
+            a, b = _leer(cliente, objetos, i, rng)
+            _reponer(cliente, objetos)
+            picos.append(a)
+            roces.append(b)
+    finally:
+        p.disconnect(physicsClientId=cliente)
+    fallos = []
+    fallos += S.correlaciones({"masa": picos, "roce": roces},
+                              {"masa": w["masas"], "roce": w["roces"]})["fallos"]
+    d = correr("dirigido", semilla=1, w=w)
+    z = correr("azaroso", semilla=1, w=w)
+    q = correr("pasivo", semilla=1, w=w)
+    fallos += S.condiciones_distintas({"dirigido": d["obs"], "azaroso": z["obs"],
+                                       "pasivo": q["obs"]})["fallos"]
+    return {"aprueba": not fallos, "fallos": fallos}
 
 
 if __name__ == "__main__":
