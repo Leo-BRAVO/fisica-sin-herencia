@@ -188,6 +188,98 @@ def dormir(episodios_vividos, dt=1.0, semilla=9):
                     "ley de vigilia (filtro mecanico de arriba) y llevar la firma del director."}
 
 
+# ==========================================================================================
+# LA PUERTA (metodo.py) — 10-ago-2026
+# ==========================================================================================
+# G9 llevaba desde julio publicando en cada ronda sin haber pasado la puerta, y es el organo con el
+# antecedente mas feo del proyecto: aqui vivia un `guardian_ok` que se calculaba y SE TIRABA, bajo
+# un comentario que aseguraba que la fase generativa "solo se abre si el guardian aprobo". La fase
+# se abria siempre. No era un agujero —el filtro de vigilia si contiene lo que sale— pero el
+# comentario mentia sobre el codigo, que es como se confia en un modulo mas de lo que merece.
+METODO = {
+    "prerregistro": 43,
+    "tipo_de_medida": "continua",
+    "que_mide": ("que fraccion de las leyes soñadas SOBREVIVE al filtro de vigilia — es decir, "
+                 "cuantas de las que la fase generativa propone coinciden en SOPORTE con una ley "
+                 "hallada despierto"),
+    "comparten_datos": {
+        "hay": True,
+        "porque": "la fase generativa sueña con un modelo ajustado a los MISMOS episodios que la "
+                  "fase conservadora minero: esa es su definicion, no un descuido. Lo que los "
+                  "separa es que la generativa extrapola y la conservadora no. El guardian de "
+                  "sueños-de-ruido corre sobre datos INDEPENDIENTES y por eso puede falsificar.",
+    },
+    "linea_base": ("soñar sobre un modelo ajustado a RUIDO PURO: cuantas leyes sobreviven al "
+                   "filtro alli es el suelo, y debe ser cero"),
+    "formulas": [
+        {"base": {"estructura": 1.0, "ruido": 0.02}, "parametro": "estructura", "factor": 0.0,
+         "esperado": "baja",
+         "porque": "sin estructura en el mundo vivido no hay ley que soñar que coincida con la "
+                   "vigilia: la fraccion que sobrevive tiene que caer. Desigualdad y no "
+                   "proporcion porque es un conteo de coincidencias de soporte, no una funcion "
+                   "cerrada"},
+        {"base": {"estructura": 1.0, "ruido": 0.02}, "parametro": "ruido", "factor": 30.0,
+         "esperado": "baja",
+         "porque": "con el mundo enterrado en ruido, la vigilia deja de hallar leyes y el filtro "
+                   "se queda sin nada con lo que comparar. Si NO bajara, el filtro estaria "
+                   "aprobando por parecido de forma y no por coincidencia de soporte"},
+    ],
+}
+
+
+def _mundo_soñable(estructura=1.0, ruido=0.02, n_ep=5, T=4000, semilla=11):
+    """Un mundo lineal cuya ESTRUCTURA controlamos: `estructura`=1 es un oscilador limpio,
+    `estructura`=0 es ruido con la misma escala. La verdad la ponemos nosotros."""
+    rng = np.random.default_rng(int(semilla))
+    eps = []
+    for e in range(int(n_ep)):
+        x = np.zeros((int(T), 2))
+        x[0] = [1.0, 0.0]
+        for t in range(1, int(T)):
+            dx = np.array([x[t - 1, 1], -0.9 * x[t - 1, 0] - 0.05 * x[t - 1, 1]])
+            x[t] = x[t - 1] + float(estructura) * 0.02 * dx + rng.normal(0, float(ruido), 2)
+        eps.append(x)
+    return eps
+
+
+# El paso de integracion del mundo de juguete. Va aqui y no suelto porque `dormir(dt=...)` DEBE
+# recibirlo: mi primera version integraba con paso 0.02 y le pasaba dt=1.0, y entonces ni la fase
+# despierta encontraba nada — la lectura base salia CERO y la puerta me dijo, con razon, "no hay
+# proporcion que comprobar". No era el organo: era yo midiendolo con la regla equivocada.
+DT_JUGUETE = 0.02
+
+
+def _metodo_medir(estructura=1.0, ruido=0.02):
+    """PASO 1 — la medida escalar: cuantas leyes soñadas sobreviven al filtro de vigilia."""
+    r = dormir(_mundo_soñable(estructura=estructura, ruido=ruido), dt=DT_JUGUETE)
+    return float(len(r["fase_generativa"]))
+
+
+def _metodo_sanidad():
+    """PASO 3 — LA FICHA. La pregunta: **¿el filtro de vigilia sigue a la estructura REAL del
+    mundo vivido, o se deja llevar por la escala del ruido?** Un filtro que aprueba mas cuando hay
+    mas ruido estaria consagrando alucinaciones — que es exactamente el riesgo de tener una fase
+    generativa dentro de un descubridor.
+    """
+    import sanidad as S
+    rng = np.random.default_rng(29)
+    ests, lect = [], []
+    for _ in range(6):
+        e = float(rng.uniform(0.0, 1.0))
+        ests.append(e)
+        lect.append(_metodo_medir(estructura=e, ruido=0.02))
+    r = S.correlaciones({"estructura": lect}, {"estructura": ests})
+    fallos = list(r["fallos"])
+    # Y el señuelo de escala: multiplicar el mundo por 10 no puede cambiar cuantas leyes pasan.
+    a = _metodo_medir(estructura=1.0, ruido=0.02)
+    eps = [x * 10.0 for x in _mundo_soñable(estructura=1.0, ruido=0.02)]
+    b = float(len(dormir(eps, dt=DT_JUGUETE)["fase_generativa"]))
+    if a != b:
+        fallos.append(f"ESCALA: con el mundo x10 pasan {b} leyes en vez de {a} — el filtro lee "
+                      f"amplitud, no estructura")
+    return {"aprueba": not fallos, "fallos": fallos, "sin_escalar": a, "escalado_x10": b}
+
+
 def regla31_dos_fases(verbose=True):
     fallos = []
     # mundo real con verdad conocida: oscilador amortiguado

@@ -29,6 +29,33 @@
     "vel_z": 0.0733,
     "ruido": 0.0019
    },
+   "obediencia_neta_por_canal": {
+    "art0": 0.1006,
+    "art1": 0.1533,
+    "art2": 0.7221,
+    "altura": 0.0,
+    "contacto": 0.0,
+    "vel_z": 0.0037,
+    "ruido": 0.0011
+   },
+   "legal_por_canal": {
+    "art0": true,
+    "art1": true,
+    "art2": true,
+    "altura": true,
+    "contacto": false,
+    "vel_z": false,
+    "ruido": false
+   },
+   "no_mio_por_canal": {
+    "art0": false,
+    "art1": false,
+    "art2": false,
+    "altura": true,
+    "contacto": true,
+    "vel_z": true,
+    "ruido": true
+   },
    "margen_sobre_el_mejor_ajeno": null
   },
   {
@@ -53,6 +80,33 @@
     "contacto": 0.2771,
     "vel_z": 0.0531,
     "ruido": 0.0021
+   },
+   "obediencia_neta_por_canal": {
+    "art0": 0.1234,
+    "art1": 0.0297,
+    "art2": 0.6559,
+    "altura": 0.0,
+    "contacto": 0.0,
+    "vel_z": 0.0,
+    "ruido": 0.0
+   },
+   "legal_por_canal": {
+    "art0": true,
+    "art1": true,
+    "art2": true,
+    "altura": true,
+    "contacto": false,
+    "vel_z": false,
+    "ruido": false
+   },
+   "no_mio_por_canal": {
+    "art0": false,
+    "art1": true,
+    "art2": false,
+    "altura": true,
+    "contacto": true,
+    "vel_z": true,
+    "ruido": true
    },
    "margen_sobre_el_mejor_ajeno": -0.4552
   },
@@ -79,6 +133,33 @@
     "vel_z": 0.0628,
     "ruido": 0.0005
    },
+   "obediencia_neta_por_canal": {
+    "art0": 0.0773,
+    "art1": 0.0531,
+    "art2": 0.6959,
+    "altura": 0.0,
+    "contacto": 0.0,
+    "vel_z": 0.0,
+    "ruido": 0.0
+   },
+   "legal_por_canal": {
+    "art0": true,
+    "art1": true,
+    "art2": true,
+    "altura": true,
+    "contacto": true,
+    "vel_z": false,
+    "ruido": false
+   },
+   "no_mio_por_canal": {
+    "art0": false,
+    "art1": false,
+    "art2": false,
+    "altura": true,
+    "contacto": true,
+    "vel_z": true,
+    "ruido": true
+   },
    "margen_sobre_el_mejor_ajeno": 0.3038
   },
   {
@@ -103,6 +184,33 @@
     "vel_z": 0.0606,
     "ruido": 0.006
    },
+   "obediencia_neta_por_canal": {
+    "art0": 0.1972,
+    "art1": 0.3446,
+    "art2": 0.7913,
+    "altura": 0.0,
+    "contacto": 0.0,
+    "vel_z": 0.0,
+    "ruido": 0.0
+   },
+   "legal_por_canal": {
+    "art0": true,
+    "art1": true,
+    "art2": true,
+    "altura": true,
+    "contacto": false,
+    "vel_z": false,
+    "ruido": false
+   },
+   "no_mio_por_canal": {
+    "art0": false,
+    "art1": false,
+    "art2": false,
+    "altura": true,
+    "contacto": true,
+    "vel_z": true,
+    "ruido": true
+   },
    "margen_sobre_el_mejor_ajeno": null
   },
   {
@@ -126,6 +234,33 @@
     "contacto": 0.2771,
     "vel_z": 0.0712,
     "ruido": 0.0051
+   },
+   "obediencia_neta_por_canal": {
+    "art0": 0.1961,
+    "art1": 0.3488,
+    "art2": 0.6966,
+    "altura": 0.0,
+    "contacto": 0.0,
+    "vel_z": 0.0,
+    "ruido": 0.0
+   },
+   "legal_por_canal": {
+    "art0": true,
+    "art1": true,
+    "art2": true,
+    "altura": true,
+    "contacto": false,
+    "vel_z": false,
+    "ruido": false
+   },
+   "no_mio_por_canal": {
+    "art0": false,
+    "art1": false,
+    "art2": false,
+    "altura": true,
+    "contacto": true,
+    "vel_z": true,
+    "ruido": true
    },
    "margen_sobre_el_mejor_ajeno": null
   }

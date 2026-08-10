@@ -253,6 +253,108 @@ def _mundos_regla31(n_ep=14, T=1600, semilla=7):
     return mundos
 
 
+# ==========================================================================================
+# LA PUERTA (metodo.py) — 10-ago-2026
+# ==========================================================================================
+# Este módulo decide QUÉ ES EL CUERPO DE DIEGO. Es el instrumento con más consecuencias del
+# proyecto: sostiene el nodo H-001 y la lectura de contingencia del panel del torneo. Tenía su
+# Regla 31 desde agosto, pero **nunca había pasado la puerta**: sin manifiesto, sin fórmulas
+# comprobables y sin ficha de sanidad. Y el 10-ago el prereg-42 encontró justo la clase de fallo
+# que esto vigila — en un mundo, una articulación del propio brazo salió clasificada como NO-MÍA.
+METODO = {
+    "prerregistro": 23,
+    "tipo_de_medida": "umbral",   # decide "es_mia" cruzando `fraccion`; la cantidad es continua
+    "que_mide": ("la FRACCIÓN DE VENTANAS en que una variable obedece a los comandos — la "
+                 "consistencia, no la contingencia a secas: el cuerpo obedece SIEMPRE, el mundo "
+                 "solo en las ventanas donde hubo contacto"),
+    "comparten_datos": {
+        "hay": True,
+        "porque": "todas las variables se miden sobre LOS MISMOS episodios y los MISMOS comandos, "
+                  "que es la única forma de compararlas entre sí. Lo que NO se comparte son los "
+                  "episodios juez: quedan fuera del ajuste y solo se usan para puntuar.",
+    },
+    "linea_base": ("el nulo por desplazamiento circular de los comandos, restado dentro del "
+                   "margen: lo que se reporta es ganancia sobre él, no obediencia cruda"),
+    "formulas": [
+        {"base": {"fuerza": 0.6, "ruido": 0.0}, "parametro": "fuerza", "factor": 0.02,
+         "esperado": "baja",
+         "porque": "si el comando casi no mueve la variable, la fracción de ventanas en que "
+                   "obedece tiene que caer. Desigualdad y no proporción: la fracción es un conteo "
+                   "sobre un umbral, no una función cerrada de la fuerza"},
+        {"base": {"fuerza": 0.6, "ruido": 0.3}, "parametro": "ruido", "factor": 12.0,
+         "esperado": "baja",
+         "porque": "ruido encima de la misma obediencia la vuelve ilegible ventana a ventana. Si "
+                   "NO bajara, el detector estaría leyendo la amplitud de la señal y no su "
+                   "relación con el comando — que es el modo de fallo del TELEVISOR"},
+    ],
+}
+
+
+def _mundo_de_fuerza(fuerza=0.6, ruido=0.0, T=1400, n_ep=8, semilla=5):
+    """Un mundo donde YO fijo cuánta agencia tiene la variable 0. La verdad la ponemos nosotros:
+    es la única forma de preguntarle al detector si mide lo que dice sin preguntarle a Diego."""
+    # PRIMER INTENTO Y POR QUE ESTABA MAL — lo cazo el paso 1 de la puerta: el cuerpo era una
+    # funcion PURA del comando, sin nada mas que lo moviera. En un mundo asi, CUALQUIER fuerza
+    # distinta de cero explica toda la varianza y la lectura sale 1.000 pase lo que pase — bajar
+    # la fuerza a la cincuentava parte no la movia ni un digito. Un mundo de juguete sin
+    # competencia no examina nada: aprueba siempre. Ahora el cuerpo tiene un FONDO propio de
+    # escala fija que el comando NO explica, asi que `fuerza` gobierna de verdad que fraccion de
+    # la dinamica es agencia — que es justo lo que el instrumento dice medir.
+    rng = np.random.default_rng(int(semilla))
+    k = np.ones(9) / 9
+    eps = []
+    for _ in range(int(n_ep)):
+        a = np.column_stack([np.convolve(rng.normal(size=T + 8), k, mode="valid")[:T]
+                             for _ in range(3)])
+        cuerpo = np.zeros(T)
+        fondo = rng.normal(0.0, 1.0, size=T)          # lo que el comando JAMAS explica
+        for t in range(1, T):
+            cuerpo[t] = 0.85 * cuerpo[t - 1] + float(fuerza) * a[t - 1, 0] + fondo[t]
+        cuerpo = cuerpo + rng.normal(0.0, float(ruido), size=T)
+        resto = [np.convolve(np.cumsum(rng.normal(size=T + 8)), k, mode="valid")[:T]
+                 for _ in range(4)]
+        eps.append((a, np.column_stack([cuerpo] + resto)))
+    return eps
+
+
+def _metodo_medir(fuerza=0.6, ruido=0.0):
+    """PASO 1 — la medida escalar: en qué fracción de ventanas obedece la variable que SÍ tiene
+    agencia por construcción."""
+    eps = _mundo_de_fuerza(fuerza=fuerza, ruido=ruido)
+    res = medir(eps, jueces=[6, 7, 8], nulos=6)
+    return float([r for r in res if r["variable"] == 0][0]["obedece_en"])
+
+
+def _metodo_sanidad():
+    """PASO 3 — LA FICHA. La pregunta: **¿la lectura de una variable sigue a SU propia agencia, o
+    se contagia de la agencia de al lado?** Es el error de tipo CRUCE, y aquí sería el peor
+    posible: un detector que se contagia declararía "mío" al objeto que el brazo está tocando —
+    o, como pasó el 10-ago en el prereg-42, declararía NO-MÍO a un brazo propio.
+    """
+    import sanidad as S
+    rng = np.random.default_rng(23)
+    v_prop, l_prop = [], []
+    for _ in range(8):
+        f = float(rng.uniform(0.05, 1.2))
+        v_prop.append(f)
+        l_prop.append(_metodo_medir(fuerza=f, ruido=0.0))
+    r = S.correlaciones({"agencia": l_prop}, {"agencia": v_prop})
+    fallos = list(r["fallos"])
+
+    # Y el contagio, medido aparte: una variable SIN agencia, en el MISMO mundo donde otra sí la
+    # tiene, no puede subir su lectura cuando sube la agencia ajena.
+    ajenas = []
+    for f in (0.1, 0.6, 1.2):
+        eps = _mundo_de_fuerza(fuerza=f)
+        res = medir(eps, jueces=[6, 7, 8], nulos=6)
+        ajenas.append(float(np.mean([x["obedece_en"] for x in res if x["variable"] != 0])))
+    if max(ajenas) - min(ajenas) > 0.25:
+        fallos.append(f"CONTAGIO: las variables sin agencia se mueven {max(ajenas)-min(ajenas):.3f} "
+                      f"cuando cambia la agencia AJENA — el detector confunde canales")
+    return {"aprueba": not fallos, "fallos": fallos,
+            "lectura_de_las_ajenas": [round(x, 3) for x in ajenas]}
+
+
 def regla31(verbose=True):
     """El detector se prueba a sí mismo antes de tocar a Diego (Regla 31)."""
     jueces = [13, 14]

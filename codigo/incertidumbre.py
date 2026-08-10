@@ -48,6 +48,77 @@ def medir(X, Y, X_test, miembros=12, semilla=0):
             "aleatoria": float(np.sqrt(np.mean(residuos)))}
 
 
+# ==========================================================================================
+# LA PUERTA (metodo.py) — 10-ago-2026, prerregistro-43
+# ==========================================================================================
+# G14 publica en cada ronda y **el temple lee su numero** para calcular su termino de sorpresa —
+# y el temple es CABLEADO E INMUTABLE por diseño. Es decir: si G14 midiera mal, el error quedaria
+# congelado dentro de un organo que por construccion no se puede ajustar. Por eso este es de los
+# primeros que pasan.
+METODO = {
+    "prerregistro": 43,
+    "tipo_de_medida": "continua",
+    "que_mide": ("las DOS ignorancias por separado: la EPISTEMICA (curable con mas datos, medida "
+                 "como desacuerdo entre miembros del conjunto) y la ALEATORIA (irreducible, el "
+                 "residuo). Confundirlas es creer que se puede aprender lo que solo es ruido"),
+    "comparten_datos": {
+        "hay": True,
+        "porque": "los miembros del conjunto se entrenan por bootstrap sobre EL MISMO conjunto de "
+                  "entrenamiento: esa es la definicion del metodo, y su desacuerdo es justo la "
+                  "señal que se busca. Lo que NO se comparte es el conjunto de prueba.",
+    },
+    "linea_base": ("decir que TODA la incertidumbre es aleatoria — es decir, que nada es curable. "
+                   "Un estimador que no bate a eso no distingue las dos ignorancias"),
+    "formulas": [
+        {"base": {"n": 40.0, "ruido": 0.5}, "parametro": "n", "factor": 8.0, "esperado": "baja",
+         "porque": "la ignorancia EPISTEMICA es, por definicion, la que se cura con datos: al "
+                   "multiplicar por 8 las muestras tiene que caer. Es la firma falsable del "
+                   "concepto — si NO cayera, lo que se esta midiendo no es ignorancia curable"},
+        {"base": {"n": 40.0, "ruido": 0.5}, "parametro": "ruido", "factor": 4.0, "esperado": "sube",
+         "porque": "mas ruido irreducible = mas desacuerdo entre miembros remuestreados. Sube, "
+                   "pero se declara como desigualdad: la relacion exacta depende del "
+                   "condicionamiento de la matriz y ponerle un factor seria inventarselo"},
+    ],
+}
+
+
+def _mundo(n=40.0, ruido=0.5, dim=2, semilla=4):
+    """Un mundo lineal cuyo TAMAÑO DE MUESTRA y RUIDO fijamos nosotros. La verdad la ponemos aqui."""
+    rng = np.random.default_rng(int(semilla))
+    X = rng.normal(size=(int(n), int(dim)))
+    Y = 2.0 * X[:, 0] - X[:, 1] + rng.normal(0, float(ruido), int(n))
+    Xt = rng.normal(size=(200, int(dim)))
+    return X, Y, Xt
+
+
+def _metodo_medir(n=40.0, ruido=0.5):
+    """PASO 1 — la medida escalar: la ignorancia EPISTEMICA, la que debe curarse con datos."""
+    X, Y, Xt = _mundo(n=n, ruido=ruido)
+    return float(medir(X, Y, Xt)["epistemica"])
+
+
+def _metodo_sanidad():
+    """PASO 3 — LA FICHA. La pregunta: **¿cada ignorancia sigue a SU propia causa?** La epistemica
+    debe seguir a la escasez de datos y la aleatoria al ruido. Si se contagian, Diego creeria que
+    puede aprender lo que solo es ruido — y gastaria su presupuesto persiguiendo un televisor.
+    """
+    import sanidad as S
+    rng = np.random.default_rng(31)
+    v_datos, v_ruido, l_epi, l_ale = [], [], [], []
+    for _ in range(10):
+        n = float(rng.integers(30, 400))
+        r = float(rng.uniform(0.1, 2.0))
+        X, Y, Xt = _mundo(n=n, ruido=r)
+        m = medir(X, Y, Xt)
+        v_datos.append(1.0 / n)          # ESCASEZ: lo que la epistemica debe seguir
+        v_ruido.append(r)
+        l_epi.append(m["epistemica"])
+        l_ale.append(m["aleatoria"])
+    r = S.correlaciones({"escasez": l_epi, "ruido": l_ale},
+                        {"escasez": v_datos, "ruido": v_ruido})
+    return {"aprueba": not r["fallos"], "fallos": r["fallos"], "tabla": r.get("tabla")}
+
+
 def regla31(verbose=True):
     """Tres mundos de verdad conocida. Si el estimador no separa las dos ignorancias, REPRUEBA.
       MUNDO APRENDIBLE, pocos datos: ley determinista y=2x1-x2 con n=25.

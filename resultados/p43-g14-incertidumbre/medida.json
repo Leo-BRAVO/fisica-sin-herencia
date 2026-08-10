@@ -1,0 +1,51 @@
+{
+ "organo": "G14_incertidumbre",
+ "prerregistro": 43,
+ "criterio_declarado": "con ruido puro, la parte curable debe ser ~0",
+ "por_tamano_de_muestra": [
+  {
+   "n": 30,
+   "ruido": 0.5,
+   "epistemica": 0.1432
+  },
+  {
+   "n": 100,
+   "ruido": 0.5,
+   "epistemica": 0.0955
+  },
+  {
+   "n": 400,
+   "ruido": 0.5,
+   "epistemica": 0.0374
+  },
+  {
+   "n": 1600,
+   "ruido": 0.5,
+   "epistemica": 0.017
+  }
+ ],
+ "por_ruido": [
+  {
+   "n": 100,
+   "ruido": 0.1,
+   "epistemica": 0.0191
+  },
+  {
+   "n": 100,
+   "ruido": 0.5,
+   "epistemica": 0.0955
+  },
+  {
+   "n": 100,
+   "ruido": 2.0,
+   "epistemica": 0.382
+  },
+  {
+   "n": 100,
+   "ruido": 8.0,
+   "epistemica": 1.5279
+  }
+ ],
+ "varianza_extra_del_ruido_sobre_la_epistemica": 0.433,
+ "veredicto": "REPROBADO: la ignorancia curable sube igual con pocos datos que con mucho ruido"
+}

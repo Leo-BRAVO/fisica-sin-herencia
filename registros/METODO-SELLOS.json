@@ -1,4 +1,8 @@
 {
+  "contingencia": {
+    "cuando": "2026-08-10 13:29:26",
+    "huella": "e2afc60177b7f680"
+  },
   "experimentar2": {
     "cuando": "2026-08-10 08:25:59",
     "huella": "b05046a1b0d938bb"
@@ -11,8 +15,12 @@
     "cuando": "2026-08-10 08:46:41",
     "huella": "41a9bcc3c2886f73"
   },
+  "torneo_ojos": {
+    "cuando": "2026-08-10 13:32:05",
+    "huella": "88d483a061177324"
+  },
   "unico_apto": {
-    "cuando": "2026-08-10 09:52:45",
-    "huella": "947288e27a7f7452"
+    "cuando": "2026-08-10 13:29:56",
+    "huella": "f255e64c5ecb70b1"
   }
 }

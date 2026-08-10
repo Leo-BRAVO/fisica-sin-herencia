@@ -271,6 +271,38 @@ deuda(19, "nodos que alcanzaron el nivel 2 (experimento fisico propio)",
 deuda(19, "nodos que alcanzaron el nivel 3 (replica independiente)",
       sum(1 for n in NODOS_FISICA if re.search(r"nivel\s*3", _leer(n), re.I)), len(NODOS_FISICA),
       "diferido por decision del director hasta que haya resultados que valga la pena replicar")
+# R31 + R33 — LOS ORGANOS DEL GENOMA DEBEN HABER PASADO LA PUERTA.
+# Hasta el 10-ago esto no se contaba en ninguna parte: la puerta exigia sello a los ESTUDIOS de la
+# cola, pero un organo que publica numeros en cada ronda de vida no pasa por la cola nunca. Podia
+# estar midiendo mal para siempre sin que ningun guardian lo notara. Aqui se cuenta, con nombre y
+# apellido, para que la deuda tenga cara.
+_genoma = json.load(open(os.path.join(BASE, "arbol", "GENOMA.json"), encoding="utf-8"))["genes"]
+_modulos_organo = sorted({m for v in _genoma.values()
+                          for m in re.findall(r"([\w_]+\.py)", v.get("modulo") or "")})
+_sellos = set(json.load(open(os.path.join(BASE, "registros", "METODO-SELLOS.json"),
+                             encoding="utf-8")))
+_sellados = [m for m in _modulos_organo if m[:-3] in _sellos]
+# NO ES LO MISMO "no lo he intentado" QUE "lo intente y REPROBO". Meterlos en el mismo saco haria
+# parecer pendiente lo que en realidad es un defecto medido, y es justo el tipo de redondeo comodo
+# que este proyecto persigue. Los reprobados se nombran, con su causa y su acta.
+REPROBADOS = {
+    "sueno.py": ("REPROBO la ficha el 10-ago-2026: su señuelo de escala se puso rojo (con el mundo "
+                 "x10 sobrevivian 0 leyes en vez de 3). La causa NO es suya — es que `sindy3` no "
+                 "es invariante a la escala. Ver INFORME-50 y prerregistro-45."),
+    "incertidumbre.py": ("REPROBO la ficha el 10-ago-2026 contra el criterio que el prerregistro-43 "
+                         "habia declarado ANTES de correr: su ignorancia 'curable' es sigma/raiz(n), "
+                         "asi que sube igual con pocos datos que con mucho ruido (el ruido explica "
+                         "un 43.3% extra). G2 curiosidad lee ese numero: una region ruidosa le "
+                         "parece prometedora. Ver INFORME-51."),
+}
+deuda(31, "ORGANOS del genoma que pasaron LA PUERTA",
+      len(_sellados), len(_modulos_organo),
+      "sin examinar todavia: " + (", ".join(m for m in _modulos_organo
+                                            if m[:-3] not in _sellos and m not in REPROBADOS)
+                                  or "ninguno"))
+for _m, _por in REPROBADOS.items():
+    deuda(31, f"ORGANO {_m} — REPROBADO, no pendiente", 0, 1, _por)
+
 deuda(22, "nodos con revision de doble uso escrita",
       sum(1 for n in NODOS if re.search(r"doble uso", _leer(n), re.I)), len(NODOS),
       "RESERVADA AL DIRECTOR: no es mecanizable ni delegable, y no debe serlo")

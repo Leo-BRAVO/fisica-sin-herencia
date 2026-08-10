@@ -593,10 +593,11 @@
    "prerregistro": 38,
    "datos": "codigo/torneo_ojos.py",
    "args": "--semilla 1 --panel --episodios 12 --pasos 1500 --epocas 12",
-   "estado": "espera-al-metodo",
-   "nota": "segunda vuelta con el panel de 3 lecturas: misma competencia, otra vara",
+   "estado": "pendiente",
+   "nota": "DESBLOQUEADO el 10-ago-2026: torneo_ojos paso LA PUERTA 7/7 y quedo sellado. Al correrlo aparecio un bug real que lo tenia roto: corromper() convertia los videos a float64 y los codificadores son float32, asi que la lectura de ROBUSTEZ del panel NUNCA habia podido correr con video de verdad. Arreglado, y añadido como caso de la Regla 31 del modulo.",
    "salida": "resultados/p38-torneo-panel-s1",
-   "nota_metodo": "DETENIDO por LA PUERTA (metodo.py) el 10-ago-2026: torneo_ojos.py nunca paso el metodo. No corre hasta que lo pase. Correrlo antes seria producir datos de los que no podriamos fiarnos."
+   "nota_metodo": "DETENIDO por LA PUERTA (metodo.py) el 10-ago-2026: torneo_ojos.py nunca paso el metodo. No corre hasta que lo pase. Correrlo antes seria producir datos de los que no podriamos fiarnos.",
+   "modulo": "torneo_ojos"
   },
   {
    "id": "p38-torneo-panel-s2",
@@ -604,10 +605,11 @@
    "prerregistro": 38,
    "datos": "codigo/torneo_ojos.py",
    "args": "--semilla 2 --panel --episodios 12 --pasos 1500 --epocas 12",
-   "estado": "espera-al-metodo",
-   "nota": "segunda vuelta con el panel de 3 lecturas: misma competencia, otra vara",
+   "estado": "pendiente",
+   "nota": "DESBLOQUEADO el 10-ago-2026: torneo_ojos paso LA PUERTA 7/7 y quedo sellado. Al correrlo aparecio un bug real que lo tenia roto: corromper() convertia los videos a float64 y los codificadores son float32, asi que la lectura de ROBUSTEZ del panel NUNCA habia podido correr con video de verdad. Arreglado, y añadido como caso de la Regla 31 del modulo.",
    "salida": "resultados/p38-torneo-panel-s2",
-   "nota_metodo": "DETENIDO por LA PUERTA (metodo.py) el 10-ago-2026: torneo_ojos.py nunca paso el metodo. No corre hasta que lo pase. Correrlo antes seria producir datos de los que no podriamos fiarnos."
+   "nota_metodo": "DETENIDO por LA PUERTA (metodo.py) el 10-ago-2026: torneo_ojos.py nunca paso el metodo. No corre hasta que lo pase. Correrlo antes seria producir datos de los que no podriamos fiarnos.",
+   "modulo": "torneo_ojos"
   },
   {
    "id": "p38-torneo-panel-s3",
@@ -615,10 +617,11 @@
    "prerregistro": 38,
    "datos": "codigo/torneo_ojos.py",
    "args": "--semilla 3 --panel --episodios 12 --pasos 1500 --epocas 12",
-   "estado": "espera-al-metodo",
-   "nota": "segunda vuelta con el panel de 3 lecturas: misma competencia, otra vara",
+   "estado": "pendiente",
+   "nota": "DESBLOQUEADO el 10-ago-2026: torneo_ojos paso LA PUERTA 7/7 y quedo sellado. Al correrlo aparecio un bug real que lo tenia roto: corromper() convertia los videos a float64 y los codificadores son float32, asi que la lectura de ROBUSTEZ del panel NUNCA habia podido correr con video de verdad. Arreglado, y añadido como caso de la Regla 31 del modulo.",
    "salida": "resultados/p38-torneo-panel-s3",
-   "nota_metodo": "DETENIDO por LA PUERTA (metodo.py) el 10-ago-2026: torneo_ojos.py nunca paso el metodo. No corre hasta que lo pase. Correrlo antes seria producir datos de los que no podriamos fiarnos."
+   "nota_metodo": "DETENIDO por LA PUERTA (metodo.py) el 10-ago-2026: torneo_ojos.py nunca paso el metodo. No corre hasta que lo pase. Correrlo antes seria producir datos de los que no podriamos fiarnos.",
+   "modulo": "torneo_ojos"
   },
   {
    "id": "p38-torneo-panel-s4",
@@ -626,10 +629,11 @@
    "prerregistro": 38,
    "datos": "codigo/torneo_ojos.py",
    "args": "--semilla 4 --panel --episodios 12 --pasos 1500 --epocas 12",
-   "estado": "espera-al-metodo",
-   "nota": "segunda vuelta con el panel de 3 lecturas: misma competencia, otra vara",
+   "estado": "pendiente",
+   "nota": "DESBLOQUEADO el 10-ago-2026: torneo_ojos paso LA PUERTA 7/7 y quedo sellado. Al correrlo aparecio un bug real que lo tenia roto: corromper() convertia los videos a float64 y los codificadores son float32, asi que la lectura de ROBUSTEZ del panel NUNCA habia podido correr con video de verdad. Arreglado, y añadido como caso de la Regla 31 del modulo.",
    "salida": "resultados/p38-torneo-panel-s4",
-   "nota_metodo": "DETENIDO por LA PUERTA (metodo.py) el 10-ago-2026: torneo_ojos.py nunca paso el metodo. No corre hasta que lo pase. Correrlo antes seria producir datos de los que no podriamos fiarnos."
+   "nota_metodo": "DETENIDO por LA PUERTA (metodo.py) el 10-ago-2026: torneo_ojos.py nunca paso el metodo. No corre hasta que lo pase. Correrlo antes seria producir datos de los que no podriamos fiarnos.",
+   "modulo": "torneo_ojos"
   },
   {
    "id": "p38-torneo-panel-s5",
@@ -637,10 +641,11 @@
    "prerregistro": 38,
    "datos": "codigo/torneo_ojos.py",
    "args": "--semilla 5 --panel --episodios 12 --pasos 1500 --epocas 12",
-   "estado": "espera-al-metodo",
-   "nota": "segunda vuelta con el panel de 3 lecturas: misma competencia, otra vara",
+   "estado": "pendiente",
+   "nota": "DESBLOQUEADO el 10-ago-2026: torneo_ojos paso LA PUERTA 7/7 y quedo sellado. Al correrlo aparecio un bug real que lo tenia roto: corromper() convertia los videos a float64 y los codificadores son float32, asi que la lectura de ROBUSTEZ del panel NUNCA habia podido correr con video de verdad. Arreglado, y añadido como caso de la Regla 31 del modulo.",
    "salida": "resultados/p38-torneo-panel-s5",
-   "nota_metodo": "DETENIDO por LA PUERTA (metodo.py) el 10-ago-2026: torneo_ojos.py nunca paso el metodo. No corre hasta que lo pase. Correrlo antes seria producir datos de los que no podriamos fiarnos."
+   "nota_metodo": "DETENIDO por LA PUERTA (metodo.py) el 10-ago-2026: torneo_ojos.py nunca paso el metodo. No corre hasta que lo pase. Correrlo antes seria producir datos de los que no podriamos fiarnos.",
+   "modulo": "torneo_ojos"
   },
   {
    "id": "p39-experimentar2-s1",
