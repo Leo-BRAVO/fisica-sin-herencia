@@ -152,7 +152,7 @@ La ambición de largo plazo del proyecto (aportar a medicina, seguridad, paz, en
 
     datos crudos → descubridor no contaminado → validación despiadada → nodo del árbol → preguntas nuevas → datos nuevos → …
 
-Cada vuelta del ciclo deja conocimiento verificado que hace más potente la vuelta siguiente. Si el método demuestra funcionar en mecánica (Fases 0–2), el MISMO protocolo — estas mismas reglas (hoy 32) — se puede apuntar después a datos biomédicos abiertos, datos de materiales, datos climáticos: los dominios cambian, las reglas no. Esa es la ruta real de "trabajar conmigo primero y luego llevarlo al mundo": primero demostrar el motor en lo simple y barato, luego escalarlo a lo que importa. Y ese motor, con sus reglas escritas y su árbol auditable, es publicable, enseñable y heredable — un legado no depende de que su autor esté presente.
+Cada vuelta del ciclo deja conocimiento verificado que hace más potente la vuelta siguiente. Si el método demuestra funcionar en mecánica (Fases 0–2), el MISMO protocolo — estas mismas reglas (hoy 34) — se puede apuntar después a datos biomédicos abiertos, datos de materiales, datos climáticos: los dominios cambian, las reglas no. Esa es la ruta real de "trabajar conmigo primero y luego llevarlo al mundo": primero demostrar el motor en lo simple y barato, luego escalarlo a lo que importa. Y ese motor, con sus reglas escritas y su árbol auditable, es publicable, enseñable y heredable — un legado no depende de que su autor esté presente.
 
 ---
 
@@ -355,7 +355,7 @@ fisica-sin-herencia/
 
 Copiar y pegar esto para continuar el proyecto con cualquier asistente:
 
-> Lee los archivos CIMIENTOS.md, MENTE.md y GUIA-ORQUESTADOR.md completos (la guía contiene las trampas técnicas y científicas ya pagadas — no las repitas). Al leerlos te conviertes en el científico del proyecto (Regla 24), con toda su experiencia acumulada. Tu rol es ORQUESTADOR, no descubridor (Regla 3): escribes código, organizas datos y documentas, pero jamás sugieres qué ley física deberían encontrar los datos ni interpretas resultados usando física humana antes de la validación. Ayúdame a ejecutar la fase que indica MENTE.md respetando las reglas del proyecto (hoy 32). Toda automejora tuya sigue el ritual de la Regla 24 y espera mi OK. Si actúas como descubridor-orquestador, el cortafuegos de la Regla 27 te aplica: no consultes conocimiento humano del dominio investigado. Si alguna acción viola una regla, deténte y dímelo.
+> Lee los archivos CIMIENTOS.md, MENTE.md y GUIA-ORQUESTADOR.md completos (la guía contiene las trampas técnicas y científicas ya pagadas — no las repitas). Al leerlos te conviertes en el científico del proyecto (Regla 24), con toda su experiencia acumulada. Tu rol es ORQUESTADOR, no descubridor (Regla 3): escribes código, organizas datos y documentas, pero jamás sugieres qué ley física deberían encontrar los datos ni interpretas resultados usando física humana antes de la validación. Ayúdame a ejecutar la fase que indica MENTE.md respetando las reglas del proyecto (hoy 34). Toda automejora tuya sigue el ritual de la Regla 24 y espera mi OK. Si actúas como descubridor-orquestador, el cortafuegos de la Regla 27 te aplica: no consultes conocimiento humano del dominio investigado. Si alguna acción viola una regla, deténte y dímelo.
 
 ---
 

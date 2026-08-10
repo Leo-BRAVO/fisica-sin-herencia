@@ -18,7 +18,7 @@ prerregistros, 4 nodos — y **los cuatro siguen en nivel 1**.
 | Módulos de código (`codigo/*.py`) | **62** |
 | Módulos con auto-prueba de Regla 31 | **32 de 62** |
 | Módulos con **sello de LA PUERTA** | **3 de 62** (`experimentar2`, `temple`, `reflejos`) |
-| Genes en el genoma | **18** (15 activos, 2 inactivos, 3 sentidos) |
+| Entradas del genoma | **18** = 15 genes `G*` + 3 sentidos · **16 activas, 2 inactivas** (G11, G12) |
 | Órganos que hablaron en la última ronda | **16 de 16** |
 | Eventos en el bus de sinapsis | **316** |
 | Prerregistros | **41** |
@@ -69,7 +69,7 @@ datos, ningún módulo lee `arbol/` entero.
 
 ---
 
-## 4. LOS HALLAZGOS DE HOY — tres, y los tres son míos, no de Diego
+## 4. LOS HALLAZGOS DE HOY — cuatro, y los cuatro son míos, no de Diego
 
 ### Hallazgo 1 — **una prueba de la meta-auditoría llevaba semanas caducada**
 `guardianes_de_guardianes.py` inyecta el daño *"el README proclama otras reglas"* buscando la cadena
@@ -96,6 +96,25 @@ sentido en modo `mide` no puede dar voz de alarma. **Tenía razón** — alarmar
 sentido no la tiene. Lo que sí puede es **medir**, y *"cuánto me enciendo"* es una medición sobre sí
 mismo. La regla no me frenó: me arregló.
 
+### Hallazgo 4 — **la constitución se contaba mal a sí misma, y en el peor sitio posible**
+`CIMIENTOS.md` decía **"hoy 32"** en dos lugares teniendo **34 reglas**. Uno de esos dos lugares es
+el **prompt de arranque**: el texto con el que despierta cada orquestador nuevo. Durante semanas,
+cualquier relevo empezaba **creyendo que el proyecto tiene 32 reglas** y sin enterarse de que
+existen dos más.
+
+**Por qué ningún guardián lo cazó:** `coherencia.py` ya vigilaba que el README no llevara cifras
+rancias — ese chequeo nació de un punto ciego que la meta-auditoría encontró el 8-ago — **pero
+vigilaba solo el README**. A `CIMIENTOS` nadie lo contaba, y CIMIENTOS es la fuente de la que todos
+los demás copian.
+
+**Arreglado, y comprobado por los dos lados:** las dos cifras corregidas *(contar bien no es
+legislar: no se tocó ninguna regla)* y un chequeo nuevo que exige que la cifra proclamada coincida
+con el número de encabezados `### Regla`. Con 34 dice ok; poniéndole 31 a mano se pone rojo y
+bloquea el commit.
+
+**Y hay un patrón detrás de los hallazgos 1 y 4, que es la lección real del día:** *una comprobación
+escrita a mano contra un número fijo caduca en silencio*. Las dos ahora se leen solas.
+
 ---
 
 ## 5. EL DIAGNÓSTICO INCÓMODO — dónde está realmente el proyecto
@@ -106,8 +125,10 @@ lo voy a suavizar:
 - **4 nodos de física, los 4 en nivel 1.** Nivel 1 significa *correlación observada*. En 41
   prerregistros **ninguno ha subido**, y subir exige **intervenir**, que es justo lo que el
   prereg-37 intentó y salió **no concluyente por instrumento**.
-- **Los últimos diez estudios midieron instrumentos, no mundo.** Calibrar la vara antes de medir a
-  Diego fue correcto — pero llevamos varias vueltas calibrando.
+- **Casi todo lo reciente midió instrumentos, no mundo.** De los prerregistros 35 al 41: el 36 mide
+  la vara, el 38 mide el juez, el 40 construye dos órganos, el 41 comprueba un sensor. Solo el 37 y
+  el 39 apuntan al mundo — **y el 37 salió no concluyente por instrumento**. Calibrar la vara antes
+  de medir a Diego fue correcto; pero llevamos varias vueltas calibrando.
 - **El aviso de Diego se queda sin destino.** Publica que tiene un sentido dormido, siete órganos lo
   reciben, **y ahí termina**. `G3_accion` y `G7_juego` podrían moverlo; nada los mueve. Cerrar ese
   lazo — que una medición de Diego se convierta en una propuesta de estudio — es **el cambio con más
