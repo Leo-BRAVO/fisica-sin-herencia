@@ -43,15 +43,34 @@ La cura no es renunciar al lazo: es **convertir la firma de costumbre en comprob
 5. **Redactar prerregistros nuevos** — redactar es proponer.
 6. **Auditar**: trazador, mapa mental, coherencia, nulos.
 
+### ⚠ ACTUALIZACIÓN 10-ago-2026 — el director pasa a OBSERVADOR
+La Regla 15 fue **enmendada por él**: *"yo actúo de observador y leo resultados, tú avanzas hasta
+conseguirlos"*, con dos condiciones suyas — **no se alteran resultados, no se pone el camino fácil
+para encontrar lo que buscamos**, y **todo auditable de pies a cabeza y replicable**.
+
+**La firma no desapareció: se movió.** Un nodo puede nacer sin firma solo si declara su **quórum
+adversarial** de siete (prerregistro previo · cuatro guardianes · Regla 31 por los dos lados ·
+cinco semillas en cinco mundos · un nulo que pudo matarlo · un señuelo rechazado · una revisión
+adversarial con memoria separada que intentó refutarlo). Nace marcado `FIRMA DELEGADA` y él lo
+revoca leyendo. `coherencia.py` comprueba que el quórum esté enumerado; si falta uno, lo nombra.
+
+La lista de abajo, por tanto, se lee así: lo que antes esperaba firma **ahora pasa por el quórum**,
+salvo los cinco puntos reservados, que siguen siendo suyos porque no pueden delegarse.
+
 ### El lazo NO PUEDE, nunca, sin firma
-1. **Escribir un nodo en el árbol** (Reglas 15 y 19).
-2. **Cambiar el genoma** (Regla 33 — solo entre generaciones y con firma).
-3. **Mover un umbral o un criterio prerregistrado.** Es la línea que más duele y la que más vale:
-   este mes el prereg-36 me obligó a no tocar el 1.5× cuando tocarlo habría "salvado" el
-   resultado. Un lazo con permiso para mover umbrales se convierte en una máquina de fabricar
-   éxitos en cuestión de días.
-4. **Hacer público el repositorio** (Regla 16).
-5. **Firmar un prerregistro.** Redactar sí; firmar no.
+1. **Escribir un nodo en el árbol** → ahora **sí puede, con el quórum de siete completo y marcado**.
+2. **Cambiar el genoma** (Regla 33 — solo entre generaciones; ahora también por quórum, con el
+   cambio marcado y revocable).
+3. **Mover un umbral o un criterio prerregistrado.** ESTO NO SE DELEGÓ NI PUEDE DELEGARSE, y no
+   porque el director lo prohíba: **nunca fue suyo concederlo**. Ni yo antes ni él a posteriori.
+   Este mes el prereg-36 me obligó a no tocar el 1.5× cuando tocarlo habría "salvado" el resultado.
+   Un lazo con permiso para mover umbrales es una máquina de fabricar éxitos en días. Si un
+   criterio está mal, se cambia en un **prerregistro nuevo, antes de volver a mirar**.
+4. **Hacer público el repositorio** (Regla 16) — acto hacia afuera e irreversible.
+5. **La revisión de doble uso** (Regla 22) antes de compartir cualquier nodo aplicable.
+6. **El experimento físico propio** (Regla 19 nivel 2) — no es permiso, es que no tengo manos.
+7. **Cambiar estas reglas.** Propongo enmiendas; no las firmo.
+8. **Cualquier acto en su nombre fuera del repositorio.**
 
 **El candado, con dientes:** todo lo del segundo grupo va a `registros/FIRMAS-PENDIENTES.md` y el
 lazo **sigue trabajando en lo demás**. No se bloquea esperándole. Y desde hoy `coherencia.py`
