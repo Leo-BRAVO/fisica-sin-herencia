@@ -21,6 +21,7 @@ from ojos_gimnasio import entrenar_ojos
 import percepcion2 as p2
 import ranuras as rn
 from filogenia import aptitud, torneo
+import panel_jueces as pj
 
 COMPETIDORES = ["A-pixel", "B-predictivo", "C-corolario", "R-ranuras"]
 
@@ -39,6 +40,34 @@ def codificar_competidor(nombre, videos, jidx, epocas, semilla, comandos=None):
         m = rn.entrenar(videos, jidx, k_ranuras=4, epocas=epocas, semilla=semilla)
         return rn.codificar(m, videos, jidx)
     raise ValueError(nombre)
+
+
+def una_semilla_panel(semilla, episodios, pasos, epocas, jueces):
+    """SEGUNDA VUELTA (prereg-38). Misma competencia, OTRA VARA.
+
+    La primera vuelta quedo NO CONCLUYENTE POR INSTRUMENTO (INFORME-38): la aptitud del prereg-27
+    aplastaba a los cuatro competidores en 0.0000 EXACTO porque el `max(margen, 0)` es un suelo, y
+    el margen mismo satura en -0.4000 cuando ningun latente alcanza el piso de contingencia. La
+    vara no medía a los competidores: medía su propio suelo.
+
+    El panel del prereg-31 no tiene suelo, y mira TRES cosas distintas en vez de una: contingencia
+    (¿sirven para hallar el cuerpo?), flecha (¿llevan dentro el sentido del tiempo?) y robustez
+    (¿cuanto sobrevive al mundo mal visto?). Un competidor gana solo si gana o empata en LAS TRES.
+    """
+    jidx = {j - 1 for j in jueces}
+    eps, verdad, videos = correr(episodios, pasos, "normal", render=True,
+                                 semilla0=1000 + 5000 * semilla)
+    comandos = [c for c, _ in eps]
+    filas = []
+    for nombre in COMPETIDORES:
+        def _cod(vs, _n=nombre):
+            return codificar_competidor(_n, vs, jidx, epocas, semilla, comandos)
+        r = pj.evaluar(nombre, _cod, videos, comandos, jueces, nulos=8)
+        filas.append(r)
+        print(f"  [{nombre}] semilla {semilla}: contingencia {r['puntajes']['contingencia']:+.5f}  "
+              f"flecha {r['puntajes']['flecha']:+.5f}  robustez {r['puntajes']['robustez']:+.5f}",
+              flush=True)
+    return filas
 
 
 def una_semilla(semilla, episodios, pasos, epocas, jueces):
@@ -65,9 +94,29 @@ def main():
     ap.add_argument("--semillas", type=int, default=5,
                     help="usado solo si --semilla no se da: cuenta semillas 1..N en una sola corrida")
     ap.add_argument("--jueces", nargs="+", type=int, default=[10, 11, 12])
+    ap.add_argument("--panel", action="store_true",
+                    help="prereg-38: SEGUNDA VUELTA con el panel de tres lecturas del prereg-31, "
+                         "en lugar de la aptitud del prereg-27 que quedo no concluyente por "
+                         "instrumento (INFORME-38). La vara vieja NO se toca.")
     a = ap.parse_args()
 
     rango = [a.semilla] if a.semilla is not None else list(range(1, a.semillas + 1))
+
+    if a.panel:
+        if a.semilla is None:
+            raise SystemExit("la segunda vuelta se encola semilla por semilla: usa --semilla N")
+        filas = una_semilla_panel(a.semilla, a.episodios, a.pasos, a.epocas, a.jueces)
+        out = os.path.join(BASE, "resultados", f"p38-torneo-panel-s{a.semilla}")
+        os.makedirs(out, exist_ok=True)
+        with open(os.path.join(out, "resumen.json"), "w", encoding="utf-8") as f:
+            json.dump({"prerregistro": 38, "semilla": a.semilla, "episodios": a.episodios,
+                       "pasos": a.pasos, "epocas": a.epocas, "lecturas": list(pj.LECTURAS),
+                       "resultados": filas,
+                       "nota": "SIN veredicto: el veredicto exige las 5 semillas juntas, y mirarlas "
+                               "antes de tiempo es exactamente el vicio que el prereg-27 cazo"},
+                      f, indent=2, ensure_ascii=False)
+        print(f"guardado en {out}/resumen.json (parcial — el veredicto se calcula con las 5)")
+        return
     print(f"=== TORNEO DE OJOS (prereg-27) — semillas {rango} x "
           f"{a.episodios} ep x {a.pasos} cuadros ===", flush=True)
     por_semilla = []
