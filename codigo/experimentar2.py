@@ -108,15 +108,17 @@ def _escena(w):
 
 
 def _leer(cliente, objetos, cual, rng):
-    """UN empujon y sus DOS lecturas ruidosas: cuanto avanzo, y como freno.
+    """UN empujon y sus DOS lecturas ruidosas: el PICO de velocidad (masa) y el tiempo hasta
+    parar (roce).
     El ruido es del sensor, no del mundo: la misma escena leida dos veces da cifras distintas, que
     es la razon por la que hace falta repetir donde uno duda."""
     import pybullet as p
     o = objetos[cual]
     (x0, y0, _), _ = p.getBasePositionAndOrientation(o, physicsClientId=cliente)
-    p.applyExternalForce(o, -1, [FUERZA * np.cos(2 * np.pi * cual / N_OBJ),
-                                 FUERZA * np.sin(2 * np.pi * cual / N_OBJ), 0],
-                         _sitio(cual), p.WORLD_FRAME, physicsClientId=cliente)
+    # (Aqui vivia una segunda llamada de fuerza, resto de la version anterior. PyBullet ACUMULA las
+    # fuerzas hasta el siguiente stepSimulation, asi que el primer paso de cada toque recibia el
+    # DOBLE de impulso. No sesgaba una propiedad frente a la otra —era identico para los ocho
+    # objetos— pero era un defecto real y se quito ANTES de la primera corrida oficial.)
     fx = FUERZA * np.cos(2 * np.pi * cual / N_OBJ)
     fy = FUERZA * np.sin(2 * np.pi * cual / N_OBJ)
     v = []
@@ -131,8 +133,6 @@ def _leer(cliente, objetos, cual, rng):
         p.stepSimulation(physicsClientId=cliente)
         vx, vy, _ = p.getBaseVelocity(o, physicsClientId=cliente)[0]
         v.append(float(np.hypot(vx, vy)))
-    (x1, y1, _), _ = p.getBasePositionAndOrientation(o, physicsClientId=cliente)
-    avance = float(np.hypot(x1 - x0, y1 - y0))
     # PICO al terminar el empujon: v ~ F*T/m. Lee la MASA.
     pico = max(v[:EMPUJE_SUBPASOS + 1]) if v else 0.0
     # CUANTO TARDA EN PARAR desde ese pico. Con friccion seca, t ~ v/(mu*g): el tiempo depende del
