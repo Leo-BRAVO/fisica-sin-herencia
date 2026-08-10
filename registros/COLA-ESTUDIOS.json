@@ -728,6 +728,28 @@
    "modulo": "unico_apto",
    "acta": "resultados/INFORME-48.md",
    "veredicto": "H-VARIOS (altura elegida 5/5, margen>=0.10 en 4/5). HALLAZGO no anticipado: en el mundo 73 una articulacion del propio brazo (art1) fue declarada no-mia"
+  },
+  {
+   "id": "p46-banda-escala",
+   "origen": "INFORME-54: el prereg-45 quedo NULO por su propio señuelo",
+   "motivo_suyo": "medir si el motor tiene banda de escala o agujeros",
+   "tipo": "analisis",
+   "estado": "hecha",
+   "salida": "resultados/p46-banda",
+   "modulo": "escala",
+   "acta": "resultados/INFORME-55.md",
+   "veredicto": "ERRATICO: 3 tramos contiguos en los dos sistemas, con la zona muerta en el mismo sitio"
+  },
+  {
+   "id": "p44-brazo-no-mio",
+   "origen": "hallazgo no anticipado del prereg-42 (INFORME-48)",
+   "motivo_suyo": "por que una articulacion del propio brazo puede parecer no-mia",
+   "tipo": "gimnasio",
+   "estado": "hecha",
+   "salida": "resultados/p44-brazo",
+   "modulo": "brazo_no_mio",
+   "acta": "resultados/INFORME-56.md",
+   "veredicto": "SE CONFIRMA C (casi quieta: mil veces menos varianza) y D (acoplamiento, no estaba listada)"
   }
  ]
 }

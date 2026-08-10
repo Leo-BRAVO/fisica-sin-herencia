@@ -1,7 +1,15 @@
 {
+  "brazo_no_mio": {
+    "cuando": "2026-08-10 18:46:15",
+    "huella": "81452845ac650ac1"
+  },
   "contingencia": {
     "cuando": "2026-08-10 13:29:26",
     "huella": "e2afc60177b7f680"
+  },
+  "escala": {
+    "cuando": "2026-08-10 18:41:31",
+    "huella": "1375923844cf3778"
   },
   "experimentar2": {
     "cuando": "2026-08-10 08:25:59",

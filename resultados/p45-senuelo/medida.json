@@ -1,0 +1,205 @@
+{
+ "que_es": "el SEÑUELO del prerregistro-45: un sistema SIN DINAMICA (constante + ruido diminuto) no puede dar ley",
+ "sin_dinamica": {
+  "declara_ley_en": 20,
+  "de": 25,
+  "detalle": [
+   {
+    "semilla": 7,
+    "exponente": -2.0,
+    "declara_ley": true
+   },
+   {
+    "semilla": 7,
+    "exponente": -1.0,
+    "declara_ley": true
+   },
+   {
+    "semilla": 7,
+    "exponente": 0.0,
+    "declara_ley": true
+   },
+   {
+    "semilla": 7,
+    "exponente": 1.0,
+    "declara_ley": false
+   },
+   {
+    "semilla": 7,
+    "exponente": 2.0,
+    "declara_ley": false
+   },
+   {
+    "semilla": 11,
+    "exponente": -2.0,
+    "declara_ley": true
+   },
+   {
+    "semilla": 11,
+    "exponente": -1.0,
+    "declara_ley": true
+   },
+   {
+    "semilla": 11,
+    "exponente": 0.0,
+    "declara_ley": true
+   },
+   {
+    "semilla": 11,
+    "exponente": 1.0,
+    "declara_ley": true
+   },
+   {
+    "semilla": 11,
+    "exponente": 2.0,
+    "declara_ley": false
+   },
+   {
+    "semilla": 13,
+    "exponente": -2.0,
+    "declara_ley": true
+   },
+   {
+    "semilla": 13,
+    "exponente": -1.0,
+    "declara_ley": true
+   },
+   {
+    "semilla": 13,
+    "exponente": 0.0,
+    "declara_ley": true
+   },
+   {
+    "semilla": 13,
+    "exponente": 1.0,
+    "declara_ley": true
+   },
+   {
+    "semilla": 13,
+    "exponente": 2.0,
+    "declara_ley": true
+   },
+   {
+    "semilla": 17,
+    "exponente": -2.0,
+    "declara_ley": true
+   },
+   {
+    "semilla": 17,
+    "exponente": -1.0,
+    "declara_ley": true
+   },
+   {
+    "semilla": 17,
+    "exponente": 0.0,
+    "declara_ley": true
+   },
+   {
+    "semilla": 17,
+    "exponente": 1.0,
+    "declara_ley": true
+   },
+   {
+    "semilla": 17,
+    "exponente": 2.0,
+    "declara_ley": false
+   },
+   {
+    "semilla": 19,
+    "exponente": -2.0,
+    "declara_ley": true
+   },
+   {
+    "semilla": 19,
+    "exponente": -1.0,
+    "declara_ley": true
+   },
+   {
+    "semilla": 19,
+    "exponente": 0.0,
+    "declara_ley": true
+   },
+   {
+    "semilla": 19,
+    "exponente": 1.0,
+    "declara_ley": true
+   },
+   {
+    "semilla": 19,
+    "exponente": 2.0,
+    "declara_ley": false
+   }
+  ]
+ },
+ "ruido_puro_para_comparar": {
+  "declara_ley_en": 0,
+  "de": 15
+ },
+ "ejemplo_de_la_ley_alucinada": {
+  "dx/dt": [
+   [
+    "1",
+    -49.5366,
+    1.0
+   ],
+   [
+    "x",
+    -48.0877,
+    1.0
+   ],
+   [
+    "v",
+    -195.2621,
+    1.0
+   ],
+   [
+    "x2",
+    24.7655,
+    1.0
+   ],
+   [
+    "xv",
+    50.9721,
+    1.0
+   ],
+   [
+    "v2",
+    -46.6676,
+    1.0
+   ]
+  ],
+  "dv/dt": [
+   [
+    "1",
+    -103.354,
+    1.0
+   ],
+   [
+    "x",
+    20.5945,
+    1.0
+   ],
+   [
+    "v",
+    -165.8537,
+    1.0
+   ],
+   [
+    "x2",
+    10.2578,
+    0.995
+   ],
+   [
+    "xv",
+    61.7365,
+    1.0
+   ],
+   [
+    "v2",
+    -21.247,
+    1.0
+   ]
+  ]
+ },
+ "veredicto": "EL SEÑUELO DEL PRERREGISTRO 45 APRUEBA DONDE NO DEBE: el motor declara ley en 20 de 25 casos sin dinamica, con confianza 1.0. Por el criterio congelado del propio prerregistro, el estudio de la banda de escala queda NULO"
+}
