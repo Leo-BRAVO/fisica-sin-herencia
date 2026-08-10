@@ -1,0 +1,127 @@
+{
+  "prerregistro": 35,
+  "semilla": 4,
+  "pasos": 1800,
+  "mundo": {
+    "altura_mesa": 0.6967,
+    "alto_suelta": 1.468,
+    "masa": 0.4284,
+    "x_suelta": 1.1077
+  },
+  "mundo_varia": true,
+  "condiciones": {
+    "encarnado": {
+      "frontera": {
+        "puntaje": 3.0,
+        "canales_mios": [
+          "art0",
+          "art1",
+          "art2"
+        ],
+        "detalle": [
+          {
+            "canal": "art0",
+            "obediencia_neta": 0.117
+          },
+          {
+            "canal": "art1",
+            "obediencia_neta": 0.1059
+          },
+          {
+            "canal": "art2",
+            "obediencia_neta": 0.7491
+          },
+          {
+            "canal": "altura",
+            "obediencia_neta": 0.0
+          },
+          {
+            "canal": "contacto",
+            "obediencia_neta": 0.0
+          },
+          {
+            "canal": "vel_z",
+            "obediencia_neta": 0.0
+          },
+          {
+            "canal": "ruido",
+            "obediencia_neta": 0.0003
+          },
+          {
+            "canal": "art0",
+            "obediencia_neta": 0.238
+          },
+          {
+            "canal": "art1",
+            "obediencia_neta": 0.0558
+          },
+          {
+            "canal": "art2",
+            "obediencia_neta": 0.7452
+          },
+          {
+            "canal": "altura",
+            "obediencia_neta": 0.0
+          },
+          {
+            "canal": "contacto",
+            "obediencia_neta": 0.0
+          },
+          {
+            "canal": "vel_z",
+            "obediencia_neta": 0.0
+          },
+          {
+            "canal": "ruido",
+            "obediencia_neta": 0.0
+          }
+        ]
+      },
+      "soporte": {
+        "escalon2_efecto": 2.6951,
+        "escalon2_hallado": true,
+        "voe_flota": 0.2175,
+        "voe_atraviesa": 0.1664,
+        "voe_nulo_natural": -0.025,
+        "puntaje": 0.1664
+      }
+    },
+    "pasivo_propio": {
+      "frontera": {
+        "puntaje": 0.0,
+        "canales_mios": [],
+        "nota": "sin acceso a sus ordenes no hay contingencia posible"
+      },
+      "soporte": {
+        "escalon2_efecto": 2.6951,
+        "escalon2_hallado": true,
+        "voe_flota": 0.2264,
+        "voe_atraviesa": 0.1759,
+        "voe_nulo_natural": -0.0235,
+        "puntaje": 0.1759
+      }
+    },
+    "pasivo_ajeno": {
+      "frontera": {
+        "puntaje": 0.0,
+        "canales_mios": [],
+        "nota": "sin acceso a sus ordenes no hay contingencia posible"
+      },
+      "soporte": {
+        "escalon2_efecto": 2.6951,
+        "escalon2_hallado": true,
+        "voe_flota": 0.2854,
+        "voe_atraviesa": 0.173,
+        "voe_nulo_natural": -0.0154,
+        "puntaje": 0.173
+      }
+    }
+  },
+  "veredicto": {
+    "frontera_yo_mundo": "EL CUERPO APORTA — el pasivo no puede siquiera plantearla",
+    "fisica_de_soporte": "EMPATE — la fisica de soporte se aprende MIRANDO; el cuerpo no aporta aqui, y asi queda escrito",
+    "diferencia_soporte": -0.0095,
+    "pasivo_ajeno_soporte": 0.173,
+    "nota": "la capacidad (1) exige accion POR CONSTRUCCION: que el encarnado gane ahi no es evidencia de nada, es el control positivo de que la comparacion ve diferencias."
+  }
+}
