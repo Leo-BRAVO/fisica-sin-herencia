@@ -1,6 +1,7 @@
 # INFORME-53 — EL TORNEO DE LOS OJOS CORRIÓ POR FIN, y corona a un ganador a escala de ruido
-**10 de agosto de 2026. Acta parcial del prerregistro-38 (4 de 5 semillas; la 5ª en curso).**
-**Datos crudos:** `resultados/p38-torneo-panel-s2/resumen.json`,
+**10 de agosto de 2026. ACTA CERRADA del prerregistro-38 — las CINCO semillas.**
+**Datos crudos:** `resultados/p38-torneo-panel-s1/resumen.json`,
+`resultados/p38-torneo-panel-s2/resumen.json`,
 `resultados/p38-torneo-panel-s3/resumen.json`, `resultados/p38-torneo-panel-s4/resumen.json`,
 `resultados/p38-torneo-panel-s5/resumen.json`, y el agregado con la calibración de la vara en
 `resultados/p38-veredicto/veredicto.json`. Módulo sellado: `codigo/torneo_ojos.py`.
@@ -16,14 +17,19 @@ había podido correr con vídeo de verdad.** Arreglado, y añadido como caso con
 
 **La puerta no retrasó este estudio: impidió que se corriera roto por segunda vez.**
 
-## 2. LOS NÚMEROS (4 semillas)
+## 2. LOS NÚMEROS (las CINCO semillas)
 
 | competidor | contingencia | flecha | robustez |
 |---|---|---|---|
-| A-pixel | +0.00541 | −0.02057 | −0.00046 |
-| B-predictivo | +0.00168 | −0.01378 | +0.00081 |
-| C-corolario | +0.00161 | −0.01262 | +0.00146 |
-| **R-ranuras** | **+0.00710** | **−0.01098** | +0.00002 |
+| A-pixel | +0.00544 | −0.00454 | −0.00040 |
+| B-predictivo | +0.00391 | −0.01071 | +0.00145 |
+| C-corolario | +0.00450 | −0.01096 | +0.00150 |
+| **R-ranuras** | **+0.00569** | **−0.00112** | +0.00015 |
+
+*(La quinta semilla —la más lenta, que se pasó de un límite de tiempo y hubo que relanzar— **no
+cambió el veredicto**: entró y los cuatro siguen donde estaban. Con 4 semillas el mejor de
+contingencia daba +0.00710; con 5 da +0.00569. **La diferencia entre competidores se encogió al
+añadir datos**, que es justo lo que se espera cuando lo que se está midiendo es ruido.)*
 
 **Veredicto formal de la regla de oro del panel, aplicada tal como está congelada:**
 > *GANA CON ASTERISCO R-ranuras — gana en contingencia y flecha, pierde en robustez; NO reemplaza
@@ -39,8 +45,8 @@ La vara tiene calibración propia, medida en su Regla 31 el mismo día:
 | **los cuatro competidores reales** | **entre −0.002 y +0.014** |
 
 **Los cuatro están en el rango del ruido, no en el de la señal.** El "ganador" gana por
-**+0.00710 contra +0.00541**, con un margen automático de **0.00027**. Y el signo de las lecturas
-**cambia de semilla a semilla** (A-pixel va de +0.0132 en la 2 a −0.0014 en la 4).
+**+0.00569 contra +0.00544** —dos milésimas— con un margen automático de **0.00009**. Y el signo de las lecturas
+**cambia de semilla a semilla** (A-pixel va de +0.0132 en la semilla 2 a −0.0014 en la 4; R-ranuras da +0.00007 en la 1 y +0.0145 en la 2).
 
 **Lectura honesta: ninguna de las cuatro arquitecturas produce latentes que sirvan para hallar el
 cuerpo.** No es que una gane: es que ninguna despega.

@@ -593,11 +593,13 @@
    "prerregistro": 38,
    "datos": "codigo/torneo_ojos.py",
    "args": "--semilla 1 --panel --episodios 12 --pasos 1500 --epocas 12",
-   "estado": "pendiente",
+   "estado": "hecha",
    "nota": "DESBLOQUEADO el 10-ago-2026: torneo_ojos paso LA PUERTA 7/7 y quedo sellado. Al correrlo aparecio un bug real que lo tenia roto: corromper() convertia los videos a float64 y los codificadores son float32, asi que la lectura de ROBUSTEZ del panel NUNCA habia podido correr con video de verdad. Arreglado, y añadido como caso de la Regla 31 del modulo.",
    "salida": "resultados/p38-torneo-panel-s1",
    "nota_metodo": "DETENIDO por LA PUERTA (metodo.py) el 10-ago-2026: torneo_ojos.py nunca paso el metodo. No corre hasta que lo pase. Correrlo antes seria producir datos de los que no podriamos fiarnos.",
-   "modulo": "torneo_ojos"
+   "modulo": "torneo_ojos",
+   "acta": "resultados/INFORME-53.md",
+   "veredicto": "los cuatro competidores puntuan a ESCALA DE RUIDO; el veredicto formal corona a R-ranuras CON ASTERISCO"
   },
   {
    "id": "p38-torneo-panel-s2",
