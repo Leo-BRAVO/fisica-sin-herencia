@@ -1,8 +1,9 @@
 # H-002 — La física de soporte NO necesita cuerpo: el observador pasivo empata, 5/5
-**Estado: CONSEGUIDO (resultado NEGATIVO para nuestra propia tesis). Aprobado por el director el
-10-ago-2026 ("adelante con todo"). Marcado `sobre-el-simulador`. Padre: [[H-000-GIMNASIO]].
-Prerregistro: 32 (FIRMADO 9-ago-2026, con el compromiso escrito de publicarlo saliera como
-saliera). Evidencia: INFORME-41, 5 corridas oficiales en la nube.**
+**Estado: CONSEGUIDO Y REPLICADO (resultado NEGATIVO para nuestra propia tesis). Aprobado por el
+director el 10-ago-2026 ("adelante con todo"). Marcado `sobre-el-simulador`. Padre:
+[[H-000-GIMNASIO]]. Prerregistros: 32 (FIRMADO 9-ago-2026, con el compromiso escrito de publicarlo
+saliera como saliera) y 35 (réplica en cinco mundos distintos). Evidencia: INFORME-41 e
+INFORME-43, 10 corridas oficiales en la nube.**
 
 Este nodo **recorta una tesis del proyecto**. Se escribe con el mismo peso que los que la
 confirman, porque eso es lo que se firmó antes de mirar el resultado.
@@ -69,17 +70,25 @@ que tengamos razón; demuestra que los dos estudios miden lo que dicen medir.
   **este mundo**, no aportó.
 - **Manipulación, causalidad por contacto activo y experimentación dirigida NO están medidas aquí.**
   Son precisamente donde el cuerpo debería aportar, y no tenemos derecho a suponerlo.
-- **La generalización está acotada por un límite conocido:** el escalón 2 vale 2.544 en las quince
-  mediciones porque **la caída es siempre la misma caída** — la semilla mueve el brazo y el brazo no
-  toca al objeto. Eso **no debilita el empate** (que es una comparación entre condiciones dentro de
-  cada semilla, y ahí sí hay variación real: el examen va de 0.0948 a 0.1951), pero sí acota cuánto
-  se puede generalizar: está medido sobre **un** régimen de caída. → prerregistro 35.
+- ~~**La generalización está acotada:** está medido sobre **un** régimen de caída.~~ **SALVEDAD
+  CERRADA el 10-ago-2026 (INFORME-43).** La segunda ronda (prereg-35) repitió las tres condiciones
+  en **cinco mundos distintos** —mesa, altura de soltada, masa y posición sorteadas por semilla— y
+  el empate no se movió: diferencias de **+0.0027 a −0.0095** contra el mismo umbral de 0.05,
+  negativas en 4 de 5, con el control positivo ganando 3 a 0 en las cinco. El empate no era un
+  artefacto de medir una sola caída.
+- **El límite que SÍ queda en pie, y es otro:** el brazo **nunca toca el objeto**. Variar la caída
+  no fue dejar que la tocara — se excluyó a propósito del prereg-35 porque es otra pregunta.
+  Mientras el cuerpo no pueda **intervenir** sobre lo que observa, este experimento compara a un
+  encarnado que en la práctica también está mirando. **Ese es el siguiente experimento de verdad,
+  no una nota al pie.**
 - Esto sigue siendo PyBullet, no el universo.
 
 ## Qué preguntas nuevas abre
 1. **¿Dónde SÍ gana el cuerpo?** La candidata natural es la **experimentación dirigida**: elegir qué
    hacer para resolver una duda. Ahí el pasivo no tiene forma de competir, porque no puede elegir
    qué mirar. **Si el cuerpo tampoco aportara ahí, sería una noticia mucho mayor que ésta.**
-2. ¿El empate sobrevive cuando la caída varía de verdad (altura, masa, posición)? → prereg-35.
+2. ~~¿El empate sobrevive cuando la caída varía de verdad?~~ **RESPONDIDA: sí, 5/5** (prereg-35,
+   INFORME-43). La pregunta que la sustituye: ¿sobrevive cuando el cuerpo puede **tocar** lo que
+   observa? Hoy no lo puede, y esa es la diferencia entre mirar y experimentar.
 3. ¿Por qué el pasivo-ajeno a veces puntúa **más alto**? ¿Es ruido, o ver episodios que uno no causó
    fuerza un modelo menos sobreajustado a la propia trayectoria?

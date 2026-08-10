@@ -1,5 +1,5 @@
 # EL ÁRBOL — mapa visual del conocimiento del proyecto
-**ÉPOCA 2 EN CURSO. Actualizado el 10-ago-2026: nacen los dos primeros nodos de CAPACIDAD hijos del Gimnasio — H-001 (se reconoce por contingencia, no por apariencia: 5/5) y H-002 (la física de soporte NO necesita cuerpo: empate 5/5, resultado negativo para nuestra propia tesis). La rama de física del universo (N-00X-E2) queda como estaba desde el 8-ago (INFORME-22).**
+**ÉPOCA 2 EN CURSO. Actualizado el 10-ago-2026 (tarde): H-002 pasa a REPLICADO — el empate sobrevive en cinco mundos distintos (INFORME-43). H-001 sigue en pie y su mitad pendiente (las firmas conductuales) queda cerrada en NO CONCLUYENTE PERMANENTE: ninguna duración hace fiable la vara (INFORME-44). La escalera de soporte replica su escalón 2 y su examen 5/5 pero queda PARCIAL por la cláusula "único apto" (INFORME-42). La rama de física del universo (N-00X-E2) queda como estaba desde el 8-ago (INFORME-22).**
 
 **GitHub renderiza el diagrama automáticamente al abrir este archivo. Verde = nodo validado provisional; azul = nodo de CAPACIDAD (qué puede hacer el ente, no qué es cierto del universo — marcado `sobre-el-simulador`); rojo = capacidad medida que RECORTA una tesis nuestra; naranja = en cuarentena (Regla 31); amarillo = pregunta abierta; gris punteado = archivado.**
 
@@ -16,11 +16,12 @@ graph TD
 
     H000["H-000 · 9-ago-2026 · sobre-el-simulador<br/>EL NACIMIENTO: la frontera yo/mundo emerge<br/>6/6 propiocepciones declaradas suyas · 5/5<br/>control de motores desconectados LIMPIO 5/5"]:::capacidad
     H001["H-001 · 10-ago-2026 · sobre-el-simulador<br/>Se reconoce por CONTINGENCIA, no por apariencia<br/>gemelo idéntico: +0.20 el suyo / −0.20 el otro · 5/5<br/>SOLO propiocepción — la visión no lo sostiene"]:::capacidad
-    H002["H-002 · 10-ago-2026 · sobre-el-simulador<br/>La física de soporte NO necesita cuerpo<br/>empate 5/5 (dif. +0.0011 a −0.0067 vs umbral 0.05)<br/>RECORTA nuestra tesis · se publicó como se firmó"]:::recorte
+    H002["H-002 · 10-ago-2026 · REPLICADO en 5 mundos<br/>La física de soporte NO necesita cuerpo<br/>empate 5/5 y otra vez 5/5 al variar la caída<br/>RECORTA nuestra tesis · se publicó como se firmó"]:::recorte
 
     PB{"¿Dónde SÍ gana el cuerpo?<br/>candidata: EXPERIMENTACIÓN DIRIGIDA<br/>(elegir qué hacer para resolver una duda)<br/>si tampoco ahí, sería noticia mayor"}:::pregunta
-    PC{"¿El empate sobrevive con caídas que<br/>varían de verdad? → prereg-35<br/>(hoy la caída es una sola, medida 5 veces)"}:::pregunta
-    PD{"Firmas conductuales: NO CONCLUYENTE<br/>el control positivo solo dispara 2/5<br/>→ prereg-36 mide la VARA antes que a Diego"}:::parcial
+    PC{"¿Sobrevive el empate si el cuerpo puede<br/>TOCAR lo que observa? Hoy no puede:<br/>ésa es la diferencia entre mirar y experimentar"}:::pregunta
+    PD["Firmas conductuales: CERRADO en no<br/>concluyente PERMANENTE (prereg-36)<br/>ninguna duración hace fiable la vara"]:::archivo
+    PE{"Escalera de soporte: PARCIAL<br/>escalón 2 y examen replican 5/5, pero con<br/>mesa alta el contacto también pasa el piso<br/>¿debe el escalón 1 aislar UN canal, o varios?"}:::parcial
 
     P1{"¿Nulos surrogados de las campañas<br/>insignia? (mendeley: se corre en la<br/>NUBE vía Actions; p14 espera ojos)"}:::pregunta
     P2{"Dimensión intrínseca: MEDIDA 2/3<br/>(Michigan ~3 · caída ~2.3, INF-22)<br/>falta dp Morpheus (rastreo 2 cuerpos)"}:::parcial
@@ -46,6 +47,7 @@ graph TD
     H002 --> PB
     H002 --> PC
     H001 --> PD
+    H000 --> PE
 
     classDef capacidad fill:#12304d,stroke:#3498db,color:#fff,stroke-width:2px
     classDef recorte fill:#4d1a1a,stroke:#e74c3c,color:#fff,stroke-width:2px
