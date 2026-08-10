@@ -81,6 +81,7 @@ y borró dos nombres de variable del registro. Y `sanidad.texto_para_shell()` av
 | **E** — restos de versiones | **SÍ** | `restos_de_versiones()` sobre el AST |
 | **F** — deslices de escritura | **SÍ** | `homoglifos()` y `texto_para_shell()` |
 | **B** — la tramoya se cuela | **A MEDIAS** | `tramoya_declarada()` exige declararla, pero **no sabe si la declaré bien** |
+| **Elegir el estadístico correcto** | **A MEDIAS** | hay dos: `correlaciones()` para lecturas continuas y `clasificacion()` para instrumentos de umbral. **Elegir mal produce una alarma falsa** — y una alarma falsa cuesta tanto como un error, porque hace desconfiar de lo que funciona |
 | **Leer antes de escribir** | **NO** | ninguna máquina puede obligarme |
 | **Escribir la fórmula primero** | **NO** | ninguna máquina sabe si la escribí antes o después |
 
@@ -98,3 +99,18 @@ director lo aceptó explícitamente: *"estoy de acuerdo, más lento pero ya no m
   como uno que nunca encuentra nada.
 - Todo módulo nuevo con `regla31()` debe aparecer también en la sección de sanidad del banco.
 - Cuando falle, el acta dirá **qué paso me salté**, no "hubo un error".
+
+## Paso 0 — antes de los seis: ¿qué clase de experimento es éste?
+Añadido el 10-ago-2026 al aplicar la ficha hacia atrás, y nace de una frase del director: *"cada
+experimento es distinto"*. Antes de tocar nada hay que responder tres preguntas, porque de ellas
+depende qué comprobación aplica:
+
+1. **¿La medida es continua o clasifica por umbral?** Aplicar el estadístico equivocado produjo una
+   alarma falsa sobre `soporte.py`, que en realidad es impecable.
+2. **¿Hay condiciones que comparten datos a propósito?** Si las hay, **declarar qué las separa y
+   probarlo**. Compartir datos es legítimo; compartirlos sin nada que separe es una tautología, y
+   las dos se ven idénticas hasta que se mira.
+3. **¿Cuál es la fórmula de cada lectura?** Si no sé escribirla, no entiendo la medida (paso 2).
+
+**Una alarma falsa no es gratis.** Un detector que grita donde no hay nada se deja de leer, y
+entonces deja de servir también donde sí hay algo.

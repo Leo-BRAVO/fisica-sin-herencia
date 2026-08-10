@@ -136,21 +136,41 @@ def _corr(a, b):
     return float(np.corrcoef(a, b)[0, 1])
 
 
-def condiciones_distintas(datos_por_condicion):
+def condiciones_distintas(datos_por_condicion, separadas_por=None):
     """TIPO C — ¿hay dos condiciones que son la MISMA por construccion?
     `datos_por_condicion`: dict nombre -> lo observado (array, lista o dict serializable).
 
     Este es el tipo que repeti DOS VECES, la segunda al dia siguiente de diagnosticar la primera:
     el pasivo heredaba los episodios del dirigido y la diferencia salia 0.0000 EXACTA en 5/5.
     Un cero exacto repetido no es un empate: es una identidad, y hay que cazarla comparando los
-    DATOS, no los numeros finales — para cuando el numero sale ya se perdio la corrida."""
+    DATOS, no los numeros finales — para cuando el numero sale ya se perdio la corrida.
+
+    `separadas_por`: dict {("a","b"): (razon, prueba_bool)} para los pares que comparten datos A
+    PROPOSITO. Distingue dos situaciones que se ven IDENTICAS y no lo son:
+      - prereg-32: encarnado y pasivo-propio ven los MISMOS episodios por diseño, y lo que los
+        separa es la COPIA EFERENTE. Diseño valido, y se comprobo que la copia entra al modelo.
+      - prereg-37: el pasivo heredaba los episodios Y el puntaje no usaba los comandos. Nada los
+        separaba. Diferencia 0.0000 exacta en 5/5, y el estudio no midio nada.
+    Compartir datos es legitimo SI otra cosa los separa Y esa otra cosa esta COMPROBADA. Sin
+    prueba, es tautologia. (Añadido al aplicar la ficha hacia atras, 10-ago-2026.)
+    """
     nombres = list(datos_por_condicion)
+    separadas_por = separadas_por or {}
     fallos = []
     for i, a in enumerate(nombres):
         for b in nombres[i + 1:]:
-            if _huella(datos_por_condicion[a]) == _huella(datos_por_condicion[b]):
-                fallos.append(f"'{a}' y '{b}' observaron EXACTAMENTE lo mismo: no son dos "
-                              f"condiciones, son el mismo numero con dos nombres")
+            if _huella(datos_por_condicion[a]) != _huella(datos_por_condicion[b]):
+                continue
+            decl = separadas_por.get((a, b)) or separadas_por.get((b, a))
+            if decl is None:
+                fallos.append(f"'{a}' y '{b}' observaron EXACTAMENTE lo mismo y NADA se declara "
+                              f"que los separe: no son dos condiciones, son el mismo numero con "
+                              f"dos nombres")
+            else:
+                razon, probado = decl
+                if not probado:
+                    fallos.append(f"'{a}' y '{b}' comparten datos y se declara que los separa "
+                                  f"'{razon}' — pero esa separacion NO esta comprobada")
     return {"fallos": fallos, "aprueba": not fallos}
 
 
@@ -172,7 +192,10 @@ def tramoya_declarada(n_pasos, cortes, maximo=0.25):
 
     Habria cazado: el re-soltado que hacia parecer caotica la caida (y coronaba al brazo), y el
     asentamiento que delataba la masa a simple vista."""
-    cortes = list(cortes or [])
+    # list(cortes or []) revienta con un array de numpy: "el valor de verdad de un array es
+    # ambiguo". Cazado al aplicar la ficha hacia atras sobre soporte.py, que declara sus cortes
+    # como array. La ficha tenia el mismo tipo de descuido que persigue.
+    cortes = [] if cortes is None else list(cortes)
     frac = len(cortes) / max(1, n_pasos)
     fallos = []
     if not cortes:
@@ -181,6 +204,38 @@ def tramoya_declarada(n_pasos, cortes, maximo=0.25):
     if frac > maximo:
         fallos.append(f"la tramoya ocupa {frac:.1%} de la señal (techo {maximo:.0%})")
     return {"fraccion": round(frac, 4), "fallos": fallos, "aprueba": not fallos}
+
+
+def clasificacion(decision, verdad_binaria, nombres=None):
+    """TIPO A, VERSION PARA INSTRUMENTOS QUE CLASIFICAN POR UMBRAL (no por correlacion).
+
+    POR QUE EXISTE, y es una leccion del director: "cada experimento es distinto". Al aplicar
+    `correlaciones()` a soporte.py —que NO devuelve una lectura continua sino un si/no por canal
+    contra un umbral— salieron tres "fallos" que eran FALSAS ALARMAS MIAS: la obediencia vale
+    0.0735 en una articulacion y 0.7032 en otra, asi que correlaciona flojo con "esto es mi
+    cuerpo" aunque las CLASIFIQUE bien a las dos. Aplicar el estadistico equivocado a un
+    instrumento correcto es, otra vez, un error de tipo A — esta vez en el detector.
+
+    Para un clasificador la pregunta correcta no es "¿el numero sube junto con la verdad?" sino
+    "¿acierta, y acierta por los dos lados?". Un clasificador que dice que si a todo acierta el
+    100% de los positivos y no sabe nada."""
+    d = [bool(x) for x in decision]
+    v = [bool(x) for x in verdad_binaria]
+    nombres = list(nombres or range(len(v)))
+    vp = sum(1 for a, b in zip(d, v) if a and b)
+    vn = sum(1 for a, b in zip(d, v) if not a and not b)
+    fp = [n for n, a, b in zip(nombres, d, v) if a and not b]
+    fn = [n for n, a, b in zip(nombres, d, v) if not a and b]
+    fallos = []
+    if fp:
+        fallos.append(f"FALSOS POSITIVOS: {fp} — declarados y no lo son")
+    if fn:
+        fallos.append(f"FALSOS NEGATIVOS: {fn} — lo son y no los declaro")
+    if sum(v) == 0 or sum(v) == len(v):
+        fallos.append("la verdad es todo si o todo no: el caso no discrimina nada")
+    return {"aciertos_positivos": vp, "aciertos_negativos": vn,
+            "falsos_positivos": fp, "falsos_negativos": fn,
+            "fallos": fallos, "aprueba": not fallos}
 
 
 def cociente_seguro(numerador, denominador, piso):
