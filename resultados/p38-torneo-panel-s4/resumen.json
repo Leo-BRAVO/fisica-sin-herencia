@@ -1,0 +1,115 @@
+{
+  "prerregistro": 38,
+  "semilla": 4,
+  "episodios": 12,
+  "pasos": 1500,
+  "epocas": 12,
+  "lecturas": [
+    "contingencia",
+    "flecha",
+    "robustez"
+  ],
+  "resultados": [
+    {
+      "nombre": "A-pixel",
+      "contingencia": {
+        "puntaje": -0.001396889753698444,
+        "ganancia": 0.0071762120757942055,
+        "ganancia_nulo": 0.00857310182949265,
+        "margen_medio_prereg23": -0.1456875,
+        "n_mias": 0,
+        "margen_max": -0.0897
+      },
+      "flecha": {
+        "puntaje": -0.13892380152846523,
+        "episodios_juez": 3
+      },
+      "robustez": {
+        "puntaje": -0.00270891318104578,
+        "puntaje_limpio": -0.001396889753698444,
+        "retenido": null
+      },
+      "puntajes": {
+        "contingencia": -0.001396889753698444,
+        "flecha": -0.13892380152846523,
+        "robustez": -0.00270891318104578
+      }
+    },
+    {
+      "nombre": "B-predictivo",
+      "contingencia": {
+        "puntaje": -0.0020781336947151893,
+        "ganancia": 0.008710696402128982,
+        "ganancia_nulo": 0.01078883009684417,
+        "margen_medio_prereg23": -0.21465,
+        "n_mias": 0,
+        "margen_max": -0.1586
+      },
+      "flecha": {
+        "puntaje": -0.005933171129098152,
+        "episodios_juez": 3
+      },
+      "robustez": {
+        "puntaje": -0.00027519517237276254,
+        "puntaje_limpio": -0.0020781336947151893,
+        "retenido": null
+      },
+      "puntajes": {
+        "contingencia": -0.0020781336947151893,
+        "flecha": -0.005933171129098152,
+        "robustez": -0.00027519517237276254
+      }
+    },
+    {
+      "nombre": "C-corolario",
+      "contingencia": {
+        "puntaje": -0.0018739520354017578,
+        "ganancia": 0.009994921169121781,
+        "ganancia_nulo": 0.011868873204523539,
+        "margen_medio_prereg23": -0.0724375,
+        "n_mias": 0,
+        "margen_max": -0.0552
+      },
+      "flecha": {
+        "puntaje": -0.03152477810270815,
+        "episodios_juez": 3
+      },
+      "robustez": {
+        "puntaje": -0.00034872386880486963,
+        "puntaje_limpio": -0.0018739520354017578,
+        "retenido": null
+      },
+      "puntajes": {
+        "contingencia": -0.0018739520354017578,
+        "flecha": -0.03152477810270815,
+        "robustez": -0.00034872386880486963
+      }
+    },
+    {
+      "nombre": "R-ranuras",
+      "contingencia": {
+        "puntaje": -0.00045791598069959763,
+        "ganancia": 0.008303584279233287,
+        "ganancia_nulo": 0.008761500259932884,
+        "margen_medio_prereg23": -0.023558333333333337,
+        "n_mias": 7,
+        "margen_max": 0.0828
+      },
+      "flecha": {
+        "puntaje": 0.20936528606434948,
+        "episodios_juez": 3
+      },
+      "robustez": {
+        "puntaje": -0.0002459565663843993,
+        "puntaje_limpio": -0.00045791598069959763,
+        "retenido": null
+      },
+      "puntajes": {
+        "contingencia": -0.00045791598069959763,
+        "flecha": 0.20936528606434948,
+        "robustez": -0.0002459565663843993
+      }
+    }
+  ],
+  "nota": "SIN veredicto: el veredicto exige las 5 semillas juntas, y mirarlas antes de tiempo es exactamente el vicio que el prereg-27 cazo"
+}
