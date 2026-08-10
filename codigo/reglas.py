@@ -229,6 +229,14 @@ _sin_dos = [os.path.basename(p) for p in _nuevos if not DOS_LADOS.search(_leer(p
 bloqueante(31, f"todo prerregistro desde el {PRIMER_PREREGISTRO_ENDURECIDO} declara los DOS lados de la Regla 31",
            not _sin_dos, f"sin los dos lados: {_sin_dos}")
 
+# R9 — el peldaño se DECLARA. Lo mecanizable de la Regla 9 no es decidir si un peldaño funciona
+# —eso es un juicio— sino exigir que cada estudio diga EN CUAL esta. Sin eso, "subir de peldaño"
+# se decide a posteriori, que es la enfermedad de siempre. Rige del 42 en adelante, como el resto.
+PELDANO = re.compile(r"fase\s*[0-3]|pelda[nñ]o", re.I)
+_sin_peldano = [os.path.basename(p) for p in _nuevos if not PELDANO.search(_leer(p))]
+bloqueante(9, f"todo prerregistro desde el {PRIMER_PREREGISTRO_ENDURECIDO} declara EN QUE PELDAÑO esta",
+           not _sin_peldano, f"sin peldaño: {_sin_peldano}")
+
 # R19 endurecida — ningun nodo sube a nivel 2 sin datos que nadie ha visto
 _falsos_n2 = []
 for n in NODOS:
@@ -308,6 +316,8 @@ def regla31():
          "la condicion VACIO es el señuelo", "se corre y se mira el resultado", DOS_LADOS.search)
     caso("R6 simplicidad sin numero",
          "elegimos la mas simple", "no habla de eso", SIMPLE.search)
+    caso("R9 declaracion de peldaño",
+         "estamos en la Fase 1 y no se sube", "corremos esto a ver que sale", PELDANO.search)
 
     # Y el caso que motivo la funcion: un chequeo sobre lista vacia NO puede contarse como ok.
     casos.append(("un chequeo sobre lista VACIA no cuenta como aprobado",

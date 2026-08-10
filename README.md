@@ -41,7 +41,7 @@ reconstruye los datos desde su fuente pública → VERIFICA la huella digital (s
 ```
 1. pruebas.py                  el banco congelado: 118 casos que la ciencia ya aprendió
 2. coherencia.py               la casa dice la verdad sobre sí misma (y la frontera de la Regla 34)
-3. auditoria_total.py          dictamen de prevuelo: reglas, no-contaminación, nube, árbol
+3. auditoria_total.py          prevuelo + reglas.py: las 31 reglas vigentes, una por una
 4. guardianes_de_guardianes.py rompe el proyecto a propósito: 9 daños que DEBEN ser cazados
 ```
 Un fallo de cualquiera **bloquea el commit**. El cuarto existe porque un guardián que siempre dice
@@ -67,9 +67,10 @@ simulador, más relaciones metamórficas) y el procedimiento escrito en **`regis
 
 Auditorías clave: **`registros/AUDITORIA-EXTERNA-01.md`** (la Regla 11 aplicada a las herramientas) ·
 **`registros/DICTAMEN-PREVUELO-01.md`** (la validación total: reglas, no-contaminación, nube, árbol) ·
-**`registros/REGLAS-ESTRUCTURADAS.md`** (las 34 reglas con objetivo, qué evitan y cómo se comprueban —
-y las 14 que hoy no tienen guardián que las nombre) · **`registros/ESTRUCTURA-DE-LAS-REGLAS.md`**
-(la propuesta de estructura, fusiones y endurecimientos, pendiente de la firma del director).
+**`registros/REGLAS-ESTRUCTURADAS.md`** (tabla GENERADA desde `CIMIENTOS.md`: las 34 con sus cinco
+campos, cuántas bloquean el commit, cuántas solo se cuentan y cuáles NO son mecanizables) · **`registros/ESTRUCTURA-DE-LAS-REGLAS.md`**
+(la propuesta original — **firmada y aplicada el 10-ago-2026**; se conserva como registro de qué se
+propuso y qué se decidió, Regla 8).
 
 ## El LAZO — cómo se orquesta el trabajo (`registros/LAZO.md`)
 Planeador → ejecutador → evaluador, **con memorias separadas** para que el que juzga no sea el que
@@ -82,7 +83,8 @@ codigo/           lo VIVO (62 módulos): descubrir · percepcion · conservada �
                   autopsia · rodar · canonizar · curiosidad(+v2) · memoria · conectoma · boleta ·
                   conectar (el bus de sinapsis) · experimentar(+2) · soporte · sueno · temple (G11) ·
                   reflejos (G12) · reconstruir_datos · latido_nube
-                  + EL MÉTODO: metodo.py (la puerta) · sanidad.py (la ficha)
+                  + EL MÉTODO: metodo.py (la puerta) · sanidad.py (la ficha) ·
+                    reglas.py (cada regla, una por una) · tabla_reglas.py (genera su tabla)
                   + LOS CUATRO GUARDIANES: pruebas.py (la ciencia) · coherencia.py (la casa) ·
                     auditoria_total.py (prevuelo) · guardianes_de_guardianes.py (rompe a propósito)
 codigo/archivo/   la era de la laptop y las campañas cerradas, con su porqué (nada se borró)
