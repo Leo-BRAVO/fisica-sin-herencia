@@ -291,7 +291,13 @@ def regla31(verbose=True, toques=TOQUES_MINIMOS):
 
     dir1 = correr("dirigido", semilla=1, toques=toques)
     pas1 = correr("pasivo", semilla=1, toques=toques)
-    azа1 = correr("azaroso", semilla=1, toques=toques)
+    # AQUI VIVIA `azа1 = correr("azaroso", ...)`, calculado y nunca usado — y el nombre llevaba
+    # una 'a' cirilica por un desliz de teclado, asi que ninguna busqueda por texto lo encontraba.
+    # Consecuencia real: la Regla 31 de este modulo NUNCA probo la condicion azarosa, que es
+    # justamente la que decide si ELEGIR vale mas que ACTUAR. Cazado por la ficha de sanidad el
+    # 10-ago-2026. El estudio ya estaba cerrado como NO CONCLUYENTE (INFORME-46) y lo sustituye
+    # experimentar2.py, que si la prueba; queda escrito para que conste que el banco tenia un
+    # caso menos de los que aparentaba.
 
     # 3) CONTROL POSITIVO: el que interviene supera al que solo mira. Si ni aqui ganara, la
     #    comparacion seria ciega y ningun resultado posterior significaria nada.

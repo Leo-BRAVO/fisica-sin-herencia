@@ -201,12 +201,19 @@ def restos_de_versiones(ruta):
     fallos = []
     for fn in [n for n in ast.walk(arbol) if isinstance(n, ast.FunctionDef)]:
         asignadas, usadas = {}, set()
+        # SOLO asignaciones simples `x = algo`. Se ignoran los desempaquetados de tupla
+        # (`a, b, _ = f()`), los bucles y los `with ... as`, porque en Python es idioma normal
+        # recibir algo que no se usa. Cazado al aplicar esta ficha hacia atras sobre los 59
+        # modulos: daba 27 hallazgos y casi todos eran ruido — entre ellos el `verdad` que
+        # torneo_ojos recibe y NO usa, que no es un resto sino el cortafuegos funcionando.
+        # Un guardian que grita de mas es peor que ninguno: se deja de leer.
         for n in ast.walk(fn):
-            if isinstance(n, ast.Name):
-                if isinstance(n.ctx, ast.Store):
-                    asignadas.setdefault(n.id, n.lineno)
-                else:
-                    usadas.add(n.id)
+            if isinstance(n, ast.Assign) and len(n.targets) == 1 \
+                    and isinstance(n.targets[0], ast.Name):
+                asignadas.setdefault(n.targets[0].id, n.lineno)
+        for n in ast.walk(fn):
+            if isinstance(n, ast.Name) and not isinstance(n.ctx, ast.Store):
+                usadas.add(n.id)
         for v, ln in asignadas.items():
             if v not in usadas and not v.startswith("_"):
                 fallos.append(f"{os.path.basename(ruta)}:{ln} '{v}' se calcula y no se usa "
