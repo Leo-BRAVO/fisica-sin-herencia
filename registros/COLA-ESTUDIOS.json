@@ -238,12 +238,13 @@
     {
       "id": "p27-torneo-ojos-s5",
       "tipo": "gimnasio",
-      "estado": "espera-al-director",
+      "estado": "hecha",
       "datos": "codigo/torneo_ojos.py",
       "salida": "resultados/p27-torneo-ojos-s5",
       "args": "--episodios 12 --pasos 1500 --epocas 12 --semilla 5",
       "prerregistro": 27,
-      "nota": "prereg-27 CERRADO por acta (INFORME-38): NO CONCLUYENTE POR INSTRUMENTO. Esta semilla NO se corre: correrla con la vara ciega no anadiria informacion. La segunda vuelta usara el panel de jueces del prereg-31."
+      "nota": "prereg-27 CERRADO por acta (INFORME-38): NO CONCLUYENTE POR INSTRUMENTO. Esta semilla NO se corre: correrla con la vara ciega no anadiria informacion. La segunda vuelta usara el panel de jueces del prereg-31.",
+      "resultado": "CERRADO SIN CORRER por el INFORME-38: la vara del prereg-27 no medía (0.0000 exacto en 3 semillas por su propio suelo). Correr la 5a semilla con el mismo instrumento habría producido otro cero sin informacion. Sustituido por la segunda vuelta del prereg-38, firmada el 10-ago-2026."
     },
     {
       "id": "p29-soporte-s1",
@@ -537,10 +538,9 @@
       "prerregistro": 37,
       "datos": "codigo/experimentar.py",
       "args": "--semilla 1 --toques 24",
-      "estado": "hecha",
+      "estado": "pendiente",
       "nota": "la primera intervencion: dirigido vs azaroso vs pasivo — ¿elegir que tocar vale mas que tocar al azar?",
-      "salida": "resultados/p37-experimentar-s1",
-      "resultado": "corrida por latido-nube (Actions)"
+      "salida": "resultados/p37-experimentar-s1"
     },
     {
       "id": "p37-experimentar-s2",
@@ -548,10 +548,9 @@
       "prerregistro": 37,
       "datos": "codigo/experimentar.py",
       "args": "--semilla 2 --toques 24",
-      "estado": "hecha",
+      "estado": "pendiente",
       "nota": "la primera intervencion: dirigido vs azaroso vs pasivo — ¿elegir que tocar vale mas que tocar al azar?",
-      "salida": "resultados/p37-experimentar-s2",
-      "resultado": "corrida por latido-nube (Actions)"
+      "salida": "resultados/p37-experimentar-s2"
     },
     {
       "id": "p37-experimentar-s3",
@@ -559,10 +558,9 @@
       "prerregistro": 37,
       "datos": "codigo/experimentar.py",
       "args": "--semilla 3 --toques 24",
-      "estado": "hecha",
+      "estado": "pendiente",
       "nota": "la primera intervencion: dirigido vs azaroso vs pasivo — ¿elegir que tocar vale mas que tocar al azar?",
-      "salida": "resultados/p37-experimentar-s3",
-      "resultado": "corrida por latido-nube (Actions)"
+      "salida": "resultados/p37-experimentar-s3"
     },
     {
       "id": "p37-experimentar-s4",
@@ -570,10 +568,9 @@
       "prerregistro": 37,
       "datos": "codigo/experimentar.py",
       "args": "--semilla 4 --toques 24",
-      "estado": "hecha",
+      "estado": "pendiente",
       "nota": "la primera intervencion: dirigido vs azaroso vs pasivo — ¿elegir que tocar vale mas que tocar al azar?",
-      "salida": "resultados/p37-experimentar-s4",
-      "resultado": "corrida por latido-nube (Actions)"
+      "salida": "resultados/p37-experimentar-s4"
     },
     {
       "id": "p37-experimentar-s5",
@@ -581,10 +578,59 @@
       "prerregistro": 37,
       "datos": "codigo/experimentar.py",
       "args": "--semilla 5 --toques 24",
-      "estado": "hecha",
+      "estado": "pendiente",
       "nota": "la primera intervencion: dirigido vs azaroso vs pasivo — ¿elegir que tocar vale mas que tocar al azar?",
-      "salida": "resultados/p37-experimentar-s5",
-      "resultado": "corrida por latido-nube (Actions)"
+      "salida": "resultados/p37-experimentar-s5"
+    },
+    {
+      "id": "p38-torneo-panel-s1",
+      "tipo": "gimnasio",
+      "prerregistro": 38,
+      "datos": "codigo/torneo_ojos.py",
+      "args": "--semilla 1 --panel --episodios 12 --pasos 1500 --epocas 12",
+      "estado": "pendiente",
+      "nota": "segunda vuelta con el panel de 3 lecturas: misma competencia, otra vara",
+      "salida": "resultados/p38-torneo-panel-s1"
+    },
+    {
+      "id": "p38-torneo-panel-s2",
+      "tipo": "gimnasio",
+      "prerregistro": 38,
+      "datos": "codigo/torneo_ojos.py",
+      "args": "--semilla 2 --panel --episodios 12 --pasos 1500 --epocas 12",
+      "estado": "pendiente",
+      "nota": "segunda vuelta con el panel de 3 lecturas: misma competencia, otra vara",
+      "salida": "resultados/p38-torneo-panel-s2"
+    },
+    {
+      "id": "p38-torneo-panel-s3",
+      "tipo": "gimnasio",
+      "prerregistro": 38,
+      "datos": "codigo/torneo_ojos.py",
+      "args": "--semilla 3 --panel --episodios 12 --pasos 1500 --epocas 12",
+      "estado": "pendiente",
+      "nota": "segunda vuelta con el panel de 3 lecturas: misma competencia, otra vara",
+      "salida": "resultados/p38-torneo-panel-s3"
+    },
+    {
+      "id": "p38-torneo-panel-s4",
+      "tipo": "gimnasio",
+      "prerregistro": 38,
+      "datos": "codigo/torneo_ojos.py",
+      "args": "--semilla 4 --panel --episodios 12 --pasos 1500 --epocas 12",
+      "estado": "pendiente",
+      "nota": "segunda vuelta con el panel de 3 lecturas: misma competencia, otra vara",
+      "salida": "resultados/p38-torneo-panel-s4"
+    },
+    {
+      "id": "p38-torneo-panel-s5",
+      "tipo": "gimnasio",
+      "prerregistro": 38,
+      "datos": "codigo/torneo_ojos.py",
+      "args": "--semilla 5 --panel --episodios 12 --pasos 1500 --epocas 12",
+      "estado": "pendiente",
+      "nota": "segunda vuelta con el panel de 3 lecturas: misma competencia, otra vara",
+      "salida": "resultados/p38-torneo-panel-s5"
     }
   ]
 }

@@ -208,6 +208,22 @@ for _hoja in sorted(glob.glob(os.path.join(BASE, "arbol", "*.md"))
 caso("ninguna hoja de arbol/ cita ciencia humana (Regla 27 mecanizada por CONTENIDO, no por nombre)",
      not _citas, str(_citas))
 
+# EL CANDADO DE LA FIRMA (10-ago-2026, al abrir el LAZO). La Regla 15 dice que Diego y el
+# orquestador solo PROPONEN: el director decide y firma. Mientras el trabajo iba prompt a prompt,
+# esa regla la sostenia el propio ritmo de la conversacion. En un lazo que corre solo durante dias
+# eso deja de ser cierto, asi que la firma pasa de costumbre a comprobacion: TODO nodo del arbol
+# debe llevar escrita su aprobacion. Un nodo sin firma es un nodo que el lazo escribio por su
+# cuenta, y el guardian lo grita antes de que llegue a main.
+_sin_firma = []
+for _n in sorted(glob.glob(os.path.join(BASE, "arbol", "N-*.md"))
+                 + glob.glob(os.path.join(BASE, "arbol", "H-*.md"))
+                 + glob.glob(os.path.join(BASE, "arbol", "epoca1", "*.md"))):
+    if not re.search(r"aprobad|aprobaci|firmad", open(_n, encoding="utf-8",
+                                                      errors="ignore").read(), re.I):
+        _sin_firma.append(os.path.basename(_n))
+caso("todo nodo del arbol lleva la firma del director (Regla 15 mecanizada para el LAZO)",
+     not _sin_firma, str(_sin_firma))
+
 print("== documentos fundacionales: sus referencias cruzadas existen ==")
 genoma_path = os.path.join(BASE, "registros", "GENOMA-DIEGO.md")   # cartel: vive fuera de arbol/
 if os.path.exists(genoma_path):
