@@ -148,14 +148,16 @@
       "modulo": null,
       "prerregistro": null,
       "escucha": [],
-      "competencia": []
+      "competencia": [],
+      "nota": "DISEÑO NO IMPLEMENTADO — no existe modulo. Marcado el 10-ago-2026 (INFORME-45, aprobado por el director) para que nadie lo cuente como organo existente. No se construye hasta que una pregunta abierta lo necesite (Regla 18): construir organos porque estan en una lista es como se acumula codigo muerto."
     },
     "G12_reflejos": {
       "modo": "inactivo",
       "modulo": null,
       "prerregistro": null,
       "escucha": [],
-      "competencia": []
+      "competencia": [],
+      "nota": "DISEÑO NO IMPLEMENTADO — no existe modulo. Marcado el 10-ago-2026 (INFORME-45, aprobado por el director) para que nadie lo cuente como organo existente. No se construye hasta que una pregunta abierta lo necesite (Regla 18): construir organos porque estan en una lista es como se acumula codigo muerto."
     },
     "G13_poder": {
       "modo": "mide",
