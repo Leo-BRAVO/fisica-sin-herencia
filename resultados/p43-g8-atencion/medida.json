@@ -1,0 +1,47 @@
+{
+ "organo": "G8_atencion",
+ "prerregistro": 43,
+ "pregunta": "el factor poder protege el reparto de una epistemica inflada por ruido (la que G14 entrega)?",
+ "piso_poder": 0.05,
+ "presupuesto": 10.0,
+ "cadena": "G14 infla la epistemica en regiones ruidosas (INFORME-51) -> piso_poder deja pasar esa inflacion -> el televisor se lleva el presupuesto",
+ "filas": [
+  {
+   "epistemica_del_televisor": 1.0,
+   "asignado_tv": 1.306,
+   "asignado_buena": 8.694,
+   "ventaja_de_la_buena": 6.659
+  },
+  {
+   "epistemica_del_televisor": 2.0,
+   "asignado_tv": 2.15,
+   "asignado_buena": 7.85,
+   "ventaja_de_la_buena": 3.651
+  },
+  {
+   "epistemica_del_televisor": 5.0,
+   "asignado_tv": 3.904,
+   "asignado_buena": 6.096,
+   "ventaja_de_la_buena": 1.562
+  },
+  {
+   "epistemica_del_televisor": 20.0,
+   "asignado_tv": 7.036,
+   "asignado_buena": 2.964,
+   "ventaja_de_la_buena": 0.421
+  },
+  {
+   "epistemica_del_televisor": 100.0,
+   "asignado_tv": 9.046,
+   "asignado_buena": 0.954,
+   "ventaja_de_la_buena": 0.105
+  },
+  {
+   "epistemica_del_televisor": 1000.0,
+   "asignado_tv": 9.675,
+   "asignado_buena": 0.325,
+   "ventaja_de_la_buena": 0.034
+  }
+ ],
+ "veredicto": "REPROBADO: el contagio SI ocurre. Con la epistemica del televisor inflada x20 se lleva 7.036 de 10 y la region buena 2.964"
+}

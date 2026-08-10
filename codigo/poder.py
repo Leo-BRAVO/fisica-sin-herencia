@@ -83,6 +83,94 @@ def medir(episodios, jueces, region_var=0, cortes=(0.0,), horizonte=8, retardos=
     return filas
 
 
+# ==========================================================================================
+# LA PUERTA (metodo.py) — 10-ago-2026, prerregistro-43
+# ==========================================================================================
+# G13 publica en cada ronda y **el temple lee su `subestima` como termino de error**. El temple es
+# CABLEADO E INMUTABLE por diseño, asi que un error aqui quedaria congelado dentro de un organo que
+# por construccion no se puede ajustar. Es la misma razon por la que G14 se examino antes que los
+# demas — y G14 REPROBO (INFORME-51). Este es el otro que alimenta al temple.
+METODO = {
+    "prerregistro": 43,
+    "tipo_de_medida": "continua",
+    "que_mide": ("el R2 de CONTROL por region: cuanto explican los comandos del futuro DADO el "
+                 "estado. Modelos anidados sobre las mismas filas — un mundo y dos conjuntos de "
+                 "entradas, no dos mundos (la forma que el INFORME-31 valido)"),
+    "comparten_datos": {
+        "hay": True,
+        "porque": "el modelo CON comandos y el modelo SIN comandos se ajustan sobre exactamente "
+                  "las mismas filas: esa es justo la propiedad que cierra el canal de mentira que "
+                  "tumbo a la ganancia honesta (INFORME-30), donde se comparaban dos mundos "
+                  "distintos. Lo que NO se comparte son los episodios juez.",
+    },
+    "linea_base": ("el modelo SIN comandos, que ya va dentro de la resta: el poder ES una ganancia "
+                   "sobre el, no un R2 crudo (Regla 11)"),
+    "formulas": [
+        {"base": {"fuerza": 0.6, "ruido": 0.3}, "parametro": "fuerza", "factor": 0.02,
+         "esperado": "baja",
+         "porque": "si el comando casi no mueve nada, lo que explica del futuro tiene que caer. "
+                   "Desigualdad y no proporcion: el R2 de un modelo anidado no es funcion cerrada "
+                   "de la fuerza del actuador"},
+        {"base": {"fuerza": 0.6, "ruido": 0.3}, "parametro": "ruido", "factor": 10.0,
+         "esperado": "baja",
+         "porque": "ruido que ningun comando explica se lleva la varianza a un sitio donde el "
+                   "comando no llega: el poder baja. Si NO bajara, estaria midiendo la escala de "
+                   "la señal y no el control"},
+    ],
+}
+
+
+def _mundo_con_poder(fuerza=0.6, ruido=0.3, T=1200, n_ep=6, semilla=13):
+    """Un mundo donde YO fijo cuanto poder tienen los comandos. La verdad la ponemos nosotros."""
+    rng = np.random.default_rng(int(semilla))
+    k = np.ones(9) / 9
+    eps = []
+    for _ in range(int(n_ep)):
+        a = np.column_stack([np.convolve(rng.normal(size=T + 8), k, mode="valid")[:T]
+                             for _ in range(3)])
+        s = np.zeros((T, 3))
+        for t in range(1, T):
+            s[t, 0] = 0.85 * s[t - 1, 0] + float(fuerza) * a[t - 1, 0] + rng.normal(0, float(ruido))
+            s[t, 1] = 0.90 * s[t - 1, 1] + rng.normal(0, 1.0)          # nadie la manda
+            s[t, 2] = 0.80 * s[t - 1, 2] + rng.normal(0, 1.0)          # nadie la manda
+        eps.append((a, s))
+    return eps
+
+
+def _metodo_medir(fuerza=0.6, ruido=0.3):
+    """PASO 1 — la medida escalar: el poder global sobre un mundo de poder conocido."""
+    eps = _mundo_con_poder(fuerza=fuerza, ruido=ruido)
+    filas = medir(eps, jueces=[5, 6], region_var=0, cortes=())
+    val = [f["poder"] for f in filas if f["poder"] is not None]
+    return float(val[0]) if val else 0.0
+
+
+def _metodo_sanidad():
+    """PASO 3 — LA FICHA. La pregunta: **¿el poder medido sigue a la fuerza real del actuador, o
+    se lo lleva el ruido?** Un mapa de poder que sube con el ruido le diria a Diego que manda
+    justo donde no manda — y G13 es el organo del que sale su sentido de agencia.
+    """
+    import sanidad as S
+    rng = np.random.default_rng(37)
+    fuerzas, lect = [], []
+    for _ in range(8):
+        f = float(rng.uniform(0.05, 1.5))
+        fuerzas.append(f)
+        lect.append(_metodo_medir(fuerza=f, ruido=0.3))
+    r = S.correlaciones({"fuerza": lect}, {"fuerza": fuerzas})
+    fallos = list(r["fallos"])
+    # Señuelo de escala: multiplicar el mundo entero por 10 no puede cambiar el poder, porque el
+    # poder es una RAZON de errores. Si cambiara, estaria leyendo amplitud.
+    a = _metodo_medir(fuerza=0.6, ruido=0.3)
+    eps = [(c, s * 10.0) for c, s in _mundo_con_poder(fuerza=0.6, ruido=0.3)]
+    filas = medir(eps, jueces=[5, 6], region_var=0, cortes=())
+    b = float([f["poder"] for f in filas if f["poder"] is not None][0])
+    if abs(a - b) > 0.05:
+        fallos.append(f"ESCALA: con el mundo x10 el poder pasa de {a:.4f} a {b:.4f} — lee amplitud")
+    return {"aprueba": not fallos, "fallos": fallos,
+            "sin_escalar": round(a, 4), "escalado_x10": round(b, 4)}
+
+
 def regla31(verbose=True):
     """Tres mundos con verdad conocida:
       SIN AGENCIA        -> poder ~0 en todas partes (no inventa control).
@@ -93,7 +181,11 @@ def regla31(verbose=True):
     rng = np.random.default_rng(17)
     T, n_ep = 900, 12
     k9 = np.ones(9) / 9
-    jueces = [11, 12]
+    # 10-ago-2026: aqui habia un `jueces = [11, 12]` que no usaba nadie — y que ademas NO coincidia
+    # con los indices que la prueba usa de verdad (`{10, 11}`, que en base cero son los episodios
+    # 11 y 12). Leerlo hacia creer que los jueces de esta prueba eran otros. Lo caza el paso 7 de
+    # la puerta al pasar el modulo por primera vez. Una variable muerta no es solo basura: es una
+    # afirmacion falsa sobre lo que el codigo hace.
 
     def balbuceo():
         return np.column_stack([np.convolve(rng.normal(size=T + 8), k9, mode="valid")[:T]

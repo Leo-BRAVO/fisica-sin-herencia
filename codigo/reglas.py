@@ -289,6 +289,11 @@ REPROBADOS = {
     "sueno.py": ("REPROBO la ficha el 10-ago-2026: su señuelo de escala se puso rojo (con el mundo "
                  "x10 sobrevivian 0 leyes en vez de 3). La causa NO es suya — es que `sindy3` no "
                  "es invariante a la escala. Ver INFORME-50 y prerregistro-45."),
+    "atencion.py": ("REPROBO la ficha el 10-ago-2026, y es el hallazgo mas grave del dia porque no "
+                    "es de un modulo sino de la CADENA: la epistemica inflada que G14 entrega SI "
+                    "compra atencion, porque `piso_poder=0.05` hace que una region con poder CERO "
+                    "puntue 0.05. Con la epistemica del televisor x20, el televisor se lleva 7.036 "
+                    "de 10 y la region buena 2.964. Ver INFORME-52."),
     "incertidumbre.py": ("REPROBO la ficha el 10-ago-2026 contra el criterio que el prerregistro-43 "
                          "habia declarado ANTES de correr: su ignorancia 'curable' es sigma/raiz(n), "
                          "asi que sube igual con pocos datos que con mucho ruido (el ruido explica "

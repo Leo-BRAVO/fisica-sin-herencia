@@ -50,6 +50,83 @@ def repartir(regiones, presupuesto, cuota_exploracion=0.05, piso_poder=0.05):
     return out
 
 
+# ==========================================================================================
+# LA PUERTA (metodo.py) — 10-ago-2026, prerregistro-43
+# ==========================================================================================
+# G8 decide DONDE MIRA DIEGO, y su prioridad es `epistemica * poder`. El 10-ago se midio que la
+# epistemica que G14 le entrega **sube con el ruido** (INFORME-51): una region imposible de
+# aprender le llega inflada. La pregunta que la ficha de abajo contesta es la unica que importa
+# aqui: **¿el factor `poder` alcanza para proteger el reparto de una epistemica inflada?**
+# Si no alcanzara, el defecto de G14 se convertiria en conducta — Diego mirando el televisor.
+METODO = {
+    "prerregistro": 43,
+    "tipo_de_medida": "continua",
+    "que_mide": ("que fraccion del presupuesto se lleva la region BUENA frente al TELEVISOR, "
+                 "cuando los dos compiten por la misma atencion"),
+    "comparten_datos": {
+        "hay": False,
+        "porque": "cada region trae sus propios numeros (epistemica, aleatoria, poder, coste) "
+                  "medidos por otros organos. El reparto no vuelve a mirar los datos: solo "
+                  "combina lo que le entregan, y por eso hereda lo que le entreguen mal.",
+    },
+    "linea_base": ("repartir POR IGUAL entre las regiones — el tonto de la Regla 11 para un "
+                   "asignador. Si no le gana, no esta priorizando: esta repartiendo"),
+    "formulas": [
+        {"base": {"poder_tv": 0.0, "epistemica_tv": 5.0}, "parametro": "poder_tv", "factor": 20.0,
+         "esperado": "baja",
+         "porque": "si el televisor pasa a ser CONTROLABLE deja de ser televisor: es una region "
+                   "legitima y debe llevarse mas presupuesto, luego la ventaja de la buena baja. "
+                   "Desigualdad y no proporcion: el reparto es una normalizacion, no una funcion "
+                   "cerrada"},
+        {"base": {"poder_tv": 0.0, "epistemica_tv": 5.0}, "parametro": "epistemica_tv",
+         "factor": 20.0, "esperado": "igual",
+         "porque": "**ESTE ES EL CASO QUE IMPORTA.** Inflar la epistemica del televisor x20 —que "
+                   "es lo que G14 hace con las regiones ruidosas— NO puede cambiar el reparto, "
+                   "porque su poder es cero y el producto sigue siendo cero. Si cambiara, el "
+                   "defecto de G14 se convertiria en conducta"},
+    ],
+}
+
+
+def _dos_regiones(poder_tv=0.0, epistemica_tv=5.0, presupuesto=10.0):
+    """Un televisor (mucha 'ignorancia', ningun control) contra una region buena."""
+    return [{"id": "tv", "epistemica": float(epistemica_tv), "aleatoria": 5.0,
+             "poder": float(poder_tv), "coste": presupuesto},
+            {"id": "buena", "epistemica": 0.8, "aleatoria": 0.1, "poder": 0.5,
+             "coste": presupuesto}]
+
+
+def _metodo_medir(poder_tv=0.0, epistemica_tv=5.0):
+    """PASO 1 — la medida escalar: cuanto se lleva la BUENA por cada unidad que se lleva el TV."""
+    regs = _dos_regiones(poder_tv=poder_tv, epistemica_tv=epistemica_tv)
+    r = {x["id"]: x["asignado"] for x in repartir(regs, presupuesto=10.0)}
+    return float(r["buena"] / max(r["tv"], 1e-9))
+
+
+def _metodo_sanidad():
+    """PASO 3 — LA FICHA, y aqui la pregunta no es sobre el instrumento sino sobre la CADENA:
+    **¿el defecto medido de G14 se propaga hasta la conducta de Diego?**
+
+    Se infla la epistemica del televisor por un factor creciente —imitando exactamente lo que G14
+    entrega en una region ruidosa— y se comprueba que el reparto NO se mueve. La proteccion es el
+    factor `poder`: no se puede aprender de lo que no se puede tocar.
+    """
+    fallos = []
+    base = _metodo_medir(epistemica_tv=1.0)
+    for factor in (2.0, 10.0, 100.0, 1000.0):
+        v = _metodo_medir(epistemica_tv=factor)
+        if abs(v - base) > 1e-6:
+            fallos.append(f"CONTAGIO DESDE G14: inflando la epistemica del televisor x{factor:g} "
+                          f"la ventaja de la region buena pasa de {base:.4f} a {v:.4f}")
+            break
+    # Y la linea base tonta: repartir por igual daria ventaja 1.0. Hay que ganarle.
+    if base <= 1.0:
+        fallos.append(f"no le gana al reparto por igual (ventaja {base:.4f}, el tonto da 1.0)")
+    return {"aprueba": not fallos, "fallos": fallos,
+            "ventaja_de_la_buena": round(base, 4),
+            "linea_base_tonta_repartir_por_igual": 1.0}
+
+
 def regla31(verbose=True):
     fallos = []
     regiones = [
