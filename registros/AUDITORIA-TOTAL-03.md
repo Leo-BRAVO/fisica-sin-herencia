@@ -1,4 +1,7 @@
 # AUDITORÍA COMPLETA DEL PROYECTO, DE PIES A CABEZA — 10 de agosto de 2026
+**ACTUALIZADA el mismo día, después de que el director firmara las tres cosas que esperaban su
+palabra. Lo que cambió está en la §9, al final: dos estudios corridos, dos actas, y los dos
+resultados van en contra de lo que esperábamos.**
 **Pedido del director: *"auditoría completa de todo el proyecto de pies a cabeza"*.**
 
 Ésta no es la auditoría de una campaña ni de un órgano. Es del **proyecto entero**: código, genoma,
@@ -182,3 +185,50 @@ ausencia, no para vetarlo.
 ---
 
 **Firmado por el orquestador. Las cuatro guardianas verdes en el momento de escribir esto.**
+
+---
+
+## 9. LO QUE PASÓ DESPUÉS DE SUS TRES FIRMAS (misma fecha)
+
+**Firmó las tres, y las tres están aplicadas:**
+
+| Lo que firmó | Qué se hizo | Dónde |
+|---|---|---|
+| **"la 1 sí"** — volver a preguntar la cláusula "único apto" | prerregistro-42 escrito con criterio congelado, módulo `unico_apto.py` **por LA PUERTA 7/7**, corrido en 5 semillas nuevas | INFORME-48 |
+| **"la 2 sí"** — activar G11 y G12 | **GENOMA v2**: los dos en modo `mide`, publicando en cada ronda | `arbol/GENOMA.json` |
+| **"la 3 sí a las preguntas"** | 4 campos en las 34 reglas · 3 fusiones · 4 endurecimientos · nace `codigo/reglas.py` | `CIMIENTOS.md` |
+
+### Los dos estudios corridos, y los dos van contra lo que esperábamos
+**Prereg-42 (INFORME-48) — ganó H-VARIOS, que es lo que yo quería, y ganar destapó algo peor.** En
+el mundo 73 el canal que acompañó a `altura` no fue `contacto` sino **`art1`, una articulación del
+propio brazo de Diego**: el instrumento declaró "no-mía" una parte de su cuerpo, y `altura` ganó
+por desempate (obediencia 0.0000 contra 0.0297), no porque el criterio excluyera al intruso. **La
+cláusula que este estudio acaba de derogar habría marcado ese mundo como problema.**
+
+**Prereg-39 (INFORME-49) — la experimentación dirigida NO gana.** Dirigido 14.4, azaroso 14.0,
+pasivo 12.4 sobre 16 incógnitas. Supera al azar en **1 de 5** mundos y empata en cuatro. Además dos
+casos del propio prerregistro se pusieron rojos (el mundo 4 resultó demasiado fácil, el 5 dio
+tautología). **Tocar sirve; elegir dónde tocar, como Diego lo elige hoy, casi no.** Y la lectura
+estaba escrita antes de correr: *"una política que solo persigue incertidumbre no es planificar"*.
+
+### Lo que esto cambia en el diagnóstico de la §5
+**Lo confirma y lo agrava.** Dije que sabemos medir mejor de lo que sabemos descubrir. Hoy se puede
+decir más preciso: **es el segundo estudio seguido en el que la experimentación dirigida no
+demuestra lo que esperábamos, y esta vez el instrumento ya no es la excusa** — el prereg-37 salió
+no concluyente por instrumento; el 39 sale negativo con el instrumento arreglado y sellado.
+
+### Las cifras que cambiaron
+| | antes | ahora |
+|---|---|---|
+| Módulos con sello de LA PUERTA | 3 | **4** (`unico_apto`) |
+| Entradas del genoma activas | 16 | **18** (G11 y G12) |
+| Prerregistros | 41 | **42** |
+| Informes | 47 | **49** |
+| Cola | 5 pendientes | **0 pendientes**, 5 `espera-al-metodo` (siguen bloqueadas por `torneo_ojos`) |
+| Reglas | 34 sin campos, 14 sin guardián | **34 con 4 campos, 31 vigentes, 3 fundidas**; las 14 mecanizadas o **con su deuda contada** |
+
+### Lo único que sigue bloqueado, y por qué
+Los **5 estudios `p38`** siguen en `espera-al-metodo`: `torneo_ojos.py` no ha pasado LA PUERTA — no
+tiene manifiesto, ni `_metodo_medir`, ni `_metodo_sanidad`, ni Regla 31 propia. **No se corren.**
+Es la puerta haciendo exactamente lo que se construyó para hacer, y dejarlos parados es la
+respuesta correcta, no un pendiente que se me olvidó.

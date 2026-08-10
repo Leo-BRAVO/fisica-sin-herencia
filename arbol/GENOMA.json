@@ -1,256 +1,259 @@
 {
-  "version": 1,
-  "fecha": "2026-08-09",
-  "nota": "El genoma ejecutable (Regla 33). Cada organo consulta aqui su modo. Cambiarlo = commit visible + firma del director. Los modos: 'mide' (produce numeros, no toca nada), 'propone' (puede escribir propuestas para humanos/cola), 'decide' (puede actuar solo; exige prerregistro firmado que lo cablee).",
-  "genes": {
-    "G1_prediccion": {
-      "modo": "decide",
-      "modulo": "percepcion.py/descubrir.py",
-      "prerregistro": "13",
-      "escucha": [
-        "mundo",
-        "leyes",
-        "revision"
-      ],
-      "competencia": [
-        "predecir",
-        "modelar"
-      ]
-    },
-    "G2_curiosidad": {
-      "modo": "propone",
-      "modulo": "curiosidad2.py",
-      "prerregistro": "18b",
-      "escucha": [
-        "leyes",
-        "recursos",
-        "revision"
-      ],
-      "competencia": [
-        "priorizar",
-        "explorar"
-      ]
-    },
-    "G3_accion": {
-      "modo": "decide",
-      "modulo": "gimnasio.py",
-      "prerregistro": "19",
-      "escucha": [
-        "cuerpo",
-        "frontera"
-      ],
-      "competencia": [
-        "actuar",
-        "intervenir"
-      ]
-    },
-    "G4_contingencia": {
-      "modo": "mide",
-      "modulo": "contingencia.py",
-      "prerregistro": "23",
-      "escucha": [
-        "cuerpo",
-        "frontera"
-      ],
-      "competencia": [
-        "separar_yo_mundo",
-        "medir_obediencia"
-      ]
-    },
-    "G5_composicion": {
-      "modo": "decide",
-      "modulo": "descubrir.py",
-      "prerregistro": "02",
-      "escucha": [
-        "leyes",
-        "revision"
-      ],
-      "competencia": [
-        "componer",
-        "simplificar"
-      ]
-    },
-    "G6_memoria": {
-      "modo": "decide",
-      "modulo": "memoria.py",
-      "prerregistro": "append-only",
-      "escucha": [
-        "cuerpo",
-        "mundo",
-        "frontera",
-        "leyes",
-        "recursos",
-        "descanso",
-        "revision"
-      ],
-      "competencia": [
-        "recordar",
-        "consolidar"
-      ]
-    },
-    "G7_juego": {
-      "modo": "decide",
-      "modulo": "gimnasio.py (balbuceo)",
-      "prerregistro": "19",
-      "escucha": [
-        "cuerpo",
-        "recursos"
-      ],
-      "competencia": [
-        "actuar",
-        "explorar"
-      ]
-    },
-    "G8_atencion": {
-      "modo": "mide",
-      "modulo": "atencion.py",
-      "prerregistro": null,
-      "escucha": [
-        "frontera",
-        "leyes",
-        "recursos",
-        "revision"
-      ],
-      "competencia": [
-        "priorizar",
-        "repartir_esfuerzo"
-      ]
-    },
-    "G9_sueno": {
-      "modo": "mide",
-      "modulo": "sueno.py",
-      "prerregistro": null,
-      "escucha": [
-        "leyes",
-        "descanso",
-        "revision"
-      ],
-      "competencia": [
-        "consolidar",
-        "reminar"
-      ]
-    },
-    "G10_interocepcion": {
-      "modo": "mide",
-      "modulo": "interocepcion.py",
-      "prerregistro": null,
-      "escucha": [
-        "recursos",
-        "descanso"
-      ],
-      "competencia": [
-        "medir_coste",
-        "repartir_esfuerzo"
-      ]
-    },
-    "G11_temple": {
-      "modo": "inactivo",
-      "modulo": "temple.py",
-      "prerregistro": "40",
-      "escucha": [
-        "recursos",
-        "revision"
-      ],
-      "competencia": [
-        "medir_incomodidad"
-      ],
-      "nota": "CONSTRUIDO el 10-ago-2026 (prereg-40). Sigue en modo 'inactivo': construirlo y ACTIVARLO son dos cosas distintas, y activar es cambio de genoma entre generaciones con firma del director (Regla 33). Coste intrinseco CABLEADO E INMUTABLE: ajustar() lanza en vez de ajustar, que es la Regla 30 hecha codigo."
-    },
-    "G12_reflejos": {
-      "modo": "inactivo",
-      "modulo": "reflejos.py",
-      "prerregistro": "40",
-      "escucha": [
-        "cuerpo",
-        "frontera"
-      ],
-      "competencia": [
-        "reaccionar_rapido"
-      ],
-      "nota": "CONSTRUIDO el 10-ago-2026 (prereg-40). Sigue en modo 'inactivo' por la misma razon. Ningun reflejo se escribe a mano: TODOS se destilan de deliberaciones que Diego ya tomo. Un reflejo escrito a mano seria fisica humana disfrazada de instinto."
-    },
-    "G13_poder": {
-      "modo": "mide",
-      "modulo": "poder.py",
-      "prerregistro": null,
-      "escucha": [
-        "cuerpo",
-        "frontera",
-        "recursos"
-      ],
-      "competencia": [
-        "medir_control",
-        "intervenir"
-      ]
-    },
-    "G14_incertidumbre": {
-      "modo": "mide",
-      "modulo": "incertidumbre.py",
-      "prerregistro": null,
-      "escucha": [
-        "mundo",
-        "leyes",
-        "revision"
-      ],
-      "competencia": [
-        "medir_incertidumbre",
-        "separar_ruido"
-      ]
-    },
-    "sentido_vision": {
-      "modo": "decide",
-      "modulo": "percepcion.py/percepcion2.py",
-      "prerregistro": "25",
-      "escucha": [
-        "mundo",
-        "cuerpo",
-        "revision"
-      ],
-      "competencia": [
-        "percibir",
-        "modelar"
-      ]
-    },
-    "sentido_propiocepcion": {
-      "modo": "mide",
-      "modulo": "gimnasio.py (sensores)",
-      "prerregistro": "26-borrador",
-      "escucha": [
-        "cuerpo"
-      ],
-      "competencia": [
-        "percibir",
-        "sentir_cuerpo"
-      ]
-    },
-    "sentido_tacto": {
-      "modo": "mide",
-      "modulo": "gimnasio.py (sensores)",
-      "prerregistro": "26-borrador",
-      "escucha": [
-        "cuerpo",
-        "mundo"
-      ],
-      "competencia": [
-        "percibir",
-        "sentir_contacto"
-      ]
-    },
-    "G15_metacognicion": {
-      "modo": "mide",
-      "modulo": "cerebro.py",
-      "prerregistro": null,
-      "nota": "sensibilidad metacognitiva (AUC tipo 2) con nulo por confianza barajada. MIDE: no decide nada hasta que un prerregistro firmado suba su modo.",
-      "escucha": [
-        "leyes",
-        "revision"
-      ],
-      "competencia": [
-        "medir_confianza",
-        "revisar"
-      ]
-    }
+ "version": 2,
+ "fecha": "2026-08-10",
+ "nota": "El genoma ejecutable (Regla 33). Cada organo consulta aqui su modo. Cambiarlo = commit visible + firma del director. Los modos: 'mide' (produce numeros, no toca nada), 'propone' (puede escribir propuestas para humanos/cola), 'decide' (puede actuar solo; exige prerregistro firmado que lo cablee).",
+ "genes": {
+  "G1_prediccion": {
+   "modo": "decide",
+   "modulo": "percepcion.py/descubrir.py",
+   "prerregistro": "13",
+   "escucha": [
+    "mundo",
+    "leyes",
+    "revision"
+   ],
+   "competencia": [
+    "predecir",
+    "modelar"
+   ]
   },
-  "nota_escucha": "Suscripcion por tema (sinapsis 2.0, 9-ago-2026). Un organo solo recibe lo que declara escuchar. Conectar todo con todo no es un cerebro: es ruido que se retroalimenta y borra la trazabilidad de quien causo que.",
-  "nota_competencia": "Competencia FUNCIONAL, jamas por dominio fisico. Un enrutador que reclutara por 'sabe de gravedad' usaria conocimiento del mundo para decidir: la contaminacion entrando por la puerta de atras."
+  "G2_curiosidad": {
+   "modo": "propone",
+   "modulo": "curiosidad2.py",
+   "prerregistro": "18b",
+   "escucha": [
+    "leyes",
+    "recursos",
+    "revision"
+   ],
+   "competencia": [
+    "priorizar",
+    "explorar"
+   ]
+  },
+  "G3_accion": {
+   "modo": "decide",
+   "modulo": "gimnasio.py",
+   "prerregistro": "19",
+   "escucha": [
+    "cuerpo",
+    "frontera"
+   ],
+   "competencia": [
+    "actuar",
+    "intervenir"
+   ]
+  },
+  "G4_contingencia": {
+   "modo": "mide",
+   "modulo": "contingencia.py",
+   "prerregistro": "23",
+   "escucha": [
+    "cuerpo",
+    "frontera"
+   ],
+   "competencia": [
+    "separar_yo_mundo",
+    "medir_obediencia"
+   ]
+  },
+  "G5_composicion": {
+   "modo": "decide",
+   "modulo": "descubrir.py",
+   "prerregistro": "02",
+   "escucha": [
+    "leyes",
+    "revision"
+   ],
+   "competencia": [
+    "componer",
+    "simplificar"
+   ]
+  },
+  "G6_memoria": {
+   "modo": "decide",
+   "modulo": "memoria.py",
+   "prerregistro": "append-only",
+   "escucha": [
+    "cuerpo",
+    "mundo",
+    "frontera",
+    "leyes",
+    "recursos",
+    "descanso",
+    "revision"
+   ],
+   "competencia": [
+    "recordar",
+    "consolidar"
+   ]
+  },
+  "G7_juego": {
+   "modo": "decide",
+   "modulo": "gimnasio.py (balbuceo)",
+   "prerregistro": "19",
+   "escucha": [
+    "cuerpo",
+    "recursos"
+   ],
+   "competencia": [
+    "actuar",
+    "explorar"
+   ]
+  },
+  "G8_atencion": {
+   "modo": "mide",
+   "modulo": "atencion.py",
+   "prerregistro": null,
+   "escucha": [
+    "frontera",
+    "leyes",
+    "recursos",
+    "revision"
+   ],
+   "competencia": [
+    "priorizar",
+    "repartir_esfuerzo"
+   ]
+  },
+  "G9_sueno": {
+   "modo": "mide",
+   "modulo": "sueno.py",
+   "prerregistro": null,
+   "escucha": [
+    "leyes",
+    "descanso",
+    "revision"
+   ],
+   "competencia": [
+    "consolidar",
+    "reminar"
+   ]
+  },
+  "G10_interocepcion": {
+   "modo": "mide",
+   "modulo": "interocepcion.py",
+   "prerregistro": null,
+   "escucha": [
+    "recursos",
+    "descanso"
+   ],
+   "competencia": [
+    "medir_coste",
+    "repartir_esfuerzo"
+   ]
+  },
+  "G11_temple": {
+   "modo": "mide",
+   "modulo": "temple.py",
+   "prerregistro": "40",
+   "escucha": [
+    "recursos",
+    "revision"
+   ],
+   "competencia": [
+    "medir_incomodidad"
+   ],
+   "nota": "CONSTRUIDO el 10-ago-2026 (prereg-40). ACTIVADO el 10-ago-2026 (genoma v2) con la firma del director. Modo 'mide': publica numeros y el portero le impide decidir. Coste intrinseco CABLEADO E INMUTABLE: ajustar() lanza en vez de ajustar, que es la Regla 30 hecha codigo.",
+   "activado": "2026-08-10 — firma del director"
+  },
+  "G12_reflejos": {
+   "modo": "mide",
+   "modulo": "reflejos.py",
+   "prerregistro": "40",
+   "escucha": [
+    "cuerpo",
+    "frontera"
+   ],
+   "competencia": [
+    "reaccionar_rapido"
+   ],
+   "nota": "CONSTRUIDO el 10-ago-2026 (prereg-40). ACTIVADO el 10-ago-2026 (genoma v2) con la firma del director. Modo 'mide'. Ningun reflejo se escribe a mano: TODOS se destilan de deliberaciones que Diego ya tomo. Un reflejo escrito a mano seria fisica humana disfrazada de instinto.",
+   "activado": "2026-08-10 — firma del director"
+  },
+  "G13_poder": {
+   "modo": "mide",
+   "modulo": "poder.py",
+   "prerregistro": null,
+   "escucha": [
+    "cuerpo",
+    "frontera",
+    "recursos"
+   ],
+   "competencia": [
+    "medir_control",
+    "intervenir"
+   ]
+  },
+  "G14_incertidumbre": {
+   "modo": "mide",
+   "modulo": "incertidumbre.py",
+   "prerregistro": null,
+   "escucha": [
+    "mundo",
+    "leyes",
+    "revision"
+   ],
+   "competencia": [
+    "medir_incertidumbre",
+    "separar_ruido"
+   ]
+  },
+  "sentido_vision": {
+   "modo": "decide",
+   "modulo": "percepcion.py/percepcion2.py",
+   "prerregistro": "25",
+   "escucha": [
+    "mundo",
+    "cuerpo",
+    "revision"
+   ],
+   "competencia": [
+    "percibir",
+    "modelar"
+   ]
+  },
+  "sentido_propiocepcion": {
+   "modo": "mide",
+   "modulo": "gimnasio.py (sensores)",
+   "prerregistro": "26-borrador",
+   "escucha": [
+    "cuerpo"
+   ],
+   "competencia": [
+    "percibir",
+    "sentir_cuerpo"
+   ]
+  },
+  "sentido_tacto": {
+   "modo": "mide",
+   "modulo": "gimnasio.py (sensores)",
+   "prerregistro": "26-borrador",
+   "escucha": [
+    "cuerpo",
+    "mundo"
+   ],
+   "competencia": [
+    "percibir",
+    "sentir_contacto"
+   ]
+  },
+  "G15_metacognicion": {
+   "modo": "mide",
+   "modulo": "cerebro.py",
+   "prerregistro": null,
+   "nota": "sensibilidad metacognitiva (AUC tipo 2) con nulo por confianza barajada. MIDE: no decide nada hasta que un prerregistro firmado suba su modo.",
+   "escucha": [
+    "leyes",
+    "revision"
+   ],
+   "competencia": [
+    "medir_confianza",
+    "revisar"
+   ]
+  }
+ },
+ "nota_escucha": "Suscripcion por tema (sinapsis 2.0, 9-ago-2026). Un organo solo recibe lo que declara escuchar. Conectar todo con todo no es un cerebro: es ruido que se retroalimenta y borra la trazabilidad de quien causo que.",
+ "nota_competencia": "Competencia FUNCIONAL, jamas por dominio fisico. Un enrutador que reclutara por 'sabe de gravedad' usaria conocimiento del mundo para decidir: la contaminacion entrando por la puerta de atras.",
+ "generacion": "G2 — nacida el 10-ago-2026 con la firma del director ('la 2 si'). Cambio unico: G11_temple y G12_reflejos pasan de 'inactivo' a 'mide'. Ningun otro gen se toca. Regla 33: el genoma solo cambia ENTRE generaciones y con firma; construir un gen y ACTIVARLO son dos actos distintos, y este es el segundo."
 }

@@ -1,0 +1,2 @@
+pybullet build time: Jan 29 2025 23:17:20
+guardado en /home/user/fisica-sin-herencia/resultados/p39-experimentar2-s1/resumen.json (parcial — el veredicto exige las 5 semillas juntas)

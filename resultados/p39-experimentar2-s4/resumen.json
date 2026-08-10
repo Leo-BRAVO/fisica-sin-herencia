@@ -1,0 +1,82 @@
+{
+  "prerregistro": 39,
+  "semilla": 4,
+  "presupuesto": 24,
+  "incognitas": 16,
+  "mundo": {
+    "masas": [
+      0.6961,
+      0.6131,
+      0.9943,
+      0.9874,
+      0.5622,
+      0.2256,
+      0.2622,
+      0.6686
+    ],
+    "roces": [
+      0.5035,
+      0.4454,
+      0.1384,
+      0.4488,
+      0.8229,
+      0.5248,
+      0.7492,
+      0.1442
+    ],
+    "umbral_masa": 0.65,
+    "umbral_roce": 0.46499999999999997,
+    "con_duda": true
+  },
+  "condiciones": {
+    "dirigido": {
+      "condicion": "dirigido",
+      "puntaje": 16,
+      "reparto": [
+        2,
+        5,
+        4,
+        2,
+        2,
+        2,
+        2,
+        5
+      ],
+      "presupuesto": 24
+    },
+    "azaroso": {
+      "condicion": "azaroso",
+      "puntaje": 16,
+      "reparto": [
+        4,
+        2,
+        4,
+        2,
+        1,
+        4,
+        6,
+        1
+      ],
+      "presupuesto": 24
+    },
+    "pasivo": {
+      "condicion": "pasivo",
+      "puntaje": 12,
+      "reparto": [
+        3,
+        2,
+        3,
+        5,
+        3,
+        2,
+        3,
+        3
+      ],
+      "presupuesto": 24,
+      "nota": "ve los episodios de OTRO agente en el mismo mundo (nunca los del dirigido)"
+    }
+  },
+  "dirigido_menos_azaroso": 0,
+  "dirigido_menos_pasivo": 4,
+  "nota": "el veredicto del hito exige las 5 semillas juntas; esto es una sola"
+}
