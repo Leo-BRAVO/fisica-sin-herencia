@@ -45,6 +45,15 @@ _rancias = sorted({int(n) for n in re.findall(r"(\d+) reglas", readme)} - {max_r
 caso("README sin NINGUNA cifra rancia de reglas (ni una mencion vieja)",
      not _rancias, f"menciona tambien: {_rancias}")
 
+# 10-ago-2026: el chequeo de arriba vigilaba el README y NUNCA a CIMIENTOS. Hoy encontre que la
+# constitucion decia "hoy 32" en DOS sitios teniendo 34 reglas — incluido el prompt de arranque, el
+# texto con el que despierta cada orquestador nuevo. Un documento que se equivoca al contarse a si
+# mismo es peor que un README rancio: es la fuente de la que todos los demas copian.
+_cim_nums = sorted({int(a or b) for a, b in re.findall(r"(\d+) reglas|hoy (\d+)", cimientos)}
+                   - {max_regla})
+caso("CIMIENTOS se cuenta bien a SI MISMO (ninguna cifra rancia de reglas)",
+     not _cim_nums, f"CIMIENTOS dice tambien: {_cim_nums} teniendo {max_regla}")
+
 print("== arbol: nodos, cuarentena y conectoma cuentan lo mismo ==")
 nodos_e2 = sorted(glob.glob(os.path.join(BASE, "arbol", "N-*-E2.md")))
 cuarentena = [n for n in nodos_e2 if "EN CUARENTENA" in open(n, encoding="utf-8").read(600)]
