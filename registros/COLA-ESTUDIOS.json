@@ -538,9 +538,10 @@
       "prerregistro": 37,
       "datos": "codigo/experimentar.py",
       "args": "--semilla 1 --toques 24",
-      "estado": "pendiente",
+      "estado": "hecha",
       "nota": "la primera intervencion: dirigido vs azaroso vs pasivo — ¿elegir que tocar vale mas que tocar al azar?",
-      "salida": "resultados/p37-experimentar-s1"
+      "salida": "resultados/p37-experimentar-s1",
+      "resultado": "corrida por latido-nube (Actions)"
     },
     {
       "id": "p37-experimentar-s2",
@@ -548,9 +549,10 @@
       "prerregistro": 37,
       "datos": "codigo/experimentar.py",
       "args": "--semilla 2 --toques 24",
-      "estado": "pendiente",
+      "estado": "hecha",
       "nota": "la primera intervencion: dirigido vs azaroso vs pasivo — ¿elegir que tocar vale mas que tocar al azar?",
-      "salida": "resultados/p37-experimentar-s2"
+      "salida": "resultados/p37-experimentar-s2",
+      "resultado": "corrida por latido-nube (Actions)"
     },
     {
       "id": "p37-experimentar-s3",
@@ -558,9 +560,10 @@
       "prerregistro": 37,
       "datos": "codigo/experimentar.py",
       "args": "--semilla 3 --toques 24",
-      "estado": "pendiente",
+      "estado": "hecha",
       "nota": "la primera intervencion: dirigido vs azaroso vs pasivo — ¿elegir que tocar vale mas que tocar al azar?",
-      "salida": "resultados/p37-experimentar-s3"
+      "salida": "resultados/p37-experimentar-s3",
+      "resultado": "corrida por latido-nube (Actions)"
     },
     {
       "id": "p37-experimentar-s4",
@@ -568,9 +571,10 @@
       "prerregistro": 37,
       "datos": "codigo/experimentar.py",
       "args": "--semilla 4 --toques 24",
-      "estado": "pendiente",
+      "estado": "hecha",
       "nota": "la primera intervencion: dirigido vs azaroso vs pasivo — ¿elegir que tocar vale mas que tocar al azar?",
-      "salida": "resultados/p37-experimentar-s4"
+      "salida": "resultados/p37-experimentar-s4",
+      "resultado": "corrida por latido-nube (Actions)"
     },
     {
       "id": "p37-experimentar-s5",
@@ -578,9 +582,10 @@
       "prerregistro": 37,
       "datos": "codigo/experimentar.py",
       "args": "--semilla 5 --toques 24",
-      "estado": "pendiente",
+      "estado": "hecha",
       "nota": "la primera intervencion: dirigido vs azaroso vs pasivo — ¿elegir que tocar vale mas que tocar al azar?",
-      "salida": "resultados/p37-experimentar-s5"
+      "salida": "resultados/p37-experimentar-s5",
+      "resultado": "corrida por latido-nube (Actions)"
     },
     {
       "id": "p38-torneo-panel-s1",
