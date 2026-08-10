@@ -530,6 +530,56 @@
       "nota": "mide LA VARA, no a Diego: barrido de duracion de fase hasta que el control positivo dispare 5/5",
       "salida": "resultados/p36-calibracion-firmas",
       "resultado": "corrida por latido-nube (Actions)"
+    },
+    {
+      "id": "p37-experimentar-s1",
+      "tipo": "gimnasio",
+      "prerregistro": 37,
+      "datos": "codigo/experimentar.py",
+      "args": "--semilla 1 --toques 24",
+      "estado": "pendiente",
+      "nota": "la primera intervencion: dirigido vs azaroso vs pasivo — ¿elegir que tocar vale mas que tocar al azar?",
+      "salida": "resultados/p37-experimentar-s1"
+    },
+    {
+      "id": "p37-experimentar-s2",
+      "tipo": "gimnasio",
+      "prerregistro": 37,
+      "datos": "codigo/experimentar.py",
+      "args": "--semilla 2 --toques 24",
+      "estado": "pendiente",
+      "nota": "la primera intervencion: dirigido vs azaroso vs pasivo — ¿elegir que tocar vale mas que tocar al azar?",
+      "salida": "resultados/p37-experimentar-s2"
+    },
+    {
+      "id": "p37-experimentar-s3",
+      "tipo": "gimnasio",
+      "prerregistro": 37,
+      "datos": "codigo/experimentar.py",
+      "args": "--semilla 3 --toques 24",
+      "estado": "pendiente",
+      "nota": "la primera intervencion: dirigido vs azaroso vs pasivo — ¿elegir que tocar vale mas que tocar al azar?",
+      "salida": "resultados/p37-experimentar-s3"
+    },
+    {
+      "id": "p37-experimentar-s4",
+      "tipo": "gimnasio",
+      "prerregistro": 37,
+      "datos": "codigo/experimentar.py",
+      "args": "--semilla 4 --toques 24",
+      "estado": "pendiente",
+      "nota": "la primera intervencion: dirigido vs azaroso vs pasivo — ¿elegir que tocar vale mas que tocar al azar?",
+      "salida": "resultados/p37-experimentar-s4"
+    },
+    {
+      "id": "p37-experimentar-s5",
+      "tipo": "gimnasio",
+      "prerregistro": 37,
+      "datos": "codigo/experimentar.py",
+      "args": "--semilla 5 --toques 24",
+      "estado": "pendiente",
+      "nota": "la primera intervencion: dirigido vs azaroso vs pasivo — ¿elegir que tocar vale mas que tocar al azar?",
+      "salida": "resultados/p37-experimentar-s5"
     }
   ]
 }
