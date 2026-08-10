@@ -1,0 +1,39 @@
+{
+ "prerregistro": 38,
+ "semillas_incluidas": [
+  2,
+  3,
+  4,
+  5
+ ],
+ "medias_por_competidor": {
+  "A-pixel": {
+   "contingencia": 0.00541,
+   "flecha": -0.02057,
+   "robustez": -0.00046
+  },
+  "B-predictivo": {
+   "contingencia": 0.00168,
+   "flecha": -0.01378,
+   "robustez": 0.00081
+  },
+  "C-corolario": {
+   "contingencia": 0.00161,
+   "flecha": -0.01262,
+   "robustez": 0.00146
+  },
+  "R-ranuras": {
+   "contingencia": 0.0071,
+   "flecha": -0.01098,
+   "robustez": 2e-05
+  }
+ },
+ "calibracion_de_la_vara": {
+  "latentes_que_obedecen": 0.412,
+  "latentes_de_puro_ruido": -0.0002,
+  "fuente": "Regla 31 de torneo_ojos.py, medida el 10-ago-2026"
+ },
+ "veredicto": "GANA CON ASTERISCO R-ranuras — gana en ['contingencia', 'flecha'] y pierde en el resto; NO reemplaza los ojos oficiales sin segunda vuelta",
+ "lectura_honesta": "los cuatro competidores puntuan a escala de RUIDO segun la calibracion de la propia vara; ganar dentro del ruido no es ganar",
+ "defecto_detectado_en_la_regla_de_oro": "panel_jueces.veredicto() usa 5% del RANGO observado como margen; sin piso absoluto, corona a alguien aunque nadie despegue"
+}
