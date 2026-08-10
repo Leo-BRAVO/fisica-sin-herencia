@@ -95,8 +95,8 @@ def _escena(w):
     p.resetSimulation(physicsClientId=cliente)
     p.setGravity(0, 0, -9.8, physicsClientId=cliente)
     p.setTimeStep(PASO_FISICO, physicsClientId=cliente)
-    suelo = p.createMultiBody(0, p.createCollisionShape(p.GEOM_PLANE, physicsClientId=cliente),
-                              physicsClientId=cliente)
+    p.createMultiBody(0, p.createCollisionShape(p.GEOM_PLANE, physicsClientId=cliente),
+                      physicsClientId=cliente)
     forma = p.createCollisionShape(p.GEOM_BOX, halfExtents=[ALTO] * 3, physicsClientId=cliente)
     objetos = []
     for i in range(N_OBJ):
@@ -114,7 +114,6 @@ def _leer(cliente, objetos, cual, rng):
     es la razon por la que hace falta repetir donde uno duda."""
     import pybullet as p
     o = objetos[cual]
-    (x0, y0, _), _ = p.getBasePositionAndOrientation(o, physicsClientId=cliente)
     # (Aqui vivia una segunda llamada de fuerza, resto de la version anterior. PyBullet ACUMULA las
     # fuerzas hasta el siguiente stepSimulation, asi que el primer paso de cada toque recibia el
     # DOBLE de impulso. No sesgaba una propiedad frente a la otra —era identico para los ocho
@@ -135,14 +134,20 @@ def _leer(cliente, objetos, cual, rng):
         v.append(float(np.hypot(vx, vy)))
     # PICO al terminar el empujon: v ~ F*T/m. Lee la MASA.
     pico = max(v[:EMPUJE_SUBPASOS + 1]) if v else 0.0
-    # CUANTO TARDA EN PARAR desde ese pico. Con friccion seca, t ~ v/(mu*g): el tiempo depende del
-    # roce y NO de la masa. Dividiendo pico entre el tiempo se lee el roce SOLO. Esta separacion es
-    # la cura del segundo diagnostico: antes 'frenado' correlacionaba -0.586 con la masa y solo
-    # -0.344 con el roce — leia la propiedad equivocada.
+    # LA DESACELERACION, no el tiempo hasta parar. Con friccion seca a = mu*g: la pendiente de la
+    # velocidad NO contiene la masa por ninguna via. Cazado por la ficha de sanidad (sanidad.py) el
+    # 10-ago-2026 sobre este mismo modulo DESPUES de que su Regla 31 lo aprobara 8/8: la lectura
+    # anterior (pico / tiempo_hasta_parar) seguia correlacionando 0.945 con la MASA una vez
+    # descontado lo que la masa ya explicaba. Las correlaciones brutas parecian sanas (+0.881 con
+    # el roce); la PARCIAL enseño que no lo estaban.
     tras = v[EMPUJE_SUBPASOS:]
     umbral = 0.02 * max(pico, 1e-12)
-    t_parar = next((j for j, sv in enumerate(tras) if sv < umbral), len(tras)) + 1
-    frenado = float(pico / t_parar)
+    fin = next((j for j, sv in enumerate(tras) if sv < umbral), len(tras))
+    if fin >= 4:
+        t = np.arange(fin, dtype=float)
+        frenado = float(-np.polyfit(t, np.asarray(tras[:fin], dtype=float), 1)[0])
+    else:
+        frenado = 0.0
     n1 = float(rng.normal(1.0, RUIDO_SENSOR))
     n2 = float(rng.normal(1.0, RUIDO_SENSOR))
     return pico * n1, frenado * n2

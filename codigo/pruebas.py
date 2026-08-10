@@ -513,6 +513,20 @@ caso("experimentar: la duda es real por los DOS lados (ciega en reposo, no ciega
      _ex._mirando_sin_tocar(_ex._mundo(1)) < 0.05
      and _ex._mirando_sin_tocar(_ex._mundo(1), mover_uno=True) > 0.50)
 
+print("== LA FICHA DE SANIDAD (10-ago-2026): los cinco tipos de error que repito al armar pruebas ==")
+import sanidad as _san
+caso("sanidad: APRUEBA su meta-prueba (caza los 5 tipos y no grita donde no hay nada)",
+     _san.regla31(verbose=False) == 0)
+# CONGELADO: la ficha se aplica al modulo mas reciente. Cazo dos cosas que su Regla 31 aprobo 8/8:
+# una lectura de roce que seguia leyendo masa, y tres variables muertas. La Regla 31 comprueba que
+# el instrumento hace lo que YO QUISE; la ficha comprueba que lo que quise fuera correcto.
+caso("sanidad: experimentar2 no tiene restos de versiones anteriores",
+     _san.restos_de_versiones(os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                           "experimentar2.py"))["aprueba"])
+caso("sanidad: la politica de experimentar2 NO ve la verdad del mundo (Regla 27 mecanizada)",
+     _san.politica_limpia(os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                       "experimentar2.py"))["aprueba"])
+
 print("== experimentacion dirigida 2a vuelta (prereg-39): un mundo donde elegir cueste ==")
 import experimentar2 as _e2b
 caso("experimentar2: APRUEBA su Regla 31 (8/8: duda real por los dos lados, presupuesto que no "
