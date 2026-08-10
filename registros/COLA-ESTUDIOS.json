@@ -636,6 +636,56 @@
       "estado": "pendiente",
       "nota": "segunda vuelta con el panel de 3 lecturas: misma competencia, otra vara",
       "salida": "resultados/p38-torneo-panel-s5"
+    },
+    {
+      "id": "p39-experimentar2-s1",
+      "tipo": "gimnasio",
+      "prerregistro": 39,
+      "datos": "codigo/experimentar2.py",
+      "args": "--semilla 1 --presupuesto 24",
+      "estado": "pendiente",
+      "nota": "2a vuelta: 8 objetos, 16 incognitas, 24 toques — ¿repartir bien vence a repartir al azar?",
+      "salida": "resultados/p39-experimentar2-s1"
+    },
+    {
+      "id": "p39-experimentar2-s2",
+      "tipo": "gimnasio",
+      "prerregistro": 39,
+      "datos": "codigo/experimentar2.py",
+      "args": "--semilla 2 --presupuesto 24",
+      "estado": "pendiente",
+      "nota": "2a vuelta: 8 objetos, 16 incognitas, 24 toques — ¿repartir bien vence a repartir al azar?",
+      "salida": "resultados/p39-experimentar2-s2"
+    },
+    {
+      "id": "p39-experimentar2-s3",
+      "tipo": "gimnasio",
+      "prerregistro": 39,
+      "datos": "codigo/experimentar2.py",
+      "args": "--semilla 3 --presupuesto 24",
+      "estado": "pendiente",
+      "nota": "2a vuelta: 8 objetos, 16 incognitas, 24 toques — ¿repartir bien vence a repartir al azar?",
+      "salida": "resultados/p39-experimentar2-s3"
+    },
+    {
+      "id": "p39-experimentar2-s4",
+      "tipo": "gimnasio",
+      "prerregistro": 39,
+      "datos": "codigo/experimentar2.py",
+      "args": "--semilla 4 --presupuesto 24",
+      "estado": "pendiente",
+      "nota": "2a vuelta: 8 objetos, 16 incognitas, 24 toques — ¿repartir bien vence a repartir al azar?",
+      "salida": "resultados/p39-experimentar2-s4"
+    },
+    {
+      "id": "p39-experimentar2-s5",
+      "tipo": "gimnasio",
+      "prerregistro": 39,
+      "datos": "codigo/experimentar2.py",
+      "args": "--semilla 5 --presupuesto 24",
+      "estado": "pendiente",
+      "nota": "2a vuelta: 8 objetos, 16 incognitas, 24 toques — ¿repartir bien vence a repartir al azar?",
+      "salida": "resultados/p39-experimentar2-s5"
     }
   ]
 }

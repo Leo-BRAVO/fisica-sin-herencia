@@ -513,6 +513,23 @@ caso("experimentar: la duda es real por los DOS lados (ciega en reposo, no ciega
      _ex._mirando_sin_tocar(_ex._mundo(1)) < 0.05
      and _ex._mirando_sin_tocar(_ex._mundo(1), mover_uno=True) > 0.50)
 
+print("== experimentacion dirigida 2a vuelta (prereg-39): un mundo donde elegir cueste ==")
+import experimentar2 as _e2b
+caso("experimentar2: APRUEBA su Regla 31 (8/8: duda real por los dos lados, presupuesto que no "
+     "alcanza, NO tautologia, señuelo, mundo sin duda, medida sin techo)",
+     _e2b.regla31(verbose=False) == 0)
+# CONGELADO, y es la leccion literal del INFORME-46: dirigido y pasivo NO pueden compartir
+# episodios. Ayer el pasivo heredaba los del dirigido y la diferencia salio 0.0000 EXACTA en 5/5.
+# Una advertencia sobre una condicion debe ser un FALLO, no una nota.
+_w39 = _e2b.mundo(1)
+caso("experimentar2: el pasivo NO es una copia del dirigido (no hay tautologia)",
+     _e2b.correr("dirigido", semilla=1, w=_w39)["reparto"]
+     != _e2b.correr("pasivo", semilla=1, w=_w39)["reparto"])
+# CONGELADO: en un mundo sin nada que averiguar, el dirigido no puede lucirse. Un instrumento que
+# premia intervenir donde no hay pregunta esta midiendo su propio entusiasmo.
+caso("experimentar2: en un mundo sin duda el dirigido cae al azar (no se luce sin pregunta)",
+     _e2b.correr("dirigido", semilla=1, con_duda=False)["puntaje"] <= 12)
+
 print("== el observador pasivo (prereg-32): el control que podria refutarnos ==")
 import observador_pasivo as _op
 caso("observador pasivo: APRUEBA su Regla 31 (5/5: control positivo, gemelos, ventaja plantada, "
