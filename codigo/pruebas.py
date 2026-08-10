@@ -523,6 +523,15 @@ caso("sanidad: APRUEBA su meta-prueba (caza los 5 tipos y no grita donde no hay 
 caso("sanidad: experimentar2 no tiene restos de versiones anteriores",
      _san.restos_de_versiones(os.path.join(os.path.dirname(os.path.abspath(__file__)),
                                            "experimentar2.py"))["aprueba"])
+# CONGELADO (TIPO F, pedido del director): ningun nombre del codigo puede llevar una letra que
+# PAREZCA latina y no lo sea. Una 'a' cirilica en `azа1` hizo que la Regla 31 del prereg-37 nunca
+# probara la condicion que decidia el estudio, y ninguna busqueda por texto la encontraba.
+import glob as _glob
+_homo = [x for _f in sorted(_glob.glob(os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                                    "*.py")))
+         for x in _san.homoglifos(_f)["fallos"]]
+caso("sanidad: ningun nombre del codigo lleva letras que parecen latinas y no lo son", not _homo,
+     str(_homo[:3]))
 caso("sanidad: la politica de experimentar2 NO ve la verdad del mundo (Regla 27 mecanizada)",
      _san.politica_limpia(os.path.join(os.path.dirname(os.path.abspath(__file__)),
                                        "experimentar2.py"))["aprueba"])

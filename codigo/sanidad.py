@@ -16,6 +16,9 @@
 #   D. REGIMEN DEGENERADO: cocientes con denominador casi cero (2 veces). 1e-9 sobre 1e-10 daba
 #      -0.80 sin que nada hubiera pasado. 'flota' daba +0.9999 con un coeficiente de 3.500.
 #   E. RESTOS DE VERSIONES ANTERIORES (1 vez). Una applyExternalForce duplicada: doble impulso.
+#   F. DESLICES DE ESCRITURA (2 veces, añadido a peticion del director el 10-ago). Una 'a' CIRILICA
+#      dentro de un nombre de variable, invisible a cualquier busqueda. Y comillas invertidas sin
+#      escapar en un mensaje de commit, que bash ejecuto y borro.
 #
 # EL AGUJERO ESTRUCTURAL, que es el hallazgo de verdad:
 #   **Todos mis casos de Regla 31 comprueban que el instrumento hace lo que YO QUISE.
@@ -304,6 +307,23 @@ def regla31(verbose=True):
     if not d2:
         fallos.append("D2")
 
+    # F1 — deslices de escritura: la letra que parece latina y no lo es (pedido del director)
+    import tempfile as _tmp
+    _p = os.path.join(_tmp.mkdtemp(), "senuelo.py")
+    open(_p, "w", encoding="utf-8").write("def f():\n    az\u04301 = 3\n    return az\u04301\n")
+    f1 = not homoglifos(_p)["aprueba"]
+    _di(verbose, f1, "TIPO F — caza una letra cirilica dentro de un nombre de variable")
+    if not f1:
+        fallos.append("F1")
+    f2 = not texto_para_shell("la variable `x` fallo")["aprueba"]
+    _di(verbose, f2, "TIPO F — avisa de una comilla invertida que bash se comeria")
+    if not f2:
+        fallos.append("F2")
+    f3 = texto_para_shell("la variable x fallo")["aprueba"]
+    _di(verbose, f3, "TIPO F — y no grita en un texto limpio")
+    if not f3:
+        fallos.append("F3")
+
     # E1 — restos de versiones anteriores, sobre codigo real del repositorio
     aqui = os.path.dirname(os.path.abspath(__file__))
     e1 = restos_de_versiones(os.path.join(aqui, "sanidad.py"))["aprueba"]
@@ -321,6 +341,80 @@ def regla31(verbose=True):
 def _di(verbose, ok, texto):
     if verbose:
         print(f"  {'ok  ' if ok else 'FALLO'} {texto}")
+
+
+
+
+# ============================================================ TIPO F: mis deslices de escritura
+# Pedido por el director el 10-ago-2026: "incluye algo que te avise si escribes mal algo sin
+# comillas". Nace de DOS errores mios del mismo dia y del mismo tipo — escribir sin releer:
+#   - una variable llamada `azа1` con una 'a' CIRILICA. Python la acepta como identificador valido,
+#     ninguna busqueda por texto la encontraba, y la condicion azarosa quedo calculada y sin usar:
+#     la Regla 31 del prereg-37 nunca probo la condicion que decidia el estudio.
+#   - un mensaje de commit con comillas invertidas sin escapar: bash se comio dos nombres de
+#     variable y el registro quedo incompleto.
+# Los dos son invisibles al ojo y triviales para una maquina. Por eso van aqui.
+
+_CONFUSABLES = {
+    "а": "a (cirilica)", "е": "e (cirilica)", "о": "o (cirilica)",
+    "р": "p (cirilica)", "с": "c (cirilica)", "х": "x (cirilica)",
+    "у": "y (cirilica)", "ο": "o (griega)", "Α": "A (griega)",
+    "Β": "B (griega)", "Ε": "E (griega)", "–": "guion largo",
+    "‘": "comilla tipografica", "’": "comilla tipografica",
+    "“": "comilla tipografica", "”": "comilla tipografica",
+    " ": "espacio duro",
+}
+
+
+def homoglifos(ruta):
+    """TIPO F — letras que PARECEN latinas y no lo son, dentro de nombres del codigo.
+    Se miran los identificadores (via AST), no los comentarios: en un comentario en español una
+    tilde es correcta; en un nombre de variable una 'a' cirilica es una bomba de relojeria."""
+    fuente = open(ruta, encoding="utf-8").read()
+    try:
+        arbol = ast.parse(fuente)
+    except SyntaxError as e:
+        return {"fallos": [f"{os.path.basename(ruta)}: no parsea ({e})"], "aprueba": False}
+    fallos = []
+    nombres = set()
+    for n in ast.walk(arbol):
+        if isinstance(n, ast.Name):
+            nombres.add(n.id)
+        elif isinstance(n, (ast.FunctionDef, ast.ClassDef)):
+            nombres.add(n.name)
+        elif isinstance(n, ast.arg):
+            nombres.add(n.arg)
+        elif isinstance(n, ast.Attribute):
+            nombres.add(n.attr)
+    for nom in sorted(nombres):
+        # SOLO los confusables declarados. Cazado por el propio detector en su primera pasada:
+        # marcaba 'señales' en seis modulos porque la ñ no es ASCII. La ñ no engaña a nadie — el
+        # peligro es la letra que se ve IGUAL que otra, no la que se ve distinta.
+        malos = [(c, _CONFUSABLES[c]) for c in nom if c in _CONFUSABLES]
+        if malos:
+            fallos.append(f"{os.path.basename(ruta)}: el nombre '{nom}' lleva "
+                          f"{', '.join(d for _, d in malos)} — parece latino y no lo es")
+    return {"fallos": fallos, "aprueba": not fallos}
+
+
+def texto_para_shell(s):
+    """TIPO F — ¿este texto se puede pasar sin peligro dentro de comillas dobles en la terminal?
+    Devuelve los caracteres que bash INTERPRETARIA en vez de escribir. La cura correcta no es
+    escaparlos uno a uno: es escribir el texto a un archivo y pasar el archivo (git commit -F).
+    Esta funcion existe para AVISAR antes, no para arreglarlo despues."""
+    peligros = []
+    if "`" in s:
+        peligros.append("comilla invertida ` — bash ejecuta lo que hay dentro y BORRA el texto")
+    if "$(" in s:
+        peligros.append("$( — bash ejecuta lo que hay dentro")
+    for i, c in enumerate(s):
+        if c == "$" and i + 1 < len(s) and (s[i + 1].isalpha() or s[i + 1] == "{"):
+            peligros.append(f"${s[i+1]}... — bash lo sustituye por una variable")
+            break
+    for c, d in _CONFUSABLES.items():
+        if c in s:
+            peligros.append(f"{d} — caracter que parece otro")
+    return {"peligros": sorted(set(peligros)), "aprueba": not peligros}
 
 
 if __name__ == "__main__":
