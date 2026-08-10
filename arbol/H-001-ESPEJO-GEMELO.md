@@ -45,7 +45,10 @@ discrimina. Es la condición que convierte este nodo en una afirmación y no en 
   —una política contingente construida a propósito para tener la firma— solo disparó **2 de 5**, y
   en la semilla 3 se movió *menos* que su propia línea base. Un instrumento que falla sobre un caso
   conocido no puede certificar una ausencia. Ni a favor ni en contra: no se afirma nada.
-  → prerregistro 36, que mide la vara antes de volver a preguntarle nada a Diego.
+  **CERRADO EN PERMANENTE el 10-ago-2026 (prereg-36, INFORME-44):** se barrieron cuatro duraciones
+  de fase y **ninguna** hace fiable la vara — el control positivo nunca pasa de 3/5, una duración
+  produjo un falso positivo del control negativo, y el señuelo nuevo (moverse mucho **sin**
+  contingencia) fue coronado 1 de 5 veces. No se vuelve a preguntar a Diego con este instrumento.
 
 ## Qué preguntas nuevas abre
 1. ¿Por qué la propiocepción distingue y la visión no? ¿Es el sensor, la representación, o que la
