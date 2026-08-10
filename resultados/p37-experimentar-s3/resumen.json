@@ -1,0 +1,67 @@
+{
+  "prerregistro": 37,
+  "semilla": 3,
+  "toques": 24,
+  "mundo": {
+    "pesado": 0,
+    "masas": [
+      1.2,
+      0.15
+    ],
+    "con_duda": true
+  },
+  "condiciones": {
+    "dirigido": {
+      "condicion": "dirigido",
+      "mundo": {
+        "pesado": 0,
+        "masas": [
+          1.2,
+          0.15
+        ],
+        "con_duda": true
+      },
+      "puntaje": 0.986782698689191,
+      "toques": 24,
+      "reparto": [
+        22,
+        2
+      ]
+    },
+    "azaroso": {
+      "condicion": "azaroso",
+      "mundo": {
+        "pesado": 0,
+        "masas": [
+          1.2,
+          0.15
+        ],
+        "con_duda": true
+      },
+      "puntaje": 0.9883144141687573,
+      "toques": 24,
+      "reparto": [
+        11,
+        13
+      ]
+    },
+    "pasivo": {
+      "condicion": "pasivo",
+      "mundo": {
+        "pesado": 0,
+        "masas": [
+          1.2,
+          0.15
+        ],
+        "con_duda": true
+      },
+      "puntaje": 0.986782698689191,
+      "toques": 24,
+      "nota": "no eligio nada: heredo los episodios del dirigido"
+    }
+  },
+  "dirigido_menos_azaroso": -0.0015,
+  "dirigido_menos_pasivo": 0.0,
+  "veredicto": "EMPATE TOTAL — ni siquiera intervenir aporta aqui",
+  "nota": "el veredicto del hito exige las 5 semillas juntas; esto es una sola"
+}
