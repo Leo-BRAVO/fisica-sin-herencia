@@ -379,6 +379,44 @@ def regla31(verbose=True):
     if not f3:
         fallos.append("F3")
 
+    # B3 — LA TRAMOYA SE DETECTA EN LOS DATOS, no se confia en mi declaracion (pregunta del
+    #      director: "¿que hacemos para validar que declaraste bien?"). Serie sintetica: un objeto
+    #      que cae acelerando y al que reponemos arriba cada 20 pasos.
+    caida, z, v = [], 1.2, 0.0
+    for t in range(100):
+        v += 0.02; z -= v; caida.append(z)
+        if t % 20 == 19:
+            z, v = 1.2, 0.0          # LA TRAMOYA: reposicion instantanea
+    cortes_reales = [t + 1 for t in range(100) if t % 20 == 19]
+    b3 = (tramoya_detectada(caida, cortes_reales)["aprueba"]
+          and not tramoya_detectada(caida, [])["aprueba"])
+    _di(verbose, b3, "TIPO B — detecta la tramoya EN LOS DATOS y aprueba solo si esta declarada")
+    if not b3:
+        fallos.append("B3")
+
+    # G1 — RELACIONES METAMORFICAS: la unica comprobacion que seguira valiendo el dia que Diego
+    #      mida algo cuya respuesta no conocemos. Se prueba con una lectura falsa que dice medir
+    #      'a' pero devuelve a*b: la relacion "doblar b no cambia la lectura" debe reprobar.
+    def _falsa(a=1.0, b=1.0):
+        return a * b
+    g1 = not relaciones_metamorficas(_falsa, [
+        {"base": {"a": 1.0, "b": 1.0}, "parametro": "b", "factor": 2.0, "esperado": 1.0,
+         "porque": "la lectura dice medir 'a', asi que 'b' no puede cambiarla"}])["aprueba"]
+    _di(verbose, g1, "TIPO G — caza una lectura contaminada por la formula, sin conocer la respuesta")
+    if not g1:
+        fallos.append("G1")
+    g2 = relaciones_metamorficas(_falsa, [
+        {"base": {"a": 1.0, "b": 1.0}, "parametro": "a", "factor": 2.0, "esperado": 2.0,
+         "porque": "la lectura es proporcional a 'a'"}])["aprueba"]
+    _di(verbose, g2, "TIPO G — y aprueba la relacion que si se cumple")
+    if not g2:
+        fallos.append("G2")
+    g3 = not relaciones_metamorficas(_falsa, [
+        {"base": {"a": 1.0, "b": 1.0}, "parametro": "a", "factor": 2.0, "esperado": 2.0}])["aprueba"]
+    _di(verbose, g3, "TIPO G — y RECHAZA una relacion sin formula declarada (corazonada, no prueba)")
+    if not g3:
+        fallos.append("G3")
+
     # E1 — restos de versiones anteriores, sobre codigo real del repositorio
     aqui = os.path.dirname(os.path.abspath(__file__))
     e1 = restos_de_versiones(os.path.join(aqui, "sanidad.py"))["aprueba"]
@@ -470,6 +508,140 @@ def texto_para_shell(s):
         if c in s:
             peligros.append(f"{d} — caracter que parece otro")
     return {"peligros": sorted(set(peligros)), "aprueba": not peligros}
+
+
+
+
+# ================================================== TIPO G: PRUEBAS METAMORFICAS
+# EL PROBLEMA QUE RESUELVEN, y por que es EL problema de este proyecto: para saber si un
+# instrumento acierta hace falta conocer la respuesta correcta. En un simulador que construimos
+# nosotros a veces la conocemos, pero en cuanto Diego mida algo de verdad, NO. A eso la literatura
+# lo llama "el problema del oraculo" y es el fallo central de validar software cientifico.
+#
+# LA SALIDA, que es lo que buscamos sin saber su nombre: aunque no sepas CUANTO debe valer una
+# lectura, si sabes COMO DEBE CAMBIAR cuando cambias la entrada.
+#   - Si duplico la fuerza, el pico de velocidad debe duplicarse.        (v = F*T/m)
+#   - Si duplico la masa, el pico debe caer a la mitad.                  (v = F*T/m)
+#   - Si duplico el rozamiento, la desaceleracion debe duplicarse.       (a = mu*g)
+# Eso se comprueba SIN conocer ninguna constante y SIN conocer la respuesta.
+#
+# Y RESUELVE LAS TRES PREGUNTAS DEL DIRECTOR DE UNA VEZ:
+#   1. "¿como validas que declaraste bien la tramoya?" -> no se valida la declaracion: se DETECTA
+#      la tramoya en los datos (saltos imposibles) y se compara con lo declarado.
+#   2. "¿leer antes o escribir y luego validar?" -> tenia razon: el orden no se puede vigilar, pero
+#      lo que produce NO leer si se detecta despues de escribir.
+#   3. "ninguna maquina sabe si escribiste la formula antes" -> cierto, y no importa: la maquina
+#      puede comprobar si la formula es VERDADERA, que es mas fuerte que comprobar cuando la
+#      escribi. Declarar 'v es proporcional a F/m' y verificarlo es una prueba, no una promesa.
+
+def relaciones_metamorficas(medir, relaciones, tolerancia=0.25, verbose=False):
+    """TIPO G — comprueba que la lectura CAMBIA como dice la formula.
+
+    `medir(**kwargs) -> float`: corre el experimento con esos parametros y devuelve la lectura.
+    `relaciones`: lista de dicts con
+        base:      dict de parametros de partida
+        parametro: cual se multiplica
+        factor:    por cuanto
+        esperado:  por cuanto debe multiplicarse LA LECTURA (0.5 = a la mitad)
+        porque:    la formula, escrita en una linea. OBLIGATORIA.
+
+    No necesita conocer ninguna constante ni ninguna respuesta correcta: solo la PROPORCION.
+    Es la unica de las comprobaciones de esta ficha que seguira valiendo el dia que Diego mida
+    algo cuya respuesta no conocemos."""
+    filas, fallos = [], []
+    for r in relaciones:
+        if not r.get("porque"):
+            fallos.append(f"{r['parametro']}x{r['factor']}: sin formula declarada — una relacion "
+                          f"sin su porque es una corazonada, no una prueba")
+            continue
+        base = dict(r["base"])
+        if r["parametro"] not in base:
+            # Mensaje claro en vez de KeyError. Cazado en la primera corrida de este validador:
+            # reventaba con una traza de Python en vez de decir que faltaba. Un validador que se
+            # rompe en lugar de explicar es un validador que no se usa.
+            fallos.append(f"{r['parametro']}: no esta en la base {sorted(base)} — la relacion "
+                          f"necesita el valor de partida del parametro que va a escalar")
+            continue
+        v0 = float(medir(**base))
+        sub = dict(base)
+        sub[r["parametro"]] = sub[r["parametro"]] * r["factor"]
+        v1 = float(medir(**sub))
+        if abs(v0) < 1e-12:
+            fallos.append(f"{r['parametro']}x{r['factor']}: la lectura base es cero, no hay "
+                          f"proporcion que comprobar")
+            continue
+        observado = v1 / v0
+        esperado = float(r["esperado"])
+        desvio = abs(observado - esperado) / max(abs(esperado), 1e-12)
+        filas.append({"parametro": r["parametro"], "factor": r["factor"],
+                      "esperado": round(esperado, 4), "observado": round(observado, 4),
+                      "desvio": round(desvio, 4), "porque": r["porque"]})
+        if verbose:
+            print(f"    {r['parametro']}x{r['factor']}: esperado x{esperado:.3f}, "
+                  f"observado x{observado:.3f}  ({r['porque']})")
+        if desvio > tolerancia:
+            fallos.append(f"{r['parametro']}x{r['factor']}: la formula dice x{esperado:.3f} y la "
+                          f"lectura hace x{observado:.3f} (desvio {desvio:.0%}) — {r['porque']}")
+    return {"filas": filas, "fallos": fallos, "aprueba": not fallos}
+
+
+def tramoya_detectada(serie, cortes_declarados, tolerancia_salto=5.0):
+    """TIPO B, VERSION QUE NO SE FIA DE MI DECLARACION.
+
+    El director pregunto: "¿que hacemos para validar que declaraste bien la tramoya?". La respuesta
+    no es un validador de la declaracion —eso solo comprueba que escribi algo— sino DETECTAR la
+    tramoya en los datos y comparar.
+
+    Como se detecta: la maquinaria del simulador (reposicionar, teletransportar, reiniciar) produce
+    SALTOS que ninguna fisica continua puede dar. Se mide el salto tipico de la serie y se marcan
+    los pasos que lo superan por mucho. Todo salto NO declarado es tramoya que se estaba colando
+    como si fuera fisica."""
+    x = np.asarray(serie, dtype=float).ravel()
+    if x.size < 10:
+        return {"fallos": ["serie demasiado corta para detectar saltos"], "aprueba": False}
+    d = np.abs(np.diff(x))
+    # LA REFERENCIA ES EL PERCENTIL 99, NO LA MEDIANA. Cazado en la primera corrida de este
+    # detector, y es un tipo D dentro del detector de tipo B: en una escena donde el objeto pasa
+    # la mayor parte del tiempo QUIETO, la mediana del salto vale 4e-07, y entonces cualquier
+    # movimiento real —una caida normal— la supera y sale marcado como "salto imposible". Daba
+    # 419 falsas alarmas sobre una serie perfectamente sana.
+    # El movimiento normal mas rapido de la serie es la referencia correcta: un teletransporte
+    # salta ~1.2 m donde una caida avanza ~0.02 m por paso. Son dos ordenes de magnitud, y con el
+    # p99 se separan solos.
+    # LA FORMULA PRIMERO (paso 2 del metodo): en fisica continua la ACELERACION ESTA ACOTADA, asi
+    # que dos desplazamientos SEGUIDOS no pueden diferir por un factor grande. Un teletransporte si:
+    # el objeto esta quieto, salta 1.22 m en un paso, y vuelve a moverse 0.001 m al siguiente.
+    # Por eso lo que delata a la tramoya no es que el salto sea GRANDE, sino que sea AISLADO.
+    #
+    # Cuarta version de este detector. Las tres anteriores fallaron por elegir mal la referencia, y
+    # las tres merecen quedar escritas porque son el mismo error con tres caras:
+    #   mediana de todos los pasos -> en una escena mayormente quieta vale 4e-07 y CUALQUIER caida
+    #                                 salia marcada: 419 falsas alarmas.
+    #   percentil 99               -> con 15 teletransportes en 900 pasos, el TELETRANSPORTE pasa a
+    #                                 ser "lo normal" y el detector se queda ciego: 0 detecciones.
+    #   mediana de lo que se mueve -> marcaba los IMPACTOS, que son fisica de verdad: la caida
+    #                                 acelera y sus ultimos pasos son los mas largos.
+    # Ninguna magnitud absoluta sirve. La discontinuidad si.
+    piso = 1e-9
+    if d.size < 3 or float(np.max(d)) < 1e-6:
+        return {"saltos_detectados": 0, "declarados": len(set(cortes_declarados or [])),
+                "sin_declarar": [], "salto_normal": 0.0, "fallos": [], "aprueba": True,
+                "nota": "la serie no se mueve: no hay tramoya que detectar"}
+    vecino = np.maximum(np.concatenate([[piso], d[:-1]]), np.concatenate([d[1:], [piso]]))
+    razon = d / np.maximum(vecino, piso)
+    aislados = np.where(razon > tolerancia_salto)[0]
+    normal = float(np.median(d[d > piso])) if np.any(d > piso) else 0.0
+
+    detectados = set(int(i) + 1 for i in aislados)
+    declarados = set(int(c) for c in (cortes_declarados if cortes_declarados is not None else []))
+    sin_declarar = sorted(detectados - declarados)
+    fallos = []
+    if sin_declarar:
+        fallos.append(f"{len(sin_declarar)} saltos imposibles NO declarados como tramoya "
+                      f"(primeros: {sin_declarar[:6]}) — se estan midiendo como si fueran fisica")
+    return {"saltos_detectados": len(detectados), "declarados": len(declarados),
+            "sin_declarar": sin_declarar[:20], "salto_normal": round(normal, 8),
+            "fallos": fallos, "aprueba": not fallos}
 
 
 if __name__ == "__main__":

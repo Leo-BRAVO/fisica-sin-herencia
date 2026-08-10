@@ -241,6 +241,22 @@ for _n in sorted(glob.glob(os.path.join(BASE, "arbol", "N-*.md"))
 caso("todo nodo de FIRMA DELEGADA enumera su quorum adversarial completo (Regla 15 enmendada)",
      not _mal_delegados, str(_mal_delegados))
 
+print("== EL METODO (10-ago-2026): sus 8 pasos existen y sus herramientas tambien ==")
+# El metodo no sustituye ninguna regla ni las repite: cubre la capa de "¿el instrumento mide lo
+# que dice?", que no existia. Aqui se comprueba que no sea solo un documento bonito.
+_met = os.path.join(BASE, "registros", "METODO.md")
+caso("el METODO existe y vive del lado humano (registros/, no arbol/)", os.path.exists(_met))
+if os.path.exists(_met):
+    _t = open(_met, encoding="utf-8").read()
+    import sanidad as _sn
+    for _fn in ("correlaciones", "clasificacion", "tramoya_detectada", "condiciones_distintas",
+                "cociente_seguro", "restos_de_versiones", "homoglifos", "texto_para_shell",
+                "relaciones_metamorficas", "politica_limpia"):
+        caso(f"el METODO cita {_fn}() y la funcion EXISTE en sanidad.py",
+             _fn in _t and hasattr(_sn, _fn))
+    caso("el METODO declara su hueco abierto (paso 0 sin mecanizar)",
+         "hueco" in _t.lower() and "paso 0" in _t.lower())
+
 print("== documentos fundacionales: sus referencias cruzadas existen ==")
 genoma_path = os.path.join(BASE, "registros", "GENOMA-DIEGO.md")   # cartel: vive fuera de arbol/
 if os.path.exists(genoma_path):
