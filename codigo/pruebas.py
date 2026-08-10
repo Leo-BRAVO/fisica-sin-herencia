@@ -513,6 +513,72 @@ caso("experimentar: la duda es real por los DOS lados (ciega en reposo, no ciega
      _ex._mirando_sin_tocar(_ex._mundo(1)) < 0.05
      and _ex._mirando_sin_tocar(_ex._mundo(1), mover_uno=True) > 0.50)
 
+print("== G11 TEMPLE y G12 REFLEJOS (prereg-40): los dos genes que estaban prometidos y no existian ==")
+import temple as _tp, reflejos as _rf
+caso("temple: APRUEBA su Regla 31 (4/4: inmutable, sube con gasto y error, la quietud no gana)",
+     _tp.regla31(verbose=False) == 0)
+# CONGELADO, y es la Regla 30 hecha codigo: si alguien escribe un bucle que "mejora" el temple para
+# que Diego sufra menos, se estrella aqui. Un juez que se puede mover no es un juez.
+try:
+    _tp.ajustar(pesos={"gasto": 0.0})
+    _inmutable = False
+except _tp.TempleInmutable:
+    _inmutable = True
+caso("temple: intentar ajustarlo LANZA (Regla 30 mecanizada: los jueces no se automodifican)",
+     _inmutable)
+# CONGELADO: quedarse quieto JAMAS puede ser la salida barata. Sin esto, la politica optima seria
+# no hacer nada nunca — el fallo clasico de un coste mal puesto.
+caso("temple: quedarse quieto cuesta MAS que moverse con esfuerzo",
+     _tp.coste(0.05, 0.05, 0.05, actividad=0.0) > _tp.coste(0.30, 0.30, 0.30, actividad=1.0))
+caso("reflejos: APRUEBA su Regla 31 (5/5: mas rapido, coincide, calla, señuelo, potencia)",
+     _rf.regla31(verbose=False) == 0)
+# CONGELADO (Regla 12, y me la cazo el metodo el 10-ago): el acuerdo se mide como GANANCIA sobre la
+# linea base tonta. Con la deliberacion disparando el 2%, un reflejo que dijera siempre "no"
+# acertaba el 88.7% y el mio el 90.7%. Llamar a eso "acuerdo 0.907" era un numero sin significado.
+_xr, _yr = _rf._mundo_de_prueba(n=400, senal=0.02)
+caso("reflejos: sin señal que destilar, la ganancia sobre la linea base tonta es CERO",
+     _rf.examinar(_rf.destilar(_xr, _yr), _xr, _yr)["acuerdo_con_la_deliberacion"] < 0.05)
+
+print("== LA FICHA DE SANIDAD (10-ago-2026): los cinco tipos de error que repito al armar pruebas ==")
+import sanidad as _san
+caso("sanidad: APRUEBA su meta-prueba (caza los 5 tipos y no grita donde no hay nada)",
+     _san.regla31(verbose=False) == 0)
+# CONGELADO: la ficha se aplica al modulo mas reciente. Cazo dos cosas que su Regla 31 aprobo 8/8:
+# una lectura de roce que seguia leyendo masa, y tres variables muertas. La Regla 31 comprueba que
+# el instrumento hace lo que YO QUISE; la ficha comprueba que lo que quise fuera correcto.
+caso("sanidad: experimentar2 no tiene restos de versiones anteriores",
+     _san.restos_de_versiones(os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                           "experimentar2.py"))["aprueba"])
+# CONGELADO (TIPO F, pedido del director): ningun nombre del codigo puede llevar una letra que
+# PAREZCA latina y no lo sea. Una 'a' cirilica en `azа1` hizo que la Regla 31 del prereg-37 nunca
+# probara la condicion que decidia el estudio, y ninguna busqueda por texto la encontraba.
+import glob as _glob
+_homo = [x for _f in sorted(_glob.glob(os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                                    "*.py")))
+         for x in _san.homoglifos(_f)["fallos"]]
+caso("sanidad: ningun nombre del codigo lleva letras que parecen latinas y no lo son", not _homo,
+     str(_homo[:3]))
+caso("sanidad: la politica de experimentar2 NO ve la verdad del mundo (Regla 27 mecanizada)",
+     _san.politica_limpia(os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                       "experimentar2.py"))["aprueba"])
+
+print("== experimentacion dirigida 2a vuelta (prereg-39): un mundo donde elegir cueste ==")
+import experimentar2 as _e2b
+caso("experimentar2: APRUEBA su Regla 31 (8/8: duda real por los dos lados, presupuesto que no "
+     "alcanza, NO tautologia, señuelo, mundo sin duda, medida sin techo)",
+     _e2b.regla31(verbose=False) == 0)
+# CONGELADO, y es la leccion literal del INFORME-46: dirigido y pasivo NO pueden compartir
+# episodios. Ayer el pasivo heredaba los del dirigido y la diferencia salio 0.0000 EXACTA en 5/5.
+# Una advertencia sobre una condicion debe ser un FALLO, no una nota.
+_w39 = _e2b.mundo(1)
+caso("experimentar2: el pasivo NO es una copia del dirigido (no hay tautologia)",
+     _e2b.correr("dirigido", semilla=1, w=_w39)["reparto"]
+     != _e2b.correr("pasivo", semilla=1, w=_w39)["reparto"])
+# CONGELADO: en un mundo sin nada que averiguar, el dirigido no puede lucirse. Un instrumento que
+# premia intervenir donde no hay pregunta esta midiendo su propio entusiasmo.
+caso("experimentar2: en un mundo sin duda el dirigido cae al azar (no se luce sin pregunta)",
+     _e2b.correr("dirigido", semilla=1, con_duda=False)["puntaje"] <= 12)
+
 print("== el observador pasivo (prereg-32): el control que podria refutarnos ==")
 import observador_pasivo as _op
 caso("observador pasivo: APRUEBA su Regla 31 (5/5: control positivo, gemelos, ventaja plantada, "

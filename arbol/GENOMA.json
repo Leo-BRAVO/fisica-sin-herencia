@@ -145,19 +145,29 @@
     },
     "G11_temple": {
       "modo": "inactivo",
-      "modulo": null,
-      "prerregistro": null,
-      "escucha": [],
-      "competencia": [],
-      "nota": "DISEÑO NO IMPLEMENTADO — no existe modulo. Marcado el 10-ago-2026 (INFORME-45, aprobado por el director) para que nadie lo cuente como organo existente. No se construye hasta que una pregunta abierta lo necesite (Regla 18): construir organos porque estan en una lista es como se acumula codigo muerto."
+      "modulo": "temple.py",
+      "prerregistro": "40",
+      "escucha": [
+        "recursos",
+        "revision"
+      ],
+      "competencia": [
+        "medir_incomodidad"
+      ],
+      "nota": "CONSTRUIDO el 10-ago-2026 (prereg-40). Sigue en modo 'inactivo': construirlo y ACTIVARLO son dos cosas distintas, y activar es cambio de genoma entre generaciones con firma del director (Regla 33). Coste intrinseco CABLEADO E INMUTABLE: ajustar() lanza en vez de ajustar, que es la Regla 30 hecha codigo."
     },
     "G12_reflejos": {
       "modo": "inactivo",
-      "modulo": null,
-      "prerregistro": null,
-      "escucha": [],
-      "competencia": [],
-      "nota": "DISEÑO NO IMPLEMENTADO — no existe modulo. Marcado el 10-ago-2026 (INFORME-45, aprobado por el director) para que nadie lo cuente como organo existente. No se construye hasta que una pregunta abierta lo necesite (Regla 18): construir organos porque estan en una lista es como se acumula codigo muerto."
+      "modulo": "reflejos.py",
+      "prerregistro": "40",
+      "escucha": [
+        "cuerpo",
+        "frontera"
+      ],
+      "competencia": [
+        "reaccionar_rapido"
+      ],
+      "nota": "CONSTRUIDO el 10-ago-2026 (prereg-40). Sigue en modo 'inactivo' por la misma razon. Ningun reflejo se escribe a mano: TODOS se destilan de deliberaciones que Diego ya tomo. Un reflejo escrito a mano seria fisica humana disfrazada de instinto."
     },
     "G13_poder": {
       "modo": "mide",

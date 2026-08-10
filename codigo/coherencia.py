@@ -83,7 +83,7 @@ cola = json.load(open(os.path.join(BASE, "registros", "COLA-ESTUDIOS.json"), enc
 TIPOS_QUE_EL_LATIDO_TOMA = {"re-analisis", "gimnasio"}
 for i in cola["items"]:
     caso(f"cola item '{i['id']}' tiene estado valido",
-         i.get("estado") in ("pendiente", "hecha", "espera-al-director"))
+         i.get("estado") in ("pendiente", "hecha", "espera-al-director", "espera-al-metodo"))
     if i.get("estado") != "pendiente":
         continue
     caso(f"cola PENDIENTE '{i['id']}': su tipo lo toma el latido",
@@ -93,6 +93,22 @@ for i in cola["items"]:
     caso(f"cola PENDIENTE '{i['id']}': la ruta de datos es UNA sola, real",
          isinstance(i.get("datos"), str) and "+" not in i.get("datos", "+"),
          f"datos={i.get('datos')}")
+
+print("== LA PUERTA (metodo.py): ningun estudio pendiente sin sello VALIDO ==")
+# Idea del director (10-ago-2026): "unicamente despues de que pasen todas las validaciones puedes
+# correr una prueba". Un metodo escrito no es una puerta; esto si. El sello guarda la HUELLA del
+# archivo, asi que pasar la puerta y luego editar el modulo INVALIDA el sello.
+# Se aplica solo a lo PENDIENTE: los estudios ya hechos se juzgan por sus actas, no retroactivamente.
+import metodo as _pu
+for _i in cola["items"]:
+    if _i.get("estado") != "pendiente":
+        continue
+    _d = _i.get("datos", "")
+    if not _d.startswith("codigo/") or not _d.endswith(".py"):
+        continue
+    _m = os.path.basename(_d)[:-3]
+    _ok, _por = _pu.sello_valido(_m)
+    caso(f"cola PENDIENTE '{_i['id']}': su modulo {_m} paso LA PUERTA", _ok, _por)
 
 print("== version de la MENTE: coincide donde se proclama ==")
 mente = leer("MENTE.md")
@@ -240,6 +256,22 @@ for _n in sorted(glob.glob(os.path.join(BASE, "arbol", "N-*.md"))
             _mal_delegados.append(f"{os.path.basename(_n)}: falta {_faltan}")
 caso("todo nodo de FIRMA DELEGADA enumera su quorum adversarial completo (Regla 15 enmendada)",
      not _mal_delegados, str(_mal_delegados))
+
+print("== EL METODO (10-ago-2026): sus 8 pasos existen y sus herramientas tambien ==")
+# El metodo no sustituye ninguna regla ni las repite: cubre la capa de "¿el instrumento mide lo
+# que dice?", que no existia. Aqui se comprueba que no sea solo un documento bonito.
+_met = os.path.join(BASE, "registros", "METODO.md")
+caso("el METODO existe y vive del lado humano (registros/, no arbol/)", os.path.exists(_met))
+if os.path.exists(_met):
+    _t = open(_met, encoding="utf-8").read()
+    import sanidad as _sn
+    for _fn in ("correlaciones", "clasificacion", "tramoya_detectada", "condiciones_distintas",
+                "cociente_seguro", "restos_de_versiones", "homoglifos", "texto_para_shell",
+                "relaciones_metamorficas", "politica_limpia"):
+        caso(f"el METODO cita {_fn}() y la funcion EXISTE en sanidad.py",
+             _fn in _t and hasattr(_sn, _fn))
+    caso("el METODO declara su hueco abierto (paso 0 sin mecanizar)",
+         "hueco" in _t.lower() and "paso 0" in _t.lower())
 
 print("== documentos fundacionales: sus referencias cruzadas existen ==")
 genoma_path = os.path.join(BASE, "registros", "GENOMA-DIEGO.md")   # cartel: vive fuera de arbol/

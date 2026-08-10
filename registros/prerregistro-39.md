@@ -68,6 +68,44 @@ advertencia sobre una condición debe ser un fallo, no una nota.*
   revisión adversarial con memoria separada.
 - **Sigue siendo `sobre-el-simulador`.**
 
+## ⚠ ENMIENDA REGISTRADA **ANTES** DE CORRER EL ESTUDIO — 10-ago-2026
+Al construir el módulo, su propia Regla 31 reprobó dos veces y las tres correcciones quedan aquí
+escritas, con lo que las motivó, porque todas se hicieron **antes de la primera corrida oficial** y
+ninguna toca el criterio del estudio.
+
+**1. Verdad balanceada (4 y 4).** Sin balancear, la verdad podía ser 6–2 mientras el clasificador
+—que no conoce el umbral y parte por la mediana observada— fuerza 4–4. El desajuste hundía el
+puntaje **por debajo del azar** (4/16 contra 8): no medía la política, medía un error mío.
+
+**2. El empujón dura, y las dos lecturas se separan por física.** Una sola llamada de fuerza vale
+un paso de simulación, y con ese impulso **4 de 8 objetos ni se movían** (pico exactamente 0.0000).
+Además `frenado` correlacionaba **−0.586 con la masa** y solo −0.344 con el roce: leía la propiedad
+equivocada. Cura: el pico al terminar el empujón lee la masa (v≈F·T/m) y el **tiempo hasta parar**
+lee el roce (t≈v/µg, independiente de la masa). Medido tras la cura: **−0.907** masa↔pico y
+**+0.881** roce↔lectura.
+
+**3. El caso 7 compara contra un cuarto de presupuesto, no contra la mitad.** La política dirigida
+alcanza el techo alcanzable (14/16) **ya con 8 toques**, así que comparar 16 contra 24 no dice nada
+sobre la medida: dice que el dirigido es eficiente. Lo que el caso debe comprobar —que la medida no
+esté capada por construcción— se ve donde aún hay margen: 6 toques → 9/16, 24 → 14/16.
+
+### La tentación que hubo aquí, dicha con su nombre
+Al medir dónde ata el presupuesto encontré esto:
+
+| presupuesto | dirigido | azaroso | ventaja |
+|---|---|---|---|
+| 8 | 14 | 6 | **+8** |
+| 10 | 14 | 9 | **+5** |
+| **24 (prerregistrado)** | **14** | **12** | **+2** |
+
+**Bajar el presupuesto habría cuadruplicado la ventaja de mi propia hipótesis.** No se hizo: el
+estudio corre con los **24 toques prerregistrados**, que es el número **que menos la favorece**.
+Queda escrito aquí porque un lazo que elige sus parámetros después de ver los datos es exactamente
+la máquina de fabricar éxitos contra la que el director puso su condición.
+
+**Y el techo real es 14, no 16:** dos incógnitas quedan demasiado cerca de la frontera para el ruido
+del sensor. Eso no se ajusta — se declara.
+
 ## Quórum
 Prerregistro escrito **antes** de correr · cuatro guardianes · Regla 31 por los dos lados · cinco
 semillas en cinco mundos · nulo · señuelo del agitador · revisión adversarial pendiente antes de

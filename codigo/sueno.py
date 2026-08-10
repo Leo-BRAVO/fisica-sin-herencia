@@ -147,8 +147,15 @@ def dormir(episodios_vividos, dt=1.0, semilla=9):
     modelo_ruido = _modelo_del_mundo(ruido_eps)
     suenos_ruido = sonar_episodios(modelo_ruido, ruido_eps[0], semilla=semilla)
     leyes_del_ruido = mineria_en_suenos(suenos_ruido, dt=dt)
-    guardian_ok = len(leyes_del_ruido) == 0
-    # --- fase generativa: solo se abre si el guardian aprobo
+    # --- fase generativa
+    # AQUI VIVIA `guardian_ok = len(leyes_del_ruido) == 0`, calculado y TIRADO, bajo un comentario
+    # que decia "solo se abre si el guardian aprobo". La fase se abria SIEMPRE. Cazado por la ficha
+    # de sanidad (tipo E) el 10-ago-2026, al aplicarla hacia atras sobre los modulos que ya habian
+    # dado resultados.
+    # NO ERA UN AGUJERO DE SEGURIDAD —el filtro de vigilia de mas abajo si condiciona lo que sale,
+    # y es el que se reporta como "aprueba"— pero el comentario mentia sobre el codigo, que es
+    # justo lo que hace confiar en un modulo mas de lo que merece. Se quita el resto y se dice lo
+    # que de verdad pasa: la fase generativa corre siempre, y lo que la contiene es el filtro.
     suenos = sonar_episodios(modelo, episodios_vividos[0], semilla=semilla)
     generativas_crudas = mineria_en_suenos(suenos, dt=dt)
 
