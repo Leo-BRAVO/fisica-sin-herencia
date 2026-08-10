@@ -139,7 +139,15 @@ def corromper(videos, sigma=0.08, tapa=0.25, semilla=31):
     rng = np.random.default_rng(semilla)
     salida = []
     for v in videos:
-        v = np.asarray(v, dtype=float).copy()
+        # 10-ago-2026 — SE CONSERVA EL TIPO DEL VIDEO ORIGINAL. Antes decia `dtype=float`, que en
+        # numpy es float64, y los codificadores son float32: la lectura de ROBUSTEZ reventaba con
+        # "Input type (double) and bias type (float) should be the same" en cuanto se le daba
+        # video de verdad. Es decir, la tercera lectura del panel NUNCA se habia podido correr en
+        # el torneo real — y no lo cazo la puerta, porque mi Regla 31 examinaba la VARA sobre
+        # latentes sinteticos y no la cadena entera. Queda escrito: el sello certifica el modulo,
+        # no la tuberia en la que vive.
+        original = np.asarray(v)
+        v = original.astype(original.dtype if original.dtype.kind == "f" else np.float32).copy()
         v += rng.normal(0, sigma, v.shape)
         if v.ndim >= 3 and tapa > 0:
             h, w = v.shape[1], v.shape[2]

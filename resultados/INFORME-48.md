@@ -1,5 +1,7 @@
 # INFORME-48 — ACTA DEL PRERREGISTRO 42: ganó la hipótesis que yo quería, y ganar destapó algo peor
 **10 de agosto de 2026. Autorizado por el director ("la 1 sí"). Cinco semillas nuevas: 71, 73, 79, 83, 89.**
+**Datos crudos de este acta: `resultados/p42-unico-apto/veredicto.json`.** Prerregistro:
+`registros/prerregistro-42.md`. Módulo sellado: `codigo/unico_apto.py`.
 
 ---
 

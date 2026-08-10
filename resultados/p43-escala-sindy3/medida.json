@@ -1,0 +1,26 @@
+{
+ "que_es": "barrido de escala sobre UN MISMO oscilador amortiguado; lo unico que cambia es un factor multiplicativo",
+ "muestras": 4000,
+ "dt": 0.02,
+ "ruido": 0.002,
+ "semilla": 3,
+ "filas": [
+  {
+   "escala": 0.1,
+   "encuentra_ley": false
+  },
+  {
+   "escala": 1.0,
+   "encuentra_ley": true
+  },
+  {
+   "escala": 10.0,
+   "encuentra_ley": true
+  },
+  {
+   "escala": 100.0,
+   "encuentra_ley": false
+  }
+ ],
+ "veredicto": "EL MOTOR SIMBOLICO NO ES INVARIANTE A LA ESCALA"
+}

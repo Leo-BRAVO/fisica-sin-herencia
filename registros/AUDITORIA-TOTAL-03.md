@@ -232,3 +232,40 @@ Los **5 estudios `p38`** siguen en `espera-al-metodo`: `torneo_ojos.py` no ha pa
 tiene manifiesto, ni `_metodo_medir`, ni `_metodo_sanidad`, ni Regla 31 propia. **No se corren.**
 Es la puerta haciendo exactamente lo que se construyó para hacer, y dejarlos parados es la
 respuesta correcta, no un pendiente que se me olvidó.
+
+---
+
+## 10. LA JORNADA DE SOLVENTAR — 10-ago-2026, tarde
+**Orden del director: *"solventa todo lo que me dijiste que falta"*.**
+
+### Lo que quedó solventado
+| Hueco | Qué se hizo |
+|---|---|
+| **`torneo_ojos` bloqueaba 5 estudios** | pasó LA PUERTA 7/7 y quedó sellado. **Y al correrlo apareció un bug real**: `corromper()` convertía los vídeos a float64 y los codificadores son float32 — **la lectura de ROBUSTEZ del panel nunca había podido correr con vídeo de verdad**. Arreglado y congelado como caso de Regla 31 |
+| **Nadie auditaba mis actas** | nace **`codigo/actas.py`**, conectado a `auditoria_total`. En su primera corrida cazó que **mis dos actas de hoy no citaban ningún archivo de datos**, y que el INFORME-48 publicaba una obediencia de **0.0297 que medí a mano y nunca guardé**. Las tres cosas corregidas |
+| **6 genes sin prerregistro** | **prerregistro-43**, con línea base tonta, los dos lados y criterio de abandono para cada uno |
+| **El hallazgo del brazo (`art1`)** | **prerregistro-44**, con sus tres causas posibles y ninguna favorita |
+| **Órganos sin sello** | **`contingencia.py`** (el que decide qué es el cuerpo de Diego) pasó 7/7 y quedó sellado |
+
+### Lo que se intentó y **REPROBÓ** — que no es lo mismo que pendiente
+| Órgano | Qué falló | Acta |
+|---|---|---|
+| **G9 sueño** | su señuelo de escala: con el mundo ×10 sobrevivían **0 leyes en vez de 3**. Persiguiendo la causa, **no era suya**: **`sindy3`, el motor simbólico, no es invariante a la escala** — encuentra la misma ley a ×1 y ×10 y NO a ×0.1 ni ×100 | INFORME-50 |
+| **G14 incertidumbre** | contra el criterio que el prereg-43 declaró **antes** de correr: su "ignorancia curable" es σ/√n, así que **sube igual con pocos datos que con mucho ruido**. G2 curiosidad lee ese número: una región ruidosa le parece prometedora | INFORME-51 |
+
+**Ninguno de los dos se forzó, se ajustó ni se re-interpretó.** Quedan registrados como **reprobados**
+en `reglas.py`, con causa y acta, separados de los que simplemente no se han examinado.
+
+### El balance sin adornos
+**Cuatro órganos examinados, dos pasaron, dos reprobaron. Quedan 11 sin examinar.** Una tasa de
+reprobación del 50% en los primeros cuatro **no es diligencia: es la medida de cuánto llevábamos sin
+mirar.** Y el defecto del motor simbólico llevaba ahí desde que el motor existe.
+
+### Lo que NO pude solventar, y por qué
+- **El nivel 2 de la Regla 19 (0 de 4 nodos).** Exige o el **experimento físico del director**
+  —reservado y no delegable— o **datos archivados que nadie ha visto**, que hay que descargar y
+  prerregistrar antes de tocarlos. **No es algo que yo pueda cerrar solo**, y decir lo contrario
+  sería el tipo de redondeo que este documento existe para evitar.
+- **Los 11 órganos restantes.** Cada uno exige manifiesto, fórmulas metamórficas, ficha y Regla 31
+  propias. Hacerlos deprisa para bajar el contador sería peor que no hacerlos: los dos reprobados de
+  hoy salieron precisamente porque las fichas se escribieron en serio.

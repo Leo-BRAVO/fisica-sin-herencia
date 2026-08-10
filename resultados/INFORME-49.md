@@ -1,5 +1,9 @@
 # INFORME-49 — ACTA DEL PRERREGISTRO 39: la experimentación dirigida **NO** gana. Y estaba escrito qué significaría.
 **10 de agosto de 2026. Cinco semillas, cinco mundos, 24 toques para 16 incógnitas.**
+**Datos crudos de este acta:** `resultados/p39-experimentar2-s1/resumen.json`,
+`resultados/p39-experimentar2-s2/resumen.json`, `resultados/p39-experimentar2-s3/resumen.json`,
+`resultados/p39-experimentar2-s4/resumen.json`, `resultados/p39-experimentar2-s5/resumen.json`.
+Prerregistro: `registros/prerregistro-39.md`. Módulo sellado: `codigo/experimentar2.py`.
 
 ---
 

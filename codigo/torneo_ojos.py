@@ -25,6 +25,193 @@ import panel_jueces as pj
 
 COMPETIDORES = ["A-pixel", "B-predictivo", "C-corolario", "R-ranuras"]
 
+# ==========================================================================================
+# LA PUERTA (metodo.py) — 10-ago-2026
+# ==========================================================================================
+# Este modulo llevaba 5 estudios ENCOLADOS Y PARADOS desde que la puerta se encendio: no tenia
+# manifiesto, ni formulas comprobables, ni ficha de sanidad, ni Regla 31 propia. Y no es un modulo
+# cualquiera — es el que DECIDE cual de las cuatro arquitecturas visuales de Diego gana. Un torneo
+# cuyo juez nunca se examino es el sitio mas caro posible para tener un instrumento roto, y ya nos
+# paso una vez: la primera vuelta (prereg-27) salio NO CONCLUYENTE POR INSTRUMENTO porque la vara
+# aplastaba a los cuatro competidores en 0.0000 EXACTO. La vara no medía a nadie: medía su suelo.
+#
+# LO QUE SE EXAMINA AQUI ES LA VARA, NO LOS COMPETIDORES. Por eso todo lo de abajo corre sobre
+# latentes SINTETICOS cuya relacion con los comandos la fijamos nosotros: es la unica forma de
+# saber si la lectura mide lo que dice medir sin preguntarle al que esta siendo medido.
+METODO = {
+    "prerregistro": 38,
+    "tipo_de_medida": "continua",
+    "que_mide": ("la lectura de CONTINGENCIA del panel: cuanta obediencia NETA a los comandos "
+                 "hay en unos latentes, descontado su propio nulo por comandos barajados"),
+    "comparten_datos": {
+        "hay": True,
+        "porque": "los cuatro competidores se evaluan sobre LOS MISMOS videos y los MISMOS "
+                  "comandos, a proposito: un torneo donde cada competidor corre su propio mundo "
+                  "no compara arquitecturas, compara suertes. Lo que NO comparten es el "
+                  "entrenamiento — cada uno entrena su propio codificador con su propia semilla.",
+    },
+    "linea_base": ("el nulo por comandos barajados, que ya va restado dentro del puntaje: la "
+                   "lectura ES una ganancia sobre su linea base, no un acierto crudo (Regla 11)"),
+    "formulas": [
+        {"base": {"senal": 0.8, "ruido": 0.3}, "parametro": "senal", "factor": 0.05,
+         "esperado": "baja",
+         "porque": "si los latentes dejan de seguir a los comandos, la contingencia debe caer. "
+                   "Se declara como DESIGUALDAD y no como proporcion porque la ganancia de "
+                   "obediencia neta no tiene forma cerrada: poner un factor exacto seria "
+                   "inventarselo, y ya me reprobo la puerta una vez por hacer eso"},
+        {"base": {"senal": 0.8, "ruido": 0.3}, "parametro": "ruido", "factor": 8.0,
+         "esperado": "baja",
+         "porque": "mas ruido encima de la misma señal = menos obediencia legible. Si NO bajara, "
+                   "la lectura estaria midiendo la escala de los latentes y no su relacion con "
+                   "los comandos"},
+    ],
+}
+
+
+def _latentes_sinteticos(n_ep=6, pasos=1400, dim=8, senal=0.8, ruido=0.3, semilla=7):
+    """Latentes de juguete con obediencia CONTROLADA por nosotros: cada canal sigue al comando
+    con peso `senal` y lleva `ruido` encima. Es la unica forma de examinar la vara sin preguntarle
+    al competidor — la verdad la ponemos nosotros.
+
+    1400 pasos x 6 episodios y no menos: `contingencia.medir` usa ventanas de 150 y EXIGE al menos
+    20 para dar un veredicto — con menos, ese criterio "fabrica cuerpo donde no lo hay" (medido el
+    8-ago-2026, y por eso LANZA en vez de devolver un numero flojo). Mi primer intento usaba 120
+    pasos y la puerta lo tumbo en el paso 1. Tenia razon: habria examinado la vara con una medicion
+    que la propia herramienta declara invalida.
+    """
+    rng = np.random.default_rng(int(semilla))
+    comandos, latentes = [], []
+    for _ in range(int(n_ep)):
+        u = rng.normal(size=(int(pasos), 3))
+        z = np.zeros((int(pasos), int(dim)))
+        for d in range(int(dim)):
+            fuente = u[:, d % 3]
+            z[:, d] = float(senal) * np.cumsum(fuente) / max(1.0, np.sqrt(pasos))
+            z[:, d] += rng.normal(0.0, float(ruido), size=int(pasos))
+        comandos.append(u)
+        latentes.append(z)
+    return comandos, latentes
+
+
+def _metodo_medir(senal=0.8, ruido=0.3):
+    """PASO 1 — la medida escalar sobre la que se comprueban las relaciones metamorficas."""
+    com, lat = _latentes_sinteticos(senal=senal, ruido=ruido)
+    return float(pj.lectura_contingencia(lat, com, jueces=[1, 2, 3], nulos=4)["puntaje"])
+
+
+def _metodo_sanidad():
+    """PASO 3 — LA FICHA. La pregunta que contesta: **¿la lectura sigue a la obediencia real de
+    los latentes, o sigue a otra cosa (su escala, su suavidad, su dimension)?**
+
+    Se fabrican 8 mundos en los que la obediencia se sortea, y se comprueba que la lectura
+    correlacione con ELLA y no con el ruido, que se sortea aparte. Es el error de tipo CRUCE: una
+    vara que sube cuando sube el ruido coronaria al competidor mas ruidoso, no al que mejor ve.
+    """
+    import sanidad as S
+    # DOS INTENTOS FALLIDOS ANTES DE ESTE, Y LOS DOS ERAN MIOS, NO DE LA VARA:
+    #   1) sortee obediencia Y ruido juntos y correlacione la lectura contra la obediencia sola:
+    #      0.234 contra un piso de 0.6. Con dos causas moviendose a la vez, una correlacion simple
+    #      contra una de ellas esta diluida POR CONSTRUCCION.
+    #   2) le di a S.correlaciones() dos "lecturas" que venian de experimentos DISTINTOS. Esa
+    #      funcion asume que todas las lecturas son del MISMO conjunto de objetos; cruzarlas no
+    #      significa nada, y me contesto que la obediencia explicaba un 21.6% extra del ruido.
+    #
+    # LA RAZON DE FONDO: S.correlaciones() esta hecha para instrumentos de VARIAS propiedades
+    # (masa, roce, ...). Este da UN SOLO NUMERO. La pregunta correcta para un instrumento de una
+    # sola lectura no es "¿cada lectura mide lo suyo?" sino "¿esta unica lectura sigue a la
+    # propiedad que dice, y es SORDA a la que no?". Se escribe explicita, con los MISMOS umbrales
+    # publicados de la ficha para no inventarme una vara mas blanda a mitad de camino.
+    rng = np.random.default_rng(19)
+    senales, ruidos, lect = [], [], []
+    for _ in range(8):
+        s = float(rng.uniform(0.2, 1.6))
+        r = float(rng.uniform(0.1, 0.9))
+        senales.append(s)
+        ruidos.append(r)
+        lect.append(_metodo_medir(senal=s, ruido=r))
+
+    fallos = []
+    # (a) SIGUE a la obediencia — descontando el ruido, que se movio a la vez.
+    solo_senal = [_metodo_medir(senal=s, ruido=0.3) for s in senales]
+    r_propia = S.correlaciones({"obediencia": solo_senal}, {"obediencia": senales})
+    fallos += r_propia["fallos"]
+    # (b) ES SORDA a la escala del ruido cuando la obediencia no cambia. Si subiera con el ruido,
+    #     el torneo coronaria al competidor mas ruidoso en vez de al que mejor ve — que es
+    #     exactamente el modo de fallo que un juez de arquitecturas NO se puede permitir.
+    solo_ruido = [_metodo_medir(senal=0.8, ruido=r) for r in ruidos]
+    import numpy as _np
+    c_ruido = abs(float(_np.corrcoef(solo_ruido, ruidos)[0, 1]))
+    if c_ruido > 0.0 and _np.corrcoef(solo_ruido, ruidos)[0, 1] > 0.0:
+        fallos.append(f"la lectura SUBE con el ruido (corr {c_ruido:.3f}): coronaria al mas ruidoso")
+    return {"aprueba": not fallos, "fallos": fallos,
+            "corr_con_obediencia": r_propia.get("tabla", {}),
+            "corr_con_ruido": round(c_ruido, 3)}
+
+
+def regla31(verbose=True):
+    """LOS DOS LADOS de la vara del torneo, mas el señuelo que ya nos costo un estudio entero.
+
+    El precedente no es hipotetico: la primera vuelta de este mismo torneo (prereg-27) quedo NO
+    CONCLUYENTE porque la vara daba 0.0000 EXACTO a los cuatro competidores. Estos casos existen
+    para que eso se cace ANTES de gastar cinco semillas, no despues.
+    """
+    fallos = []
+
+    def caso(nombre, ok, extra=""):
+        print(f"  {'ok  ' if ok else 'FALLO'} {nombre} {extra}")
+        if not ok:
+            fallos.append(nombre)
+
+    if verbose:
+        print("== REGLA 31 de la VARA del torneo (no de los competidores) ==")
+
+    # LADO NEGATIVO — latentes de puro ruido: no obedecen a nadie. La lectura debe quedar ~0.
+    com, lat_ruido = _latentes_sinteticos(senal=0.0, ruido=1.0, semilla=3)
+    p_vacio = float(pj.lectura_contingencia(lat_ruido, com, jueces=[1, 2, 3], nulos=4)["puntaje"])
+    caso("con latentes de PURO RUIDO la contingencia no despega", abs(p_vacio) < 0.05,
+         f"puntaje {p_vacio:+.5f}")
+
+    # LADO POSITIVO — latentes que siguen a los comandos: la lectura DEBE verlo.
+    com2, lat_buenos = _latentes_sinteticos(senal=1.5, ruido=0.1, semilla=4)
+    p_lleno = float(pj.lectura_contingencia(lat_buenos, com2, jueces=[1, 2, 3], nulos=4)["puntaje"])
+    caso("con latentes que SI obedecen, la contingencia lo ve", p_lleno > 0.05,
+         f"puntaje {p_lleno:+.5f}")
+
+    # DISCRIMINA — y esto es lo que fallo en la primera vuelta.
+    caso("la vara SEPARA el lleno del vacio (no aplasta a todos en el mismo numero)",
+         (p_lleno - p_vacio) > 0.05, f"separacion {p_lleno - p_vacio:+.5f}")
+
+    # SIN SUELO — el defecto exacto del prereg-27: un max(x, 0) que convierte todo en 0.0000.
+    peores = [float(pj.lectura_contingencia(l, c, jueces=[1, 2, 3], nulos=4)["puntaje"])
+              for l, c in ((lat_ruido, com), (_latentes_sinteticos(senal=0.0, ruido=2.0,
+                                                                   semilla=9)[1], com))]
+    caso("la vara NO tiene suelo: dos mundos vacios distintos no dan el MISMO numero exacto",
+         len(set(round(x, 6) for x in peores)) > 1 or all(x != 0.0 for x in peores),
+         f"{[round(x, 6) for x in peores]}")
+
+    # LA TUBERIA ENTERA, NO SOLO LA VARA. Este caso nace de un fallo real del 10-ago: el torneo
+    # paso la puerta 7/7 y aun asi REVENTO en la primera semilla — `corromper()` convertia los
+    # videos a float64 y los codificadores son float32, asi que la lectura de ROBUSTEZ nunca se
+    # habia podido correr con video de verdad. Mi Regla 31 examinaba la vara sobre latentes
+    # sinteticos y no tocaba la cadena. LECCION: el sello certifica el modulo, no la tuberia en la
+    # que vive — asi que la tuberia se prueba aparte, barata, antes de gastar cinco semillas.
+    import numpy as _np
+    _v32 = [_np.zeros((6, 16, 16), dtype=_np.float32)]
+    _c = pj.corromper(_v32)
+    caso("corromper() CONSERVA el tipo del video (float32 sigue siendo float32)",
+         _c[0].dtype == _np.float32, str(_c[0].dtype))
+
+    # EL VEREDICTO NO PUEDE CORONAR SIN EVIDENCIA: cuatro competidores identicos deben EMPATAR.
+    iguales = [{"nombre": n, "puntajes": {"contingencia": 0.3, "flecha": 0.2, "robustez": 0.1}}
+               for n in COMPETIDORES]
+    v = pj.veredicto(iguales)
+    caso("cuatro competidores IDENTICOS no coronan a nadie por evidencia",
+         "EMPATE" in v["fallo"], v["fallo"][:60])
+
+    if verbose:
+        print("REGLA 31: " + ("APRUEBA" if not fallos else f"REPRUEBA en {fallos}"))
+    return 0 if not fallos else 1
+
 
 def codificar_competidor(nombre, videos, jidx, epocas, semilla, comandos=None):
     if nombre == "A-pixel":

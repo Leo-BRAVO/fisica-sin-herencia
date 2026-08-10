@@ -231,6 +231,20 @@ import reglas as _reglas                                                       #
 for _f in _reglas.informe():
     FALLOS.append(_f)
 
+# ==========================================================================================
+# G. EL AUDITOR DE LAS ACTAS (10-ago-2026)
+# ==========================================================================================
+# Era el ultimo hueco de la cadena, y el mas peligroso: todo lo demas vigilaba el codigo, la casa,
+# las reglas y los instrumentos, pero NADIE vigilaba lo que yo escribo sobre los resultados — que
+# es justo lo unico que el director lee. Un acta puede contradecir sus propios datos y la cadena
+# entera seguiria verde. En su primera corrida encontro que mis dos actas de hoy no citaban ningun
+# archivo de datos, y que el INFORME-48 publicaba una obediencia de 0.0297 que yo habia medido a
+# mano y nunca guardado.
+print("\n=== G. LAS ACTAS NO PUEDEN CONTRADECIR SUS PROPIOS DATOS ===")
+import actas as _actas                                                         # noqa: E402
+for _f in _actas.auditar():
+    FALLOS.append(_f)
+
 print("\n" + "=" * 74)
 if FALLOS:
     print(f"DICTAMEN: {len(FALLOS)} FALLO(S) — NO correr campanas ni mostrar el repo: {FALLOS}")

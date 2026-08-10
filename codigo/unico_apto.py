@@ -74,12 +74,23 @@ def _de_un_mundo(semilla, pasos=900):
     com, can, nom, cortes = soporte.escena("cae", semilla=semilla, pasos=pasos, mundo=mundo)
     r = soporte.escalon1(com, can, nom, cortes=cortes)
     auto = {f["canal"]: f["autopredictible"] for f in r["detalle"]}
+    # 10-ago-2026 — SE GUARDA TAMBIEN LA OBEDIENCIA, y el motivo es una falta mia. El INFORME-48
+    # publico que `art1` tenia obediencia 0.0297 contra un techo de 0.05, y ese numero lo habia
+    # medido A MANO en una sesion: no estaba en ningun archivo. `actas.py` —el auditor de actas,
+    # escrito ese mismo dia— lo caza al primer intento: "1 cifra de sus tablas NO aparece en los
+    # datos citados". Tenia razon. Un numero que solo existe en mi cabeza no es evidencia, por
+    # cierto que sea. Ahora el detalle entero viaja al JSON y el acta puede apuntarle.
+    obed = {f["canal"]: f["obediencia_neta"] for f in r["detalle"]}
+    legal = {f["canal"]: bool(f["legal"]) for f in r["detalle"]}
+    no_mio = {f["canal"]: bool(f["no_mio"]) for f in r["detalle"]}
     aptos = r.get("candidatos_aptos") or []
     ajenos = [a for a in aptos if a != OBJETIVO]
     margen = (auto.get(OBJETIVO, 0.0) - max([auto[a] for a in ajenos])) if ajenos else None
     return {"semilla": int(semilla), "mundo": {k: round(float(v), 3) for k, v in mundo.items()},
             "aptos": aptos, "elegido": r.get("candidato"),
             "auto_objetivo": auto.get(OBJETIVO), "auto_por_canal": auto,
+            "obediencia_neta_por_canal": obed, "legal_por_canal": legal,
+            "no_mio_por_canal": no_mio,
             "margen_sobre_el_mejor_ajeno": (round(margen, 4) if margen is not None else None)}
 
 
