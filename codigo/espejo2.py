@@ -176,6 +176,10 @@ def paradigma_movil(semilla=1, pasos_fase=400, politica="ciega", desconexion="ab
               'contingente' = POLITICA PLANTADA (control positivo del instrumento, jamas un
               competidor real): sube la amplitud de la articulacion cuyo movimiento predijo el
               efecto. Es "un bebe que aprende", construido a proposito para probar el aparato.
+              'agitada' = SEÑUELO (prereg-36): reparte el MISMO presupuesto finito de esfuerzo,
+              pero AL AZAR, sin mirar el movil. Se mueve mas y de forma desigual sin que la
+              contingencia tenga nada que ver. Si la vara la corona, esta midiendo actividad y no
+              contingencia — es el analogo exacto del señuelo de ruido de la escalera de soporte.
     Devuelve actividad por articulacion y por fase, y la serie del movil."""
     import pybullet as p
     cliente = p.connect(p.DIRECT)
@@ -243,6 +247,14 @@ def paradigma_movil(semilla=1, pasos_fase=400, politica="ciega", desconexion="ab
                 hist_vel[j].append(float(vel[j]))
             hist_movil.append(movil)
 
+            if politica == "agitada" and t > 60 and t % 20 == 0:
+                # SEÑUELO (prereg-36): el MISMO presupuesto finito, repartido al azar. Se mueve mas
+                # y de forma desigual, pero nada de eso viene del movil. Una vara que corone a esta
+                # esta midiendo actividad, no contingencia.
+                r = rng.random(N_ART)
+                objetivo = np.clip(N_ART * r / r.sum(), 0.2, 4.0)
+                amplitud = amplitud + ganancia * (objetivo - amplitud)
+
             if politica == "contingente" and t > 60 and t % 20 == 0:
                 # POLITICA PLANTADA (control positivo del instrumento, jamas un competidor real):
                 # reparte un PRESUPUESTO FINITO de esfuerzo entre las articulaciones, en proporcion
@@ -296,6 +308,83 @@ def firmas(res):
             "hay_rafaga": bool(rafaga > 1.0),
             "razon_otras_articulaciones": round(r_otras, 4),
             "especifica": bool(razon > r_otras * 1.2)}
+
+
+# ======================================================= EL CALIBRADOR (prereg-36)
+# POR QUE EXISTE. El INFORME-40 cerro las firmas conductuales como NO CONCLUYENTE POR INSTRUMENTO:
+# la politica contingente PLANTADA —construida a proposito para tener la firma— solo disparo el
+# criterio clasico en 2 de 5 semillas, y en la semilla 3 se movio MENOS que su propia linea base.
+# "Diego no exhibe las firmas" puede ser cierto, pero un instrumento que falla sobre un caso
+# conocido no puede certificar una ausencia.
+#
+# EL ERROR DE DISEÑO QUE LO PERMITIO, dicho con su nombre: el caso B1 del banco probaba el control
+# positivo con UNA semilla (la 2, que resulto ser de las que funcionan). Un control positivo de una
+# sola muestra no es un control positivo: es una anecdota que aprueba.
+#
+# ESTE MODULO NO MIDE A DIEGO. Mide la VARA. Solo cuando la vara pase su propio examen tiene
+# sentido volver a preguntarle nada a Diego.
+DURACIONES = (400, 800, 1600, 3200)
+SEMILLAS_CALIBRACION = (1, 2, 3, 4, 5)
+
+
+def _veredicto_calibracion(filas):
+    """Funcion PURA sobre las filas del barrido: decide si la vara sirve y con que duracion.
+    Se separa a proposito del calculo caro para poder congelarla en el banco sin simular nada —
+    es la logica que fallo en el prereg-30, y la logica es lo que hay que blindar."""
+    usables = [f for f in filas
+               if f["tasa_control_positivo"] >= 1.0
+               and f["tasa_ciega"] <= 0.0
+               and f["tasa_agitada_especifica"] <= 0.0]
+    if not usables:
+        return {"vara_usable": False, "pasos_fase_recomendado": None,
+                "lectura": "NINGUNA duracion probada hace fiable la vara. Las firmas conductuales "
+                           "siguen sin poder medirse, y eso se escribe como resultado — no se "
+                           "vuelve a preguntar a Diego con un instrumento que no pasa su examen."}
+    mejor = min(usables, key=lambda f: f["pasos_fase"])
+    return {"vara_usable": True, "pasos_fase_recomendado": mejor["pasos_fase"],
+            "lectura": f"con {mejor['pasos_fase']} pasos por fase el control positivo dispara 5/5, "
+                       f"el balbuceo ciego 0/5 y el señuelo agitado no resulta especifico. "
+                       f"Recien ahi se puede volver a preguntar por Diego."}
+
+
+def calibrar(duraciones=DURACIONES, semillas=SEMILLAS_CALIBRACION, verbose=False):
+    """Barre la duracion de fase y mide, para cada una, si el instrumento sirve.
+    Tres politicas por celda: contingente (debe disparar SIEMPRE), ciega (NUNCA) y agitada
+    (se mueve mas sin contingencia: nunca puede resultar especifica)."""
+    filas = []
+    for d in duraciones:
+        cont, cieg, agit = [], [], []
+        for s in semillas:
+            cont.append(firmas(paradigma_movil(semilla=2000 + s, pasos_fase=d,
+                                               politica="contingente")))
+            cieg.append(firmas(paradigma_movil(semilla=2000 + s, pasos_fase=d, politica="ciega")))
+            agit.append(firmas(paradigma_movil(semilla=2000 + s, pasos_fase=d,
+                                               politica="agitada")))
+        rz = [f["razon_contingencia_sobre_base"] for f in cieg]
+        fila = {
+            "pasos_fase": d,
+            "tasa_control_positivo": round(np.mean([f["criterio_clasico_1.5x"] for f in cont]), 3),
+            "tasa_ciega": round(np.mean([f["criterio_clasico_1.5x"] for f in cieg]), 3),
+            "tasa_agitada": round(np.mean([f["criterio_clasico_1.5x"] for f in agit]), 3),
+            "tasa_agitada_especifica": round(
+                np.mean([f["criterio_clasico_1.5x"] and f["especifica"] for f in agit]), 3),
+            # LA CIFRA QUE DIAGNOSTICA: si la dispersion de la linea base es del orden del efecto
+            # que buscamos (0.5 sobre 1.0), la vara no puede ver ese efecto por mucho que insistamos.
+            "dispersion_ciega": round(float(np.std(rz)), 4),
+            "razon_media_contingente": round(
+                float(np.mean([f["razon_contingencia_sobre_base"] for f in cont])), 4),
+            "razon_media_ciega": round(float(np.mean(rz)), 4),
+            "razones_contingente": [f["razon_contingencia_sobre_base"] for f in cont],
+        }
+        fila["separacion_en_sigmas"] = round(
+            float((fila["razon_media_contingente"] - fila["razon_media_ciega"])
+                  / fila["dispersion_ciega"]), 3) if fila["dispersion_ciega"] > 1e-9 else None
+        filas.append(fila)
+        if verbose:
+            print(f"  fase={d:5d}  positivo {fila['tasa_control_positivo']:.1f}  "
+                  f"ciega {fila['tasa_ciega']:.1f}  agitada-especifica "
+                  f"{fila['tasa_agitada_especifica']:.1f}  dispersion {fila['dispersion_ciega']}")
+    return {"filas": filas, "veredicto": _veredicto_calibracion(filas)}
 
 
 # =============================================================== Regla 31
@@ -367,6 +456,55 @@ def regla31(verbose=True, pasos=1200, pasos_fase=400):
     if not c6:
         fallos.append("gradual-abrupta")
 
+    # ------------------------------------------------ prereg-36: la vara pasa su propio examen
+    # C1) LA LOGICA QUE FALLO, BLINDADA. Es el caso mas importante de este modulo y no simula nada:
+    #     con el control positivo disparando 2 de 5 —exactamente lo que ocurrio en la corrida
+    #     oficial del prereg-30— el veredicto TIENE que ser "vara NO usable". Si esta funcion
+    #     dijera que si, volveriamos a firmar una ausencia con un instrumento roto.
+    _falso = [{"pasos_fase": 500, "tasa_control_positivo": 0.4, "tasa_ciega": 0.0,
+               "tasa_agitada_especifica": 0.0}]
+    _bueno = [{"pasos_fase": 500, "tasa_control_positivo": 0.4, "tasa_ciega": 0.0,
+               "tasa_agitada_especifica": 0.0},
+              {"pasos_fase": 900, "tasa_control_positivo": 1.0, "tasa_ciega": 0.0,
+               "tasa_agitada_especifica": 0.0}]
+    v_falso, v_bueno = _veredicto_calibracion(_falso), _veredicto_calibracion(_bueno)
+    c7 = (not v_falso["vara_usable"]) and v_bueno["vara_usable"] \
+        and v_bueno["pasos_fase_recomendado"] == 900
+    if verbose:
+        print(f"  {'ok  ' if c7 else 'FALLO'} VEREDICTO DE CALIBRACION: con el positivo en 2/5 la "
+              f"vara se declara NO usable ({v_falso['vara_usable']}); con 5/5 recomienda 900 "
+              f"({v_bueno['pasos_fase_recomendado']})")
+    if not c7:
+        fallos.append("veredicto-calibracion")
+
+    # C2) UN CONTROL POSITIVO DE UNA SOLA SEMILLA NO ES UN CONTROL POSITIVO. El caso B1 de arriba
+    #     usaba la semilla 2 —que resulto ser de las que funcionan— y por eso el banco aprobo un
+    #     instrumento que en la nube fallo 3 de 5 veces. Aqui se exige la tasa sobre VARIAS
+    #     semillas, y se registra cual es de verdad. No se exige que sea 1.0: se exige MEDIRLA,
+    #     porque el prereg-36 existe precisamente para averiguar a que duracion lo es.
+    tasa = np.mean([firmas(paradigma_movil(semilla=2000 + s, pasos_fase=300,
+                                           politica="contingente"))["criterio_clasico_1.5x"]
+                    for s in (1, 2, 3)])
+    c8 = 0.0 <= tasa <= 1.0
+    if verbose:
+        print(f"  {'ok  ' if c8 else 'FALLO'} CONTROL POSITIVO MULTI-SEMILLA: a 300 pasos/fase el "
+              f"positivo dispara {tasa:.2f} de las veces (una sola semilla habria dicho "
+              f"'funciona' o 'no funciona', y las dos serian mentira)")
+    if not c8:
+        fallos.append("positivo-multisemilla")
+
+    # C3) EL SEÑUELO AGITADO: moverse mas, y de forma desigual, SIN contingencia. No puede resultar
+    #     especifico — si lo fuera, la vara estaria midiendo actividad y no contingencia. Es el
+    #     analogo exacto del señuelo de ruido que salvo a la escalera de soporte.
+    ag = firmas(paradigma_movil(semilla=2002, pasos_fase=300, politica="agitada"))
+    c9 = not (ag["criterio_clasico_1.5x"] and ag["especifica"])
+    if verbose:
+        print(f"  {'ok  ' if c9 else 'FALLO'} SEÑUELO AGITADO: se mueve sin contingencia "
+              f"({ag['razon_contingencia_sobre_base']}x, especifica={ag['especifica']}) y NO es "
+              f"coronado")
+    if not c9:
+        fallos.append("senuelo-agitado")
+
     if verbose:
         print("\nREGLA 31: " + ("APRUEBA — distingue al gemelo y mide las firmas donde las hay."
                                 if not fallos else f"REPRUEBA en {fallos}"))
@@ -379,11 +517,23 @@ def main():
     ap.add_argument("--semilla", type=int, default=None)
     ap.add_argument("--pasos", type=int, default=1500)
     ap.add_argument("--pasos-fase", type=int, default=500)
+    ap.add_argument("--calibrar", action="store_true",
+                    help="prereg-36: mide LA VARA, no a Diego. Barre la duracion de fase hasta que "
+                         "el control positivo plantado dispare 5/5 y el ciego 0/5.")
     a = ap.parse_args()
     if a.regla31:
         sys.exit(regla31())
+    if a.calibrar:
+        res = calibrar(verbose=True)
+        salida = {"prerregistro": 36, "semillas": list(SEMILLAS_CALIBRACION), **res}
+        out = os.path.join(BASE, "resultados", "p36-calibracion-firmas")
+        os.makedirs(out, exist_ok=True)
+        with open(os.path.join(out, "resumen.json"), "w", encoding="utf-8") as f:
+            json.dump(salida, f, indent=2, ensure_ascii=False, default=str)
+        print(f"\n{res['veredicto']['lectura']}\nguardado en {out}/resumen.json")
+        return
     if a.semilla is None:
-        print("uso: --regla31 | --semilla N")
+        print("uso: --regla31 | --semilla N | --calibrar")
         return
     s = a.semilla
     u_pro, u_aje, s_pro, s_aje, _ = escena_gemelo(semilla=1000 + s, pasos=a.pasos)

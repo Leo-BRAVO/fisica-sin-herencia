@@ -1,11 +1,11 @@
 # EL ÁRBOL — mapa visual del conocimiento del proyecto
-**ÉPOCA 2 EN CURSO. Actualizado el 8-ago-2026 (INFORME-22): E2-N-004 salió de cuarentena REDUCIDO — Michigan refutado por el nulo honesto, la caída sobrevive con una candidata distinta validada contra el verdugo que aprueba la Regla 31. La Época 1 vive archivada en `arbol/epoca1/` con la confianza retirada.**
+**ÉPOCA 2 EN CURSO. Actualizado el 10-ago-2026: nacen los dos primeros nodos de CAPACIDAD hijos del Gimnasio — H-001 (se reconoce por contingencia, no por apariencia: 5/5) y H-002 (la física de soporte NO necesita cuerpo: empate 5/5, resultado negativo para nuestra propia tesis). La rama de física del universo (N-00X-E2) queda como estaba desde el 8-ago (INFORME-22).**
 
-**GitHub renderiza el diagrama automáticamente al abrir este archivo. Verde = nodo validado provisional; naranja = en cuarentena (Regla 31); amarillo = pregunta abierta; gris punteado = en curso.**
+**GitHub renderiza el diagrama automáticamente al abrir este archivo. Verde = nodo validado provisional; azul = nodo de CAPACIDAD (qué puede hacer el ente, no qué es cierto del universo — marcado `sobre-el-simulador`); rojo = capacidad medida que RECORTA una tesis nuestra; naranja = en cuarentena (Regla 31); amarillo = pregunta abierta; gris punteado = archivado.**
 
 ```mermaid
 graph TD
-    RAIZ(("FÍSICA SIN HERENCIA<br/>32 reglas · MENTE v12")):::raiz
+    RAIZ(("FÍSICA SIN HERENCIA<br/>34 reglas · MENTE v12")):::raiz
 
     E2N001["N-001-E2 · 11-jul-2026<br/>Ley de retardos Mendeley — 8× sobre É1<br/>k = 0.017454 reapareció espontáneamente<br/>5/5 semillas"]:::nodo
     E2N002["N-002-E2 · 12-jul-2026<br/>Percepción propia: 8 variables autoinventadas<br/>ley acoplada replicada a la 4ª–6ª cifra<br/>5/5 · el dp Morpheus por fin cedió"]:::nodo
@@ -13,6 +13,14 @@ graph TD
     E2N004["N-004-E2 · 13-jul, REDUCIDO 8-ago<br/>UNA conservada de la caída sobrevive al<br/>verdugo honesto (jueces 0.004, rompe solo<br/>en el video corrupto) · Michigan REFUTADO"]:::nodo
 
     E1["ÉPOCA 1 (archivada)<br/>N-001 · N-002 · N-003<br/>k invariante · transferencia entre trials<br/>la caída retiene su corona É1"]:::archivo
+
+    H000["H-000 · 9-ago-2026 · sobre-el-simulador<br/>EL NACIMIENTO: la frontera yo/mundo emerge<br/>6/6 propiocepciones declaradas suyas · 5/5<br/>control de motores desconectados LIMPIO 5/5"]:::capacidad
+    H001["H-001 · 10-ago-2026 · sobre-el-simulador<br/>Se reconoce por CONTINGENCIA, no por apariencia<br/>gemelo idéntico: +0.20 el suyo / −0.20 el otro · 5/5<br/>SOLO propiocepción — la visión no lo sostiene"]:::capacidad
+    H002["H-002 · 10-ago-2026 · sobre-el-simulador<br/>La física de soporte NO necesita cuerpo<br/>empate 5/5 (dif. +0.0011 a −0.0067 vs umbral 0.05)<br/>RECORTA nuestra tesis · se publicó como se firmó"]:::recorte
+
+    PB{"¿Dónde SÍ gana el cuerpo?<br/>candidata: EXPERIMENTACIÓN DIRIGIDA<br/>(elegir qué hacer para resolver una duda)<br/>si tampoco ahí, sería noticia mayor"}:::pregunta
+    PC{"¿El empate sobrevive con caídas que<br/>varían de verdad? → prereg-35<br/>(hoy la caída es una sola, medida 5 veces)"}:::pregunta
+    PD{"Firmas conductuales: NO CONCLUYENTE<br/>el control positivo solo dispara 2/5<br/>→ prereg-36 mide la VARA antes que a Diego"}:::parcial
 
     P1{"¿Nulos surrogados de las campañas<br/>insignia? (mendeley: se corre en la<br/>NUBE vía Actions; p14 espera ojos)"}:::pregunta
     P2{"Dimensión intrínseca: MEDIDA 2/3<br/>(Michigan ~3 · caída ~2.3, INF-22)<br/>falta dp Morpheus (rastreo 2 cuerpos)"}:::parcial
@@ -32,6 +40,15 @@ graph TD
     E2N004 --> P4
     E2N003 --> P5
 
+    RAIZ --> H000
+    H000 --> H001
+    H000 --> H002
+    H002 --> PB
+    H002 --> PC
+    H001 --> PD
+
+    classDef capacidad fill:#12304d,stroke:#3498db,color:#fff,stroke-width:2px
+    classDef recorte fill:#4d1a1a,stroke:#e74c3c,color:#fff,stroke-width:2px
     classDef parcial fill:#4a3d1a,stroke:#e67e22,color:#fff
     classDef raiz fill:#1a1a2e,stroke:#e94560,color:#fff,stroke-width:3px
     classDef nodo fill:#0f3d2e,stroke:#2ecc71,color:#fff,stroke-width:2px
@@ -42,6 +59,8 @@ graph TD
 
 ## Cómo leerlo
 - **Verde:** conocimiento validado provisional (nivel 1 de la Regla 19 — falta corroboración física y réplica independiente).
+- **Azul (capacidad):** qué puede hacer el ente, no qué es cierto del universo. Nacen en el Gimnasio y llevan `sobre-el-simulador` de por vida: la gravedad de PyBullet es una ecuación que escribimos nosotros. **Jamás entran a la rama de física.**
+- **Rojo (recorte):** una capacidad medida cuyo resultado **contradice una tesis nuestra**. Vale exactamente igual que un nodo verde y se escribe con el mismo detalle — es lo que separa un árbol de conocimiento de un folleto.
 - **Naranja (cuarentena):** la Regla 31 encontró un defecto en el instrumento que lo validó; ni muerto ni vivo hasta la re-corrida. No entra al conectoma ni sirve de rival.
 - **Amarillo:** preguntas abiertas — cada corrida nueva debe nacer de una (Regla 18).
 - **Gris:** la Época 1, archivada con confianza retirada; sus leyes solo regresan venciendo.

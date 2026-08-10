@@ -409,6 +409,116 @@
       "nota": "encarnado vs pasivo: el control que podria refutarnos",
       "salida": "resultados/p32-observador-pasivo-s5",
       "resultado": "corrida por latido-nube (Actions)"
+    },
+    {
+      "id": "p35-soporte-variable-s1",
+      "tipo": "gimnasio",
+      "prerregistro": 35,
+      "datos": "codigo/soporte.py",
+      "args": "--semilla 1 --pasos 1800 --variar",
+      "estado": "pendiente",
+      "nota": "la escalera de soporte en un mundo distinto por semilla: la caida deja de ser una sola",
+      "salida": "resultados/p35-soporte-variable-s1"
+    },
+    {
+      "id": "p35-soporte-variable-s2",
+      "tipo": "gimnasio",
+      "prerregistro": 35,
+      "datos": "codigo/soporte.py",
+      "args": "--semilla 2 --pasos 1800 --variar",
+      "estado": "pendiente",
+      "nota": "la escalera de soporte en un mundo distinto por semilla: la caida deja de ser una sola",
+      "salida": "resultados/p35-soporte-variable-s2"
+    },
+    {
+      "id": "p35-soporte-variable-s3",
+      "tipo": "gimnasio",
+      "prerregistro": 35,
+      "datos": "codigo/soporte.py",
+      "args": "--semilla 3 --pasos 1800 --variar",
+      "estado": "pendiente",
+      "nota": "la escalera de soporte en un mundo distinto por semilla: la caida deja de ser una sola",
+      "salida": "resultados/p35-soporte-variable-s3"
+    },
+    {
+      "id": "p35-soporte-variable-s4",
+      "tipo": "gimnasio",
+      "prerregistro": 35,
+      "datos": "codigo/soporte.py",
+      "args": "--semilla 4 --pasos 1800 --variar",
+      "estado": "pendiente",
+      "nota": "la escalera de soporte en un mundo distinto por semilla: la caida deja de ser una sola",
+      "salida": "resultados/p35-soporte-variable-s4"
+    },
+    {
+      "id": "p35-soporte-variable-s5",
+      "tipo": "gimnasio",
+      "prerregistro": 35,
+      "datos": "codigo/soporte.py",
+      "args": "--semilla 5 --pasos 1800 --variar",
+      "estado": "pendiente",
+      "nota": "la escalera de soporte en un mundo distinto por semilla: la caida deja de ser una sola",
+      "salida": "resultados/p35-soporte-variable-s5"
+    },
+    {
+      "id": "p35-pasivo-variable-s1",
+      "tipo": "gimnasio",
+      "prerregistro": 35,
+      "datos": "codigo/observador_pasivo.py",
+      "args": "--semilla 1 --pasos 1800 --variar",
+      "estado": "pendiente",
+      "nota": "encarnado vs pasivo con caidas que varian de verdad: ¿sobrevive el empate?",
+      "salida": "resultados/p35-pasivo-variable-s1"
+    },
+    {
+      "id": "p35-pasivo-variable-s2",
+      "tipo": "gimnasio",
+      "prerregistro": 35,
+      "datos": "codigo/observador_pasivo.py",
+      "args": "--semilla 2 --pasos 1800 --variar",
+      "estado": "pendiente",
+      "nota": "encarnado vs pasivo con caidas que varian de verdad: ¿sobrevive el empate?",
+      "salida": "resultados/p35-pasivo-variable-s2"
+    },
+    {
+      "id": "p35-pasivo-variable-s3",
+      "tipo": "gimnasio",
+      "prerregistro": 35,
+      "datos": "codigo/observador_pasivo.py",
+      "args": "--semilla 3 --pasos 1800 --variar",
+      "estado": "pendiente",
+      "nota": "encarnado vs pasivo con caidas que varian de verdad: ¿sobrevive el empate?",
+      "salida": "resultados/p35-pasivo-variable-s3"
+    },
+    {
+      "id": "p35-pasivo-variable-s4",
+      "tipo": "gimnasio",
+      "prerregistro": 35,
+      "datos": "codigo/observador_pasivo.py",
+      "args": "--semilla 4 --pasos 1800 --variar",
+      "estado": "pendiente",
+      "nota": "encarnado vs pasivo con caidas que varian de verdad: ¿sobrevive el empate?",
+      "salida": "resultados/p35-pasivo-variable-s4"
+    },
+    {
+      "id": "p35-pasivo-variable-s5",
+      "tipo": "gimnasio",
+      "prerregistro": 35,
+      "datos": "codigo/observador_pasivo.py",
+      "args": "--semilla 5 --pasos 1800 --variar",
+      "estado": "pendiente",
+      "nota": "encarnado vs pasivo con caidas que varian de verdad: ¿sobrevive el empate?",
+      "salida": "resultados/p35-pasivo-variable-s5"
+    },
+    {
+      "id": "p36-calibracion-firmas",
+      "tipo": "gimnasio",
+      "prerregistro": 36,
+      "datos": "codigo/espejo2.py",
+      "args": "--calibrar",
+      "estado": "pendiente",
+      "nota": "mide LA VARA, no a Diego: barrido de duracion de fase hasta que el control positivo dispare 5/5",
+      "salida": "resultados/p36-calibracion-firmas"
     }
   ]
 }
