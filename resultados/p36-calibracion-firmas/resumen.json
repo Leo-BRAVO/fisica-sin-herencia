@@ -1,0 +1,89 @@
+{
+  "prerregistro": 36,
+  "semillas": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "filas": [
+    {
+      "pasos_fase": 400,
+      "tasa_control_positivo": 0.4,
+      "tasa_ciega": 0.0,
+      "tasa_agitada": 0.2,
+      "tasa_agitada_especifica": 0.2,
+      "dispersion_ciega": 0.1032,
+      "razon_media_contingente": 1.6763,
+      "razon_media_ciega": 1.1263,
+      "razones_contingente": [
+        1.2123,
+        1.1379,
+        1.4812,
+        2.351,
+        2.1992
+      ],
+      "separacion_en_sigmas": 5.329
+    },
+    {
+      "pasos_fase": 800,
+      "tasa_control_positivo": 0.2,
+      "tasa_ciega": 0.2,
+      "tasa_agitada": 0.0,
+      "tasa_agitada_especifica": 0.0,
+      "dispersion_ciega": 0.2724,
+      "razon_media_contingente": 1.3629,
+      "razon_media_ciega": 1.0636,
+      "razones_contingente": [
+        1.8367,
+        1.0672,
+        1.1455,
+        1.367,
+        1.3982
+      ],
+      "separacion_en_sigmas": 1.099
+    },
+    {
+      "pasos_fase": 1600,
+      "tasa_control_positivo": 0.6,
+      "tasa_ciega": 0.0,
+      "tasa_agitada": 0.2,
+      "tasa_agitada_especifica": 0.2,
+      "dispersion_ciega": 0.111,
+      "razon_media_contingente": 1.4947,
+      "razon_media_ciega": 1.1112,
+      "razones_contingente": [
+        1.6155,
+        1.2789,
+        1.5578,
+        1.5293,
+        1.4922
+      ],
+      "separacion_en_sigmas": 3.455
+    },
+    {
+      "pasos_fase": 3200,
+      "tasa_control_positivo": 0.6,
+      "tasa_ciega": 0.0,
+      "tasa_agitada": 0.0,
+      "tasa_agitada_especifica": 0.0,
+      "dispersion_ciega": 0.1165,
+      "razon_media_contingente": 1.5112,
+      "razon_media_ciega": 1.0122,
+      "razones_contingente": [
+        1.8848,
+        1.1974,
+        1.2032,
+        1.696,
+        1.5747
+      ],
+      "separacion_en_sigmas": 4.283
+    }
+  ],
+  "veredicto": {
+    "vara_usable": false,
+    "pasos_fase_recomendado": null,
+    "lectura": "NINGUNA duracion probada hace fiable la vara. Las firmas conductuales siguen sin poder medirse, y eso se escribe como resultado — no se vuelve a preguntar a Diego con un instrumento que no pasa su examen."
+  }
+}

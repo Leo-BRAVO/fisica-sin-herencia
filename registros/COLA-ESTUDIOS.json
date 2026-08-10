@@ -526,9 +526,10 @@
       "prerregistro": 36,
       "datos": "codigo/espejo2.py",
       "args": "--calibrar",
-      "estado": "pendiente",
+      "estado": "hecha",
       "nota": "mide LA VARA, no a Diego: barrido de duracion de fase hasta que el control positivo dispare 5/5",
-      "salida": "resultados/p36-calibracion-firmas"
+      "salida": "resultados/p36-calibracion-firmas",
+      "resultado": "corrida por latido-nube (Actions)"
     }
   ]
 }
