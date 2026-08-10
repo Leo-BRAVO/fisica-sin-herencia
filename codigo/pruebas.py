@@ -513,6 +513,32 @@ caso("experimentar: la duda es real por los DOS lados (ciega en reposo, no ciega
      _ex._mirando_sin_tocar(_ex._mundo(1)) < 0.05
      and _ex._mirando_sin_tocar(_ex._mundo(1), mover_uno=True) > 0.50)
 
+print("== G11 TEMPLE y G12 REFLEJOS (prereg-40): los dos genes que estaban prometidos y no existian ==")
+import temple as _tp, reflejos as _rf
+caso("temple: APRUEBA su Regla 31 (4/4: inmutable, sube con gasto y error, la quietud no gana)",
+     _tp.regla31(verbose=False) == 0)
+# CONGELADO, y es la Regla 30 hecha codigo: si alguien escribe un bucle que "mejora" el temple para
+# que Diego sufra menos, se estrella aqui. Un juez que se puede mover no es un juez.
+try:
+    _tp.ajustar(pesos={"gasto": 0.0})
+    _inmutable = False
+except _tp.TempleInmutable:
+    _inmutable = True
+caso("temple: intentar ajustarlo LANZA (Regla 30 mecanizada: los jueces no se automodifican)",
+     _inmutable)
+# CONGELADO: quedarse quieto JAMAS puede ser la salida barata. Sin esto, la politica optima seria
+# no hacer nada nunca — el fallo clasico de un coste mal puesto.
+caso("temple: quedarse quieto cuesta MAS que moverse con esfuerzo",
+     _tp.coste(0.05, 0.05, 0.05, actividad=0.0) > _tp.coste(0.30, 0.30, 0.30, actividad=1.0))
+caso("reflejos: APRUEBA su Regla 31 (5/5: mas rapido, coincide, calla, señuelo, potencia)",
+     _rf.regla31(verbose=False) == 0)
+# CONGELADO (Regla 12, y me la cazo el metodo el 10-ago): el acuerdo se mide como GANANCIA sobre la
+# linea base tonta. Con la deliberacion disparando el 2%, un reflejo que dijera siempre "no"
+# acertaba el 88.7% y el mio el 90.7%. Llamar a eso "acuerdo 0.907" era un numero sin significado.
+_xr, _yr = _rf._mundo_de_prueba(n=400, senal=0.02)
+caso("reflejos: sin señal que destilar, la ganancia sobre la linea base tonta es CERO",
+     _rf.examinar(_rf.destilar(_xr, _yr), _xr, _yr)["acuerdo_con_la_deliberacion"] < 0.05)
+
 print("== LA FICHA DE SANIDAD (10-ago-2026): los cinco tipos de error que repito al armar pruebas ==")
 import sanidad as _san
 caso("sanidad: APRUEBA su meta-prueba (caza los 5 tipos y no grita donde no hay nada)",

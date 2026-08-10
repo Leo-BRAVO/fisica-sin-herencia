@@ -571,7 +571,30 @@ def relaciones_metamorficas(medir, relaciones, tolerancia=0.25, verbose=False):
                           f"proporcion que comprobar")
             continue
         observado = v1 / v0
-        esperado = float(r["esperado"])
+        esp = r["esperado"]
+        # DESIGUALDADES, no solo proporciones exactas. Muchas relaciones metamorficas de la
+        # literatura son de la forma "debe bajar" o "debe subir": cuando la cantidad medida no
+        # tiene forma cerrada —por ejemplo el acuerdo de una aproximacion lineal a una frontera
+        # curva bajo ruido— exigir un factor exacto obliga a INVENTARSELO, y un numero inventado
+        # es peor que una desigualdad honesta. Cazado el 10-ago al declarar "x0.75" para algo que
+        # no habia derivado: la puerta lo midio en x0.983 y tenia razon en reprobarme.
+        if isinstance(esp, str):
+            cumple = {"baja": observado < 0.97, "sube": observado > 1.03,
+                      "igual": 0.90 <= observado <= 1.10}.get(esp)
+            if cumple is None:
+                fallos.append(f"{r['parametro']}: 'esperado' debe ser un numero o "
+                              f"'baja'/'sube'/'igual', no {esp!r}")
+                continue
+            filas.append({"parametro": r["parametro"], "factor": r["factor"], "esperado": esp,
+                          "observado": round(observado, 4), "porque": r["porque"]})
+            if verbose:
+                print(f"    {r['parametro']}x{r['factor']}: esperado {esp}, "
+                      f"observado x{observado:.3f}  ({r['porque']})")
+            if not cumple:
+                fallos.append(f"{r['parametro']}x{r['factor']}: la formula dice que {esp} y la "
+                              f"lectura hace x{observado:.3f} — {r['porque']}")
+            continue
+        esperado = float(esp)
         desvio = abs(observado - esperado) / max(abs(esperado), 1e-12)
         filas.append({"parametro": r["parametro"], "factor": r["factor"],
                       "esperado": round(esperado, 4), "observado": round(observado, 4),
