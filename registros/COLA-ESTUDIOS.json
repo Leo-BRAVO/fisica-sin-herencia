@@ -493,9 +493,10 @@
       "prerregistro": 35,
       "datos": "codigo/observador_pasivo.py",
       "args": "--semilla 3 --pasos 1800 --variar",
-      "estado": "pendiente",
+      "estado": "hecha",
       "nota": "encarnado vs pasivo con caidas que varian de verdad: ¿sobrevive el empate?",
-      "salida": "resultados/p35-pasivo-variable-s3"
+      "salida": "resultados/p35-pasivo-variable-s3",
+      "resultado": "corrida por latido-nube (Actions)"
     },
     {
       "id": "p35-pasivo-variable-s4",
