@@ -90,7 +90,29 @@ Cualquier persona con el registro debe poder reproducir cada resultado exactamen
 ### Regla 15 — La máquina propone, el humano decide
 Ningún bucle de automejora cerrado: ningún sistema del proyecto modifica su propio código o sus propios objetivos sin revisión humana entre ciclos. Esto es tanto una regla de seguridad como de ciencia: un bucle sin supervisión optimiza hacia donde nadie miró.
 **Enmienda de reconciliación (8-ago-2026, AUDITORIA-EXTERNA-01, aprobada por el director):** las Reglas 28–30 delegaron automejora dentro de presupuestos prerregistrados y con commit visible, y la práctica (tarea horaria, cola de la mente) ejecuta sin humano despierto. Para que esta regla diga la verdad y no quede reinterpretada en silencio, su forma vigente es: **lo que jamás se automodifica son los OBJETIVOS, los CRITERIOS DE ÉXITO, los JUECES y las REGLAS; todo lo demás puede automejorarse solo dentro de una delegación que un humano aprobó por prerregistro, con registro auditable (commit visible) y banco de pruebas congelado.** La revisión humana sube del ciclo al diseño del ciclo — nunca desaparece.
-**Declaración del director (8-ago-2026), a partir de hoy y para todo lo que venga:** *"él solo sugiere que debe mejorarse; nosotros decidimos"*. Diego —y el orquestador— **proponen** qué degradar, qué podar, qué construir y qué corregir, con la evidencia delante. **La decisión es humana, siempre, y queda firmada.** Esta declaración no relaja nada: cierra la última rendija por la que una recomendación bien argumentada podría convertirse en un hecho consumado sin que nadie la firmara. El primer caso al que se aplicó fue la degradación de N-002-E2 y N-003-E2 (INFORME-33): el orquestador la recomendó y se ejecutó **solo después de la firma del director**.
+**ENMIENDA DEL DIRECTOR (10-ago-2026) — el director pasa a OBSERVADOR.** Palabras suyas: *"cambiamos la 15, yo actúo de observador y leo resultados, tú avanzas hasta conseguirlos sin violar ninguna regla que armamos del proyecto"*, con la condición explícita: *"no alteramos resultados ni ponemos el happy path para que encuentre el resultado que buscamos... todo debe poder ser auditado de pies a cabeza y replicado si hace falta"*.
+
+**La firma no se elimina: se sustituye por un QUÓRUM ADVERSARIAL.** Un control humano que desaparece no deja el sistema igual de seguro con menos fricción — lo deja sin control. Para que un nodo se escriba sin firma del director deben cumplirse **las siete**, y el nodo debe decir cuáles:
+1. **Prerregistro firmado ANTES** de ver los datos, con criterio y umbrales congelados en él.
+2. **Los cuatro guardianes en verde** sobre `main`.
+3. **Regla 31 aprobada por los DOS lados**: falla con datos vacíos y aprueba con control positivo. (Lección del 10-ago: un caso que solo protege el falso positivo aprueba con una medida ciega.)
+4. **Cinco semillas en cinco mundos distintos** (lección del INFORME-39: cinco mediciones de una realización no son cinco réplicas).
+5. **Un nulo que pudo matarlo y no lo mató**, con la verificación de que el nulo es válido (Regla 11).
+6. **Un señuelo declarado** que parezca la respuesta y sea rechazado.
+7. **Una revisión adversarial con memoria separada** que intentó REFUTAR el nodo y no pudo — sin ver la hipótesis ni lo que se esperaba.
+
+**Marcado y revocable:** todo nodo así nace con `FIRMA DELEGADA` y la lista de su quórum. El director lo revoca con una palabra al leerlo, y la revocación se registra como se registró la degradación de N-002 y N-003.
+
+**LO QUE NO SE DELEGA, y no por cautela sino porque estructuralmente no puede delegarse:**
+- **Regla 16 — hacer público el repositorio.** Es un acto hacia afuera e irreversible; no lo decide quien lo produce.
+- **Regla 22 — la revisión de doble uso** antes de compartir cualquier nodo con aplicación posible. La escribió para que la hiciera un humano con la respuesta delante.
+- **Regla 19 nivel 2 — el experimento físico propio.** No es una cuestión de permiso: no tengo manos en el mundo. El nivel 2 sigue esperándole a usted.
+- **Cambiar estas reglas.** El orquestador propone enmiendas; no las firma. Esta enmienda existe porque el director la escribió, no porque yo la propusiera.
+- **Cualquier acto en su nombre fuera del repositorio.**
+
+**Y una prohibición que esta enmienda NO relaja, porque nunca fue del director concederla:** *mover un umbral o un criterio después de ver los datos*. No podía hacerlo yo y tampoco él a posteriori. Un criterio que se ajusta cuando incomoda deja de ser un criterio y pasa a ser una preferencia con decimales. Si un criterio está mal, se cambia en un prerregistro NUEVO, antes de volver a mirar.
+
+**Declaración del director (8-ago-2026):** *"él solo sugiere que debe mejorarse; nosotros decidimos"*. Diego —y el orquestador— **proponen** qué degradar, qué podar, qué construir y qué corregir, con la evidencia delante. **La decisión es humana, siempre, y queda firmada.** Esta declaración no relaja nada: cierra la última rendija por la que una recomendación bien argumentada podría convertirse en un hecho consumado sin que nadie la firmara. El primer caso al que se aplicó fue la degradación de N-002-E2 y N-003-E2 (INFORME-33): el orquestador la recomendó y se ejecutó **solo después de la firma del director**.
 
 ### Regla 16 — Prioridad demostrable y apertura
 Para que el trabajo cuente como legado, debe ser demostrable que fue tuyo y cuándo: repositorio público (GitHub, gratis) desde el día uno, con commits fechados. El documento CIMIENTOS.md y cada prerregistro se suben ANTES de correr los experimentos — eso convierte cada idea en prioridad verificable con fecha, que es exactamente lo que le faltó a todos los que "lo pensaron primero" pero no lo escribieron en público.

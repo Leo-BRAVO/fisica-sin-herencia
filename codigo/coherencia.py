@@ -224,6 +224,23 @@ for _n in sorted(glob.glob(os.path.join(BASE, "arbol", "N-*.md"))
 caso("todo nodo del arbol lleva la firma del director (Regla 15 mecanizada para el LAZO)",
      not _sin_firma, str(_sin_firma))
 
+# QUORUM ADVERSARIAL (enmienda del 10-ago-2026: el director pasa a observador). Un nodo puede
+# nacer sin su firma SOLO si declara las siete comprobaciones que lo sostienen. Esto no es
+# burocracia: es lo unico que queda en el sitio donde antes estaba un humano diciendo que si. Un
+# nodo con FIRMA DELEGADA que no enumere su quorum es exactamente el "hecho consumado sin que
+# nadie lo firmara" que la Regla 15 existe para impedir.
+_QUORUM = ("prerregistro", "guardian", "regla 31", "semillas", "nulo", "señuelo", "adversarial")
+_mal_delegados = []
+for _n in sorted(glob.glob(os.path.join(BASE, "arbol", "N-*.md"))
+                 + glob.glob(os.path.join(BASE, "arbol", "H-*.md"))):
+    _t = open(_n, encoding="utf-8", errors="ignore").read().lower()
+    if "firma delegada" in _t:
+        _faltan = [q for q in _QUORUM if q not in _t]
+        if _faltan:
+            _mal_delegados.append(f"{os.path.basename(_n)}: falta {_faltan}")
+caso("todo nodo de FIRMA DELEGADA enumera su quorum adversarial completo (Regla 15 enmendada)",
+     not _mal_delegados, str(_mal_delegados))
+
 print("== documentos fundacionales: sus referencias cruzadas existen ==")
 genoma_path = os.path.join(BASE, "registros", "GENOMA-DIEGO.md")   # cartel: vive fuera de arbol/
 if os.path.exists(genoma_path):
