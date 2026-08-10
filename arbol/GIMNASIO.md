@@ -31,6 +31,33 @@ eligió, no por datos que alguien más grabó.
 
 ---
 
+### ⚠ ENMIENDA MEDIDA — 10-ago-2026: esta sección prometía más de lo que la evidencia sostiene
+
+Lo de arriba se escribió el 8-ago-2026, **antes de tener una sola medición**. El 10-ago la
+tuvimos, y **recorta esta sección**. Se deja el texto original intacto y se enmienda debajo, como
+manda la Regla 8: un documento que se reescribe para parecer que siempre tuvo razón no es un
+registro.
+
+**Lo que el prereg-32 midió** (nodo [[H-002-SOPORTE-SIN-CUERPO]], INFORME-41): en física de
+soporte, un **observador pasivo empata con el encarnado en 5 de 5 semillas** — diferencias de
++0.0011 a −0.0067 contra un umbral firmado de 0.05, y **negativas en 4 de 5**. El pasivo-ajeno, que
+ni causó lo que ve, a veces puntúa más alto.
+
+**Qué queda en pie de esta sección y qué no:**
+
+| Afirmación original | Estado tras medir |
+|---|---|
+| El teorema de identificabilidad (hacen falta intervenciones para desambiguar la estructura causal) | **INTACTO.** Es un teorema, y el prereg-32 no lo tocó: midió discriminación posible/imposible, no identificación de estructura causal |
+| *"El Gimnasio es la única puerta de salida del callejón"* | **DEMASIADO GRANDE.** Para la física de soporte no hay callejón: se aprende mirando. La frase valdrá para las capacidades que **exijan** intervención, no para "aprender física" en general |
+| *"El cuerpo es lo que permite descubrir física sin heredarla"* | **RECORTADA.** El cuerpo no es un atajo para aprender física. Se justifica porque **sin él no hay un "yo" respecto del cual definir nada** — ni el no-yo, ni la agencia, ni los hitos que vengan. Es una tesis más pequeña, y es la que la evidencia aguanta |
+
+**Lo que queda por medir, y que decidiría de verdad esta discusión:** la **experimentación
+dirigida** — elegir qué hacer para resolver una duda. Ahí el pasivo no puede competir, porque no
+puede elegir qué mirar. **Si el cuerpo tampoco aportara ahí, sería una noticia mucho mayor que
+ésta.** Está anotada como pregunta abierta del árbol y todavía no tiene prerregistro.
+
+---
+
 ## 1. LA INVESTIGACIÓN — qué hay ahí fuera y qué nos falta
 
 Revisión hecha el 8-ago-2026. Para cada línea: **qué dicen**, **qué tomamos**, **qué NO tomamos**,

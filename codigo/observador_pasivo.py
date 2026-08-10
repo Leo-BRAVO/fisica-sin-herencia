@@ -33,16 +33,17 @@ BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(BASE, "codigo"))
 
 from soporte import (escena, escalon2, examen_voe, _r2_autopredictivo, _ganancia_comando,
+                     mundo_variable, MUNDO_FIJO,
                      PISO_LEGALIDAD, TECHO_OBEDIENCIA, PASOS_MINIMOS)
 
 CONDICIONES = ("encarnado", "pasivo_propio", "pasivo_ajeno")
 
 
-def _dieta(semilla, pasos):
+def _dieta(semilla, pasos, mundo=None):
     """Los episodios que UN agente vive. Devuelve lo observable y, aparte, sus ordenes — que solo
     el encarnado podra usar."""
-    c1, x1, nom, k1 = escena("cae", semilla=semilla + 1, pasos=pasos)
-    c2, x2, _, k2 = escena("apoyado", semilla=semilla + 2, pasos=pasos)
+    c1, x1, nom, k1 = escena("cae", semilla=semilla + 1, pasos=pasos, mundo=mundo)
+    c2, x2, _, k2 = escena("apoyado", semilla=semilla + 2, pasos=pasos, mundo=mundo)
     return {"comandos": [c1, c2], "canales": [x1, x2], "cortes": [k1, k2], "nombres": nom}
 
 
@@ -100,21 +101,27 @@ def fisica_de_soporte(dieta, dieta_examen, comandos=None):
             "puntaje": float(min(v_flota["sorpresa_relativa"], v_atrav["sorpresa_relativa"]))}
 
 
-def _examen(semilla, pasos):
-    _, x_flo, _, _ = escena("flota", semilla=semilla + 3, pasos=pasos)
-    _, x_atr, _, _ = escena("atraviesa", semilla=semilla + 4, pasos=pasos)
-    _, x_c2, _, _ = escena("cae", semilla=semilla + 5, pasos=pasos)
-    _, x_a2, _, _ = escena("apoyado", semilla=semilla + 6, pasos=pasos)
-    _, x_c3, _, _ = escena("cae", semilla=semilla + 7, pasos=pasos)
+def _examen(semilla, pasos, mundo=None):
+    _, x_flo, _, _ = escena("flota", semilla=semilla + 3, pasos=pasos, mundo=mundo)
+    _, x_atr, _, _ = escena("atraviesa", semilla=semilla + 4, pasos=pasos, mundo=mundo)
+    _, x_c2, _, _ = escena("cae", semilla=semilla + 5, pasos=pasos, mundo=mundo)
+    _, x_a2, _, _ = escena("apoyado", semilla=semilla + 6, pasos=pasos, mundo=mundo)
+    _, x_c3, _, _ = escena("cae", semilla=semilla + 7, pasos=pasos, mundo=mundo)
     return {"flota": x_flo, "atraviesa": x_atr, "cae2": x_c2, "apoyado2": x_a2, "cae3": x_c3}
 
 
-def comparar(semilla=1, pasos=PASOS_MINIMOS):
+def comparar(semilla=1, pasos=PASOS_MINIMOS, variar=False):
     """Las tres condiciones sobre el MISMO mundo. El pasivo-propio ve exactamente los mismos
-    episodios que el encarnado: la unica diferencia es el acceso a sus ordenes."""
-    dieta = _dieta(100 * semilla, pasos)
-    dieta_ajena = _dieta(100 * semilla + 50, pasos)     # episodios de OTRO agente
-    examen = _examen(100 * semilla, pasos)
+    episodios que el encarnado: la unica diferencia es el acceso a sus ordenes.
+
+    `variar` (prereg-35): la semilla mueve tambien la caida. El mundo se sortea UNA vez y se usa en
+    las tres condiciones y en el examen — si el encarnado y el pasivo cayeran en mundos distintos,
+    la comparacion mediria el decorado en lugar de la copia eferente, que es justo lo que el
+    prereg-32 existe para NO hacer."""
+    w = mundo_variable(semilla) if variar else None
+    dieta = _dieta(100 * semilla, pasos, mundo=w)
+    dieta_ajena = _dieta(100 * semilla + 50, pasos, mundo=w)   # episodios de OTRO agente
+    examen = _examen(100 * semilla, pasos, mundo=w)
     filas = {}
     for cond in CONDICIONES:
         d = dieta_ajena if cond == "pasivo_ajeno" else dieta
@@ -190,6 +197,23 @@ def regla31(verbose=True, pasos=PASOS_MINIMOS):
     if not c4:
         fallos.append("pasivo-ajeno")
 
+    # 5) prereg-35 — EL MUNDO VARIABLE NO ROMPE LA COMPARACION. La cura del INFORME-39 podria
+    #    haber destruido justo lo que este modulo mide: si el encarnado y el pasivo cayeran en
+    #    mundos distintos, el "empate" dejaria de significar nada. Se exige que las tres
+    #    condiciones sigan compartiendo decorado — se comprueba en el dato, no en la intencion.
+    fv = comparar(semilla=2, pasos=pasos, variar=True)
+    c5 = (fv["encarnado"]["soporte"]["escalon2_efecto"]
+          == fv["pasivo_propio"]["soporte"]["escalon2_efecto"]
+          and fv["encarnado"]["frontera"]["puntaje"] > fv["pasivo_propio"]["frontera"]["puntaje"])
+    if verbose:
+        print(f"  {'ok  ' if c5 else 'FALLO'} MUNDO VARIABLE (prereg-35): las tres condiciones "
+              f"comparten decorado (escalon2 {fv['encarnado']['soporte']['escalon2_efecto']}) y el "
+              f"control positivo sigue ganando "
+              f"({fv['encarnado']['frontera']['puntaje']} vs "
+              f"{fv['pasivo_propio']['frontera']['puntaje']})")
+    if not c5:
+        fallos.append("mundo-variable")
+
     if verbose:
         print("\nREGLA 31: " + ("APRUEBA — la comparacion ve diferencias reales y no inventa."
                                 if not fallos else f"REPRUEBA en {fallos}"))
@@ -201,18 +225,24 @@ def main():
     ap.add_argument("--regla31", action="store_true")
     ap.add_argument("--semilla", type=int, default=None)
     ap.add_argument("--pasos", type=int, default=PASOS_MINIMOS)
+    ap.add_argument("--variar", action="store_true",
+                    help="prereg-35: la semilla mueve TAMBIEN la caida, no solo el balbuceo")
     a = ap.parse_args()
     if a.pasos < PASOS_MINIMOS:
         raise SystemExit(f"MEDICION INVALIDA: {a.pasos} pasos (minimo {PASOS_MINIMOS}).")
     if a.regla31:
         sys.exit(regla31(pasos=a.pasos))
     if a.semilla is None:
-        print("uso: --regla31 | --semilla N")
+        print("uso: --regla31 | --semilla N [--variar]")
         return
-    filas = comparar(semilla=a.semilla, pasos=a.pasos)
-    salida = {"prerregistro": 32, "semilla": a.semilla, "pasos": a.pasos,
+    filas = comparar(semilla=a.semilla, pasos=a.pasos, variar=a.variar)
+    salida = {"prerregistro": 35 if a.variar else 32, "semilla": a.semilla, "pasos": a.pasos,
+              "mundo": (mundo_variable(a.semilla) if a.variar else MUNDO_FIJO),
+              "mundo_varia": bool(a.variar),
               "condiciones": filas, "veredicto": veredicto(filas)}
-    out = os.path.join(BASE, "resultados", f"p32-observador-pasivo-s{a.semilla}")
+    out = os.path.join(BASE, "resultados",
+                       f"p35-pasivo-variable-s{a.semilla}" if a.variar
+                       else f"p32-observador-pasivo-s{a.semilla}")
     os.makedirs(out, exist_ok=True)
     with open(os.path.join(out, "resumen.json"), "w", encoding="utf-8") as f:
         json.dump(salida, f, indent=2, ensure_ascii=False, default=str)

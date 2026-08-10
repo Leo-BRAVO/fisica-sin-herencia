@@ -440,8 +440,20 @@ caso("panel: gana con ASTERISCO quien gana una lectura y pierde otra (no reempla
 
 print("== la escalera de soporte (prereg-29): el primer no-yo por definicion POSITIVA ==")
 import soporte as _sop
-caso("soporte: APRUEBA su Regla 31 (7/7: escalones, senuelo, sin gravedad, VOE, nulos)",
+caso("soporte: APRUEBA su Regla 31 (11/11: escalones, senuelo, sin gravedad, VOE, nulos, "
+     "y el mundo variable del prereg-35)",
      _sop.regla31(verbose=False) == 0)
+# EL HALLAZGO DEL INFORME-39, CONGELADO: las 5 semillas de la primera ronda daban cifras IDENTICAS
+# porque la semilla movia el balbuceo y no la caida. Estos dos casos exigen que la cura exista Y
+# que no haya movido el defecto: lo publicado tiene que seguir valiendo bit a bit.
+caso("soporte: el mundo VARIA de verdad por semilla (5 valores distintos de cada parametro)",
+     all(len({_sop.mundo_variable(_s)[_k] for _s in range(1, 6)}) == 5
+         for _k in _sop.RANGOS_MUNDO))
+caso("soporte: sin --variar la escena es la de la primera ronda (nada publicado se movio)",
+     _sop.mundo_variable(1) != _sop.MUNDO_FIJO
+     and np.array_equal(_sop.escena("cae", semilla=1, pasos=_sop.PASOS_MINIMOS)[1],
+                        _sop.escena("cae", semilla=1, pasos=_sop.PASOS_MINIMOS,
+                                    mundo=_sop.MUNDO_FIJO)[1]))
 # LA LECCION DEL NIVEL B FRACASADO, CONGELADA: definir el no-yo solo como "no me obedece" deja
 # entrar al ruido puro. El senuelo de ruido debe ser rechazado por ILEGAL (impredecible), no por
 # obediente. Si alguien quita el requisito de legalidad, esto grita.
@@ -454,8 +466,17 @@ caso("soporte: sin potencia estadistica no hay veredicto (guarda de pasos minimo
 
 print("== el gemelo y las firmas del bebe (prereg-30): el control de oro del espejo ==")
 import espejo2 as _e2
-caso("espejo2: APRUEBA su Regla 31 (6/6: gemelo, apariencia, firmas positivas y negativas)",
+caso("espejo2: APRUEBA su Regla 31 (9/9: gemelo, apariencia, firmas, y el calibrador del "
+     "prereg-36)",
      _e2.regla31(verbose=False) == 0)
+# LA LECCION DEL INFORME-40, CONGELADA Y SIN SIMULAR NADA: el control positivo del prereg-30
+# disparo 2 de 5 en la nube y aun asi el banco lo aprobaba, porque probaba UNA semilla. Un control
+# positivo de una sola muestra no es un control positivo. Si alguien vuelve a leer "2/5" como
+# instrumento sano, esto grita.
+caso("espejo2: con el control positivo en 2/5 la vara se declara NO USABLE (prereg-36)",
+     not _e2._veredicto_calibracion(
+         [{"pasos_fase": 500, "tasa_control_positivo": 0.4, "tasa_ciega": 0.0,
+           "tasa_agitada_especifica": 0.0}])["vara_usable"])
 # CONGELADO: el cuerpo del GEMELO jamas puede declararse propio. Si alguien afloja el criterio
 # del espejo hasta que la apariencia baste, esto grita.
 _up, _ua, _sp, _sa, _ = _e2.escena_gemelo(semilla=1, pasos=1200)
@@ -470,7 +491,8 @@ caso("espejo2: el balbuceo ciego NO alcanza el criterio 1.5x (control negativo v
 
 print("== el observador pasivo (prereg-32): el control que podria refutarnos ==")
 import observador_pasivo as _op
-caso("observador pasivo: APRUEBA su Regla 31 (4/4: control positivo, gemelos, ventaja plantada)",
+caso("observador pasivo: APRUEBA su Regla 31 (5/5: control positivo, gemelos, ventaja plantada, "
+     "y el mundo variable no rompe la comparacion)",
      _op.regla31(verbose=False) == 0)
 # CONGELADO: la comparacion NO puede ser tautologica. Si las medidas de soporte dejan de
 # consultar los comandos, encarnado y pasivo dan el MISMO numero por construccion y el "empate"
