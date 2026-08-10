@@ -8,7 +8,7 @@ elegir por usted qué queremos que sea verdad** — que no es lo mismo que decid
 el experimento físico propio (R19 nivel 2) · cambiar las reglas · actuar en su nombre fuera del
 repositorio. Y una que nunca fue suya para concederla: **mover un umbral después de ver los datos**.
 
-**Estado: 1 pendiente, 2 resueltas por quórum — 10 de agosto de 2026.**
+**Estado: 3 pendientes, 2 resueltas por quórum, 1 revocada por el director — 10 de agosto de 2026.**
 
 ---
 
@@ -33,11 +33,30 @@ se queda como está, que también es una respuesta legítima.
 
 ---
 
+## PENDIENTE 2 — **Activar G11 temple y G12 reflejos** (Regla 33: cambio de genoma)
+Los dos genes **existen y pasan LA PUERTA 7/7** desde el 10-ago (`codigo/temple.py`,
+`codigo/reflejos.py`). Están en `modo: "inactivo"`. **Construir y ACTIVAR son dos cosas distintas:**
+activar es un cambio de genoma entre generaciones y la Regla 33 lo reserva a su firma. Yo no la tomo
+por quórum porque no es una decisión sobre cómo medir: es sobre qué órganos gobiernan a Diego.
+
+## PENDIENTE 3 — **Las cuatro preguntas sobre las reglas** (`registros/REGLAS-ESTRUCTURADAS.md`)
+1. ¿Reescribo las 34 con los cinco campos? · 2. ¿Aplico las 3 fusiones (34 → 31)? ·
+3. ¿Aplico los 4 endurecimientos? · 4. ¿Construyo guardianes para las **14 reglas que hoy ningún
+guardián nombra**, o las marcamos honestamente como dependientes de disciplina?
+**Cambiar las reglas es lo único que la enmienda de la Regla 15 dejó explícitamente fuera de mi
+alcance**, así que las cuatro esperan.
+
+---
+
+## Revocada por orden directa del director — 10-ago-2026
+**El quórum había decidido que G11 y G12 "no se construyen"** (Regla 18: ninguna pregunta abierta
+los necesitaba). **El director ordenó construirlos** — *"quiero que implementes temple y reflejos
+detalladamente con investigación"* — y su palabra manda sobre el quórum, que existe para avanzar en
+su ausencia, no para vetarlo. Se construyeron con la arquitectura de LeCun detrás (coste intrínseco
+cableado e inmutable · Modo 1 destilado del Modo 2) y quedan **inactivos** (ver PENDIENTE 2).
+**Queda escrito que el quórum se equivocó**: había pregunta abierta y era suya.
+
 ## Resueltas por quórum (Regla 15 enmendada) — 10-ago-2026
-**G11_temple y G12_reflejos: no se construyen.** Aplicación directa de la Regla 18 (toda corrida
-nace de una pregunta abierta) — ninguna pregunta abierta los necesita hoy. Quedan marcados como
-diseño no implementado en `GENOMA.json`. No hay juicio sobre qué es verdad aquí, solo sobre qué
-código merece existir. Revocable.
 
 **La segunda vuelta del prereg-37: se ejecuta.** El estudio salió **NO CONCLUYENTE POR INSTRUMENTO**
 (INFORME-46) y la cura —más objetos, más propiedades, un pasivo que no sea copia y una medida sin

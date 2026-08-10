@@ -29,6 +29,10 @@ import datetime
 import numpy as np
 
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Por debajo de esto, un sentido se declara DORMIDO y Diego lo dice en su propia voz.
+# Medido el 10-ago-2026 (INFORME-45): el tacto vivia en 0.0001.
+UMBRAL_SENTIDO_DORMIDO = 0.01
 sys.path.insert(0, os.path.join(BASE, "codigo"))
 
 from sinapsis import publicar, leer, SinapsisBloqueada
@@ -123,8 +127,46 @@ def latir(pasos=900, verbose=True, traza=None):
     cid = s_cuerpo["id"] if s_cuerpo else None
     _resp("sentido_propiocepcion", cid, {"canales": 6,
           "rango_angular": round(float(np.ptp(sentidos[:, :3])), 4)}, tema="cuerpo")
-    _resp("sentido_tacto", cid, {"canales": 3,
-          "fraccion_con_contacto": round(float(sentidos[:, 6:9].mean()), 4)}, tema="cuerpo")
+    # EL SENTIDO DORMIDO. Orden del director (10-ago-2026): "porque esta apagado, Diego debe saber
+    # que puede utilizar estos sentidos para ser mejor".
+    # La auditoria del INFORME-45 midio el tacto en 0.0001 — se enciende 1 vez cada 10.000 pasos,
+    # porque su brazo no toca nada. Hasta hoy ese numero se publicaba y nadie lo leia como lo que
+    # es. Ahora, si un sentido esta practicamente apagado, DIEGO LO DICE: queda en su sinapsis, en
+    # su propia voz, que tiene un sentido sin usar.
+    # FRONTERA (Regla 27): esto NO le dice nada del mundo. Le dice algo de SI MISMO — cuanto se
+    # enciende uno de sus canales — que es exactamente lo que un ente puede saber de si.
+    _tacto = round(float(sentidos[:, 6:9].mean()), 4)
+    _resp("sentido_tacto", cid, {"canales": 3, "fraccion_con_contacto": _tacto,
+                                 "dormido": bool(_tacto < UMBRAL_SENTIDO_DORMIDO)}, tema="cuerpo")
+    if _tacto < UMBRAL_SENTIDO_DORMIDO:
+        # MEDICION, no señal. El portero de sinapsis.py me bloqueo al primer intento: un sentido
+        # en modo 'mide' NO puede publicar 'senal'. Tenia razon — dar voz de alarma es autoridad, y
+        # un sentido no la tiene. Lo que SI puede hacer es medir: y "cuanto me enciendo" es una
+        # medicion sobre si mismo, no una alarma sobre el mundo. La constitucion me corrigio el
+        # diseño, y quedo mejor.
+        _pub("sentido_tacto", "medicion",
+             {"aviso": "tengo un sentido que casi nunca se enciende",
+              "cuanto_se_enciende": _tacto,
+              "umbral": UMBRAL_SENTIDO_DORMIDO,
+              # 10-ago-2026, CORRECCION: la primera version decia "no esta roto, es que no hay
+              # nada que tocar". ESO NO LO PUEDO SABER con esta medicion. Un canal que marca 0.0001
+              # es indistinguible entre las dos causas mirandolo quieto. Afirmar una era exactamente
+              # el pecado que el proyecto persigue: dar por cierto lo comodo. Ahora se declaran las
+              # dos y el experimento que las separa — que es ademas lo que hace util al sentido.
+              "dos_causas_que_no_puedo_separar_mirando": [
+                  "el canal funciona y no hay nada a mi alcance que tocar",
+                  "el canal esta averiado y nunca se encenderia aunque tocara algo"],
+              "como_las_separo": "moverme a proposito hasta chocar con algo. Si al haber contacto "
+                                 "el canal sube, funciona y solo estaba ocioso. Si sigue en cero "
+                                 "con contacto, esta averiado. Es la unica prueba que las separa, "
+                                 "y exige ACTUAR, no observar.",
+              "para_que_me_sirve": "un sentido sin usar es capacidad que no estoy gastando: si "
+                                   "funciona, el tacto me da la unica evidencia de contacto que no "
+                                   "depende de la vista, y con ella podria fechar cuando dos cosas "
+                                   "se tocan sin tener que verlo",
+              "lo_que_NO_significa": "esto no dice nada sobre el mundo, solo sobre cuanto se "
+                                     "enciende uno de mis canales"},
+             tema="cuerpo", causa=cid)
     _pub("G7_juego", "decision",
          {"balbuceo": "suave", "amplitud_media": round(float(np.abs(com).mean()), 4)},
          tema="cuerpo", causa=cid)

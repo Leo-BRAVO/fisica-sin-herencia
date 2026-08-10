@@ -54,7 +54,12 @@ def mutacion(nombre, guardian, danar):
     tmp, raiz = _copia()
     try:
         if not danar(raiz):
-            print(f"  SALTADA {nombre} (no se pudo aplicar el daño)")
+            # 10-ago-2026: SALTADA ERA UN APROBADO DISFRAZADO. Si el daño no se puede aplicar,
+            # la meta-auditoria perdio esa cobertura y NADIE se enteraba: el veredicto final
+            # seguia diciendo "los 9 daños fueron cazados" contando 8. Un daño que caduca es
+            # exactamente el punto ciego que este archivo existe para cazar, aplicado a si mismo.
+            print(f"  FALLO {nombre}  ->  el DAÑO ya no se puede aplicar: la prueba caduco")
+            FALLOS.append(f"{nombre} (daño caducado, no se pudo aplicar)")
             return
         codigo = _correr(raiz, guardian)
         if codigo != 0:
@@ -124,8 +129,24 @@ def cola_inejecutable(raiz):
 
 
 def readme_desfasado(raiz):
-    """Daño: el README proclama un número de reglas distinto del que CIMIENTOS contiene."""
-    return _editar(raiz, "README.md", "32 reglas", "29 reglas")
+    """Daño: el README proclama un número de reglas distinto del que CIMIENTOS contiene.
+
+    10-ago-2026 — POR QUE ESTE DAÑO SE LEE SOLO Y YA NO SE ESCRIBE A MANO: durante semanas el daño
+    buscaba la cadena literal "32 reglas". Cuando las reglas pasaron de 32 a 34 el texto dejo de
+    existir, el daño dejo de aplicarse, y la meta-auditoria lo reporto como SALTADA — es decir,
+    perdio una cobertura sin ponerse roja. Un daño escrito a mano CADUCA. Ahora se lee el numero
+    que el README proclame hoy, sea cual sea, y se le resta uno."""
+    ruta = os.path.join(raiz, "README.md")
+    if not os.path.exists(ruta):
+        return False
+    with open(ruta, encoding="utf-8") as f:
+        texto = f.read()
+    m = re.search(r"(\d+)\s+reglas", texto)
+    if not m:
+        return False
+    viejo = m.group(0)
+    nuevo = f"{int(m.group(1)) - 1} reglas"
+    return _editar(raiz, "README.md", viejo, nuevo)
 
 
 def suavizar_el_objetivo(raiz):
