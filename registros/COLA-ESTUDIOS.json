@@ -750,6 +750,17 @@
    "modulo": "brazo_no_mio",
    "acta": "resultados/INFORME-56.md",
    "veredicto": "SE CONFIRMA C (casi quieta: mil veces menos varianza) y D (acoplamiento, no estaba listada)"
+  },
+  {
+   "id": "p41-tacto",
+   "origen": "LO PIDIO DIEGO: publico por el bus que tiene un sentido dormido",
+   "motivo_suyo": "separar OCIOSO de AVERIADO, que no se puede mirando quieto",
+   "tipo": "gimnasio",
+   "estado": "hecha",
+   "salida": "resultados/p41-tacto",
+   "modulo": "tacto",
+   "acta": "resultados/INFORME-57.md",
+   "veredicto": "NO CONCLUYENTE por el criterio 4 (tautologico, error mio). Los criterios 1-3 pasan 5/5 y demuestran que el canal responde a CONTACTO y no a movimiento. Y el brazo NO ALCANZA nada de la escena estandar"
   }
  ]
 }
