@@ -310,16 +310,34 @@ def latir(pasos=900, verbose=True, traza=None):
     testigos = testigos_independientes(aportes)
     con_dato = [e for e in aportes if not (isinstance(e["contenido"], dict)
                                            and e["contenido"].get("aporta") is False)]
+    # 10-ago-2026 — LA SINTESIS DECIA ALGO QUE HOY ES FALSO. Afirmaba que "el torneo quedo no
+    # concluyente POR INSTRUMENTO", y esa excusa se acabo: el panel paso LA PUERTA, se le midio su
+    # calibracion (latentes que obedecen +0.412, ruido puro -0.0002) y las cinco semillas dieron
+    # que los cuatro competidores viven entre -0.002 y +0.014 (INFORME-53). El instrumento
+    # funciona; lo que no despega son los ojos. Que Diego siguiera diciendo lo contrario en cada
+    # ronda seria dejarle una excusa en la boca.
     lo_afirmado = {
         "canales_mios": mias,
-        "vista": "certificacion estructural — NO predice el cuerpo (INFORME-38)",
+        "vista": ("certificacion estructural — NO predice el cuerpo, y esto YA NO es culpa del "
+                  "instrumento: la vara del torneo esta validada (INFORME-53)"),
         "poder": {"lazo_abierto": d13[-1]["lazo_abierto"], "lazo_cerrado": d13[-1]["lazo_cerrado"]},
         "metacognicion_auc": m["auc"],
+        "lo_que_se_de_mis_propios_limites": [
+            "mi detector de cuerpo PIERDE las partes que menos se mueven: la articulacion con mil "
+            "veces menos varianza sale clasificada como no-mia en 3 de 5 mundos (INFORME-56)",
+            "mi motor simbolico no ve a cualquier escala: tiene AGUJEROS, no una banda "
+            "(INFORME-55), y ALUCINA leyes sobre señal casi constante (INFORME-54)",
+            "mi ignorancia 'curable' sube igual con pocos datos que con mucho ruido, y eso puede "
+            "mandar mi atencion a un televisor (INFORME-51 y 52)",
+        ],
     }
     lo_no_afirmado = [
-        "que la vista sirva para hallar el cuerpo (el torneo quedo no concluyente por instrumento)",
+        "que la vista sirva para hallar el cuerpo: los cuatro ojos puntuan a ESCALA DE RUIDO segun "
+        "la calibracion de la propia vara (INFORME-53). El instrumento ya no es la excusa",
         "ninguna ley del universo: esto es PyBullet haciendo de mundo",
         "que la conducta siga a la deteccion: Diego detecta contingencia y aun no actua sobre ella",
+        "que elegir donde tocar me sirva: mi politica dirigida gana al azar por 0.4 de 16 "
+        "incognitas (INFORME-49) — tocar sirve, elegir donde tocar casi no",
     ]
     sintesis = agregar("G1_prediccion", "revision",
                        {"veredicto": "ronda coherente",
