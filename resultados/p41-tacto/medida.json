@@ -1,0 +1,103 @@
+{
+ "prerregistro": 41,
+ "semillas": [
+  1,
+  2,
+  3,
+  4,
+  5
+ ],
+ "filas": [
+  {
+   "semilla": 1,
+   "quieto": 0.0,
+   "busca": 0.275,
+   "vacio": 0.0,
+   "pasos_con_contacto_real": 330,
+   "acuerdo": 1.0,
+   "tonto": 1.0
+  },
+  {
+   "semilla": 2,
+   "quieto": 0.0,
+   "busca": 0.4658333333333333,
+   "vacio": 0.0,
+   "pasos_con_contacto_real": 559,
+   "acuerdo": 1.0,
+   "tonto": 1.0
+  },
+  {
+   "semilla": 3,
+   "quieto": 0.0,
+   "busca": 0.2833333333333333,
+   "vacio": 0.0,
+   "pasos_con_contacto_real": 340,
+   "acuerdo": 1.0,
+   "tonto": 1.0
+  },
+  {
+   "semilla": 4,
+   "quieto": 0.0,
+   "busca": 0.4275,
+   "vacio": 0.0,
+   "pasos_con_contacto_real": 513,
+   "acuerdo": 1.0,
+   "tonto": 1.0
+  },
+  {
+   "semilla": 5,
+   "quieto": 0.0,
+   "busca": 0.25083333333333335,
+   "vacio": 0.0,
+   "pasos_con_contacto_real": 301,
+   "acuerdo": 1.0,
+   "tonto": 1.0
+  }
+ ],
+ "alcance_medido_del_brazo": {
+  "reposo_punta": [
+   0.593,
+   0.0,
+   0.442
+  ],
+  "barrido_x": [
+   -0.22,
+   0.657
+  ],
+  "barrido_y": [
+   -0.44,
+   0.439
+  ],
+  "barrido_z": [
+   0.38,
+   0.82
+  ],
+  "medido": "10-ago-2026"
+ },
+ "obstaculo": [
+  0.4,
+  0.38,
+  0.55
+ ],
+ "suelo_del_gimnasio_z": 0.0,
+ "objetos_del_gimnasio_z": 0.2,
+ "umbrales": {
+  "piso_busca": 0.05,
+  "techo_apagado": 0.01,
+  "minimos_busca": 4,
+  "piso_acuerdo": 0.6,
+  "margen_sobre_tonto": 0.15
+ },
+ "busca_enciende_en": 5,
+ "de": 5,
+ "quieto_max": 0.0,
+ "vacio_max": 0.0,
+ "acuerdo_medio": 1.0,
+ "linea_base_tonta_media": 1.0,
+ "ganancia_sobre_el_tonto": 0.0,
+ "criterio_1_busca_enciende": true,
+ "criterio_2_quieto_apagado": true,
+ "criterio_3_vacio_apagado_SEÑUELO": true,
+ "criterio_4_acuerdo": false,
+ "veredicto": "NO CONCLUYENTE — los criterios no encajan en ninguno de los tres veredictos escritos"
+}
