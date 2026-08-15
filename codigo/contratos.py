@@ -38,8 +38,85 @@ TIPOS = ("SENTIDO", "ACTUADOR", "ESTIMADOR", "POLITICA")
 # se ha mirado. Cada modulo entra aqui cuando alguien lee de verdad que publica y que consume.
 CON_CONTRATO = ("incertidumbre", "atencion")
 
+METODO = {
+    "prerregistro": 49,
+    "tipo_de_medida": "umbral",   # cada chequeo de contrato es una decision binaria: pasa o no
+    "que_mide": ("cuantos incumplimientos de contrato detecta: tipo invalido, numero publicado "
+                 "sin rango, consumo sin decir de quien, y rango declarado pero no verificado "
+                 "en codigo"),
+    "comparten_datos": {
+        "hay": False,
+        "porque": "cada contrato se revisa por separado y no hay ninguna magnitud compartida "
+                  "entre modulos; lo unico comun es el propio detector",
+    },
+    "linea_base": ("no revisar nada — el detector tonto que dice 'todo bien' siempre. Detecta 0 "
+                   "incumplimientos, y cualquier detector util tiene que superarlo sobre "
+                   "contratos rotos a proposito (Regla 11)"),
+    "formulas": [
+        {"base": {"rotos": 1.0}, "parametro": "rotos", "factor": 4.0, "esperado": "sube",
+         "porque": "mas contratos rotos = mas incumplimientos detectados. Se declara como "
+                   "desigualdad y no como proporcion porque un mismo contrato roto puede disparar "
+                   "mas de un chequeo. Base 1.0 y NO 0.0: multiplicar cero por cuatro sigue "
+                   "siendo cero, y ese descuido ya me tumbo cuatro relaciones este mes"},
+    ],
+}
+
 _fallos = []
 _ok = []
+
+
+def revisar_contrato(nombre, contrato):
+    """EL REVISOR PURO: recibe un contrato y devuelve la lista de incumplimientos. Separado del
+    resto para poder probarlo con contratos SINTETICOS —rotos a proposito— sin tocar el
+    repositorio. Un detector que solo se puede probar sobre los modulos reales no se puede probar
+    por el lado negativo."""
+    fallos = []
+    if not isinstance(contrato, dict):
+        return [f"{nombre}: sin CONTRATO"]
+    if contrato.get("tipo") not in TIPOS:
+        fallos.append(f"{nombre}: tipo invalido {contrato.get('tipo')!r}")
+    for clave, spec in (contrato.get("publica") or {}).items():
+        r = (spec or {}).get("rango")
+        if not (isinstance(r, (list, tuple)) and len(r) == 2
+                and isinstance(r[0], (int, float))):
+            fallos.append(f"{nombre}: publica '{clave}' SIN rango")
+    for clave, spec in (contrato.get("consume") or {}).items():
+        if not (spec or {}).get("de"):
+            fallos.append(f"{nombre}: consume '{clave}' sin decir DE QUIEN")
+        r = (spec or {}).get("rango")
+        if not (isinstance(r, (list, tuple)) and len(r) == 2):
+            fallos.append(f"{nombre}: consume '{clave}' sin rango declarado")
+    return fallos
+
+
+def _metodo_medir(rotos=1.0):
+    """PASO 1 — la medida escalar: cuantos incumplimientos detecta sobre `rotos` contratos rotos
+    a proposito. Sinteticos: no se toca ningun modulo real para medir el detector."""
+    total = 0
+    for i in range(int(rotos)):
+        total += len(revisar_contrato(f"sintetico_{i}",
+                                      {"tipo": "INVENTADO", "publica": {"x": {}}}))
+    return float(total)
+
+
+def _metodo_sanidad():
+    """PASO 3 — LA FICHA. La pregunta: **¿el detector distingue un contrato bueno de uno roto, o
+    marca todo por igual?** Un guardian que marca siempre es tan inutil como uno que nunca marca,
+    y ademas es peor: enseña a ignorarlo."""
+    fallos = []
+    bueno = revisar_contrato("bueno", {"tipo": "ESTIMADOR",
+                                       "publica": {"x": {"rango": [0.0, 1.0]}}})
+    roto = revisar_contrato("roto", {"tipo": "INVENTADO", "publica": {"x": {}}})
+    if bueno:
+        fallos.append(f"marca un contrato BIEN puesto: {bueno}")
+    if not roto:
+        fallos.append("NO marca un contrato roto: el detector no detecta")
+    if not CON_CONTRATO:
+        fallos.append("la lista de modulos con contrato esta VACIA: revisar sobre vacio aprueba "
+                      "siempre, que es justo lo que la Regla 31 prohibe")
+    return {"aprueba": not fallos, "fallos": fallos,
+            "incumplimientos_en_uno_bueno": len(bueno),
+            "incumplimientos_en_uno_roto": len(roto)}
 
 
 def _caso(nombre, ok, detalle=""):
@@ -109,22 +186,20 @@ def regla31(verbose=True):
         if not ok:
             fallos.append(nombre)
 
-    class _Sin:
-        pass
-
-    class _Malo:
-        CONTRATO = {"tipo": "INVENTADO", "publica": {"x": {}}}
-
-    class _Bueno:
-        CONTRATO = {"tipo": "ESTIMADOR", "publica": {"x": {"rango": [0.0, 1.0]}}}
-
-    caso("un modulo SIN contrato se marca", getattr(_Sin, "CONTRATO", None) is None)
-    caso("un tipo inventado se marca", _Malo.CONTRATO["tipo"] not in TIPOS)
+    caso("un modulo SIN contrato se marca", len(revisar_contrato("x", None)) > 0)
+    caso("un tipo inventado se marca",
+         any("tipo invalido" in f for f in
+             revisar_contrato("x", {"tipo": "INVENTADO", "publica": {}})))
     caso("un numero publicado SIN rango se marca",
-         (_Malo.CONTRATO["publica"]["x"].get("rango") is None))
+         any("SIN rango" in f for f in
+             revisar_contrato("x", {"tipo": "ESTIMADOR", "publica": {"y": {}}})))
+    caso("un consumo sin decir DE QUIEN se marca",
+         any("DE QUIEN" in f for f in
+             revisar_contrato("x", {"tipo": "POLITICA",
+                                    "consume": {"y": {"rango": [0, 1]}}})))
     caso("un contrato BIEN puesto NO se marca",
-         _Bueno.CONTRATO["tipo"] in TIPOS
-         and len(_Bueno.CONTRATO["publica"]["x"]["rango"]) == 2)
+         revisar_contrato("x", {"tipo": "ESTIMADOR",
+                                "publica": {"y": {"rango": [0.0, 1.0]}}}) == [])
     caso("la lista de modulos con contrato NO esta vacia (un chequeo sobre vacio no aprueba nada)",
          len(CON_CONTRATO) > 0)
     print("\nREGLA 31: " + ("APRUEBA — los detectores funcionan por los dos lados."

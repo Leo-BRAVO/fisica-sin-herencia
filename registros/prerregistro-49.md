@@ -85,6 +85,34 @@ verificarlo.** Guardián nuevo `contratos.py`, **BLOQUEANTE**, con su prueba de 
 **Esto es lo que faltó de verdad:** G8 se creyó un número de G14 sin comprobar nada. No es un
 problema de nombres ni de metáforas biológicas: **es una interfaz sin contrato.**
 
+> ### ENMIENDA 2 — el contrato deja de tener puerta trasera. Escrita ANTES de correr, 11-ago-2026
+> **La puerta volvió a reprobar, y esta vez el fallo es mío y de la enmienda 1.**
+>
+> **Qué pasó:** al repartir la cuota de exploración **en proporción a la ignorancia**, inflar la
+> lectura del televisor **vuelve a comprarle presupuesto** — la fuga se mudó del presupuesto de
+> actuar al de explorar. Medido por la ficha: inflando la epistémica del televisor ×2, la ventaja
+> de la región buena cae de **34.9971 a 27.0034**.
+>
+> **Y la causa es una concesión mía:** escribí `_ignorancia()` de forma que, *"por
+> compatibilidad"*, **aceptaba la `epistemica` cruda cuando la región no traía `curable`.**
+> **Es exactamente el agujero que este prerregistro existe para tapar**, construido por mí dentro
+> del arreglo. Una interfaz con una excepción amable no es un contrato.
+>
+> **La corrección:** `_ignorancia()` **exige `curable`** y levanta error si falta o si está fuera
+> de `[0, 1]`. **Sin excepciones de compatibilidad.**
+>
+> **Consecuencia, y es más fuerte que lo que el criterio B pedía:** una epistémica de **20 ya no
+> puede llegar a G8 en absoluto** — el contrato la rechaza en la puerta, porque `curable` es una
+> fracción acotada. **El ataque del INFORME-52 deja de ser representable.**
+>
+> **Por eso el criterio B se pone a prueba de las dos formas**, y las dos deben cumplirse:
+> - **B1 — el contrato rechaza el número inflado**: pasarle `curable = 20` levanta error.
+> - **B2 — el ataque más fuerte que el contrato SÍ permite**: con `curable_tv = 1.0` (el máximo
+>   posible) y `poder_tv = 0`, el televisor se lleva **menos de 2.0 de 10**.
+>
+> **B2 es lo que impide que esto sea un truco de tipos.** Si el televisor ganara con la ignorancia
+> máxima legal, el contrato solo estaría escondiendo el problema detrás de una validación.
+
 ## 2. LA LÍNEA BASE TONTA (Reglas 11 y 12)
 - **Para G14:** decir que **toda** la incertidumbre es aleatoria — que nada es curable. Es la línea
   base que el módulo ya declaraba en el prerregistro 43.

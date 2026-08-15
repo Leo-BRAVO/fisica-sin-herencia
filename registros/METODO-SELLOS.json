@@ -3,6 +3,10 @@
     "cuando": "2026-08-15 05:02:59",
     "huella": "fc459ffcd9950d08"
   },
+  "atencion": {
+    "cuando": "2026-08-15 20:31:30",
+    "huella": "8877685efc139691"
+  },
   "brazo_no_mio": {
     "cuando": "2026-08-10 18:46:15",
     "huella": "81452845ac650ac1"
@@ -10,6 +14,10 @@
   "contingencia": {
     "cuando": "2026-08-10 13:29:26",
     "huella": "e2afc60177b7f680"
+  },
+  "contratos": {
+    "cuando": "2026-08-15 20:30:55",
+    "huella": "1eb4b09c66800048"
   },
   "escala": {
     "cuando": "2026-08-10 18:41:31",
