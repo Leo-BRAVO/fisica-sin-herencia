@@ -1,0 +1,98 @@
+{
+  "prerregistro": 50,
+  "alcance_medido": {
+    "x": [
+      -0.22,
+      0.657
+    ],
+    "y": [
+      -0.44,
+      0.439
+    ],
+    "z": [
+      0.38,
+      0.82
+    ]
+  },
+  "A_cuerpo_alcanza": {
+    "aprueba": true,
+    "fallos": [],
+    "posicion_inicial": [
+      0.4706,
+      0.2928,
+      0.6211
+    ],
+    "alcance_medido": {
+      "x": [
+        -0.22,
+        0.657
+      ],
+      "y": [
+        -0.44,
+        0.439
+      ],
+      "z": [
+        0.38,
+        0.82
+      ]
+    }
+  },
+  "B_persistencia": {
+    "estado_historia_1": {
+      "pos": [
+        0.49552160263827544,
+        0.25717082604846386,
+        0.49220399280083
+      ],
+      "vel": [
+        0.054326009783680726,
+        0.020679875308947486,
+        -0.1385230318894771
+      ],
+      "pasos": 100
+    },
+    "estado_historia_2": {
+      "pos": [
+        0.439274038051976,
+        0.2772975755196611,
+        0.6210110728899046
+      ],
+      "vel": [
+        -0.021146448169041827,
+        -0.10655256586641983,
+        -0.017513580444161812
+      ],
+      "pasos": 100
+    },
+    "distintos": true
+  },
+  "C_ventaja_mundo_vivo": 0.2166,
+  "D_ventaja_mundo_muerto": 0.0,
+  "E_predictor_al_azar": {
+    "error_azar": 0.1909,
+    "error_linea_base_tonta": 0.0008,
+    "el_azar_pierde": true
+  },
+  "F_etiquetas": {
+    "limpio": [],
+    "con_violacion_inyectada": [
+      "la observacion trae la etiqueta humana 'masa_del_objeto' (palabra 'masa')"
+    ]
+  },
+  "G_recompensa": {
+    "legitima": [],
+    "con_violacion_inyectada": [
+      "la recompensa incluye el termino ajeno 'se_parece_a_newton': depende de un criterio nuestro y no de si el mundo le dio la razon"
+    ]
+  },
+  "criterios": {
+    "A_cuerpo_alcanza_el_mundo": true,
+    "B_el_mundo_persiste": true,
+    "C_la_moneda_discrimina": true,
+    "D_nulo_mundo_muerto": true,
+    "E_el_azar_pierde": true,
+    "F_regla27_etiquetas": true,
+    "G_regla27_recompensa": true
+  },
+  "veredicto": "MUNDO EN PIE — persiste, el cuerpo lo alcanza, la moneda discrimina y la Regla 27 queda cerrada por dos guardianes"
+}
