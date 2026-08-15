@@ -3,13 +3,25 @@
     "cuando": "2026-08-15 05:02:59",
     "huella": "fc459ffcd9950d08"
   },
+  "atencion": {
+    "cuando": "2026-08-15 20:36:24",
+    "huella": "8877685efc139691"
+  },
   "brazo_no_mio": {
     "cuando": "2026-08-10 18:46:15",
     "huella": "81452845ac650ac1"
   },
+  "cadena_g14g8": {
+    "cuando": "2026-08-15 20:38:03",
+    "huella": "7543a6330b738070"
+  },
   "contingencia": {
     "cuando": "2026-08-10 13:29:26",
     "huella": "e2afc60177b7f680"
+  },
+  "contratos": {
+    "cuando": "2026-08-15 20:30:55",
+    "huella": "1eb4b09c66800048"
   },
   "escala": {
     "cuando": "2026-08-10 18:41:31",
@@ -18,6 +30,10 @@
   "experimentar2": {
     "cuando": "2026-08-10 08:25:59",
     "huella": "b05046a1b0d938bb"
+  },
+  "incertidumbre": {
+    "cuando": "2026-08-15 20:32:08",
+    "huella": "6dd0e49aff7b83d4"
   },
   "poder": {
     "cuando": "2026-08-10 14:17:20",

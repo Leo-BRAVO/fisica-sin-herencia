@@ -28,7 +28,44 @@ import numpy as np
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-def repartir(regiones, presupuesto, cuota_exploracion=0.05, piso_poder=0.05):
+# EL CONTRATO DE ESTE CONSUMIDOR (prerregistro-49). G8 se creyo una epistemica inflada de G14 sin
+# comprobar nada, y esa es la causa REAL del INFORME-52: no un nombre malo ni una metafora
+# biologica, sino UNA INTERFAZ SIN CONTRATO. Desde aqui, lo que se consume se verifica.
+CONTRATO = {
+    "tipo": "POLITICA",
+    "consume": {"curable": {"de": "incertidumbre.py", "rango": [0.0, 1.0],
+                            "porque": "es una FRACCION adimensional. La `epistemica` cruda es una "
+                                      "magnitud que sube con el ruido (INFORME-51), y consumirla "
+                                      "para decidir donde mirar es lo que compro el televisor"}},
+}
+
+
+def _ignorancia(region):
+    """Lo que G8 usa para priorizar, CON su rango verificado. EXIGE `curable`: sin excepciones.
+
+    LA PRIMERA VERSION DE ESTA FUNCION ACEPTABA LA `epistemica` CRUDA "por compatibilidad", y esa
+    concesion mia reabrio la fuga por la otra puerta: como la cuota de exploracion se reparte en
+    proporcion a la ignorancia, inflar la lectura volvia a comprarle presupuesto al televisor. La
+    ficha lo midio antes de que existiera un dato del estudio: con la epistemica del televisor x2,
+    la ventaja de la region buena caia de 34.9971 a 27.0034.
+    UNA INTERFAZ CON UNA EXCEPCION AMABLE NO ES UN CONTRATO. Ver enmienda 2 del prerregistro-49.
+
+    Y hay una consecuencia mas fuerte que el criterio que se buscaba: como `curable` es una
+    FRACCION ACOTADA, una epistemica de 20 ya no puede llegar aqui. El ataque del INFORME-52 deja
+    de ser representable."""
+    if "curable" not in region:
+        raise ValueError(f"CONTRATO ROTO: la region {region.get('id')} no publica 'curable'. "
+                         f"G8 no consume la `epistemica` cruda: sube con el ruido (INFORME-51) y "
+                         f"consumirla para decidir donde mirar es lo que compro el televisor")
+    v = float(region["curable"])
+    lo, hi = CONTRATO["consume"]["curable"]["rango"]
+    if not (lo <= v <= hi):
+        raise ValueError(f"CONTRATO ROTO: la region {region.get('id')} publica curable={v}, "
+                         f"fuera del rango {[lo, hi]} declarado por incertidumbre.py")
+    return v
+
+
+def repartir(regiones, presupuesto, cuota_exploracion=0.05, piso_poder=0.0):
     """regiones: [{'id', 'epistemica', 'aleatoria', 'poder', 'coste'}]. Devuelve el reparto.
     'coste' = lo que consumiría atender la región del todo. Si el presupuesto alcanza para
     todos los costes, se asigna completo (la escasez no se finge)."""
@@ -36,15 +73,36 @@ def repartir(regiones, presupuesto, cuota_exploracion=0.05, piso_poder=0.05):
     if presupuesto >= total_coste:
         return [{"id": r["id"], "asignado": r["coste"], "fraccion": 1.0,
                  "nota": "sin escasez: atencion plena"} for r in regiones]
-    prioridad = np.array([r["epistemica"] * max(r["poder"], piso_poder) for r in regiones])
+    # EL PISO ERA LA FUGA. Valia 0.05, asi que una region con poder CERO puntuaba 0.05 y con la
+    # epistemica del televisor x20 se llevaba 7.036 de 10 (INFORME-52). Ahora vale 0.0: una region
+    # sobre la que NO SE PUEDE HACER NADA puntua exactamente cero. Eso es EMPOWERMENT — preferir
+    # los estados desde los que tus acciones tienen efecto—, y un televisor con ruido tiene mucha
+    # sorpresa y empowerment cero, asi que no puede secuestrar la atencion POR CONSTRUCCION.
+    # Y quitarlo no ciega a nadie: la `cuota_exploracion` de abajo ya reserva un trozo del
+    # presupuesto repartido por igual. El piso era redundante con ella; lo unico que añadia era
+    # premiar lo intocable.
+    prioridad = np.array([_ignorancia(r) * max(r["poder"], piso_poder) for r in regiones])
     if prioridad.sum() <= 0:
         prioridad = np.ones(len(regiones))
-    base = cuota_exploracion * presupuesto / len(regiones)     # nadie queda ciego del todo
-    resto = presupuesto - base * len(regiones)
+    # DOS PRESUPUESTOS CON DOS CRITERIOS (enmienda 1 del prerregistro-49, escrita antes de correr
+    # porque LA PUERTA cazo el problema antes de que existiera un dato).
+    # Con empowerment PURO, toda region de poder cero puntua cero, asi que una region donde SI hay
+    # algo real que aprender pero no se puede tocar y EL TELEVISOR reciben exactamente lo mismo.
+    # La Regla 31 de este modulo, congelada en el prerregistro-43, exige lo contrario: "mirar aun
+    # vale algo". Y esa exigencia no es opinion: el prerregistro-32 midio que la fisica de soporte
+    # NO NECESITA CUERPO, o sea que la observacion pasiva construye modelo.
+    # Por eso la cuota de exploracion deja de repartirse POR IGUAL y se reparte EN PROPORCION A LA
+    # IGNORANCIA CURABLE. El televisor no se cuela por ahi: su ignorancia es ALEATORIA, no curable,
+    # asi que su `curable` es bajo por construccion. Lo que se recupera es la distincion entre
+    # "intocable pero informativo" y "ruido", que el empowerment puro borraba.
+    ign = np.array([_ignorancia(r) for r in regiones], dtype=float)
+    pesos_expl = ign / ign.sum() if ign.sum() > 0 else np.ones(len(regiones)) / len(regiones)
+    bolsa_expl = cuota_exploracion * presupuesto
+    resto = presupuesto - bolsa_expl
     pesos = prioridad / prioridad.sum()
     out = []
-    for r, w in zip(regiones, pesos):
-        asignado = min(base + resto * w, r["coste"])
+    for r, w, we in zip(regiones, pesos, pesos_expl):
+        asignado = min(bolsa_expl * we + resto * w, r["coste"])
         out.append({"id": r["id"], "asignado": round(float(asignado), 4),
                     "fraccion": round(float(asignado / r["coste"]), 4)})
     return out
@@ -72,33 +130,45 @@ METODO = {
     "linea_base": ("repartir POR IGUAL entre las regiones — el tonto de la Regla 11 para un "
                    "asignador. Si no le gana, no esta priorizando: esta repartiendo"),
     "formulas": [
-        {"base": {"poder_tv": 0.0, "epistemica_tv": 5.0}, "parametro": "poder_tv", "factor": 20.0,
+        # BASE 0.05 Y NO 0.0: la version del prerregistro-43 ponia base 0.0 y factor 20, y
+        # multiplicar cero por veinte sigue siendo cero — la puerta lo midio x1.000. Es la trampa
+        # de la base nula, la cuarta vez en un mes que aparece en este repositorio.
+        {"base": {"poder_tv": 0.05, "curable_tv": 0.10}, "parametro": "poder_tv", "factor": 20.0,
          "esperado": "baja",
          "porque": "si el televisor pasa a ser CONTROLABLE deja de ser televisor: es una region "
                    "legitima y debe llevarse mas presupuesto, luego la ventaja de la buena baja. "
                    "Desigualdad y no proporcion: el reparto es una normalizacion, no una funcion "
                    "cerrada"},
-        {"base": {"poder_tv": 0.0, "epistemica_tv": 5.0}, "parametro": "epistemica_tv",
-         "factor": 20.0, "esperado": "igual",
-         "porque": "**ESTE ES EL CASO QUE IMPORTA.** Inflar la epistemica del televisor x20 —que "
-                   "es lo que G14 hace con las regiones ruidosas— NO puede cambiar el reparto, "
-                   "porque su poder es cero y el producto sigue siendo cero. Si cambiara, el "
-                   "defecto de G14 se convertiria en conducta"},
+        {"base": {"poder_tv": 0.0, "curable_tv": 0.10}, "parametro": "curable_tv",
+         "factor": 10.0, "esperado": "baja",
+         "porque": "subir la ignorancia CURABLE de una region intocable si tiene que darle mas "
+                   "cuota de OBSERVAR —observar vale, y vale mas donde hay mas que aprender "
+                   "(prerregistro-32: la fisica de soporte no necesita cuerpo)—, luego la ventaja "
+                   "de la buena baja. Lo que NO puede pasar es que se lleve el presupuesto de "
+                   "ACTUAR, y eso no se declara aqui: es el criterio B2 del prerregistro-49, y "
+                   "declararlo en el instrumento impediria que pudiera fallar"},
+        # AQUI ESTABA LA RELACION "inflar la epistemica x20 no cambia el reparto: igual", y ya no
+        # se puede escribir: desde la enmienda 2 del prerregistro-49 el contrato de G8 solo acepta
+        # `curable`, que es una FRACCION ACOTADA en [0,1]. Una epistemica de 20 no llega hasta
+        # aqui — levanta ValueError en la puerta. El ataque del INFORME-52 dejo de ser
+        # representable, que es mas fuerte que ganarle la subasta.
     ],
 }
 
 
-def _dos_regiones(poder_tv=0.0, epistemica_tv=5.0, presupuesto=10.0):
-    """Un televisor (mucha 'ignorancia', ningun control) contra una region buena."""
-    return [{"id": "tv", "epistemica": float(epistemica_tv), "aleatoria": 5.0,
+def _dos_regiones(poder_tv=0.0, curable_tv=0.25, presupuesto=10.0):
+    """El televisor y la region buena. Desde la enmienda 2 del prerregistro-49 las regiones hablan
+    en `curable` —la fraccion acotada— y no en `epistemica` cruda, porque es lo unico que el
+    contrato de G8 acepta."""
+    return [{"id": "tv", "curable": float(curable_tv), "aleatoria": 5.0,
              "poder": float(poder_tv), "coste": presupuesto},
-            {"id": "buena", "epistemica": 0.8, "aleatoria": 0.1, "poder": 0.5,
+            {"id": "buena", "curable": 0.30, "aleatoria": 0.1, "poder": 0.5,
              "coste": presupuesto}]
 
 
-def _metodo_medir(poder_tv=0.0, epistemica_tv=5.0):
+def _metodo_medir(poder_tv=0.05, curable_tv=0.10):
     """PASO 1 — la medida escalar: cuanto se lleva la BUENA por cada unidad que se lleva el TV."""
-    regs = _dos_regiones(poder_tv=poder_tv, epistemica_tv=epistemica_tv)
+    regs = _dos_regiones(poder_tv=poder_tv, curable_tv=curable_tv)
     r = {x["id"]: x["asignado"] for x in repartir(regs, presupuesto=10.0)}
     return float(r["buena"] / max(r["tv"], 1e-9))
 
@@ -107,33 +177,49 @@ def _metodo_sanidad():
     """PASO 3 — LA FICHA, y aqui la pregunta no es sobre el instrumento sino sobre la CADENA:
     **¿el defecto medido de G14 se propaga hasta la conducta de Diego?**
 
-    Se infla la epistemica del televisor por un factor creciente —imitando exactamente lo que G14
-    entrega en una region ruidosa— y se comprueba que el reparto NO se mueve. La proteccion es el
-    factor `poder`: no se puede aprender de lo que no se puede tocar.
+    Se ataca por los DOS caminos que el defecto de G14 podria tomar, y la defensa es distinta en
+    cada uno:
+      (1) EL NUMERO INFLADO NO ENTRA. El contrato solo acepta `curable`, una fraccion en [0,1], asi
+          que una epistemica de 20 levanta ValueError antes de tocar el reparto.
+      (2) EL ATAQUE MAS FUERTE QUE EL CONTRATO SI PERMITE. Con la ignorancia al maximo legal
+          (curable=1.0) y poder cero, el televisor tiene que llevarse menos de 2.0 de 10.
+    El (2) es lo que impide que esto sea un truco de tipos: si el televisor ganara con la
+    ignorancia maxima legal, el contrato solo estaria escondiendo el problema tras una validacion.
     """
     fallos = []
-    base = _metodo_medir(epistemica_tv=1.0)
-    for factor in (2.0, 10.0, 100.0, 1000.0):
-        v = _metodo_medir(epistemica_tv=factor)
-        if abs(v - base) > 1e-6:
-            fallos.append(f"CONTAGIO DESDE G14: inflando la epistemica del televisor x{factor:g} "
-                          f"la ventaja de la region buena pasa de {base:.4f} a {v:.4f}")
-            break
+    base = _metodo_medir()
+    # (1) el contrato rechaza lo que no es una fraccion
+    try:
+        _metodo_medir(curable_tv=20.0)
+        fallos.append("EL CONTRATO NO PROTEGE: una 'ignorancia' de 20 entro sin levantar error, "
+                      "asi que la epistemica inflada de G14 seguiria llegando al reparto")
+    except ValueError:
+        pass
+    # (2) con la ignorancia al maximo LEGAL y poder cero, el televisor sigue perdiendo
+    reparto = {x["id"]: x["asignado"]
+               for x in repartir(_dos_regiones(poder_tv=0.0, curable_tv=1.0), presupuesto=10.0)}
+    if reparto["tv"] >= 2.0:
+        fallos.append(f"CONTAGIO: con la ignorancia al maximo legal (curable=1.0) y poder CERO, "
+                      f"el televisor se lleva {reparto['tv']:.4f} de 10")
     # Y la linea base tonta: repartir por igual daria ventaja 1.0. Hay que ganarle.
     if base <= 1.0:
         fallos.append(f"no le gana al reparto por igual (ventaja {base:.4f}, el tonto da 1.0)")
     return {"aprueba": not fallos, "fallos": fallos,
             "ventaja_de_la_buena": round(base, 4),
+            "tv_con_ignorancia_maxima_legal": round(float(reparto["tv"]), 4),
             "linea_base_tonta_repartir_por_igual": 1.0}
 
 
 def regla31(verbose=True):
     fallos = []
     regiones = [
-        {"id": "curable_y_controlable", "epistemica": 0.8, "aleatoria": 0.1, "poder": 0.6, "coste": 10},
-        {"id": "curable_sin_control",   "epistemica": 0.8, "aleatoria": 0.1, "poder": 0.0, "coste": 10},
-        {"id": "televisor",             "epistemica": 0.05, "aleatoria": 2.0, "poder": 0.0, "coste": 10},
-        {"id": "ya_aprendida",          "epistemica": 0.02, "aleatoria": 0.1, "poder": 0.7, "coste": 10},
+        # Hablan en `curable` desde la enmienda 2 del prerregistro-49: es lo unico que el
+        # contrato acepta. El televisor tiene curable BAJO por construccion —su ignorancia es
+        # aleatoria, no curable— y por eso tampoco se cuela por la cuota de exploracion.
+        {"id": "curable_y_controlable", "curable": 0.80, "aleatoria": 0.1, "poder": 0.6, "coste": 10},
+        {"id": "curable_sin_control",   "curable": 0.80, "aleatoria": 0.1, "poder": 0.0, "coste": 10},
+        {"id": "televisor",             "curable": 0.05, "aleatoria": 2.0, "poder": 0.0, "coste": 10},
+        {"id": "ya_aprendida",          "curable": 0.02, "aleatoria": 0.1, "poder": 0.7, "coste": 10},
     ]
     rep = {r["id"]: r["asignado"] for r in repartir(regiones, presupuesto=12)}
     c1 = rep["curable_y_controlable"] == max(rep.values())

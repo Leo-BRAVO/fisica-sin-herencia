@@ -37,15 +37,76 @@ def medir(X, Y, X_test, miembros=12, semilla=0):
     A = np.column_stack([X, np.ones(len(X))])
     At = np.column_stack([X_test, np.ones(len(X_test))])
     preds, residuos = [], []
+    err_modelo, err_constante = [], []
     for _ in range(miembros):
         idx = rng.integers(0, len(X), len(X))          # bootstrap: remuestreo con reemplazo
         w, *_ = np.linalg.lstsq(A[idx], Y2[idx], rcond=None)
         preds.append(At @ w)
         residuos.append(float(np.mean((A[idx] @ w - Y2[idx]) ** 2)))
+        # FUERA DE BOLSA: los puntos que ESTE miembro no vio. El remuestreo con reemplazo deja
+        # fuera ~37% cada vez, asi que salen gratis y son datos que el ajuste no toco. Se comparan
+        # dos errores sobre ellos: el del modelo y el de la LINEA BASE TONTA (la media de Y).
+        fuera = np.setdiff1d(np.arange(len(X)), idx)
+        if len(fuera) >= 3:
+            err_modelo.append(float(np.mean((A[fuera] @ w - Y2[fuera]) ** 2)))
+            err_constante.append(float(np.mean((Y2[idx].mean(axis=0) - Y2[fuera]) ** 2)))
     preds = np.stack(preds)                            # (miembros, n_test, d)
+    epi = float(preds.std(axis=0).mean())
+    ale = float(np.sqrt(np.mean(residuos)))
     return {"prediccion": preds.mean(axis=0),
-            "epistemica": float(preds.std(axis=0).mean()),
-            "aleatoria": float(np.sqrt(np.mean(residuos)))}
+            "epistemica": epi,
+            "aleatoria": ale,
+            # LA LECTURA QUE ARREGLA EL DEFECTO DEL INFORME-51 (prerregistro-49, 11-ago-2026).
+            # `epistemica` sola es una MAGNITUD con las unidades de Y, y para un modelo lineal vale
+            # aproximadamente sigma/raiz(n): sube igual con POCOS DATOS que con MUCHO RUIDO. Medido
+            # el 10-ago: multiplicar el ruido por 5 multiplicaba la lectura por 5, y el ruido
+            # explicaba un 43.3% extra. G2 curiosidad leia ese numero y una region ruidosa le
+            # parecia prometedora.
+            # `curable` es una FRACCION, sin unidades: cuanta de la ignorancia total es la parte
+            # que mas datos podrian curar. Para el caso lineal, epistemica ~ sigma/raiz(n) y
+            # aleatoria ~ sigma, asi que la razon sale ~1/(1+raiz(n)) Y SIGMA SE CANCELA SOLO.
+            # Dividir el ruido en vez de restarlo.
+            # NO SE QUITA NINGUNA LECTURA: `epistemica` y `aleatoria` siguen publicandose igual,
+            # para que nada de lo que hoy las usa cambie en silencio.
+            "ganancia_predictiva": _ganancia(err_modelo, err_constante),
+            "curable": (float(_ganancia(err_modelo, err_constante) * epi / (epi + ale))
+                        if (epi + ale) > 0 else 0.0)}
+
+
+def _ganancia(err_modelo, err_constante):
+    """CUANTO MEJOR PREDICE EL MODELO QUE DECIR "todo vale la media", en datos que no vio.
+
+    POR QUE ESTE FACTOR EXISTE (enmienda 3 del prerregistro-49). La primera version de `curable`
+    era solo `epistemica/(epistemica+aleatoria)`, y ese arreglo tenia un agujero que la puerta
+    destapo antes de que el estudio corriera: con 60 datos, la region APRENDIBLE puntuaba 0.1510
+    y el TELEVISOR 0.1861 — la pared que parpadea puntuaba MAS ALTO.
+    La causa es el mismo mecanismo que celebre como acierto: al ser una razon entre dos cantidades
+    con las mismas unidades, sigma se cancela — Y CON SIGMA SE CANCELA TAMBIEN SI HAY LEY O NO.
+    Lo que quedaba medía UNICAMENTE escasez de datos.
+    Con este factor, una region sin ley tiene ganancia ~0 y su ignorancia deja de parecer curable:
+    mas datos no curan lo que no tiene estructura que aprender."""
+    if not err_modelo:
+        return 0.0
+    em, ec = float(np.mean(err_modelo)), float(np.mean(err_constante))
+    if ec <= 0:
+        return 0.0
+    return float(max(0.0, 1.0 - em / ec))
+
+
+# EL CONTRATO DE ESTE ESTIMADOR (prerregistro-49). Lo que faltaba de verdad en la cadena G14->G8
+# no era un nombre mejor: era que quien consume un numero comprobara que esta en su rango. G8 se
+# creyo una epistemica inflada sin preguntar nada.
+CONTRATO = {
+    "tipo": "ESTIMADOR",
+    "publica": {
+        "epistemica": {"rango": [0.0, None], "unidades": "las de Y",
+                       "aviso": "MAGNITUD, no fraccion: sube con el ruido. Ver INFORME-51"},
+        "aleatoria": {"rango": [0.0, None], "unidades": "las de Y"},
+        "ganancia_predictiva": {"rango": [0.0, 1.0], "unidades": "fraccion adimensional"},
+        "curable": {"rango": [0.0, 1.0], "unidades": "fraccion adimensional",
+                    "aviso": "esta es la que debe consumir quien decida DONDE mirar"},
+    },
+}
 
 
 # ==========================================================================================
@@ -74,10 +135,16 @@ METODO = {
          "porque": "la ignorancia EPISTEMICA es, por definicion, la que se cura con datos: al "
                    "multiplicar por 8 las muestras tiene que caer. Es la firma falsable del "
                    "concepto — si NO cayera, lo que se esta midiendo no es ignorancia curable"},
-        {"base": {"n": 40.0, "ruido": 0.5}, "parametro": "ruido", "factor": 4.0, "esperado": "sube",
-         "porque": "mas ruido irreducible = mas desacuerdo entre miembros remuestreados. Sube, "
-                   "pero se declara como desigualdad: la relacion exacta depende del "
-                   "condicionamiento de la matriz y ponerle un factor seria inventarselo"},
+        # AQUI VIVIA LA RELACION "mas ruido -> sube", y SE RETIRA (prerregistro-49, 11-ago-2026).
+        # Era cierta de la lectura vieja —`epistemica` cruda sube con el ruido, y eso es
+        # exactamente el defecto que el INFORME-51 midio— y es FALSA de la lectura nueva, porque
+        # `curable` es una fraccion en la que sigma se cancela.
+        # PERO NO SE SUSTITUYE POR "mas ruido -> igual", que es lo que me pedia el cuerpo. Esa
+        # afirmacion es PRECISAMENTE lo que el criterio A del prerregistro-49 existe para medir:
+        # declararla aqui haria que el modulo no pudiera sellarse sin cumplirla, y entonces el
+        # criterio A no podria fallar nunca. Seria el sexto criterio tautologico del mes.
+        # Una relacion metamorfica solo puede declarar lo que se sabe A PRIORI, y lo unico que se
+        # sabe a priori de `curable` es lo de arriba: mas datos la bajan, por definicion.
     ],
 }
 
@@ -92,9 +159,11 @@ def _mundo(n=40.0, ruido=0.5, dim=2, semilla=4):
 
 
 def _metodo_medir(n=40.0, ruido=0.5):
-    """PASO 1 — la medida escalar: la ignorancia EPISTEMICA, la que debe curarse con datos."""
+    """PASO 1 — la medida escalar: la FRACCION curable, que es la que la cadena consume desde el
+    prerregistro-49. Antes devolvia `epistemica` cruda, y por eso la ficha reprobaba: el ruido
+    explicaba un 43.3% extra de la lectura (INFORME-51)."""
     X, Y, Xt = _mundo(n=n, ruido=ruido)
-    return float(medir(X, Y, Xt)["epistemica"])
+    return float(medir(X, Y, Xt)["curable"])
 
 
 def _metodo_sanidad():
@@ -112,7 +181,11 @@ def _metodo_sanidad():
         m = medir(X, Y, Xt)
         v_datos.append(1.0 / n)          # ESCASEZ: lo que la epistemica debe seguir
         v_ruido.append(r)
-        l_epi.append(m["epistemica"])
+        # SE LEE `curable`, NO `epistemica` CRUDA (prerregistro-49). La ficha seguia midiendo la
+        # lectura vieja despues de arreglarla, y por eso daba EXACTAMENTE el mismo 43.3% del
+        # INFORME-51: no es que el arreglo no funcionara, es que la ficha no lo estaba mirando.
+        # Un instrumento arreglado del que nadie cambia el medidor sigue leyendo el defecto.
+        l_epi.append(m["curable"])
         l_ale.append(m["aleatoria"])
     r = S.correlaciones({"escasez": l_epi, "ruido": l_ale},
                         {"escasez": v_datos, "ruido": v_ruido})
