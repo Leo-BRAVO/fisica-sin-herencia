@@ -119,26 +119,35 @@ def sonar_episodios(modelo, semilla_estado, n=4, pasos=2600, semilla=9, con_ruid
     return suenos
 
 
-def mineria_en_suenos(suenos, dt=1.0):
+# EL MOTOR ES UN PARAMETRO DESDE EL PRERREGISTRO 48, y por defecto sigue siendo `sindy3`: cambiar
+# el comportamiento del organo NO es lo que ese estudio mide. El estudio corre las dos versiones y
+# compara; cambiar el defecto es una decision posterior, con el acta delante.
+def _motor(nombre):
+    import sindy3
+    import sindy4
+    return {"sindy3": sindy3.descubrir, "sindy4": sindy4.descubrir}[nombre]
+
+
+def mineria_en_suenos(suenos, dt=1.0, motor="sindy3"):
     """Re-mineria sobre lo soñado, con el motor mas robusto de la casa (forma debil + bootstrap).
     Devuelve la ley SOLO si el motor la declara; el motor ya trae su propia disciplina."""
-    import sindy3
+    descubrir = _motor(motor)
     leyes = []
     for s in suenos:
         if s.shape[1] < 2:
             continue
-        ley = sindy3.descubrir(s[:, :2], dt=dt)
+        ley = descubrir(s[:, :2], dt=dt)
         if ley is not None:
             leyes.append(ley["terminos"])
     return leyes
 
 
-def dormir(episodios_vividos, dt=1.0, semilla=9):
+def dormir(episodios_vividos, dt=1.0, semilla=9, motor="sindy3"):
     """Las dos fases seguidas, con el guardian entre ellas. Devuelve PROPUESTAS, jamas nodos."""
     modelo = _modelo_del_mundo(episodios_vividos)
     # --- fase conservadora: re-mineria sobre lo REALMENTE vivido
-    import sindy3
-    conserv = [sindy3.descubrir(np.asarray(X)[:, :2], dt=dt) for X in episodios_vividos]
+    descubrir = _motor(motor)
+    conserv = [descubrir(np.asarray(X)[:, :2], dt=dt) for X in episodios_vividos]
     conserv = [c["terminos"] for c in conserv if c is not None]
     # --- guardian: ¿un modelo de RUIDO tambien produciria leyes al soñar?
     rng = np.random.default_rng(semilla)
@@ -146,7 +155,7 @@ def dormir(episodios_vividos, dt=1.0, semilla=9):
                  for _ in range(len(episodios_vividos))]
     modelo_ruido = _modelo_del_mundo(ruido_eps)
     suenos_ruido = sonar_episodios(modelo_ruido, ruido_eps[0], semilla=semilla)
-    leyes_del_ruido = mineria_en_suenos(suenos_ruido, dt=dt)
+    leyes_del_ruido = mineria_en_suenos(suenos_ruido, dt=dt, motor=motor)
     # --- fase generativa
     # AQUI VIVIA `guardian_ok = len(leyes_del_ruido) == 0`, calculado y TIRADO, bajo un comentario
     # que decia "solo se abre si el guardian aprobo". La fase se abria SIEMPRE. Cazado por la ficha
@@ -157,7 +166,7 @@ def dormir(episodios_vividos, dt=1.0, semilla=9):
     # justo lo que hace confiar en un modulo mas de lo que merece. Se quita el resto y se dice lo
     # que de verdad pasa: la fase generativa corre siempre, y lo que la contiene es el filtro.
     suenos = sonar_episodios(modelo, episodios_vividos[0], semilla=semilla)
-    generativas_crudas = mineria_en_suenos(suenos, dt=dt)
+    generativas_crudas = mineria_en_suenos(suenos, dt=dt, motor=motor)
 
     # EL FILTRO DE VIGILIA, mecanico y no solo escrito: una ley soñada SOLO pasa si su SOPORTE
     # (que terminos gobiernan cada derivada) coincide con una ley hallada despierto.
@@ -249,13 +258,13 @@ def _mundo_soñable(estructura=1.0, ruido=0.02, n_ep=5, T=4000, semilla=11):
 DT_JUGUETE = 0.02
 
 
-def _metodo_medir(estructura=1.0, ruido=0.02):
+def _metodo_medir(estructura=1.0, ruido=0.02, motor="sindy3"):
     """PASO 1 — la medida escalar: cuantas leyes soñadas sobreviven al filtro de vigilia."""
-    r = dormir(_mundo_soñable(estructura=estructura, ruido=ruido), dt=DT_JUGUETE)
+    r = dormir(_mundo_soñable(estructura=estructura, ruido=ruido), dt=DT_JUGUETE, motor=motor)
     return float(len(r["fase_generativa"]))
 
 
-def _metodo_sanidad():
+def _metodo_sanidad(motor="sindy3"):
     """PASO 3 — LA FICHA. La pregunta: **¿el filtro de vigilia sigue a la estructura REAL del
     mundo vivido, o se deja llevar por la escala del ruido?** Un filtro que aprueba mas cuando hay
     mas ruido estaria consagrando alucinaciones — que es exactamente el riesgo de tener una fase
@@ -267,13 +276,13 @@ def _metodo_sanidad():
     for _ in range(6):
         e = float(rng.uniform(0.0, 1.0))
         ests.append(e)
-        lect.append(_metodo_medir(estructura=e, ruido=0.02))
+        lect.append(_metodo_medir(estructura=e, ruido=0.02, motor=motor))
     r = S.correlaciones({"estructura": lect}, {"estructura": ests})
     fallos = list(r["fallos"])
     # Y el señuelo de escala: multiplicar el mundo por 10 no puede cambiar cuantas leyes pasan.
-    a = _metodo_medir(estructura=1.0, ruido=0.02)
+    a = _metodo_medir(estructura=1.0, ruido=0.02, motor=motor)
     eps = [x * 10.0 for x in _mundo_soñable(estructura=1.0, ruido=0.02)]
-    b = float(len(dormir(eps, dt=DT_JUGUETE)["fase_generativa"]))
+    b = float(len(dormir(eps, dt=DT_JUGUETE, motor=motor)["fase_generativa"]))
     if a != b:
         fallos.append(f"ESCALA: con el mundo x10 pasan {b} leyes en vez de {a} — el filtro lee "
                       f"amplitud, no estructura")
