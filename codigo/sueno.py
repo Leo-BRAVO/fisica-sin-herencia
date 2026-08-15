@@ -119,16 +119,24 @@ def sonar_episodios(modelo, semilla_estado, n=4, pasos=2600, semilla=9, con_ruid
     return suenos
 
 
-# EL MOTOR ES UN PARAMETRO DESDE EL PRERREGISTRO 48, y por defecto sigue siendo `sindy3`: cambiar
-# el comportamiento del organo NO es lo que ese estudio mide. El estudio corre las dos versiones y
-# compara; cambiar el defecto es una decision posterior, con el acta delante.
+# EL MOTOR ES UN PARAMETRO DESDE EL PRERREGISTRO 48. Nacio con `sindy3` por defecto —cambiar el
+# organo no era lo que ese estudio medía— y PASA A `sindy4` EL 11-ago-2026, con el acta delante:
+# el INFORME-59 mide que con sindy4 la ficha de sanidad de este modulo aprueba ENTERA (cero
+# fallos), el señuelo de escala del prerregistro 43 da 3.0 leyes con el mundo x1 y 3.0 con el
+# mundo x10, y la linea base tonta —soñar sobre un modelo ajustado a ruido puro— sigue dando 0.
+# Con sindy3 daba 3.0 y 0.0, y ademas fallaba la correlacion con la estructura (0.327 sobre un
+# piso de 0.6). Los dos fallos eran el mismo fallo visto por dos ventanas.
+# EL MECANISMO DEL SUEÑO NUNCA FALLO: fallaba el motor con el que minaba sus propios sueños.
+# AVISO PARA QUIEN LO CAMBIE: sindy4 CALLA POR COMPLETO en sistemas con una coordenada no acotada
+# (INFORME-58, la caida con roce). Aqui funciona porque el mundo de juguete de este modulo es un
+# oscilador amortiguado. Un organo que viviera en otro mundo podria EMPEORAR con este motor.
 def _motor(nombre):
     import sindy3
     import sindy4
     return {"sindy3": sindy3.descubrir, "sindy4": sindy4.descubrir}[nombre]
 
 
-def mineria_en_suenos(suenos, dt=1.0, motor="sindy3"):
+def mineria_en_suenos(suenos, dt=1.0, motor="sindy4"):
     """Re-mineria sobre lo soñado, con el motor mas robusto de la casa (forma debil + bootstrap).
     Devuelve la ley SOLO si el motor la declara; el motor ya trae su propia disciplina."""
     descubrir = _motor(motor)
@@ -142,7 +150,7 @@ def mineria_en_suenos(suenos, dt=1.0, motor="sindy3"):
     return leyes
 
 
-def dormir(episodios_vividos, dt=1.0, semilla=9, motor="sindy3"):
+def dormir(episodios_vividos, dt=1.0, semilla=9, motor="sindy4"):
     """Las dos fases seguidas, con el guardian entre ellas. Devuelve PROPUESTAS, jamas nodos."""
     modelo = _modelo_del_mundo(episodios_vividos)
     # --- fase conservadora: re-mineria sobre lo REALMENTE vivido
@@ -258,13 +266,13 @@ def _mundo_soñable(estructura=1.0, ruido=0.02, n_ep=5, T=4000, semilla=11):
 DT_JUGUETE = 0.02
 
 
-def _metodo_medir(estructura=1.0, ruido=0.02, motor="sindy3"):
+def _metodo_medir(estructura=1.0, ruido=0.02, motor="sindy4"):
     """PASO 1 — la medida escalar: cuantas leyes soñadas sobreviven al filtro de vigilia."""
     r = dormir(_mundo_soñable(estructura=estructura, ruido=ruido), dt=DT_JUGUETE, motor=motor)
     return float(len(r["fase_generativa"]))
 
 
-def _metodo_sanidad(motor="sindy3"):
+def _metodo_sanidad(motor="sindy4"):
     """PASO 3 — LA FICHA. La pregunta: **¿el filtro de vigilia sigue a la estructura REAL del
     mundo vivido, o se deja llevar por la escala del ruido?** Un filtro que aprueba mas cuando hay
     mas ruido estaria consagrando alucinaciones — que es exactamente el riesgo de tener una fase
