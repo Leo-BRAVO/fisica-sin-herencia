@@ -1,0 +1,101 @@
+{
+  "que_es": "diagnostico del INFORME-58 §5, NO evidencia de ningun criterio del prerregistro-47",
+  "semilla": 47,
+  "escala": 1.0,
+  "sistemas": {
+    "oscilador": {
+      "condicion_matriz": 10.6,
+      "recorrido_x": [
+        -0.96,
+        1.0
+      ],
+      "recorrido_v": [
+        -0.92,
+        0.86
+      ],
+      "soporte": {
+        "dx/dt": [
+          "x",
+          "v"
+        ],
+        "dv/dt": [
+          "x",
+          "v"
+        ]
+      },
+      "cp": {
+        "dx/dt": {
+          "1": 0.9,
+          "x": 3.7,
+          "v": 351.3,
+          "x2": 0.9,
+          "xv": 0.8,
+          "v2": 0.2
+        },
+        "dv/dt": {
+          "1": 0.4,
+          "x": 244.3,
+          "v": 13.8,
+          "x2": 1.4,
+          "xv": 0.6,
+          "v2": 0.3
+        }
+      },
+      "margen_fuera_de_muestra": [
+        1.0087,
+        0.9982
+      ],
+      "gana_a_la_linea_base": true,
+      "con_tope_1e12_declara_ley": true,
+      "declara_ley": true
+    },
+    "caida_con_roce": {
+      "condicion_matriz": 1434996.3,
+      "recorrido_x": [
+        -0.01,
+        220.6
+      ],
+      "recorrido_v": [
+        0.0,
+        2.9
+      ],
+      "soporte": {
+        "dx/dt": [
+          "v"
+        ],
+        "dv/dt": [
+          "1",
+          "x",
+          "xv"
+        ]
+      },
+      "cp": {
+        "dx/dt": {
+          "1": 1.7,
+          "x": 0.4,
+          "v": 13.6,
+          "x2": 1.9,
+          "xv": 0.3,
+          "v2": 1.7
+        },
+        "dv/dt": {
+          "1": 6.0,
+          "x": 4.0,
+          "v": 2.5,
+          "x2": 0.4,
+          "xv": 3.9,
+          "v2": 0.0
+        }
+      },
+      "margen_fuera_de_muestra": [
+        33.6574,
+        -62.4371
+      ],
+      "gana_a_la_linea_base": false,
+      "con_tope_1e12_declara_ley": false,
+      "declara_ley": false
+    }
+  },
+  "tope_condicion_del_motor": 1000000.0,
+  "piso_cp_del_motor": 3.0
+}
