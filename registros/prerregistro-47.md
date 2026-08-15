@@ -23,8 +23,27 @@ Dos sondas **exploratorias** del `DIAGNOSTICO-MOTOR-01`, que **no son evidencia 
 
 **Semillas quemadas y prohibidas aquí:** `2, 3, 5, 7, 11` (arreglo del módulo de escala),
 `23, 29, 31, 37, 41` (prerregistro 46) y `7` (las sondas de arriba).
-**Este estudio corre sobre cinco semillas nuevas: `43, 47, 53, 59, 61`**, declaradas aquí antes de
+**Este estudio corre sobre cinco semillas nuevas: `47, 53, 59, 61, 67`**, declaradas aquí antes de
 tocarlas.
+
+> ### ENMIENDA 4 — la semilla 43 queda QUEMADA y se sustituye por la 67. 11-ago-2026, antes de correr
+> **La lista original de este prerregistro era `43, 47, 53, 59, 61`. Miré la 43 y por eso la
+> retiro.**
+>
+> **Qué miré y por qué:** al construir el módulo, LA PUERTA reprobó la relación metamórfica
+> midiendo `×1.000`. Para saber si era la trampa de la base cero (que ya me tumbó tres relaciones
+> en un día) abrí el caso concreto: **semilla 43, oscilador, escala ×1, con los dos motores.**
+>
+> **Qué vi, dicho entero para que se me pueda descontar:** con ruido base, `sindy3` declara
+> `dx/dt = 0.993·v` y `dv/dt = −0.89·x`, y `sindy4` declara lo mismo **más el término de
+> amortiguamiento** `−0.041·v`, que es el que la ley verdadera tiene en `−0.05` y **`sindy3` no
+> encuentra**. Con ruido ×200, `sindy3` calla y `sindy4` declara la ley con margen fuera de
+> muestra de 0.71 y 0.74.
+>
+> **Esas observaciones NO son evidencia de este estudio.** Salieron de diagnosticar un fallo de la
+> puerta, sobre una semilla que ahora queda fuera. **La sustituye la `67`**, que no se ha tocado.
+>
+> **Y no se toca ningún criterio.** A, B, C y D siguen exactamente como estaban firmados.
 
 **Y declaro mi expectativa, para que se me pueda descontar:** espero que **A y B pasen y C pase**.
 Si el criterio A falla, mi diagnóstico del umbral era incorrecto y lo escribiré con esas palabras.
@@ -39,17 +58,79 @@ Se construye un archivo **NUEVO**, `codigo/sindy4.py`. **`sindy3.py` no se edita
 mataría su sello y dejaría irreproducibles las 67 corridas ya hechas.
 
 1. **Corte adimensional**: en vez de `|W| < 0.05`, la **Presencia de Coeficiente**
-   `CP = √m · μ(ξ) / σ(ξ)` sobre los remuestreos del bootstrap. Es una razón **sin unidades**, así
-   que **no cambia si el mundo se mide en otra escala**. Piso de CP congelado: **3.0**.
+   `CP = |μ(ξ)| / σ(ξ)` sobre los remuestreos del bootstrap. Es una razón **sin unidades**, así
+   que **no cambia si el mundo se mide en otra escala**. Piso de CP congelado: **3.0** — un peso
+   solo entra si está a **tres desviaciones o más de cero**.
+
+   > ### ENMIENDA 1, escrita ANTES de correr y antes de que exista `sindy4.py` — 11-ago-2026
+   > **La primera versión de este prerregistro escribió la fórmula como `CP = √m · μ/σ`**, copiada
+   > tal cual del trabajo que la propone (STCV, arXiv 2603.05201). **Al ir a implementarla vi que
+   > ese factor `√m` no aplica a nuestro estimador y la corrijo aquí, en abierto, antes de tener
+   > un solo dato.**
+   >
+   > **La razón:** en el trabajo original, `σ` es la dispersión *de una muestra* de tamaño `m`, y
+   > `√m` convierte esa dispersión en el error de la media. **En un bootstrap, la dispersión entre
+   > remuestreos YA ES el error estándar** — no hay que dividirla otra vez. Con nuestros 200
+   > remuestreos, `√m = 14.1`, así que dejar el factor **multiplicaría por catorce la puntuación de
+   > todos los términos, incluidos los falsos**, y un piso de 3.0 dejaría pasar cualquier cosa con
+   > una razón real de 0.21.
+   >
+   > **Qué cambia y qué no:** cambia el factor constante, **no cambia el criterio ni lo relaja** —
+   > al contrario, lo endurece. Y **no cambia lo que importa: sigue siendo una razón sin unidades**,
+   > que es la propiedad por la que se eligió. **Se enmienda ahora porque implementar a sabiendas
+   > una fórmula que creo equivocada sería peor que enmendarla a la vista.**
 2. **Adimensionalización previa**: las columnas del diccionario se normalizan por las escalas de
    **los propios datos** antes de ajustar, y los pesos se devuelven a unidades al final. **No se
    usan unidades humanas** — eso sería herencia; se usan las escalas empíricas de la serie.
+   **Piso de peso adimensional congelado: `|W_s| ≥ 0.01`.**
+
+   > ### ENMIENDA 3, escrita ANTES de correr el estudio — 11-ago-2026
+   > **La puerta reprobó `sindy4` en su control positivo antes de que existiera un solo dato del
+   > estudio, y el motivo obliga a declarar un número que faltaba.**
+   >
+   > **Lo que pasó:** sobre el oscilador **sin ruido**, CP no discrimina. La razón es que **CP mide
+   > consistencia, no relevancia**: el sesgo de discretización del integrador —un término de
+   > magnitud 0.0059 sobre 1.0— es diminuto pero **perfectamente consistente entre remuestreos**,
+   > así que su CP sale 7·10¹², indistinguible del de un término verdadero. **Un criterio de
+   > consistencia por sí solo no puede separar "pequeño y sistemático" de "grande y real".**
+   >
+   > **Lo que se añade:** el piso de magnitud **en el espacio adimensional**, que el cambio 2 ya
+   > declaraba construir y que no llegué a usar para decidir. Como las columnas del diccionario y
+   > el objetivo están normalizados a norma unidad, **`|W_s|` es la fracción de la magnitud del
+   > objetivo que explica ese término — una cantidad sin unidades.** Se congela en **0.01**: *un
+   > término que aporta menos del 1% no es un término de la ley.*
+   >
+   > **Por qué esto NO reintroduce el defecto que arreglamos:** el `0.05` de `sindy3` cortaba
+   > **pesos con unidades**, y por eso se movía con la escala. Este piso corta **una fracción**, y
+   > una fracción no cambia si el mundo se mide en otra escala. Es la diferencia entre *"pesa menos
+   > de 50 gramos"* y *"es menos del 1% del total"*.
+   >
+   > **Qué vi antes de fijar el 0.01, dicho entero:** los pesos adimensionales del control positivo
+   > —el juguete de `sindy3`, semilla 7, **ya quemada**— salen 1.001, 1.002 y 0.162 para los
+   > términos verdaderos, 0.0059 para el sesgo de discretización y ≤0.0046 para el ruido. **El 0.01
+   > es el orden de magnitud que separa esos dos grupos, y lo digo en vez de presentarlo como
+   > elegido a priori.** No he mirado ni un dato del barrido de 25 escalas ni de las semillas
+   > 43, 47, 53, 59, 61: el estudio no ha corrido.
+   >
+   > **Y esto hace el criterio A más difícil, no más fácil:** un piso de magnitud es exactamente
+   > la clase de número que podría reintroducir dependencia de la escala si estuviera mal puesto.
+   > Si el barrido sigue saliendo con agujeros, este piso será el primer sospechoso.
 3. **Guarda de condición**: si el número de condición de la matriz supera **10⁶**, el motor
    **calla**. Razón declarada, y es aritmética y no empírica: la doble precisión lleva ~16 cifras
    significativas, y con condición 10⁶ se conservan 10 cifras buenas.
 4. **Poder predictivo fuera de muestra**: se ajusta en el 70% de las ventanas y se mide en el 30%
    restante. **Si la ley no supera a la línea base tonta en las ventanas que no vio, no se declara
    ley.**
+
+   > ### ENMIENDA 2, escrita ANTES de correr — 11-ago-2026
+   > La versión firmada decía *"supera a la línea base tonta"* **sin número**, y sin número no es
+   > un criterio. Se fija aquí, antes de existir el código: **la línea base tonta es el modelo que
+   > solo usa el término constante** (*"la derivada no depende de nada"*), y la ley debe superarlo
+   > en **R² ≥ +0.10** en las ventanas que no vio, **en cada una de las dos ecuaciones**.
+   >
+   > Se elige ese rival y no la persistencia porque es el que **discrimina justo el defecto 2**:
+   > sobre una señal casi constante, el modelo constante lo explica todo, así que **ninguna ley
+   > puede ganarle por 0.10 y el motor se ve obligado a callar.**
 
 **Lo que NO se cambia:** la forma débil (integrar en vez de derivar) se queda intacta, y **el
 diccionario sigue teniendo las mismas seis piezas**. Un cambio a la vez, o no sabremos cuál actuó.
@@ -90,6 +171,28 @@ así, con esas palabras y con acta propia.
 - **NO ERA LA CAUSA** — falla A con C y D en pie: el umbral no era el problema.
 - **EL INFORME-55 ESTABA MAL** — falla D.
 - **NO CONCLUYENTE** — no encaja en ninguno.
+
+> ### ENMIENDA 5 — la relación metamórfica que declaré era FALSA. 11-ago-2026, antes de correr
+> **La primera versión declaraba:** *"subir el ruido ×200 baja la cuenta, porque con la señal
+> enterrada en ruido no hay ley que hallar"*. **Es falsa, y la puerta lo cazó.**
+>
+> **Por qué es falsa:** el ruido de `escala.py` se añade **dentro** de la integración. **No
+> entierra la señal: la conduce.** La desviación de la trayectoria sube de 0.404 a 6.369 al subir
+> el ruido, y la ley determinista **sigue estando ahí** — es un oscilador forzado por ruido, no un
+> oscilador borrado por ruido. **`sindy4` la encuentra, con margen fuera de muestra de 0.71.**
+>
+> **La relación correcta, que sí se sabe a priori:** lo que destruye una ley no es el ruido del
+> proceso sino **el ruido de MEDIDA** — el que se suma a la trayectoria ya ocurrida, como el de un
+> sensor. Eso sí entierra la señal y sí tiene que bajar la cuenta. La relación pasa a declararse
+> sobre `ruido_medida`, **con base 0.01 y no 0.0.**
+>
+> **Y un hallazgo sobre nuestro propio pasado, que no puedo callarme:** el prerregistro-46 declaró
+> **esta misma relación falsa** y su Regla 31 la dio por buena. **Aprobó por el motivo equivocado:**
+> `sindy3` pierde la ley al subir el ruido del proceso, pero **por fragilidad suya, no porque no
+> hubiera ley que hallar.** El chequeo *"la medida responde al ruido"* del prerregistro-46 estaba
+> midiendo un defecto del motor y creyendo medir la física del problema. **Esto no invalida el
+> INFORME-55** —su barrido no dependía de esa relación— pero queda escrito, y es la **tercera vez**
+> que declaro una relación metamórfica sin saberla de verdad a priori.
 
 ## 6. REGLA 31 — sobre MI PROCEDIMIENTO, **los dos lados**, y no sobre el motor
 Lo escribo explícito porque este mismo error mató al prerregistro 45 y casi al 44, **el mismo

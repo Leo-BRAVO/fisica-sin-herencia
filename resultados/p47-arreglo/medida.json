@@ -1,0 +1,245 @@
+{
+  "prerregistro": 47,
+  "semillas": [
+    47,
+    53,
+    59,
+    61,
+    67
+  ],
+  "exponentes": [
+    -3.0,
+    -2.75,
+    -2.5,
+    -2.25,
+    -2.0,
+    -1.75,
+    -1.5,
+    -1.25,
+    -1.0,
+    -0.75,
+    -0.5,
+    -0.25,
+    0.0,
+    0.25,
+    0.5,
+    0.75,
+    1.0,
+    1.25,
+    1.5,
+    1.75,
+    2.0,
+    2.25,
+    2.5,
+    2.75,
+    3.0
+  ],
+  "barrido": {
+    "sindy3": {
+      "oscilador": {
+        "ve_por_escala": [
+          5,
+          5,
+          5,
+          5,
+          2,
+          0,
+          0,
+          0,
+          0,
+          1,
+          3,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          3,
+          2,
+          2,
+          1,
+          3,
+          4,
+          5
+        ],
+        "tramos": 3,
+        "decadas_tramo_mayor": 1.5,
+        "tramos_indices": [
+          [
+            0,
+            3
+          ],
+          [
+            11,
+            17
+          ],
+          [
+            23,
+            24
+          ]
+        ]
+      },
+      "caida_con_roce": {
+        "ve_por_escala": [
+          2,
+          4,
+          4,
+          4,
+          3,
+          3,
+          2,
+          1,
+          2,
+          2,
+          5,
+          5,
+          5,
+          3,
+          3,
+          2,
+          3,
+          4,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "tramos": 3,
+        "decadas_tramo_mayor": 1.75,
+        "tramos_indices": [
+          [
+            1,
+            3
+          ],
+          [
+            10,
+            12
+          ],
+          [
+            17,
+            24
+          ]
+        ]
+      }
+    },
+    "sindy4": {
+      "oscilador": {
+        "ve_por_escala": [
+          0,
+          0,
+          4,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "tramos": 1,
+        "decadas_tramo_mayor": 5.5,
+        "tramos_indices": [
+          [
+            2,
+            24
+          ]
+        ]
+      },
+      "caida_con_roce": {
+        "ve_por_escala": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "tramos": 0,
+        "decadas_tramo_mayor": 0.0,
+        "tramos_indices": []
+      }
+    }
+  },
+  "casi_constante": {
+    "sindy3": {
+      "leyes_declaradas": 24,
+      "casos": 25
+    },
+    "sindy4": {
+      "leyes_declaradas": 0,
+      "casos": 25
+    }
+  },
+  "no_rompimos_nada": {
+    "oscilador_limpio": {
+      "debe_ver": true,
+      "sindy3": true,
+      "sindy4": true,
+      "sindy4_conserva": true
+    },
+    "oscilador_ruidoso": {
+      "debe_ver": true,
+      "sindy3": true,
+      "sindy4": true,
+      "sindy4_conserva": true
+    },
+    "barajado": {
+      "debe_ver": false,
+      "sindy3": true,
+      "sindy4": true,
+      "sindy4_conserva": true
+    },
+    "ruido_puro": {
+      "debe_ver": false,
+      "sindy3": true,
+      "sindy4": true,
+      "sindy4_conserva": true
+    }
+  },
+  "criterios": {
+    "A_agujeros_cerrados": false,
+    "B_alucinacion_muerta": true,
+    "C_no_rompimos_nada": true,
+    "D_el_defecto_es_del_motor": true
+  },
+  "veredicto": "ARREGLA UNO SOLO — deja de alucinar pero siguen los agujeros"
+}
