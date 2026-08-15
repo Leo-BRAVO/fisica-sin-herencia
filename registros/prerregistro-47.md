@@ -39,17 +39,79 @@ Se construye un archivo **NUEVO**, `codigo/sindy4.py`. **`sindy3.py` no se edita
 mataría su sello y dejaría irreproducibles las 67 corridas ya hechas.
 
 1. **Corte adimensional**: en vez de `|W| < 0.05`, la **Presencia de Coeficiente**
-   `CP = √m · μ(ξ) / σ(ξ)` sobre los remuestreos del bootstrap. Es una razón **sin unidades**, así
-   que **no cambia si el mundo se mide en otra escala**. Piso de CP congelado: **3.0**.
+   `CP = |μ(ξ)| / σ(ξ)` sobre los remuestreos del bootstrap. Es una razón **sin unidades**, así
+   que **no cambia si el mundo se mide en otra escala**. Piso de CP congelado: **3.0** — un peso
+   solo entra si está a **tres desviaciones o más de cero**.
+
+   > ### ENMIENDA 1, escrita ANTES de correr y antes de que exista `sindy4.py` — 11-ago-2026
+   > **La primera versión de este prerregistro escribió la fórmula como `CP = √m · μ/σ`**, copiada
+   > tal cual del trabajo que la propone (STCV, arXiv 2603.05201). **Al ir a implementarla vi que
+   > ese factor `√m` no aplica a nuestro estimador y la corrijo aquí, en abierto, antes de tener
+   > un solo dato.**
+   >
+   > **La razón:** en el trabajo original, `σ` es la dispersión *de una muestra* de tamaño `m`, y
+   > `√m` convierte esa dispersión en el error de la media. **En un bootstrap, la dispersión entre
+   > remuestreos YA ES el error estándar** — no hay que dividirla otra vez. Con nuestros 200
+   > remuestreos, `√m = 14.1`, así que dejar el factor **multiplicaría por catorce la puntuación de
+   > todos los términos, incluidos los falsos**, y un piso de 3.0 dejaría pasar cualquier cosa con
+   > una razón real de 0.21.
+   >
+   > **Qué cambia y qué no:** cambia el factor constante, **no cambia el criterio ni lo relaja** —
+   > al contrario, lo endurece. Y **no cambia lo que importa: sigue siendo una razón sin unidades**,
+   > que es la propiedad por la que se eligió. **Se enmienda ahora porque implementar a sabiendas
+   > una fórmula que creo equivocada sería peor que enmendarla a la vista.**
 2. **Adimensionalización previa**: las columnas del diccionario se normalizan por las escalas de
    **los propios datos** antes de ajustar, y los pesos se devuelven a unidades al final. **No se
    usan unidades humanas** — eso sería herencia; se usan las escalas empíricas de la serie.
+   **Piso de peso adimensional congelado: `|W_s| ≥ 0.01`.**
+
+   > ### ENMIENDA 3, escrita ANTES de correr el estudio — 11-ago-2026
+   > **La puerta reprobó `sindy4` en su control positivo antes de que existiera un solo dato del
+   > estudio, y el motivo obliga a declarar un número que faltaba.**
+   >
+   > **Lo que pasó:** sobre el oscilador **sin ruido**, CP no discrimina. La razón es que **CP mide
+   > consistencia, no relevancia**: el sesgo de discretización del integrador —un término de
+   > magnitud 0.0059 sobre 1.0— es diminuto pero **perfectamente consistente entre remuestreos**,
+   > así que su CP sale 7·10¹², indistinguible del de un término verdadero. **Un criterio de
+   > consistencia por sí solo no puede separar "pequeño y sistemático" de "grande y real".**
+   >
+   > **Lo que se añade:** el piso de magnitud **en el espacio adimensional**, que el cambio 2 ya
+   > declaraba construir y que no llegué a usar para decidir. Como las columnas del diccionario y
+   > el objetivo están normalizados a norma unidad, **`|W_s|` es la fracción de la magnitud del
+   > objetivo que explica ese término — una cantidad sin unidades.** Se congela en **0.01**: *un
+   > término que aporta menos del 1% no es un término de la ley.*
+   >
+   > **Por qué esto NO reintroduce el defecto que arreglamos:** el `0.05` de `sindy3` cortaba
+   > **pesos con unidades**, y por eso se movía con la escala. Este piso corta **una fracción**, y
+   > una fracción no cambia si el mundo se mide en otra escala. Es la diferencia entre *"pesa menos
+   > de 50 gramos"* y *"es menos del 1% del total"*.
+   >
+   > **Qué vi antes de fijar el 0.01, dicho entero:** los pesos adimensionales del control positivo
+   > —el juguete de `sindy3`, semilla 7, **ya quemada**— salen 1.001, 1.002 y 0.162 para los
+   > términos verdaderos, 0.0059 para el sesgo de discretización y ≤0.0046 para el ruido. **El 0.01
+   > es el orden de magnitud que separa esos dos grupos, y lo digo en vez de presentarlo como
+   > elegido a priori.** No he mirado ni un dato del barrido de 25 escalas ni de las semillas
+   > 43, 47, 53, 59, 61: el estudio no ha corrido.
+   >
+   > **Y esto hace el criterio A más difícil, no más fácil:** un piso de magnitud es exactamente
+   > la clase de número que podría reintroducir dependencia de la escala si estuviera mal puesto.
+   > Si el barrido sigue saliendo con agujeros, este piso será el primer sospechoso.
 3. **Guarda de condición**: si el número de condición de la matriz supera **10⁶**, el motor
    **calla**. Razón declarada, y es aritmética y no empírica: la doble precisión lleva ~16 cifras
    significativas, y con condición 10⁶ se conservan 10 cifras buenas.
 4. **Poder predictivo fuera de muestra**: se ajusta en el 70% de las ventanas y se mide en el 30%
    restante. **Si la ley no supera a la línea base tonta en las ventanas que no vio, no se declara
    ley.**
+
+   > ### ENMIENDA 2, escrita ANTES de correr — 11-ago-2026
+   > La versión firmada decía *"supera a la línea base tonta"* **sin número**, y sin número no es
+   > un criterio. Se fija aquí, antes de existir el código: **la línea base tonta es el modelo que
+   > solo usa el término constante** (*"la derivada no depende de nada"*), y la ley debe superarlo
+   > en **R² ≥ +0.10** en las ventanas que no vio, **en cada una de las dos ecuaciones**.
+   >
+   > Se elige ese rival y no la persistencia porque es el que **discrimina justo el defecto 2**:
+   > sobre una señal casi constante, el modelo constante lo explica todo, así que **ninguna ley
+   > puede ganarle por 0.10 y el motor se ve obligado a callar.**
 
 **Lo que NO se cambia:** la forma débil (integrar en vez de derivar) se queda intacta, y **el
 diccionario sigue teniendo las mismas seis piezas**. Un cambio a la vez, o no sabremos cuál actuó.
