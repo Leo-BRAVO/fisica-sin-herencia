@@ -49,12 +49,11 @@ METODO = {
                    "eso o mas, la atencion no esta priorizando (Regla 11)"),
     "formulas": [
         {"base": {"ruido_buena": 0.3}, "parametro": "ruido_buena", "factor": 10.0,
-         "esperado": "sube",
-         "porque": "al ENTERRAR la region aprendible en ruido deja de tener ley que aprender, es "
-                   "decir se vuelve un televisor mas; entonces las dos regiones se parecen y el "
-                   "reparto tiende a igualarse, luego la cuota del televisor SUBE. Es ruido de "
-                   "MEDIDA sobre observaciones —aqui no hay dinamica que excitar—, asi que si "
-                   "entierra informacion (LECCION-RUIDO-01). Base 0.3 y NO 0.0."},
+         "esperado": "baja",
+         "porque": "al ENTERRAR la region aprendible en ruido, su ley se recupera peor con los "
+                   "mismos datos, asi que la ignorancia que queda por curar POR DATO baja. Es "
+                   "ruido de MEDIDA sobre observaciones —aqui no hay dinamica que excitar—, asi "
+                   "que si entierra informacion (LECCION-RUIDO-01). Base 0.3 y NO 0.0."},
         # AQUI DECLARE PRIMERO "subir el ruido DEL TELEVISOR baja su cuota" y LA RETIRO por dos
         # razones, y la segunda es la que importa:
         #   (1) Es TRIVIALMENTE falsa como "baja": escalar la amplitud de una region que ya es
@@ -100,10 +99,17 @@ def _cadena(ruido_tv=1.0, poder_tv=0.0, ruido_buena=0.3):
 
 
 def _metodo_medir(ruido_buena=0.3):
-    """PASO 1 — la medida escalar: cuanto se lleva el televisor, de 10, segun lo enterrada que
-    este la region aprendible."""
-    _, reparto = _cadena(ruido_buena=float(ruido_buena))
-    return float(reparto["tv"])
+    """PASO 1 — la medida escalar: la ignorancia CURABLE que G14 le entrega a G8 para la region
+    aprendible, segun lo enterrada que este.
+
+    POR QUE NO SE MIDE LA CUOTA DEL TELEVISOR, que es lo que intente primero: con la enmienda 3
+    el televisor sale con `curable` EXACTAMENTE 0.0, asi que su peso es cero en los dos
+    presupuestos y su cuota es cero pase lo que pase. La puerta lo dijo con esas palabras — "la
+    lectura base es cero, no hay proporcion que comprobar" — y tenia razon: comparar dos ceros no
+    prueba nada. Que la lectura sea degenerada es BUENA NOTICIA sobre el arreglo y MALA MEDIDA
+    para una relacion metamorfica, y son dos cosas distintas que no hay que mezclar."""
+    regiones, _ = _cadena(ruido_buena=float(ruido_buena))
+    return float(regiones[0]["curable"])
 
 
 def _metodo_sanidad():
@@ -226,12 +232,22 @@ def correr(salida=None, verbose=True):
     datos["E_serie_ruido_tv"] = serie
     e = all(serie[f"x{f:g}"] <= serie["x1"] + 1e-9 for f in (2.0, 5.0, 10.0))
 
+    # --- F: `curable` distingue una region aprendible de un televisor, con los MISMOS datos
+    mb = incertidumbre.medir(*_region_aprendible())
+    mt = incertidumbre.medir(*_region_televisor())
+    datos["F_distingue"] = {"curable_aprendible": round(mb["curable"], 4),
+                            "curable_televisor": round(mt["curable"], 4),
+                            "ganancia_aprendible": round(mb["ganancia_predictiva"], 4),
+                            "ganancia_televisor": round(mt["ganancia_predictiva"], 4)}
+    f = mb["curable"] >= 2.0 * mt["curable"]
+
     datos["criterios"] = {"A_G14_no_confunde": bool(fa["aprueba"]),
                           "B1_contrato_rechaza_inflado": bool(b1),
                           "B2_pierde_con_ignorancia_maxima": bool(b2),
                           "C_poder_cero_no_puntua": bool(c),
                           "D_no_se_rompio": bool(d),
-                          "E_mas_ruido_no_sube_cuota": bool(e)}
+                          "E_mas_ruido_no_sube_cuota": bool(e),
+                          "F_distingue_ley_de_ruido": bool(f)}
 
     todos = all(datos["criterios"].values())
     if todos:

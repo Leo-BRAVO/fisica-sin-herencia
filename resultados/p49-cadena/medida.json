@@ -1,0 +1,78 @@
+{
+  "prerregistro": 49,
+  "criterios": {
+    "A_G14_no_confunde": false,
+    "B1_contrato_rechaza_inflado": true,
+    "B2_pierde_con_ignorancia_maxima": true,
+    "C_poder_cero_no_puntua": true,
+    "D_no_se_rompio": true,
+    "E_mas_ruido_no_sube_cuota": true,
+    "F_distingue_ley_de_ruido": true
+  },
+  "A_ficha_G14": {
+    "aprueba": false,
+    "fallos": [
+      "escasez: la propiedad ajena 'ruido' explica un 20.7% EXTRA de la lectura — esta leyendo la propiedad equivocada"
+    ],
+    "tabla": {
+      "escasez": {
+        "con_lo_suyo": 0.852,
+        "varianza_extra_de_lo_ajeno": {
+          "ruido": 0.207
+        },
+        "las_verdades_entre_si": {
+          "ruido": 0.266
+        }
+      },
+      "ruido": {
+        "con_lo_suyo": 0.998,
+        "varianza_extra_de_lo_ajeno": {
+          "escasez": 0.004
+        },
+        "las_verdades_entre_si": {
+          "escasez": 0.266
+        }
+      }
+    }
+  },
+  "B1_detalle": "CONTRATO ROTO: la region tv publica curable=20.0, fuera del rango [0.0, 1.0] declarado por incertidumbre.py",
+  "B2_ignorancia_maxima_legal": {
+    "tv": 0.3846,
+    "buena": 9.6154
+  },
+  "D_cadena_real": {
+    "regiones": [
+      {
+        "id": "buena",
+        "curable": 0.1459,
+        "aleatoria": 0.2939,
+        "poder": 0.5,
+        "coste": 10.0
+      },
+      {
+        "id": "tv",
+        "curable": 0.0,
+        "aleatoria": 0.8421,
+        "poder": 0.0,
+        "coste": 10.0
+      }
+    ],
+    "reparto": {
+      "buena": 10.0,
+      "tv": 0.0
+    }
+  },
+  "E_serie_ruido_tv": {
+    "x1": 0.0,
+    "x2": 0.0,
+    "x5": 0.0,
+    "x10": 0.0
+  },
+  "F_distingue": {
+    "curable_aprendible": 0.1459,
+    "curable_televisor": 0.0,
+    "ganancia_aprendible": 0.9657,
+    "ganancia_televisor": 0.0
+  },
+  "veredicto": "ARREGLA UNO SOLO — la cadena NO esta reparada; fallan A_G14_no_confunde"
+}
