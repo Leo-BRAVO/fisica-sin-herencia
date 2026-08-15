@@ -130,6 +130,43 @@ problema de nombres ni de metáforas biológicas: **es una interfaz sin contrato
 | **C** | **el señuelo de poder cero** | Una región con `poder = 0` recibe **prioridad exactamente 0.0** — no 0.05 |
 | **D** | **no se rompió lo que servía** | Con una región de verdad prometedora (epistémica alta **y** poder real), G8 le sigue dando **la mayor parte** del presupuesto, y le gana a la línea base tonta del reparto uniforme |
 | **E** | **relación metamórfica, sabida a priori** | **Subir el ruido del televisor NO puede subir su cuota de atención.** Hoy la sube; ésa es la definición del defecto. Base distinta de cero |
+| **F** | **`curable` distingue una región aprendible de un televisor** | Con **el mismo número de datos**, `curable(aprendible) ≥ 2 × curable(televisor)`. **La implementación de hoy lo SUSPENDE** (ver enmienda 3) |
+
+> ### ENMIENDA 3 — mi arreglo tenía un agujero, y el criterio F se añade ANTES de taparlo
+> **11-ago-2026, antes de que el estudio produzca un solo dato.** La puerta reprobó la relación
+> metamórfica dos veces seguidas midiendo ×1.000, y perseguir el porqué destapó algo que los
+> criterios A–E **no cubrían**:
+>
+> | región | n | `curable` |
+> |---|---|---|
+> | aprendible | 60 | 0.1510 |
+> | **televisor** | 60 | **0.1861** |
+> | aprendible | 400 | 0.0744 |
+> | televisor | 400 | 0.0719 |
+>
+> **`curable` no distingue una región con ley de una pared que parpadea. El televisor incluso
+> puntúa más alto.**
+>
+> **Por qué pasó, y es culpa del mecanismo que yo mismo declaré como acierto:** predije que
+> `epistemica ≈ σ/√n` y `aleatoria ≈ σ`, de modo que la razón sale `≈1/(1+√n)` **y σ se cancela**.
+> Es cierto — **y celebré la mitad buena sin ver la otra: al cancelarse σ, se cancela también la
+> presencia o ausencia de una ley.** Lo que queda mide **solo escasez de datos**.
+>
+> **Consecuencia real:** el presupuesto de **actuar** sigue protegido (el televisor tiene poder
+> cero), pero la cuota de **observar** —que la enmienda 1 hizo proporcional a la ignorancia— se
+> repartiría casi por igual entre el televisor y una región con ley.
+>
+> **Se declara el criterio F ahora, sabiendo que el código de hoy lo suspende**, para que arreglarlo
+> no sea ajustar hasta que salga bien. **La corrección que se va a intentar:** pesar la fracción por
+> la **ganancia predictiva fuera de bolsa** del conjunto sobre el modelo constante —
+> `curable = max(0, R²_fuera_de_bolsa) · epistemica/(epistemica+aleatoria)`. Un televisor no tiene
+> ganancia predictiva, así que su `curable` debe caer a ~0.
+>
+> **Y declaro lo que puede salir mal:** esa corrección **vuelve a meter una dependencia del ruido**
+> —una ley enterrada en ruido predice peor y bajará su `curable`—. **Es la dirección segura** (el
+> ruido resta en vez de sumar) pero **no es invariancia**, así que el criterio A tiene que seguir
+> cumpliéndose con el techo de confusión de `sanidad.py`, y si no se cumple, **el arreglo no vale
+> y se dice.**
 
 ## 4. REGLA 31 — sobre MI PROCEDIMIENTO, **los dos lados**, y no sobre los órganos
 - **Control positivo (debe aprobar):** antes de tocar nada, el montaje debe **reproducir los dos

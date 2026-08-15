@@ -4,7 +4,7 @@
     "huella": "fc459ffcd9950d08"
   },
   "atencion": {
-    "cuando": "2026-08-15 20:31:30",
+    "cuando": "2026-08-15 20:36:24",
     "huella": "8877685efc139691"
   },
   "brazo_no_mio": {
@@ -26,6 +26,10 @@
   "experimentar2": {
     "cuando": "2026-08-10 08:25:59",
     "huella": "b05046a1b0d938bb"
+  },
+  "incertidumbre": {
+    "cuando": "2026-08-15 20:32:08",
+    "huella": "6dd0e49aff7b83d4"
   },
   "poder": {
     "cuando": "2026-08-10 14:17:20",
