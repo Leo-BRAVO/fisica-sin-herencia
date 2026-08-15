@@ -1,0 +1,28 @@
+{
+  "prerregistro": 48,
+  "criterio_viene_de": "prerregistro-43, no se toca aqui",
+  "ficha": {
+    "sindy3": {
+      "aprueba": false,
+      "fallos": [
+        "estructura: correlaciona 0.327 con lo suyo (piso 0.6) — la lectura no mide lo que dice medir",
+        "ESCALA: con el mundo x10 pasan 0.0 leyes en vez de 3.0 — el filtro lee amplitud, no estructura"
+      ],
+      "sin_escalar": 3.0,
+      "escalado_x10": 0.0,
+      "escala_ok": false
+    },
+    "sindy4": {
+      "aprueba": true,
+      "fallos": [],
+      "sin_escalar": 3.0,
+      "escalado_x10": 3.0,
+      "escala_ok": true
+    }
+  },
+  "linea_base_ruido": {
+    "sindy3": 0,
+    "sindy4": 0
+  },
+  "veredicto": "RECUPERADO — con sindy4 la ficha de sanidad aprueba entera y el señuelo de escala da el mismo numero con el mundo x1 y x10"
+}

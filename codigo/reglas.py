@@ -285,10 +285,16 @@ _sellados = [m for m in _modulos_organo if m[:-3] in _sellos]
 # NO ES LO MISMO "no lo he intentado" QUE "lo intente y REPROBO". Meterlos en el mismo saco haria
 # parecer pendiente lo que en realidad es un defecto medido, y es justo el tipo de redondeo comodo
 # que este proyecto persigue. Los reprobados se nombran, con su causa y su acta.
+# SUENO.PY SALIO DE ESTA LISTA EL 11-ago-2026, y queda escrito por que para que la lista no se
+# pueda vaciar en silencio. Entro el 10-ago: "REPROBO la ficha, su señuelo de escala se puso rojo
+# (con el mundo x10 sobrevivian 0 leyes en vez de 3). La causa NO es suya — es que sindy3 no es
+# invariante a la escala." El prerregistro-48 puso a prueba ese diagnostico con un criterio que
+# NO se escribio para la ocasion —el señuelo venia congelado del prerregistro-43— y con un control
+# positivo que exigia reproducir antes el REPROBADO ya publicado. Con sindy4 la ficha aprueba
+# entera: 3.0 leyes con el mundo x1 y 3.0 con el x10, y la linea base tonta sigue en 0. Ademas
+# paso LA PUERTA entera, 7/7, y esta sellado. Ver INFORME-59.
+# El mecanismo del sueño nunca fallo: fallaba el motor con el que minaba sus propios sueños.
 REPROBADOS = {
-    "sueno.py": ("REPROBO la ficha el 10-ago-2026: su señuelo de escala se puso rojo (con el mundo "
-                 "x10 sobrevivian 0 leyes en vez de 3). La causa NO es suya — es que `sindy3` no "
-                 "es invariante a la escala. Ver INFORME-50 y prerregistro-45."),
     "atencion.py": ("REPROBO la ficha el 10-ago-2026, y es el hallazgo mas grave del dia porque no "
                     "es de un modulo sino de la CADENA: la epistemica inflada que G14 entrega SI "
                     "compra atencion, porque `piso_poder=0.05` hace que una region con poder CERO "
