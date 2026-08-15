@@ -235,18 +235,39 @@ METODO = {
                    "vigilia: la fraccion que sobrevive tiene que caer. Desigualdad y no "
                    "proporcion porque es un conteo de coincidencias de soporte, no una funcion "
                    "cerrada"},
-        {"base": {"estructura": 1.0, "ruido": 0.02}, "parametro": "ruido", "factor": 30.0,
-         "esperado": "baja",
-         "porque": "con el mundo enterrado en ruido, la vigilia deja de hallar leyes y el filtro "
-                   "se queda sin nada con lo que comparar. Si NO bajara, el filtro estaria "
-                   "aprobando por parecido de forma y no por coincidencia de soporte"},
+        {"base": {"estructura": 1.0, "ruido_medida": 0.05}, "parametro": "ruido_medida",
+         "factor": 30.0, "esperado": "baja",
+         "porque": "el ruido de MEDIDA se suma a la trayectoria ya ocurrida, como el de un sensor: "
+                   "entierra la señal sin cambiar la dinamica, luego la vigilia deja de hallar "
+                   "leyes y el filtro se queda sin nada con lo que comparar. Si NO bajara, el "
+                   "filtro estaria aprobando por parecido de forma y no por coincidencia de "
+                   "soporte. Base 0.05 y no 0.0: comparar un cero con otro cero no prueba nada"},
+        # AQUI DECLARABA LA MISMA RELACION SOBRE `ruido` —el de PROCESO— Y ERA FALSA. La cazo la
+        # puerta el 11-ago-2026 al cambiar el motor del organo, midiendo x1.333 donde la formula
+        # prometia una bajada. La razon es general y vale para todo el repositorio:
+        #   EL RUIDO DE PROCESO NO ENTIERRA LA LEY: EXCITA EL SISTEMA. Se suma DENTRO de la
+        #   integracion, asi que sacude al oscilador y le hace recorrer mas de su espacio de
+        #   estados; la ley determinista sigue intacta y ademas se vuelve MAS facil de
+        #   identificar. Medido: subir el ruido de proceso x30 lleva la desviacion del mundo de
+        #   0.658 a 13.686, y las leyes que sobreviven pasan de 3.0 a 4.0 con sindy4.
+        # Con sindy3 la relacion "aprobaba" (3.0 -> 1.0), PERO POR EL MOTIVO EQUIVOCADO: el motor
+        # viejo perdia leyes por fragilidad suya, no porque no hubiera ley que hallar. Es la
+        # TERCERA vez que el mismo error aparece —prerregistro 43 (aqui), 46 (escala.py) y el
+        # primer borrador del 47—, y las tres veces paso lo mismo: un defecto del instrumento
+        # haciendo pasar por buena una afirmacion falsa sobre el mundo.
     ],
 }
 
 
-def _mundo_soñable(estructura=1.0, ruido=0.02, n_ep=5, T=4000, semilla=11):
+def _mundo_soñable(estructura=1.0, ruido=0.02, n_ep=5, T=4000, semilla=11, ruido_medida=0.0):
     """Un mundo lineal cuya ESTRUCTURA controlamos: `estructura`=1 es un oscilador limpio,
-    `estructura`=0 es ruido con la misma escala. La verdad la ponemos nosotros."""
+    `estructura`=0 es ruido con la misma escala. La verdad la ponemos nosotros.
+
+    LOS DOS RUIDOS NO SON EL MISMO Y NO HACEN LO MISMO — 11-ago-2026, leccion de la puerta:
+      `ruido`         es de PROCESO: entra DENTRO de la integracion y EXCITA el sistema. La ley
+                      determinista sigue intacta y se vuelve mas facil de identificar.
+      `ruido_medida`  es de SENSOR: se suma a la trayectoria YA OCURRIDA. Ese si entierra la señal
+                      sin tocar la dinamica, y es el unico que puede destruir una ley."""
     rng = np.random.default_rng(int(semilla))
     eps = []
     for e in range(int(n_ep)):
@@ -255,6 +276,8 @@ def _mundo_soñable(estructura=1.0, ruido=0.02, n_ep=5, T=4000, semilla=11):
         for t in range(1, int(T)):
             dx = np.array([x[t - 1, 1], -0.9 * x[t - 1, 0] - 0.05 * x[t - 1, 1]])
             x[t] = x[t - 1] + float(estructura) * 0.02 * dx + rng.normal(0, float(ruido), 2)
+        if ruido_medida:
+            x = x + rng.normal(0, float(ruido_medida), x.shape)
         eps.append(x)
     return eps
 
@@ -266,9 +289,10 @@ def _mundo_soñable(estructura=1.0, ruido=0.02, n_ep=5, T=4000, semilla=11):
 DT_JUGUETE = 0.02
 
 
-def _metodo_medir(estructura=1.0, ruido=0.02, motor="sindy4"):
+def _metodo_medir(estructura=1.0, ruido=0.02, motor="sindy4", ruido_medida=0.0):
     """PASO 1 — la medida escalar: cuantas leyes soñadas sobreviven al filtro de vigilia."""
-    r = dormir(_mundo_soñable(estructura=estructura, ruido=ruido), dt=DT_JUGUETE, motor=motor)
+    r = dormir(_mundo_soñable(estructura=estructura, ruido=ruido, ruido_medida=ruido_medida),
+               dt=DT_JUGUETE, motor=motor)
     return float(len(r["fase_generativa"]))
 
 
