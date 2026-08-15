@@ -183,11 +183,23 @@ def evaluar(nombre, codificar, videos, comandos, jueces, nulos=8):
                          "robustez": c["puntaje"]}}
 
 
-def veredicto(filas, margenes=None, parsimonia=None):
+def veredicto(filas, margenes=None, parsimonia=None, pisos=None):
     """LA REGLA DE ORO. filas: [{'nombre', 'puntajes': {lectura: valor}}, ...].
     `margenes`: cuanto hay que separarse en cada lectura para decir que se gano (si no se da,
     empate tecnico = diferencia menor al 5% del rango observado en esa lectura).
-    `parsimonia`: orden de simplicidad para desempatar, del mas simple al mas complejo."""
+    `parsimonia`: orden de simplicidad para desempatar, del mas simple al mas complejo.
+    `pisos`: EL SUELO ABSOLUTO por lectura (prerregistro-51).
+
+    POR QUE EXISTE `pisos` — el defecto que arregla, medido. Hasta el 11-ago-2026 esta funcion
+    comparaba a los competidores SOLO ENTRE SI: tomaba el mejor de cada lectura y coronaba a quien
+    ganara o empatara en las tres. SIN NINGUN SUELO ABSOLUTO EN NINGUNA PARTE. En el torneo de
+    ojos, las cuatro arquitecturas puntuaron A ESCALA DE RUIDO —la vara calibrada da +0.412 con
+    latentes obedientes y -0.0002 con ruido puro— y aun asi el panel tenia que nombrar a alguien.
+    UN TORNEO SIEMPRE DA CAMPEON, EXISTA O NO MERITO.
+
+    Y la parte incomoda a proposito: SIN PISOS DECLARADOS NO SE CORONA. Un suelo que se elige
+    despues de ver los puntajes no es un suelo, asi que obliga a que alguien escriba el numero
+    antes de correr el torneo."""
     if not filas:
         return {"fallo": "SIN COMPETIDORES"}
     margenes = margenes or {}
@@ -199,6 +211,25 @@ def veredicto(filas, margenes=None, parsimonia=None):
         m = margenes.get(lec, 0.05 * rango if rango > 0 else 0.0)
         detalle[lec] = {"mejor": mejor, "margen_usado": m, "valores": vals}
         ganan_o_empatan[lec] = {n for n, v in vals.items() if v >= mejor - m}
+        # EL SUELO: quien no lo supera NO COMPITE en esa lectura. Excluye, no empata.
+        if pisos and lec in pisos:
+            piso = float(pisos[lec])
+            detalle[lec]["piso"] = piso
+            sobre = {n for n, v in vals.items() if v > piso}
+            detalle[lec]["sobre_el_piso"] = sorted(sobre)
+            ganan_o_empatan[lec] &= sobre
+
+    if not pisos:
+        return {"fallo": "SIN SUELO DECLARADO — no se corona a nadie. La regla de oro exige un "
+                         "piso absoluto por lectura, declarado ANTES de correr el torneo "
+                         "(prerregistro-51): sin el, el panel solo sabe decir quien es el mejor "
+                         "de los presentes, aunque todos esten a escala de ruido",
+                "detalle": detalle}
+    if not any(ganan_o_empatan[l] for l in LECTURAS):
+        return {"fallo": "NINGUNO SUPERA EL SUELO — ningun competidor pasa el piso absoluto en "
+                         "ninguna lectura, asi que no hay campeon. Un torneo puede quedar "
+                         "desierto, y este lo queda",
+                "detalle": detalle}
 
     limpios = set.intersection(*[ganan_o_empatan[l] for l in LECTURAS])
     if len(limpios) == 1:
@@ -254,6 +285,55 @@ def _mundo_sintetico(n_ep=9, T=3400, semilla=31):
     return comandos, videos, cuerpos
 
 
+def _regla31_suelo(verbose=True):
+    """LA REGLA 31 DEL SUELO ABSOLUTO (prerregistro-51), probada por LOS DOS LADOS.
+
+    Sin estos casos, `pisos` seria una opcion que nadie ha visto actuar — y una opcion que nunca
+    se ha visto actuar es indistinguible de no tenerla."""
+    fallos = []
+
+    def caso(nombre, ok, extra=""):
+        if verbose:
+            print(f"  {'ok  ' if ok else 'FALLO'} {nombre}" + (f"  [{extra}]" if extra else ""))
+        if not ok:
+            fallos.append(nombre)
+
+    buenos = [{"nombre": "bueno", "puntajes": {l: 0.5 for l in LECTURAS}},
+              {"nombre": "flojo", "puntajes": {l: 0.1 for l in LECTURAS}}]
+    pisos = {l: 0.05 for l in LECTURAS}
+
+    # CONTROL POSITIVO: el merito real sigue ganando, y gana AL MISMO que sin suelo.
+    con = veredicto(buenos, pisos=pisos)
+    caso("CONTROL POSITIVO: con merito por encima del piso, corona al bueno",
+         con.get("ganador") == "bueno", con["fallo"][:40])
+
+    # SEÑUELO: TODOS a escala de ruido con el piso declarado -> nadie gana. Es el caso que motivo
+    # todo: en el torneo de ojos las cuatro arquitecturas puntuaron a nivel de ruido y el panel
+    # tenia que nombrar a alguien igual.
+    ruido = [{"nombre": n, "puntajes": {l: 0.001 * (k + 1) for l in LECTURAS}}
+             for k, n in enumerate(("a", "b", "c", "d"))]
+    r = veredicto(ruido, pisos=pisos)
+    caso("SEÑUELO: con TODOS a escala de ruido, NINGUNO SUPERA EL SUELO",
+         "ganador" not in r and "NINGUNO SUPERA EL SUELO" in r["fallo"])
+
+    # SIN SUELO DECLARADO no se corona, aunque haya un competidor obviamente bueno.
+    sin = veredicto(buenos)
+    caso("sin pisos declarados NO se corona a nadie",
+         "ganador" not in sin and "SIN SUELO DECLARADO" in sin["fallo"])
+
+    # EL SUELO EXCLUYE, NO EMPATA: uno arriba y el resto abajo -> gana el de arriba.
+    mixto = [{"nombre": "arriba", "puntajes": {l: 0.5 for l in LECTURAS}},
+             {"nombre": "abajo", "puntajes": {l: 0.001 for l in LECTURAS}}]
+    mx = veredicto(mixto, pisos=pisos)
+    caso("el suelo EXCLUYE a los de abajo, no empata a todos",
+         mx.get("ganador") == "arriba", mx["fallo"][:40])
+
+    if verbose:
+        print("\nREGLA 31 DEL SUELO: " + ("APRUEBA — el panel sabe quedar desierto."
+                                           if not fallos else f"REPRUEBA en {fallos}"))
+    return 0 if not fallos else 1
+
+
 def regla31(verbose=True):
     fallos = []
     comandos, videos, cuerpos = _mundo_sintetico()
@@ -287,7 +367,13 @@ def regla31(verbose=True):
     tra = evaluar("tramposo", cod_congelado, videos, comandos, jueces)
 
     # 1) GEMELOS: identicos deben empatar en las tres
-    v1 = veredicto([g1, g2])
+    # UN PISO QUE NO EXCLUYE A NADIE. Estos tres casos existen para probar la logica RELATIVA
+    # —gemelos, oraculo, asterisco— y no el suelo absoluto, que tiene su propia Regla 31 arriba
+    # (`_regla31_suelo`). Declararles un piso por debajo de todos los puntajes deja esa logica
+    # exactamente como estaba antes del prerregistro-51: es lo que exige el criterio A, que manda
+    # descartar el arreglo si cambiara algun veredicto ya emitido.
+    _sin_excluir = {l: float("-inf") for l in LECTURAS}
+    v1 = veredicto([g1, g2], pisos=_sin_excluir)
     c1 = "EMPATE TECNICO" in v1["fallo"]
     if verbose:
         print(f"  {'ok  ' if c1 else 'FALLO'} GEMELOS: {v1['fallo'][:60]}")
@@ -295,7 +381,7 @@ def regla31(verbose=True):
         fallos.append("gemelos")
 
     # 2) ORACULO: la trampa plantada debe ganar las tres
-    v2 = veredicto([ora, rui, g1])
+    v2 = veredicto([ora, rui, g1], pisos=_sin_excluir)
     c2 = v2.get("ganador") == "oraculo" and v2["fallo"].startswith("GANA oraculo")
     if verbose:
         print(f"  {'ok  ' if c2 else 'FALLO'} ORACULO PLANTADO: {v2['fallo'][:70]}")
@@ -303,7 +389,7 @@ def regla31(verbose=True):
         fallos.append("oraculo")
 
     # 3) ASTERISCO: quien gana una lectura y pierde otra JAMAS recibe victoria limpia
-    v3 = veredicto([tra, ora])
+    v3 = veredicto([tra, ora], pisos=_sin_excluir)
     c3 = ("ASTERISCO" in v3["fallo"]) or (v3.get("ganador") == "oraculo")
     limpio = v3.get("ganador") == "tramposo"
     c3 = c3 and not limpio
