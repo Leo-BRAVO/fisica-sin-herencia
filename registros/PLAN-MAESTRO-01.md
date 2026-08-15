@@ -101,9 +101,23 @@ final · 2 sin pisar nombres · 3 ficha de sanidad · 4 regla 31 · 7 escritura 
 
 # FASE 2 — LA REVISIÓN DE LAS 67 CORRIDAS. Prerregistro 48
 
+> ### CORRECCIÓN, 11-ago-2026 — el paso 0 se hizo y desmintió el título de esta fase
+> **El inventario está en `registros/INVENTARIO-MOTOR-01.md` y el número no es 67: es 2.** Las 67
+> corridas de la cola **no usan `sindy3` en absoluto** — corren por `descubrir.py`, que usa PySR.
+> El motor con los dos defectos medidos se usa en exactamente dos sitios: `escala.py` (el estudio
+> *del* motor) y **`sueno.py`, el único órgano que lo consume**.
+>
+> **La Fase 2 pasa de "rehacer 67 corridas" a "rehacer un órgano".** El resto de esta sección
+> —la obligación de publicación decidida antes de mirar— **sigue vigente tal cual**, porque el
+> caso incómodo (que un hallazgo se caiga) puede darse igual con una sola corrida.
+>
+> **Y abre un hueco nuevo, que no se tapa con esto:** PySR produjo **55 de nuestras 67 corridas** y
+> **nunca ha pasado por LA PUERTA ni por la ficha de sanidad.** No se hereda tranquilidad de un
+> examen que no se ha hecho.
+
 ## 2.1 Qué se hace
 **Paso 0, mecánico:** inventario de qué corridas llaman de verdad al motor. No son las 67; hay que
-contarlo antes de prometer nada.
+contarlo antes de prometer nada. **— HECHO: son 2. Ver la corrección de arriba.**
 
 **Paso 1:** rehacer cada una de esas corridas con `sindy4` y comparar veredictos, uno a uno.
 
