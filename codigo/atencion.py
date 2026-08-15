@@ -28,7 +28,33 @@ import numpy as np
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-def repartir(regiones, presupuesto, cuota_exploracion=0.05, piso_poder=0.05):
+# EL CONTRATO DE ESTE CONSUMIDOR (prerregistro-49). G8 se creyo una epistemica inflada de G14 sin
+# comprobar nada, y esa es la causa REAL del INFORME-52: no un nombre malo ni una metafora
+# biologica, sino UNA INTERFAZ SIN CONTRATO. Desde aqui, lo que se consume se verifica.
+CONTRATO = {
+    "tipo": "POLITICA",
+    "consume": {"curable": {"de": "incertidumbre.py", "rango": [0.0, 1.0],
+                            "porque": "es una FRACCION adimensional. La `epistemica` cruda es una "
+                                      "magnitud que sube con el ruido (INFORME-51), y consumirla "
+                                      "para decidir donde mirar es lo que compro el televisor"}},
+}
+
+
+def _ignorancia(region):
+    """Lo que G8 usa para priorizar, CON su rango verificado. Prefiere la fraccion `curable` de
+    G14; si una region solo trae la `epistemica` cruda, se acepta por compatibilidad pero se sabe
+    que es la lectura contaminada por el ruido."""
+    if "curable" in region:
+        v = float(region["curable"])
+        lo, hi = CONTRATO["consume"]["curable"]["rango"]
+        if not (lo <= v <= hi):
+            raise ValueError(f"CONTRATO ROTO: la region {region.get('id')} publica curable={v}, "
+                             f"fuera del rango {[lo, hi]} declarado por incertidumbre.py")
+        return v
+    return float(region["epistemica"])
+
+
+def repartir(regiones, presupuesto, cuota_exploracion=0.05, piso_poder=0.0):
     """regiones: [{'id', 'epistemica', 'aleatoria', 'poder', 'coste'}]. Devuelve el reparto.
     'coste' = lo que consumiría atender la región del todo. Si el presupuesto alcanza para
     todos los costes, se asigna completo (la escasez no se finge)."""
@@ -36,15 +62,36 @@ def repartir(regiones, presupuesto, cuota_exploracion=0.05, piso_poder=0.05):
     if presupuesto >= total_coste:
         return [{"id": r["id"], "asignado": r["coste"], "fraccion": 1.0,
                  "nota": "sin escasez: atencion plena"} for r in regiones]
-    prioridad = np.array([r["epistemica"] * max(r["poder"], piso_poder) for r in regiones])
+    # EL PISO ERA LA FUGA. Valia 0.05, asi que una region con poder CERO puntuaba 0.05 y con la
+    # epistemica del televisor x20 se llevaba 7.036 de 10 (INFORME-52). Ahora vale 0.0: una region
+    # sobre la que NO SE PUEDE HACER NADA puntua exactamente cero. Eso es EMPOWERMENT — preferir
+    # los estados desde los que tus acciones tienen efecto—, y un televisor con ruido tiene mucha
+    # sorpresa y empowerment cero, asi que no puede secuestrar la atencion POR CONSTRUCCION.
+    # Y quitarlo no ciega a nadie: la `cuota_exploracion` de abajo ya reserva un trozo del
+    # presupuesto repartido por igual. El piso era redundante con ella; lo unico que añadia era
+    # premiar lo intocable.
+    prioridad = np.array([_ignorancia(r) * max(r["poder"], piso_poder) for r in regiones])
     if prioridad.sum() <= 0:
         prioridad = np.ones(len(regiones))
-    base = cuota_exploracion * presupuesto / len(regiones)     # nadie queda ciego del todo
-    resto = presupuesto - base * len(regiones)
+    # DOS PRESUPUESTOS CON DOS CRITERIOS (enmienda 1 del prerregistro-49, escrita antes de correr
+    # porque LA PUERTA cazo el problema antes de que existiera un dato).
+    # Con empowerment PURO, toda region de poder cero puntua cero, asi que una region donde SI hay
+    # algo real que aprender pero no se puede tocar y EL TELEVISOR reciben exactamente lo mismo.
+    # La Regla 31 de este modulo, congelada en el prerregistro-43, exige lo contrario: "mirar aun
+    # vale algo". Y esa exigencia no es opinion: el prerregistro-32 midio que la fisica de soporte
+    # NO NECESITA CUERPO, o sea que la observacion pasiva construye modelo.
+    # Por eso la cuota de exploracion deja de repartirse POR IGUAL y se reparte EN PROPORCION A LA
+    # IGNORANCIA CURABLE. El televisor no se cuela por ahi: su ignorancia es ALEATORIA, no curable,
+    # asi que su `curable` es bajo por construccion. Lo que se recupera es la distincion entre
+    # "intocable pero informativo" y "ruido", que el empowerment puro borraba.
+    ign = np.array([_ignorancia(r) for r in regiones], dtype=float)
+    pesos_expl = ign / ign.sum() if ign.sum() > 0 else np.ones(len(regiones)) / len(regiones)
+    bolsa_expl = cuota_exploracion * presupuesto
+    resto = presupuesto - bolsa_expl
     pesos = prioridad / prioridad.sum()
     out = []
-    for r, w in zip(regiones, pesos):
-        asignado = min(base + resto * w, r["coste"])
+    for r, w, we in zip(regiones, pesos, pesos_expl):
+        asignado = min(bolsa_expl * we + resto * w, r["coste"])
         out.append({"id": r["id"], "asignado": round(float(asignado), 4),
                     "fraccion": round(float(asignado / r["coste"]), 4)})
     return out
@@ -72,7 +119,10 @@ METODO = {
     "linea_base": ("repartir POR IGUAL entre las regiones — el tonto de la Regla 11 para un "
                    "asignador. Si no le gana, no esta priorizando: esta repartiendo"),
     "formulas": [
-        {"base": {"poder_tv": 0.0, "epistemica_tv": 5.0}, "parametro": "poder_tv", "factor": 20.0,
+        # BASE 0.05 Y NO 0.0: la version del prerregistro-43 ponia base 0.0 y factor 20, y
+        # multiplicar cero por veinte sigue siendo cero — la puerta lo midio x1.000. Es la trampa
+        # de la base nula, la cuarta vez en un mes que aparece en este repositorio.
+        {"base": {"poder_tv": 0.05, "epistemica_tv": 5.0}, "parametro": "poder_tv", "factor": 20.0,
          "esperado": "baja",
          "porque": "si el televisor pasa a ser CONTROLABLE deja de ser televisor: es una region "
                    "legitima y debe llevarse mas presupuesto, luego la ventaja de la buena baja. "
