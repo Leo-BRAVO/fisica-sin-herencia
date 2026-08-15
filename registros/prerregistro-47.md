@@ -23,8 +23,27 @@ Dos sondas **exploratorias** del `DIAGNOSTICO-MOTOR-01`, que **no son evidencia 
 
 **Semillas quemadas y prohibidas aquí:** `2, 3, 5, 7, 11` (arreglo del módulo de escala),
 `23, 29, 31, 37, 41` (prerregistro 46) y `7` (las sondas de arriba).
-**Este estudio corre sobre cinco semillas nuevas: `43, 47, 53, 59, 61`**, declaradas aquí antes de
+**Este estudio corre sobre cinco semillas nuevas: `47, 53, 59, 61, 67`**, declaradas aquí antes de
 tocarlas.
+
+> ### ENMIENDA 4 — la semilla 43 queda QUEMADA y se sustituye por la 67. 11-ago-2026, antes de correr
+> **La lista original de este prerregistro era `43, 47, 53, 59, 61`. Miré la 43 y por eso la
+> retiro.**
+>
+> **Qué miré y por qué:** al construir el módulo, LA PUERTA reprobó la relación metamórfica
+> midiendo `×1.000`. Para saber si era la trampa de la base cero (que ya me tumbó tres relaciones
+> en un día) abrí el caso concreto: **semilla 43, oscilador, escala ×1, con los dos motores.**
+>
+> **Qué vi, dicho entero para que se me pueda descontar:** con ruido base, `sindy3` declara
+> `dx/dt = 0.993·v` y `dv/dt = −0.89·x`, y `sindy4` declara lo mismo **más el término de
+> amortiguamiento** `−0.041·v`, que es el que la ley verdadera tiene en `−0.05` y **`sindy3` no
+> encuentra**. Con ruido ×200, `sindy3` calla y `sindy4` declara la ley con margen fuera de
+> muestra de 0.71 y 0.74.
+>
+> **Esas observaciones NO son evidencia de este estudio.** Salieron de diagnosticar un fallo de la
+> puerta, sobre una semilla que ahora queda fuera. **La sustituye la `67`**, que no se ha tocado.
+>
+> **Y no se toca ningún criterio.** A, B, C y D siguen exactamente como estaban firmados.
 
 **Y declaro mi expectativa, para que se me pueda descontar:** espero que **A y B pasen y C pase**.
 Si el criterio A falla, mi diagnóstico del umbral era incorrecto y lo escribiré con esas palabras.
@@ -152,6 +171,28 @@ así, con esas palabras y con acta propia.
 - **NO ERA LA CAUSA** — falla A con C y D en pie: el umbral no era el problema.
 - **EL INFORME-55 ESTABA MAL** — falla D.
 - **NO CONCLUYENTE** — no encaja en ninguno.
+
+> ### ENMIENDA 5 — la relación metamórfica que declaré era FALSA. 11-ago-2026, antes de correr
+> **La primera versión declaraba:** *"subir el ruido ×200 baja la cuenta, porque con la señal
+> enterrada en ruido no hay ley que hallar"*. **Es falsa, y la puerta lo cazó.**
+>
+> **Por qué es falsa:** el ruido de `escala.py` se añade **dentro** de la integración. **No
+> entierra la señal: la conduce.** La desviación de la trayectoria sube de 0.404 a 6.369 al subir
+> el ruido, y la ley determinista **sigue estando ahí** — es un oscilador forzado por ruido, no un
+> oscilador borrado por ruido. **`sindy4` la encuentra, con margen fuera de muestra de 0.71.**
+>
+> **La relación correcta, que sí se sabe a priori:** lo que destruye una ley no es el ruido del
+> proceso sino **el ruido de MEDIDA** — el que se suma a la trayectoria ya ocurrida, como el de un
+> sensor. Eso sí entierra la señal y sí tiene que bajar la cuenta. La relación pasa a declararse
+> sobre `ruido_medida`, **con base 0.01 y no 0.0.**
+>
+> **Y un hallazgo sobre nuestro propio pasado, que no puedo callarme:** el prerregistro-46 declaró
+> **esta misma relación falsa** y su Regla 31 la dio por buena. **Aprobó por el motivo equivocado:**
+> `sindy3` pierde la ley al subir el ruido del proceso, pero **por fragilidad suya, no porque no
+> hubiera ley que hallar.** El chequeo *"la medida responde al ruido"* del prerregistro-46 estaba
+> midiendo un defecto del motor y creyendo medir la física del problema. **Esto no invalida el
+> INFORME-55** —su barrido no dependía de esa relación— pero queda escrito, y es la **tercera vez**
+> que declaro una relación metamórfica sin saberla de verdad a priori.
 
 ## 6. REGLA 31 — sobre MI PROCEDIMIENTO, **los dos lados**, y no sobre el motor
 Lo escribo explícito porque este mismo error mató al prerregistro 45 y casi al 44, **el mismo
