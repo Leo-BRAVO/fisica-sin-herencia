@@ -1,0 +1,27 @@
+{
+  "que_es": "diagnostico del INFORME-62, NO evidencia de ningun criterio del prerregistro-52",
+  "mundos": {
+    "sin_amortiguar": {
+      "condicion_matriz": 732978794549068.6,
+      "tope_del_motor": 1000000.0,
+      "declara_ley": false,
+      "declara_con_tope_1e14": false,
+      "terminos_con_tope_alto": null
+    },
+    "amortiguado": {
+      "condicion_matriz": 56.1,
+      "tope_del_motor": 1000000.0,
+      "declara_ley": true,
+      "declara_con_tope_1e14": true,
+      "terminos_con_tope_alto": {
+        "dx/dt": [
+          "v"
+        ],
+        "dv/dt": [
+          "x",
+          "v"
+        ]
+      }
+    }
+  }
+}
