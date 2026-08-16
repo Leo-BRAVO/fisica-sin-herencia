@@ -349,4 +349,8 @@ if __name__ == "__main__":
     a = ap.parse_args()
     if a.regla31:
         sys.exit(regla31())
-    correr(salida=a.salida)
+    _d = correr(salida=a.salida)
+    # SALE CON ERROR SI ALGUN CRITERIO FALLA, y muy en particular los dos de la Regla 27. Sin
+    # esto, la meta-auditoria podria dañar los guardianes de etiquetas o de recompensa y el modulo
+    # seguiria diciendo "todo bien" con codigo 0 — que es la definicion de guardian decorativo.
+    sys.exit(0 if all(_d["criterios"].values()) else 1)

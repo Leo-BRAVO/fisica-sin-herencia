@@ -134,6 +134,16 @@ caso("boleta: vivos + cuarentena = archivos de nodos E2",
      f"boleta={boleta.get('nodos_vivos_E2')}+{boleta.get('nodos_en_cuarentena')} archivos={len(nodos_e2)}")
 caso("boleta sin numeros de juicio escritos a mano",
      "leyes_humanas_redescubiertas" not in boleta and "automejoras_validadas" not in boleta)
+# LA BOLETA SE VUELVE RANCIA SI NADIE LA REGENERA, y hasta el 11-ago-2026 solo se vigilaba su
+# conteo de nodos. Decia 49 informes y 43 prerregistros cuando en disco habia 57 y 47: se llevaba
+# semanas mintiendo y ningun guardian miraba. Es el mismo mal que ya nos mordio con la tabla de
+# reglas —un archivo generado que envejece en silencio— y se cierra igual: contando en disco.
+_inf = len(glob.glob(os.path.join(BASE, "resultados", "INFORME-*.md")))
+_pre = len(glob.glob(os.path.join(BASE, "registros", "prerregistro-*.md")))
+caso("boleta: el numero de informes coincide con los que hay en disco",
+     boleta.get("informes") == _inf, f"boleta={boleta.get('informes')} disco={_inf}")
+caso("boleta: el numero de prerregistros coincide con los que hay en disco",
+     boleta.get("prerregistros") == _pre, f"boleta={boleta.get('prerregistros')} disco={_pre}")
 
 print("== prerregistros: los borradores se declaran, los firmados no fingen ==")
 for p in sorted(glob.glob(os.path.join(BASE, "registros", "prerregistro-*.md"))):
