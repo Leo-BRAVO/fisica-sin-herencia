@@ -1,0 +1,82 @@
+{
+  "que_es": "barrido de la Fase 6 del PLAN-MAESTRO-01: los 8 organos que nunca habian pasado por LA PUERTA",
+  "expectativa_declarada_antes": "entre 2 y 5 reprobados de 8",
+  "organos": {
+    "cerebro": {
+      "aprueba": false,
+      "fallos": [
+        "[paso 7 escritura limpia] cerebro.py:115 'prog' se calcula y no se usa (resto de una version anterior)",
+        "[paso 0 manifiesto] el modulo no declara METODO = {...}: no dice que clase de prueba es, ni sus formulas, ni si hay condiciones que comparten datos",
+        "[paso 1 formulas] sin manifiesto"
+      ]
+    },
+    "curiosidad2": {
+      "aprueba": false,
+      "fallos": [
+        "[paso 0 manifiesto] el modulo no declara METODO = {...}: no dice que clase de prueba es, ni sus formulas, ni si hay condiciones que comparten datos",
+        "[paso 1 formulas] sin manifiesto",
+        "[paso 3 ficha de sanidad] el modulo no expone _metodo_sanidad(): la Regla 31 comprueba que hace lo que quise, no que lo que quise fuera correcto"
+      ]
+    },
+    "descubrir": {
+      "aprueba": false,
+      "fallos": [
+        "[paso 2 sin pisar nombres] _iaaft: 'x' se asigna FUERA del bucle (linea 97) y vuelve a asignarse DENTRO (linea 100) — el de dentro pisa al de fuera y el resto de la funcion usa el equivocado",
+        "[paso 0 manifiesto] el modulo no declara METODO = {...}: no dice que clase de prueba es, ni sus formulas, ni si hay condiciones que comparten datos",
+        "[paso 1 formulas] sin manifiesto"
+      ]
+    },
+    "gimnasio": {
+      "aprueba": false,
+      "fallos": [
+        "[paso 0 manifiesto] el modulo no declara METODO = {...}: no dice que clase de prueba es, ni sus formulas, ni si hay condiciones que comparten datos",
+        "[paso 1 formulas] sin manifiesto",
+        "[paso 3 ficha de sanidad] el modulo no expone _metodo_sanidad(): la Regla 31 comprueba que hace lo que quise, no que lo que quise fuera correcto"
+      ]
+    },
+    "interocepcion": {
+      "aprueba": false,
+      "fallos": [
+        "[paso 2 sin pisar nombres] coste_de: 'ultimo' se asigna FUERA del bucle (linea 95) y vuelve a asignarse DENTRO (linea 107) — el de dentro pisa al de fuera y el resto de la funcion usa el equivocado",
+        "[paso 0 manifiesto] el modulo no declara METODO = {...}: no dice que clase de prueba es, ni sus formulas, ni si hay condiciones que comparten datos",
+        "[paso 1 formulas] sin manifiesto"
+      ]
+    },
+    "memoria": {
+      "aprueba": false,
+      "fallos": [
+        "[paso 0 manifiesto] el modulo no declara METODO = {...}: no dice que clase de prueba es, ni sus formulas, ni si hay condiciones que comparten datos",
+        "[paso 1 formulas] sin manifiesto",
+        "[paso 3 ficha de sanidad] el modulo no expone _metodo_sanidad(): la Regla 31 comprueba que hace lo que quise, no que lo que quise fuera correcto"
+      ]
+    },
+    "percepcion": {
+      "aprueba": false,
+      "fallos": [
+        "[paso 0 manifiesto] el modulo no declara METODO = {...}: no dice que clase de prueba es, ni sus formulas, ni si hay condiciones que comparten datos",
+        "[paso 1 formulas] sin manifiesto",
+        "[paso 3 ficha de sanidad] el modulo no expone _metodo_sanidad(): la Regla 31 comprueba que hace lo que quise, no que lo que quise fuera correcto"
+      ]
+    },
+    "percepcion2": {
+      "aprueba": false,
+      "fallos": [
+        "[paso 0 manifiesto] el modulo no declara METODO = {...}: no dice que clase de prueba es, ni sus formulas, ni si hay condiciones que comparten datos",
+        "[paso 1 formulas] sin manifiesto",
+        "[paso 3 ficha de sanidad] el modulo no expone _metodo_sanidad(): la Regla 31 comprueba que hace lo que quise, no que lo que quise fuera correcto"
+      ]
+    }
+  },
+  "aprueban": 0,
+  "reprueban": 8,
+  "de": 8,
+  "fallos_por_paso": {
+    "paso_0_manifiesto": 8,
+    "paso_1_formulas": 8,
+    "paso_3_ficha": 5,
+    "paso_2_pisar_nombres": 2,
+    "paso_7_escritura": 1
+  },
+  "falsos_positivos_de_la_puerta_verificados_a_mano": 2,
+  "hallazgos_de_codigo_reales": 1
+}

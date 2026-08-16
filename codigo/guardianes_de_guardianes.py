@@ -180,6 +180,47 @@ def contingencia_sin_nulo(raiz):
                    '"es_mia": bool(real[d] >= 0.0),')
 
 
+# ---- LOS TRES GUARDIANES NACIDOS EL 11-ago-2026, con su prueba de daño ----------------------
+# Los escribi diciendo que "un guardian sin prueba de daño es decoracion", y durante unas horas
+# fueron exactamente eso. Estos cuatro daños cierran el hueco.
+
+def contrato_sin_rango(raiz):
+    """Daño: un ESTIMADOR deja de declarar el rango de lo que publica. Es el descuido que hizo que
+    G8 se creyera una epistemica inflada de G14 (INFORME-52)."""
+    return _editar(raiz, "codigo/incertidumbre.py",
+                   '"curable": {"rango": [0.0, 1.0], "unidades": "fraccion adimensional"',
+                   '"curable": {"unidades": "fraccion adimensional"')
+
+
+def consumidor_que_no_comprueba(raiz):
+    """Daño REAL que ya cometimos: el consumidor declara el rango y NO lo verifica en codigo.
+    Declarar un rango y no mirarlo es exactamente lo que hizo G8 con G14 durante meses."""
+    p = os.path.join(raiz, "codigo", "atencion.py")
+    t = open(p, encoding="utf-8").read()
+    if "raise ValueError" not in t:
+        return False
+    # se quitan los dos `raise` del contrato: el rango queda declarado y sin comprobar
+    t = re.sub(r'\n\s+raise ValueError\(f"CONTRATO ROTO.*?\)\n', "\n", t, flags=re.S)
+    open(p, "w", encoding="utf-8").write(t)
+    return "raise ValueError" not in t
+
+
+def etiqueta_humana_en_la_observacion(raiz):
+    """Daño: se le cuela a Diego una palabra humana de fisica en lo que observa. Es la fuga de la
+    Regla 27 mas dificil de ver, porque parece una comodidad: ponerle nombre a una columna."""
+    return _editar(raiz, "codigo/mundo.py",
+                   'PROHIBIDAS = ("masa", "kg"',
+                   'PROHIBIDAS = ("kg"')
+
+
+def recompensa_con_criterio_nuestro(raiz):
+    """Daño: la señal que Diego recibe pasa a depender de un criterio NUESTRO. Es la herencia por
+    la puerta de atras: no le decimos F=ma, le premiamos por parecerse a F=ma."""
+    return _editar(raiz, "codigo/mundo.py",
+                   'if str(t) != "error_de_prediccion_propio":',
+                   'if False:')
+
+
 MUTACIONES = [
     ("desaparece una regla del medio",            "coherencia.py",      borra_una_regla),
     ("la boleta proclama nodos que no existen",   "coherencia.py",      boleta_miente),
@@ -190,6 +231,10 @@ MUTACIONES = [
     ("la linea base se vuelve facil de vencer",   "pruebas.py",         base_trivial_debil),
     ("el nulo por barajado no destruye nada",     "pruebas.py",         nulo_que_no_destruye),
     ("la contingencia declara cuerpo sin nulo",   "pruebas.py",         contingencia_sin_nulo),
+    ("un estimador publica sin declarar rango",   "contratos.py",       contrato_sin_rango),
+    ("el consumidor declara el rango y no lo mira", "contratos.py",     consumidor_que_no_comprueba),
+    ("una etiqueta humana se cuela en lo que Diego observa", "mundo.py", etiqueta_humana_en_la_observacion),
+    ("la recompensa pasa a depender de un criterio NUESTRO", "mundo.py", recompensa_con_criterio_nuestro),
 ]
 
 
