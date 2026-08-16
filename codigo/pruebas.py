@@ -354,8 +354,13 @@ caso("G9 sueño: APRUEBA su Regla 31 (sueña donde hay algo, calla donde no)", _
 caso("G8 atencion: APRUEBA su Regla 31 (la fovea huye del televisor)", _a31(verbose=False) == 0)
 caso("Regla 33 filogenia: el estadio empata gemelos y corona oraculos", _f31(verbose=False) == 0)
 # la propiedad anti-Goodhart de la atencion, congelada como numero:
-_regs = [{"id": "tv", "epistemica": 0.05, "aleatoria": 5.0, "poder": 0.0, "coste": 10},
-         {"id": "buena", "epistemica": 0.8, "aleatoria": 0.1, "poder": 0.5, "coste": 10}]
+# HABLAN EN `curable` DESDE EL PRERREGISTRO-49. Esta prueba seguia construyendo regiones con la
+# `epistemica` cruda, y al cerrarse el contrato de G8 el 11-ago-2026 empezo a levantar ValueError.
+# NO es un fallo de la prueba: es el contrato haciendo exactamente lo que se le pidio —negarse a
+# consumir la lectura contaminada— y cazando de paso un sitio del repositorio que se me habia
+# quedado sin actualizar. Se anota porque es la clase de rotura que da la razon al guardian.
+_regs = [{"id": "tv", "curable": 0.05, "aleatoria": 5.0, "poder": 0.0, "coste": 10},
+         {"id": "buena", "curable": 0.80, "aleatoria": 0.1, "poder": 0.5, "coste": 10}]
 _r = {x["id"]: x["asignado"] for x in _rep(_regs, presupuesto=10)}
 caso("atencion: la varianza pura NO compra fovea (anti-televisor por construccion)",
      _r["buena"] > 4 * _r["tv"], str(_r))
@@ -428,19 +433,22 @@ caso("panel: APRUEBA su Regla 31 (5/5: gemelos, oraculo, asterisco, ruido, sin s
 # EL BUG DE LA CORRIDA 13, CONGELADO: la aptitud vieja recorta el margen a cero con max(.,0),
 # asi que CUALQUIER par de representaciones bajo el piso empata en 0.0000 exacto. Si alguien
 # vuelve a poner un suelo en el ordenamiento del panel, esto grita.
+_sin_excluir = {l: float("-inf") for l in _pj.LECTURAS}
 _cero = _pj.veredicto([{"nombre": "a", "puntajes": {"contingencia": 0.0, "flecha": 0.0,
                                                     "robustez": 0.0}},
                        {"nombre": "b", "puntajes": {"contingencia": 0.0, "flecha": 0.0,
-                                                    "robustez": 0.0}}])
+                                                    "robustez": 0.0}}], pisos=_sin_excluir)
 caso("panel: cuatro ceros identicos JAMAS producen un ganador (el torneo viejo si lo hacia)",
      "ganador" not in _cero or "EMPATE" in _cero["fallo"])
 caso("panel: gana con ASTERISCO quien gana una lectura y pierde otra (no reemplaza los ojos)",
      "ASTERISCO" in _pj.veredicto(
          [{"nombre": "x", "puntajes": {"contingencia": 1.0, "flecha": 0.0, "robustez": 0.0}},
-          {"nombre": "y", "puntajes": {"contingencia": 0.0, "flecha": 1.0, "robustez": 1.0}}]
+          {"nombre": "y", "puntajes": {"contingencia": 0.0, "flecha": 1.0, "robustez": 1.0}}],
+         pisos=_sin_excluir
      )["fallo"] or "GANA y" in _pj.veredicto(
          [{"nombre": "x", "puntajes": {"contingencia": 1.0, "flecha": 0.0, "robustez": 0.0}},
-          {"nombre": "y", "puntajes": {"contingencia": 0.0, "flecha": 1.0, "robustez": 1.0}}]
+          {"nombre": "y", "puntajes": {"contingencia": 0.0, "flecha": 1.0, "robustez": 1.0}}],
+         pisos=_sin_excluir
      )["fallo"])
 
 print("== la escalera de soporte (prereg-29): el primer no-yo por definicion POSITIVA ==")

@@ -1,0 +1,50 @@
+{
+  "prerregistro": 52,
+  "semillas": [
+    71,
+    73,
+    79,
+    83,
+    89
+  ],
+  "mundos": {
+    "sin_amortiguar": {
+      "invariantes": 5,
+      "sindy4": 0,
+      "de": 5
+    },
+    "amortiguado": {
+      "invariantes": 0,
+      "sindy4": 5,
+      "de": 5
+    },
+    "filas_barajadas": {
+      "invariantes": 5,
+      "sindy4": 0,
+      "de": 5
+    },
+    "columnas_barajadas": {
+      "invariantes": 0,
+      "sindy4": 0,
+      "de": 5
+    },
+    "ruido_puro": {
+      "invariantes": 0,
+      "sindy4": 0,
+      "de": 5
+    }
+  },
+  "D_escala": {
+    "x1": 5,
+    "x1000": 5
+  },
+  "criterios": {
+    "A_encuentra_lo_que_hay": true,
+    "B_calla_donde_se_disipa": true,
+    "C_nulos": true,
+    "D_no_depende_de_las_unidades": true,
+    "E_los_dos_motores_discrepan": true,
+    "E_ademas_discrepan_en_filas_barajadas": true
+  },
+  "veredicto": "SEGUNDO MOTOR EN PIE — encuentra lo que hay, calla donde no lo hay, no depende de las unidades y DISCREPA de sindy4"
+}
