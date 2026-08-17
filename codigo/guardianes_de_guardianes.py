@@ -265,6 +265,19 @@ def datos_publicados_pisados(raiz):
                    "HAY 4 ORGANO(S) DESCONECTADO(S)", "HAY 99 ORGANO(S) DESCONECTADO(S)")
 
 
+def criterio_que_pasa_el_azar(raiz):
+    """Daño REAL, cometido en el prerregistro-60: congelar un criterio de 'k de n' que el azar pasa
+    casi una de cada cinco veces. Alli el NULO gano 4 de 5 y anulo el estudio entero.
+
+    Se crea el ESTADO MALO —un prerregistro nuevo con el criterio flojo— y no se toca ningun
+    chequeo."""
+    ruta = os.path.join(raiz, "registros", "prerregistro-99.md")
+    with open(ruta, "w", encoding="utf-8") as f:
+        f.write("# Prerregistro 99 — de mentira, para la meta-auditoria\n\n"
+                "El criterio pide que la politica gane en 4 de 5 semillas.\n")
+    return True
+
+
 MUTACIONES = [
     ("desaparece una regla del medio",            "coherencia.py",      borra_una_regla),
     ("la boleta proclama nodos que no existen",   "coherencia.py",      boleta_miente),
@@ -284,6 +297,7 @@ MUTACIONES = [
     ("se enmienda un modulo sellado y en uso sin volver a pasar la puerta", "disciplina.py",
      sello_muerto_en_modulo_en_uso),
     ("se pisan los datos que un acta ya publico", "actas.py", datos_publicados_pisados),
+    ("se congela un criterio de conteo que el azar pasa", "disciplina.py", criterio_que_pasa_el_azar),
 ]
 
 

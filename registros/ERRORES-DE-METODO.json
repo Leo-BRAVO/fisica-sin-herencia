@@ -193,6 +193,14 @@
       "mecanizado": true
     },
     {
+      "id": "criterio-de-conteo-sin-calcular-la-potencia",
+      "titulo": "Congelar un criterio de 'k de n' sin calcular que hace el azar bajo el",
+      "veces": 1,
+      "incidente": "el prerregistro-60 congelo 'gana en 4 de 5 semillas' para el resultado Y para el nulo. Con 5 semillas, una moneda justa saca 4 o mas caras el 18.75% de las veces (6 de 32). El nulo lo paso —gano 4 de 5— y anulo el estudio entero. No es que la politica fallara: es que el criterio no distinguia nada, y eso se sabia ANTES de correr con una binomial.",
+      "como_evitarlo": "antes de congelar un criterio de 'k de n' se calcula P(X>=k | n, p=0.5) y se escribe en el prerregistro; si pasa de 0.05 el criterio no esta listo. '5 de 5' da 0.031 y aguanta; '4 de 5' da 0.19 y no",
+      "mecanizado": true
+    },
+    {
       "id": "variable-muerta",
       "titulo": "Variable que se calcula y no se usa",
       "veces": 2,
@@ -201,7 +209,7 @@
       "mecanizado": true
     }
   ],
-  "mecanizados": 11,
-  "total": 25,
-  "veces_en_total": 35
+  "mecanizados": 12,
+  "total": 26,
+  "veces_en_total": 36
 }

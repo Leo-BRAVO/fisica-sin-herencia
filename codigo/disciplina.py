@@ -342,6 +342,20 @@ ERRORES = [
         "mecanizado": True,
     },
     {
+        "id": "criterio-de-conteo-sin-calcular-la-potencia",
+        "titulo": "Congelar un criterio de 'k de n' sin calcular que hace el azar bajo el",
+        "veces": 1,
+        "incidente": ("el prerregistro-60 congelo 'gana en 4 de 5 semillas' para el resultado Y "
+                      "para el nulo. Con 5 semillas, una moneda justa saca 4 o mas caras el "
+                      "18.75% de las veces (6 de 32). El nulo lo paso —gano 4 de 5— y anulo el "
+                      "estudio entero. No es que la politica fallara: es que el criterio no "
+                      "distinguia nada, y eso se sabia ANTES de correr con una binomial."),
+        "como_evitarlo": ("antes de congelar un criterio de 'k de n' se calcula P(X>=k | n, "
+                          "p=0.5) y se escribe en el prerregistro; si pasa de 0.05 el criterio no "
+                          "esta listo. '5 de 5' da 0.031 y aguanta; '4 de 5' da 0.19 y no"),
+        "mecanizado": True,
+    },
+    {
         "id": "variable-muerta",
         "titulo": "Variable que se calcula y no se usa",
         "veces": 2,
@@ -645,12 +659,43 @@ def revisar_prerregistros(verbose=True):
         if "espero" in t and not re.search(r"si (sale|no|aprueban|falla|reprueban)", t):
             fallos.append(f"{os.path.basename(p)}: declara una expectativa y no dice que dira si "
                           f"falla — una expectativa que solo se equivoca por un lado no es honesta")
+        for f in d_criterio_sin_potencia(t, numero=n):
+            fallos.append(f"{os.path.basename(p)}: {f}")
     if verbose:
         for f in fallos:
             print(f"  FALLO [expectativa-de-un-solo-lado] {f}")
         if not fallos:
             print("  ok    los prerregistros desde el 47 declaran los dos lados de su expectativa")
     return fallos
+
+
+def _cola_binomial(k, n):
+    """P(X >= k | n tiradas de moneda justa). Es la probabilidad de que el AZAR pase un criterio
+    de 'k de n'."""
+    import math
+    return sum(math.comb(n, i) for i in range(k, n + 1)) / float(2 ** n)
+
+
+def d_criterio_sin_potencia(texto, desde_prerregistro=61, numero=None):
+    """UN CRITERIO DE 'k de n' QUE EL AZAR PASA. Rige de un prerregistro en adelante, como los
+    demas endurecimientos: lo anterior se cuenta, no se reescribe.
+
+    Un criterio queda disculpado si el propio prerregistro escribe la probabilidad —basta que
+    nombre el azar o la binomial junto al criterio—, que es justo lo que se pide hacer."""
+    if numero is not None and numero < desde_prerregistro:
+        return []
+    if re.search(r"binomial|P\(X|el azar lo pasa|probabilidad del azar", texto, re.I):
+        return []
+    fallos = []
+    for m in re.finditer(r"\b(\d+)\s+de\s+(\d+)\b", texto):
+        k, n = int(m.group(1)), int(m.group(2))
+        if not (2 <= n <= 30 and k <= n and k > n / 2.0):
+            continue
+        p = _cola_binomial(k, n)
+        if p > 0.05:
+            fallos.append(f"el criterio '{k} de {n}' lo pasa el azar el {p:.1%} de las veces y el "
+                          f"prerregistro no lo dice: no esta listo para congelarse")
+    return sorted(set(fallos))
 
 
 def d_sello_muerto_en_uso(sellos, importados):
@@ -771,6 +816,15 @@ def regla31(verbose=True):
     finally:
         del ERRORES[:]
         ERRORES.extend(_guardado)
+    caso("potencia: MARCA un '4 de 5', que el azar pasa el 18.75% de las veces",
+         len(d_criterio_sin_potencia("gana en 4 de 5 semillas", numero=61)) == 1)
+    caso("potencia: NO marca un '5 de 5', que el azar pasa el 3.1%",
+         d_criterio_sin_potencia("gana en 5 de 5 semillas", numero=61) == [])
+    caso("potencia: NO marca un '4 de 5' cuyo prerregistro YA escribe la probabilidad",
+         d_criterio_sin_potencia("gana en 4 de 5; el azar lo pasa el 18.75%", numero=61) == [])
+    caso("potencia: NO marca los prerregistros anteriores al corte",
+         d_criterio_sin_potencia("gana en 4 de 5 semillas", numero=60) == [])
+
     caso("sello-muerto: MARCA un sello muerto en un modulo que alguien importa",
          len(d_sello_muerto_en_uso({"a": False}, {"a"})) == 1)
     caso("sello-muerto: NO marca un sello VIGENTE en un modulo en uso",
