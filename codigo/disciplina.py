@@ -251,16 +251,34 @@ ERRORES = [
     },
     {
         "id": "detector-aplicado-a-la-prosa",
-        "titulo": "Un detector que lee comentarios y docstrings como si fueran codigo",
-        "veces": 1,
+        "titulo": "Un detector que lee comentarios, docstrings o CADENAS como si fueran codigo",
+        "veces": 2,
         "incidente": ("`d_prueba_que_caduca` marco a anatomia.py por dos frases de sus "
                       "COMENTARIOS. El incidente que ese detector existe para cazar fue un conteo "
                       "dentro de una BUSQUEDA REAL —codigo que se ejecuta y caduca—, y explicar "
                       "un numero en prosa no caduca nada. Se corrigio aplicandolo al texto "
-                      "correcto, NO aflojandolo."),
+                      "correcto, NO aflojandolo. SEGUNDA VEZ el mismo dia, en su detector GEMELO: "
+                      "`d_sujeto_en_regla31` ignoraba comentarios pero NO cadenas, y marco la "
+                      "palabra 'lazo' dentro de un mensaje impreso. Arregle uno y no su hermano."),
         "como_evitarlo": ("un detector de codigo mira codigo; si tiene que mirar prosa, es otro "
                           "detector y necesita sus propios casos por los dos lados"),
         "mecanizado": True,
+    },
+    {
+        "id": "linea-base-favorable",
+        "titulo": "Linea base tonta que no es tonta, sino FAVORABLE",
+        "veces": 1,
+        "incidente": ("el criterio E del prerregistro-58 comparaba el reparto medido contra MIS "
+                      "PROPIOS NUMEROS escritos a mano (curable 0.30 y 0.10). La realidad medida "
+                      "es 0.0827 y 0.0776: yo habia inventado una diferencia tres veces mayor de "
+                      "la que existe. El criterio no comparaba contra un rival tonto — comparaba "
+                      "contra una ficcion favorable escrita por mi, que era justo lo que el "
+                      "estudio venia a desmontar. La correcta era el reparto uniforme. Ver "
+                      "INFORME-69."),
+        "como_evitarlo": ("la linea base tiene que ser TONTA, no COMODA: uniforme, persistencia, "
+                          "constante, azar. Si el rival es una suposicion mia, no es una linea "
+                          "base: es mi hipotesis disfrazada"),
+        "mecanizado": False,
     },
     {
         "id": "variable-muerta",
@@ -360,9 +378,15 @@ def d_sujeto_en_regla31(nombre, texto):
     cuerpo = texto[i:]
     fin = re.search(r"\ndef (?!regla31)", cuerpo)
     cuerpo = cuerpo[:fin.start()] if fin else cuerpo
-    # se ignoran las lineas de comentario: nombrar el sujeto para EXPLICAR por que no se prueba
-    # es exactamente lo que queremos que se escriba.
+    # SE IGNORAN COMENTARIOS **Y CADENAS DE TEXTO** — 11-ago-2026, y es el mismo error que ya
+    # corregi en `d_prueba_que_caduca` sin aplicarlo a su gemelo. Nombrar el sujeto para EXPLICAR
+    # por que no se prueba, o dentro del mensaje que se imprime al aprobar, no es probarlo. Lo que
+    # el detector busca es una LLAMADA al sujeto dentro del cuerpo de regla31().
+    # ESTO NO AFLOJA EL CRITERIO: `sindy4.foo()` sigue disparando; `"el sindy4 funciona"` no. La
+    # Regla 31 de este archivo lo prueba por los dos lados.
     codigo = "\n".join(l for l in cuerpo.split("\n") if not l.strip().startswith("#"))
+    codigo = re.sub(r'"[^"\n]*"', '""', codigo)
+    codigo = re.sub(r"'[^'\n]*'", "''", codigo)
     return [f"su regla31() menciona a '{s}', que es su OBJETO DE ESTUDIO: eso es resultado, no "
             f"requisito de entrada" for s in sujetos if re.search(rf"\b{re.escape(s)}\b", codigo)]
 
@@ -606,6 +630,12 @@ def regla31(verbose=True):
          len(d_sujeto_en_regla31("x", 'SUJETO = ("sindy4",)\ndef regla31():\n    sindy4.foo()\n')) == 1)
     caso("sujeto: NO marca una regla31 limpia",
          d_sujeto_en_regla31("x", 'SUJETO = ("sindy4",)\ndef regla31():\n    otra()\n') == [])
+    caso("sujeto: NO marca al sujeto nombrado dentro de un MENSAJE de texto",
+         d_sujeto_en_regla31("x", 'SUJETO = ("lazo",)\ndef regla31():\n'
+                                  '    print("el lazo funciona")\n') == [])
+    caso("sujeto: SI SIGUE marcando una LLAMADA al sujeto",
+         len(d_sujeto_en_regla31("x", 'SUJETO = ("sindy4",)\ndef regla31():\n'
+                                      '    sindy4.descubrir(x)\n')) == 1)
     caso("sujeto: NO marca al sujeto nombrado en un COMENTARIO que explica por que no se prueba",
          d_sujeto_en_regla31("x", 'SUJETO = ("sindy4",)\ndef regla31():\n'
                                   '    # aqui NO se prueba sindy4: es resultado\n    otra()\n') == [])
