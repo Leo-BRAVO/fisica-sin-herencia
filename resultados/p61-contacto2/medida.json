@@ -1,0 +1,187 @@
+{
+  "prerregistro": 61,
+  "semillas": 15,
+  "exigidas": 12,
+  "probabilidad_del_azar": 0.017578125,
+  "semillas_en_que_gana_la_intrinseca": 6,
+  "semillas_en_que_gana_la_barajada": 9,
+  "semillas_en_que_gana_la_intrinseca_en_el_mundo_sordo": 6,
+  "diferencia_mediana_informativa": -0.0007499999999999989,
+  "filas": [
+    {
+      "semilla": 1,
+      "balbuceo": 0.0085,
+      "intrinseca": 0.0078,
+      "barajada": 0.00965
+    },
+    {
+      "semilla": 2,
+      "balbuceo": 0.0074,
+      "intrinseca": 0.01555,
+      "barajada": 0.0167
+    },
+    {
+      "semilla": 3,
+      "balbuceo": 0.0216,
+      "intrinseca": 0.01135,
+      "barajada": 0.003
+    },
+    {
+      "semilla": 4,
+      "balbuceo": 0.00785,
+      "intrinseca": 0.0071,
+      "barajada": 0.0109
+    },
+    {
+      "semilla": 5,
+      "balbuceo": 0.01325,
+      "intrinseca": 0.01885,
+      "barajada": 0.02225
+    },
+    {
+      "semilla": 6,
+      "balbuceo": 0.0118,
+      "intrinseca": 0.0192,
+      "barajada": 0.02595
+    },
+    {
+      "semilla": 7,
+      "balbuceo": 0.01005,
+      "intrinseca": 0.01615,
+      "barajada": 0.02435
+    },
+    {
+      "semilla": 8,
+      "balbuceo": 0.0093,
+      "intrinseca": 0.0071,
+      "barajada": 0.0063
+    },
+    {
+      "semilla": 9,
+      "balbuceo": 0.01165,
+      "intrinseca": 0.0141,
+      "barajada": 0.0267
+    },
+    {
+      "semilla": 10,
+      "balbuceo": 0.00705,
+      "intrinseca": 0.01255,
+      "barajada": 0.0103
+    },
+    {
+      "semilla": 11,
+      "balbuceo": 0.0264,
+      "intrinseca": 0.01075,
+      "barajada": 0.0169
+    },
+    {
+      "semilla": 12,
+      "balbuceo": 0.01895,
+      "intrinseca": 0.0081,
+      "barajada": 0.01745
+    },
+    {
+      "semilla": 13,
+      "balbuceo": 0.0139,
+      "intrinseca": 0.0118,
+      "barajada": 0.0136
+    },
+    {
+      "semilla": 14,
+      "balbuceo": 0.02465,
+      "intrinseca": 0.0139,
+      "barajada": 0.0349
+    },
+    {
+      "semilla": 15,
+      "balbuceo": 0.0319,
+      "intrinseca": 0.0211,
+      "barajada": 0.0229
+    }
+  ],
+  "mundo_sordo": [
+    {
+      "semilla": 1,
+      "balbuceo": 0.01415,
+      "intrinseca": 0.0171
+    },
+    {
+      "semilla": 2,
+      "balbuceo": 0.00955,
+      "intrinseca": 0.01025
+    },
+    {
+      "semilla": 3,
+      "balbuceo": 0.0257,
+      "intrinseca": 0.00675
+    },
+    {
+      "semilla": 4,
+      "balbuceo": 0.0075,
+      "intrinseca": 0.0134
+    },
+    {
+      "semilla": 5,
+      "balbuceo": 0.01335,
+      "intrinseca": 0.0066
+    },
+    {
+      "semilla": 6,
+      "balbuceo": 0.01315,
+      "intrinseca": 0.0102
+    },
+    {
+      "semilla": 7,
+      "balbuceo": 0.01325,
+      "intrinseca": 0.0127
+    },
+    {
+      "semilla": 8,
+      "balbuceo": 0.0111,
+      "intrinseca": 0.0125
+    },
+    {
+      "semilla": 9,
+      "balbuceo": 0.0139,
+      "intrinseca": 0.00865
+    },
+    {
+      "semilla": 10,
+      "balbuceo": 0.00935,
+      "intrinseca": 0.0138
+    },
+    {
+      "semilla": 11,
+      "balbuceo": 0.01835,
+      "intrinseca": 0.0102
+    },
+    {
+      "semilla": 12,
+      "balbuceo": 0.02625,
+      "intrinseca": 0.0289
+    },
+    {
+      "semilla": 13,
+      "balbuceo": 0.0197,
+      "intrinseca": 0.0109
+    },
+    {
+      "semilla": 14,
+      "balbuceo": 0.0364,
+      "intrinseca": 0.00855
+    },
+    {
+      "semilla": 15,
+      "balbuceo": 0.0323,
+      "intrinseca": 0.01405
+    }
+  ],
+  "criterios": {
+    "A_el_cortafuegos_aguanta": true,
+    "B_en_el_mundo_sordo_la_intrinseca_no_busca": true,
+    "C_la_intrinseca_busca_sola": false,
+    "D_el_nulo_no_gana": true,
+    "E_no_se_puede_inventar_contacto": true
+  },
+  "veredicto": "LA CURIOSIDAD SOLA NO BASTA PARA BUSCAR EL CONTACTO — gana en 6 de 15 y hacian falta 12. Esta vez el diseño SI tenia potencia, asi que el item queda cerrado con una respuesta"
+}

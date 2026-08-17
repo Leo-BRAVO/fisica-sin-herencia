@@ -19,6 +19,26 @@
       "huella_del_catalogo": "652adc136556f6e7",
       "errores_en_ese_momento": 25,
       "cuando": "sin marca de tiempo"
+    },
+    "disciplina": {
+      "huella_del_catalogo": "34fd145cc65c0a61",
+      "errores_en_ese_momento": 26,
+      "cuando": "sin marca de tiempo"
+    },
+    "contacto2": {
+      "huella_del_catalogo": "34fd145cc65c0a61",
+      "errores_en_ese_momento": 26,
+      "cuando": "sin marca de tiempo"
+    },
+    "lazo2": {
+      "huella_del_catalogo": "34fd145cc65c0a61",
+      "errores_en_ese_momento": 26,
+      "cuando": "sin marca de tiempo"
+    },
+    "anatomia2": {
+      "huella_del_catalogo": "eec86bee389582e8",
+      "errores_en_ese_momento": 27,
+      "cuando": "sin marca de tiempo"
     }
   }
 }

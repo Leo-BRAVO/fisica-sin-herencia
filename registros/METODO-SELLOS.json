@@ -3,6 +3,10 @@
     "cuando": "2026-08-17 00:22:00",
     "huella": "dde9d83dd1156bdc"
   },
+  "anatomia2": {
+    "cuando": "2026-08-17 14:49:50",
+    "huella": "809ee9c25d535a34"
+  },
   "arreglo_motor": {
     "cuando": "2026-08-15 05:02:59",
     "huella": "fc459ffcd9950d08"
@@ -27,6 +31,10 @@
     "cuando": "2026-08-17 03:32:16",
     "huella": "95940b39c945f608"
   },
+  "contacto2": {
+    "cuando": "2026-08-17 14:40:30",
+    "huella": "29225ff9275e4b82"
+  },
   "contingencia": {
     "cuando": "2026-08-10 13:29:26",
     "huella": "e2afc60177b7f680"
@@ -50,6 +58,10 @@
   "invariantes": {
     "cuando": "2026-08-16 04:30:23",
     "huella": "f4c857d5d252c8e7"
+  },
+  "lazo2": {
+    "cuando": "2026-08-17 14:42:20",
+    "huella": "9f851cc9de6bee75"
   },
   "lazo_atencion": {
     "cuando": "2026-08-17 02:31:46",

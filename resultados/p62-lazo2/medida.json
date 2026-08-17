@@ -1,0 +1,27 @@
+{
+  "prerregistro": 62,
+  "regiones_medidas": {
+    "buena": {
+      "curable": 0.0827,
+      "poder": 0.2328
+    },
+    "tv": {
+      "curable": 0.0776,
+      "poder": 0.0
+    }
+  },
+  "reparto_medido": {
+    "buena": 9.758,
+    "tv": 0.242
+  },
+  "linea_base_uniforme": 5.0,
+  "instrumento_con_defecto_publicado": "todo `curable` sale de incertidumbre.py, que mide SIN SELLO VIGENTE y cuya ficha reprueba por el 20.7% del INFORME-60. Si ese defecto se arregla, este resultado hay que rehacerlo",
+  "criterios": {
+    "A_los_organos_miden": true,
+    "B_el_televisor_pierde": true,
+    "C_la_buena_gana": true,
+    "E_le_gana_al_uniforme": true,
+    "F_el_uniforme_es_ciego": true
+  },
+  "veredicto": "EL LAZO LE GANA AL RIVAL TRIVIAL — la region buena se lleva 9.758 contra el 5.0 del uniforme y el televisor 0.242 contra el mismo 5.0. `poder` queda listo para conectarse, con el 20.7% de G14 escrito"
+}
