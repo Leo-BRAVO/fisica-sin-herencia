@@ -1,0 +1,123 @@
+{
+  "prerregistro": 57,
+  "semillas": [
+    251,
+    257,
+    263,
+    269,
+    271
+  ],
+  "por_semilla": {
+    "251": {
+      "pixel_mse": {
+        "r2": 0.3134,
+        "perdida_final": 0.003548,
+        "diverge": false
+      },
+      "keypoint_softmax": {
+        "r2": 0.7584,
+        "perdida_final": 0.003204,
+        "diverge": false
+      },
+      "r2_contra_objetivo_al_azar": -0.0461
+    },
+    "257": {
+      "pixel_mse": {
+        "r2": 0.3852,
+        "perdida_final": 0.00393,
+        "diverge": false
+      },
+      "keypoint_softmax": {
+        "r2": 0.7264,
+        "perdida_final": 0.004537,
+        "diverge": false
+      },
+      "r2_contra_objetivo_al_azar": -0.0113
+    },
+    "263": {
+      "pixel_mse": {
+        "r2": 0.3072,
+        "perdida_final": 0.003585,
+        "diverge": false
+      },
+      "keypoint_softmax": {
+        "r2": -0.0205,
+        "perdida_final": 0.004523,
+        "diverge": false
+      },
+      "r2_contra_objetivo_al_azar": -0.0296
+    },
+    "269": {
+      "pixel_mse": {
+        "r2": 0.1838,
+        "perdida_final": 0.003093,
+        "diverge": false
+      },
+      "keypoint_softmax": {
+        "r2": 0.6093,
+        "perdida_final": 0.00374,
+        "diverge": false
+      },
+      "r2_contra_objetivo_al_azar": -0.0173
+    },
+    "271": {
+      "pixel_mse": {
+        "r2": 0.2348,
+        "perdida_final": 0.003256,
+        "diverge": false
+      },
+      "keypoint_softmax": {
+        "r2": 0.7519,
+        "perdida_final": 0.003145,
+        "diverge": false
+      },
+      "r2_contra_objetivo_al_azar": -0.0134
+    }
+  },
+  "r2_keypoint": [
+    0.7584,
+    0.7264,
+    -0.0205,
+    0.6093,
+    0.7519
+  ],
+  "r2_pixel": [
+    0.3134,
+    0.3852,
+    0.3072,
+    0.1838,
+    0.2348
+  ],
+  "ventajas": [
+    0.445,
+    0.3412,
+    -0.3277,
+    0.4255,
+    0.5171
+  ],
+  "ventaja_media": 0.2802,
+  "ventaja_maxima_del_disco_INFORME_66": 0.2693,
+  "r2_contra_objetivo_al_azar": [
+    -0.0461,
+    -0.0113,
+    -0.0296,
+    -0.0173,
+    -0.0134
+  ],
+  "ruido_sensor_bajo": 0.1326,
+  "ruido_sensor_alto": -0.0227,
+  "escena": {
+    "aprueba": true,
+    "fallos": [],
+    "fraccion_de_pixeles_del_brazo": 0.0142,
+    "desviacion_del_extremo": 5.884
+  },
+  "criterios": {
+    "A_el_brazo_es_delgado": true,
+    "B_la_ventaja_crece": true,
+    "C_la_medida_no_se_infla": true,
+    "D_la_medida_responde": true,
+    "E_ninguno_diverge": true
+  },
+  "veredicto": "ERA EL BRAZO DELGADO — la ventaja del cuello de botella espacial CRECE cuando el objeto es delgado, que es el caso que Diego tiene"
+}

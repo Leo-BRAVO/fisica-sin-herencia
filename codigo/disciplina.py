@@ -187,6 +187,20 @@ ERRORES = [
         "mecanizado": False,
     },
     {
+        "id": "media-sobre-resultado-bimodal",
+        "titulo": "Criterio construido sobre una MEDIA cuando el resultado tiene dos modos",
+        "veces": 1,
+        "incidente": ("el criterio B del prerregistro-57 exigia que la ventaja MEDIA superara "
+                      "0.2693 y paso por 0.011 (0.2802) — pero cuatro semillas daban entre 0.3412 "
+                      "y 0.5171 y la quinta daba -0.3277, es decir el signo contrario. La media "
+                      "escondio exactamente lo que habia que mirar: que el candidato falla del "
+                      "todo 1 de cada 5 veces. Ver INFORME-67."),
+        "como_evitarlo": ("si un criterio puede pasar con la mitad de los casos fallando, no use "
+                          "la media: exija el resultado EN CADA CASO, como hacen los criterios "
+                          "'5 de 5' del resto del proyecto"),
+        "mecanizado": False,
+    },
+    {
         "id": "variable-muerta",
         "titulo": "Variable que se calcula y no se usa",
         "veces": 2,
