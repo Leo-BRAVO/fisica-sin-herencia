@@ -23,12 +23,22 @@
         223
       ],
       "que_se_tanteaba": "perdida por pixel contra cuello de botella de softmax espacial"
+    },
+    {
+      "salida": "colapso/tanteo.json",
+      "semillas_quemadas": [
+        251,
+        263
+      ],
+      "que_se_tanteaba": "si los dos keypoints colapsan sobre el mismo segmento (INFORME-67)"
     }
   ],
   "semillas_quemadas_en_total": [
     101,
     103,
     211,
-    223
+    223,
+    251,
+    263
   ]
 }

@@ -1,0 +1,24 @@
+{
+  "_sello": "TANTEO DEL BANCO — NO ES EVIDENCIA. Sin prerregistro previo y sin sello, este numero no puede citarse en ningun acta ni sostener ninguna afirmacion. Si el tanteo funciona, el paso siguiente NO es ascenderlo: es escribir un prerregistro y volver a medirlo con semillas nuevas.",
+  "_semillas_quemadas": [
+    251,
+    263
+  ],
+  "_que_se_tanteaba": "si los dos keypoints colapsan sobre el mismo segmento (INFORME-67)",
+  "tanteo": {
+    "263": {
+      "r2": 0.6148,
+      "separacion_media_entre_los_dos_puntos": 1.489,
+      "separacion_minima": 1.3933,
+      "recorrido_del_punto_0": 0.0003,
+      "recorrido_del_punto_1": 0.0278
+    },
+    "251": {
+      "r2": 0.6778,
+      "separacion_media_entre_los_dos_puntos": 0.2603,
+      "separacion_minima": 0.2466,
+      "recorrido_del_punto_0": 0.0035,
+      "recorrido_del_punto_1": 0.0066
+    }
+  }
+}
