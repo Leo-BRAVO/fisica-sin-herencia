@@ -1,0 +1,11 @@
+{
+  "_sello": "TANTEO DEL BANCO — NO ES EVIDENCIA. Sin prerregistro previo y sin sello, este numero no puede citarse en ningun acta ni sostener ninguna afirmacion. Si el tanteo funciona, el paso siguiente NO es ascenderlo: es escribir un prerregistro y volver a medirlo con semillas nuevas.",
+  "_semillas_quemadas": [
+    101,
+    103
+  ],
+  "_que_se_tanteaba": "la propia Regla 31",
+  "tanteo": {
+    "x": 1
+  }
+}
