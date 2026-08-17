@@ -215,6 +215,98 @@ ERRORES = [
         "mecanizado": False,
     },
     {
+        "id": "factor-elegido-a-ojo",
+        "titulo": "El factor de una relacion metamorfica elegido por intuicion, no por mecanismo",
+        "veces": 1,
+        "incidente": ("el prerregistro-56 declaro 'ruido de sensor x10 baja el R2' y la puerta lo "
+                      "midio x1.020. La relacion era cierta; el FACTOR estaba mal: x10 llevaba el "
+                      "ruido a 0.20 y el objeto tenia contraste 0.5, asi que seguia siendo el "
+                      "borron mas brillante. El factor correcto sale del mecanismo —x50, el doble "
+                      "del contraste— y ese numero se sabe a priori porque yo dibujo la escena."),
+        "como_evitarlo": ("el factor se deriva de una magnitud del problema que se conozca a "
+                          "priori; si no se puede derivar, la relacion no esta lista"),
+        "mecanizado": False,
+    },
+    {
+        "id": "error-de-categoria-en-la-carpeta",
+        "titulo": "Poner en resultados/ algo que no es un resultado",
+        "veces": 1,
+        "incidente": ("escribi la CORRECCION-01 en resultados/ y sus numeros salian de un TANTEO "
+                      "del banco, que por construccion no puede probar nada. El auditor de actas "
+                      "lo cazo: PONER ALGO EN resultados/ ES AFIRMAR QUE ES UN RESULTADO."),
+        "como_evitarlo": ("resultados/ es para actas con datos prerregistrados; registros/ es para "
+                          "notas, lecciones y correcciones"),
+        "mecanizado": False,
+    },
+    {
+        "id": "sujeto-mal-declarado",
+        "titulo": "Confundir la ENTRADA con el OBJETO DE ESTUDIO al declarar SUJETO",
+        "veces": 1,
+        "incidente": ("peticiones.py declaro SUJETO = ('peticion',) y disciplina.py lo reprobo. "
+                      "Una peticion es lo que el modulo RECIBE; lo que estudia es SU PROPIO "
+                      "FILTRO. La tupla vacia es una AFIRMACION que obliga a explicar por que no "
+                      "hay sujeto externo; no declararla sigue reprobando."),
+        "como_evitarlo": "el SUJETO es lo que el estudio MIDE, no lo que el modulo consume",
+        "mecanizado": True,
+    },
+    {
+        "id": "detector-aplicado-a-la-prosa",
+        "titulo": "Un detector que lee comentarios, docstrings o CADENAS como si fueran codigo",
+        "veces": 2,
+        "incidente": ("`d_prueba_que_caduca` marco a anatomia.py por dos frases de sus "
+                      "COMENTARIOS. El incidente que ese detector existe para cazar fue un conteo "
+                      "dentro de una BUSQUEDA REAL —codigo que se ejecuta y caduca—, y explicar "
+                      "un numero en prosa no caduca nada. Se corrigio aplicandolo al texto "
+                      "correcto, NO aflojandolo. SEGUNDA VEZ el mismo dia, en su detector GEMELO: "
+                      "`d_sujeto_en_regla31` ignoraba comentarios pero NO cadenas, y marco la "
+                      "palabra 'lazo' dentro de un mensaje impreso. Arregle uno y no su hermano."),
+        "como_evitarlo": ("un detector de codigo mira codigo; si tiene que mirar prosa, es otro "
+                          "detector y necesita sus propios casos por los dos lados"),
+        "mecanizado": True,
+    },
+    {
+        "id": "linea-base-favorable",
+        "titulo": "Linea base tonta que no es tonta, sino FAVORABLE",
+        "veces": 1,
+        "incidente": ("el criterio E del prerregistro-58 comparaba el reparto medido contra MIS "
+                      "PROPIOS NUMEROS escritos a mano (curable 0.30 y 0.10). La realidad medida "
+                      "es 0.0827 y 0.0776: yo habia inventado una diferencia tres veces mayor de "
+                      "la que existe. El criterio no comparaba contra un rival tonto — comparaba "
+                      "contra una ficcion favorable escrita por mi, que era justo lo que el "
+                      "estudio venia a desmontar. La correcta era el reparto uniforme. Ver "
+                      "INFORME-69."),
+        "como_evitarlo": ("la linea base tiene que ser TONTA, no COMODA: uniforme, persistencia, "
+                          "constante, azar. Si el rival es una suposicion mia, no es una linea "
+                          "base: es mi hipotesis disfrazada"),
+        "mecanizado": False,
+    },
+    {
+        "id": "autopruebas-en-un-modo-que-nadie-corre",
+        "titulo": "Las autopruebas de un guardian viven en un modo que la corrida normal no ejecuta",
+        "veces": 1,
+        "incidente": ("añadi dos daños a la meta-auditoria —vaciar el catalogo de errores y "
+                      "quitarle la caducidad a la lectura previa— y disciplina.py siguio diciendo "
+                      "OK sobre el proyecto ROTO: sus autopruebas estaban en `--regla31`, un modo "
+                      "que la corrida normal no ejecutaba. UN GUARDIAN CUYAS AUTOPRUEBAS ESTAN EN "
+                      "UN MODO APARTE SE PUEDE VACIAR Y NO SE ENTERA."),
+        "como_evitarlo": ("todo guardian corre sus propias autopruebas ANTES de revisar nada, en "
+                          "su ruta normal, y se niega a opinar si reprueban"),
+        "mecanizado": False,
+    },
+    {
+        "id": "daño-que-desactiva-el-chequeo-en-vez-de-crear-el-estado",
+        "titulo": "Una prueba de daño que apaga el detector en lugar de provocar lo que detecta",
+        "veces": 1,
+        "incidente": ("mi daño 'se vacia el catalogo de errores' cambiaba el CHEQUEO —`len(ERRORES) "
+                      "> 0` por `True`— en vez de vaciar la lista. La meta-auditoria lo marco como "
+                      "guardian ciego, y tenia razon: desactivar el detector y provocar lo que el "
+                      "detector busca son cosas distintas, y SOLO LA SEGUNDA prueba que el detector "
+                      "sirve."),
+        "como_evitarlo": ("una prueba de daño crea el ESTADO que el guardian debe cazar; si toca "
+                          "el codigo del guardian, esta probando otra cosa"),
+        "mecanizado": False,
+    },
+    {
         "id": "variable-muerta",
         "titulo": "Variable que se calcula y no se usa",
         "veces": 2,
@@ -312,9 +404,15 @@ def d_sujeto_en_regla31(nombre, texto):
     cuerpo = texto[i:]
     fin = re.search(r"\ndef (?!regla31)", cuerpo)
     cuerpo = cuerpo[:fin.start()] if fin else cuerpo
-    # se ignoran las lineas de comentario: nombrar el sujeto para EXPLICAR por que no se prueba
-    # es exactamente lo que queremos que se escriba.
+    # SE IGNORAN COMENTARIOS **Y CADENAS DE TEXTO** — 11-ago-2026, y es el mismo error que ya
+    # corregi en `d_prueba_que_caduca` sin aplicarlo a su gemelo. Nombrar el sujeto para EXPLICAR
+    # por que no se prueba, o dentro del mensaje que se imprime al aprobar, no es probarlo. Lo que
+    # el detector busca es una LLAMADA al sujeto dentro del cuerpo de regla31().
+    # ESTO NO AFLOJA EL CRITERIO: `sindy4.foo()` sigue disparando; `"el sindy4 funciona"` no. La
+    # Regla 31 de este archivo lo prueba por los dos lados.
     codigo = "\n".join(l for l in cuerpo.split("\n") if not l.strip().startswith("#"))
+    codigo = re.sub(r'"[^"\n]*"', '""', codigo)
+    codigo = re.sub(r"'[^'\n]*'", "''", codigo)
     return [f"su regla31() menciona a '{s}', que es su OBJETO DE ESTUDIO: eso es resultado, no "
             f"requisito de entrada" for s in sujetos if re.search(rf"\b{re.escape(s)}\b", codigo)]
 
@@ -377,6 +475,71 @@ def d_semilla_tardia(texto):
             fallos.append(f"'{m.group(1)}' recibe el modelo YA CONSTRUIDO y fija la semilla "
                           f"dentro: los pesos iniciales no los controla la semilla declarada")
     return fallos
+
+
+# ==========================================================================================
+# LA LECTURA PREVIA — el guardian va ANTES de escribir, no despues.
+#
+# Encargo del director, con sus palabras: "antes de hacer cualquier cosa en desarrollo pasas por
+# ese guardian para seguir, son demasiados errores". Y tiene razon: hasta ahora este archivo corria
+# como paso 0.5 de LA PUERTA, es decir DESPUES de que el modulo ya estuviera escrito. Cazaba, pero
+# tarde: el error ya estaba cometido y solo quedaba rehacerlo.
+#
+# COMO SE MECANIZA, para que no sea una promesa mia: `--antes <modulo>` imprime el catalogo entero
+# y DEJA CONSTANCIA. LA PUERTA exige esa constancia, y ademas exige que sea POSTERIOR al ultimo
+# cambio del catalogo: si se añade un error nuevo, TODAS las lecturas viejas caducan y hay que
+# volver a leer. Un catalogo que crece y nadie relee es una lista de museo.
+#
+# LO QUE ESTO **NO** PUEDE HACER, y hay que decirlo: no me obliga a ENTENDER la lista, solo a
+# tenerla delante. Que sirva depende de leerla de verdad. Lo que si impide es lo que venia pasando:
+# empezar a escribir sin haberla mirado.
+# ==========================================================================================
+LECTURAS = os.path.join(BASE, "registros", "LECTURAS-PREVIAS.json")
+
+
+def _huella_del_catalogo():
+    """Cambia en cuanto se añade, se quita o se reescribe un error. Si cambia, las lecturas
+    anteriores dejan de valer."""
+    import hashlib
+    crudo = json.dumps([{k: e[k] for k in ("id", "titulo", "veces", "incidente")}
+                        for e in ERRORES], ensure_ascii=False, sort_keys=True)
+    return hashlib.sha256(crudo.encode("utf-8")).hexdigest()[:16]
+
+
+def leer_antes(modulo, cuando=None):
+    """Imprime el catalogo y deja constancia de que se leyo, con la huella del catalogo de HOY."""
+    print("=" * 88)
+    print(f"ANTES DE ESCRIBIR '{modulo}' — LOS {len(ERRORES)} ERRORES QUE YA COMETI")
+    print("=" * 88)
+    for e in ERRORES:
+        marca = "BLOQUEA" if e["mecanizado"] else "recuerda"
+        print(f"\n[{marca}] {e['titulo']}  (x{e['veces']})")
+        print(f"    EVITARLO: {e['como_evitarlo']}")
+    print("\n" + "=" * 88)
+    d = json.load(open(LECTURAS, encoding="utf-8")) if os.path.exists(LECTURAS) else {"lecturas": {}}
+    d["lecturas"][modulo] = {"huella_del_catalogo": _huella_del_catalogo(),
+                             "errores_en_ese_momento": len(ERRORES),
+                             "cuando": cuando or "sin marca de tiempo"}
+    os.makedirs(os.path.dirname(LECTURAS), exist_ok=True)
+    with open(LECTURAS, "w", encoding="utf-8") as f:
+        json.dump(d, f, indent=2, ensure_ascii=False)
+    return d["lecturas"][modulo]
+
+
+def lectura_valida(modulo):
+    """¿Hay constancia de haber leido el catalogo ACTUAL antes de escribir este modulo?"""
+    if not os.path.exists(LECTURAS):
+        return False, ("no hay constancia de haber leido el catalogo de errores. Corre "
+                       f"`python disciplina.py --antes {modulo}` ANTES de escribir nada")
+    d = json.load(open(LECTURAS, encoding="utf-8")).get("lecturas", {}).get(modulo)
+    if not d:
+        return False, (f"no hay constancia de lectura para '{modulo}'. Corre "
+                       f"`python disciplina.py --antes {modulo}` ANTES de escribir nada")
+    if d.get("huella_del_catalogo") != _huella_del_catalogo():
+        return False, (f"la lectura de '{modulo}' es de un catalogo VIEJO ({d.get('errores_en_ese_momento')} "
+                       f"errores; ahora hay {len(ERRORES)}). Se añadio un error nuevo desde "
+                       f"entonces: hay que volver a leer")
+    return True, ""
 
 
 def revisar_modulo(nombre, verbose=True):
@@ -493,6 +656,12 @@ def regla31(verbose=True):
          len(d_sujeto_en_regla31("x", 'SUJETO = ("sindy4",)\ndef regla31():\n    sindy4.foo()\n')) == 1)
     caso("sujeto: NO marca una regla31 limpia",
          d_sujeto_en_regla31("x", 'SUJETO = ("sindy4",)\ndef regla31():\n    otra()\n') == [])
+    caso("sujeto: NO marca al sujeto nombrado dentro de un MENSAJE de texto",
+         d_sujeto_en_regla31("x", 'SUJETO = ("lazo",)\ndef regla31():\n'
+                                  '    print("el lazo funciona")\n') == [])
+    caso("sujeto: SI SIGUE marcando una LLAMADA al sujeto",
+         len(d_sujeto_en_regla31("x", 'SUJETO = ("sindy4",)\ndef regla31():\n'
+                                      '    sindy4.descubrir(x)\n')) == 1)
     caso("sujeto: NO marca al sujeto nombrado en un COMENTARIO que explica por que no se prueba",
          d_sujeto_en_regla31("x", 'SUJETO = ("sindy4",)\ndef regla31():\n'
                                   '    # aqui NO se prueba sindy4: es resultado\n    otra()\n') == [])
@@ -505,6 +674,19 @@ def regla31(verbose=True):
                           "def entrenar(modelo, X):\n    pass\n") == [])
     caso("semilla-tardia: NO marca a un modulo que no usa torch",
          d_semilla_tardia("def entrenar(modelo, X):\n    manual_seed(1)\n") == [])
+    # LA LECTURA PREVIA, por los dos lados. Un mecanismo nuevo sin prueba por los dos lados es
+    # decoracion, y este archivo entero existe por esa leccion.
+    _falsa = lectura_valida("__modulo_que_nadie_ha_leido__")
+    caso("lectura previa: MARCA un modulo sin constancia", not _falsa[0])
+    _guardado = list(ERRORES)
+    try:
+        ERRORES.append({"id": "__prueba__", "titulo": "x", "veces": 1, "incidente": "y",
+                        "como_evitarlo": "z", "mecanizado": False})
+        caso("lectura previa: la constancia CADUCA si el catalogo crece",
+             not lectura_valida("peticiones")[0])
+    finally:
+        del ERRORES[:]
+        ERRORES.extend(_guardado)
     caso("el catalogo de errores NO esta vacio", len(ERRORES) > 0)
     caso("todo error del catalogo declara si esta mecanizado",
          all("mecanizado" in e and "incidente" in e for e in ERRORES))
@@ -538,10 +720,26 @@ if __name__ == "__main__":
     ap.add_argument("--regla31", action="store_true")
     ap.add_argument("--modulo")
     ap.add_argument("--prerregistros", action="store_true")
+    ap.add_argument("--antes", metavar="MODULO",
+                    help="LO PRIMERO: imprime el catalogo y deja constancia antes de escribir")
     ap.add_argument("--catalogo", default="registros/ERRORES-DE-METODO.json")
     a = ap.parse_args()
     if a.regla31:
         sys.exit(regla31())
+    if a.antes:
+        leer_antes(a.antes)
+        print(f"CONSTANCIA DEJADA para '{a.antes}'. LA PUERTA la exigira, y CADUCARA en cuanto se "
+              f"añada un error nuevo al catalogo.")
+        sys.exit(0)
+    # LO PRIMERO: EL GUARDIAN SE COMPRUEBA A SI MISMO ANTES DE COMPROBAR NADA.
+    # La meta-auditoria lo cazo el 11-ago-2026: mis dos daños nuevos —vaciar el catalogo y quitarle
+    # la caducidad a la lectura previa— NO ponian rojo a este archivo, porque sus autopruebas
+    # vivian en `--regla31`, UN MODO QUE NADIE EJECUTA EN LA CORRIDA NORMAL. Un guardian cuyas
+    # autopruebas estan en un modo aparte se puede vaciar y no se entera de nada.
+    if regla31(verbose=False) != 0:
+        print("DISCIPLINA: SUS PROPIAS AUTOPRUEBAS REPRUEBAN. No reviso nada mas: un guardian roto "
+              "que sigue opinando es peor que ninguno.")
+        sys.exit(1)
     catalogo(salida=a.catalogo)
     if a.modulo:
         sys.exit(1 if revisar_modulo(a.modulo) else 0)

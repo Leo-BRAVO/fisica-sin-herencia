@@ -1,0 +1,43 @@
+{
+  "prerregistro": 58,
+  "regiones_medidas": {
+    "buena": {
+      "curable": 0.0827,
+      "poder": 0.2328
+    },
+    "tv": {
+      "curable": 0.0776,
+      "poder": 0.0
+    }
+  },
+  "reparto_medido": {
+    "buena": 9.758,
+    "tv": 0.242
+  },
+  "reparto_con_mis_numeros_a_mano": {
+    "buena": 9.875,
+    "tv": 0.125
+  },
+  "ficha": {
+    "aprueba": true,
+    "fallos": [],
+    "medidas": {
+      "buena": {
+        "curable": 0.0827,
+        "poder": 0.2328
+      },
+      "tv": {
+        "curable": 0.0776,
+        "poder": 0.0
+      }
+    }
+  },
+  "criterios": {
+    "A_los_organos_miden": true,
+    "B_el_televisor_pierde": true,
+    "C_la_buena_gana": true,
+    "D_el_rango_del_contrato_se_respeta": true,
+    "E_le_gana_a_mis_numeros": false
+  },
+  "veredicto": "MEDIR DE VERDAD NO MEJORA EL REPARTO — `poder` sigue desconectado, y ahora con esa razon escrita"
+}

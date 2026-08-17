@@ -121,6 +121,54 @@
       "mecanizado": false
     },
     {
+      "id": "factor-elegido-a-ojo",
+      "titulo": "El factor de una relacion metamorfica elegido por intuicion, no por mecanismo",
+      "veces": 1,
+      "incidente": "el prerregistro-56 declaro 'ruido de sensor x10 baja el R2' y la puerta lo midio x1.020. La relacion era cierta; el FACTOR estaba mal: x10 llevaba el ruido a 0.20 y el objeto tenia contraste 0.5, asi que seguia siendo el borron mas brillante. El factor correcto sale del mecanismo —x50, el doble del contraste— y ese numero se sabe a priori porque yo dibujo la escena.",
+      "como_evitarlo": "el factor se deriva de una magnitud del problema que se conozca a priori; si no se puede derivar, la relacion no esta lista",
+      "mecanizado": false
+    },
+    {
+      "id": "error-de-categoria-en-la-carpeta",
+      "titulo": "Poner en resultados/ algo que no es un resultado",
+      "veces": 1,
+      "incidente": "escribi la CORRECCION-01 en resultados/ y sus numeros salian de un TANTEO del banco, que por construccion no puede probar nada. El auditor de actas lo cazo: PONER ALGO EN resultados/ ES AFIRMAR QUE ES UN RESULTADO.",
+      "como_evitarlo": "resultados/ es para actas con datos prerregistrados; registros/ es para notas, lecciones y correcciones",
+      "mecanizado": false
+    },
+    {
+      "id": "sujeto-mal-declarado",
+      "titulo": "Confundir la ENTRADA con el OBJETO DE ESTUDIO al declarar SUJETO",
+      "veces": 1,
+      "incidente": "peticiones.py declaro SUJETO = ('peticion',) y disciplina.py lo reprobo. Una peticion es lo que el modulo RECIBE; lo que estudia es SU PROPIO FILTRO. La tupla vacia es una AFIRMACION que obliga a explicar por que no hay sujeto externo; no declararla sigue reprobando.",
+      "como_evitarlo": "el SUJETO es lo que el estudio MIDE, no lo que el modulo consume",
+      "mecanizado": true
+    },
+    {
+      "id": "detector-aplicado-a-la-prosa",
+      "titulo": "Un detector que lee comentarios, docstrings o CADENAS como si fueran codigo",
+      "veces": 2,
+      "incidente": "`d_prueba_que_caduca` marco a anatomia.py por dos frases de sus COMENTARIOS. El incidente que ese detector existe para cazar fue un conteo dentro de una BUSQUEDA REAL —codigo que se ejecuta y caduca—, y explicar un numero en prosa no caduca nada. Se corrigio aplicandolo al texto correcto, NO aflojandolo. SEGUNDA VEZ el mismo dia, en su detector GEMELO: `d_sujeto_en_regla31` ignoraba comentarios pero NO cadenas, y marco la palabra 'lazo' dentro de un mensaje impreso. Arregle uno y no su hermano.",
+      "como_evitarlo": "un detector de codigo mira codigo; si tiene que mirar prosa, es otro detector y necesita sus propios casos por los dos lados",
+      "mecanizado": true
+    },
+    {
+      "id": "linea-base-favorable",
+      "titulo": "Linea base tonta que no es tonta, sino FAVORABLE",
+      "veces": 1,
+      "incidente": "el criterio E del prerregistro-58 comparaba el reparto medido contra MIS PROPIOS NUMEROS escritos a mano (curable 0.30 y 0.10). La realidad medida es 0.0827 y 0.0776: yo habia inventado una diferencia tres veces mayor de la que existe. El criterio no comparaba contra un rival tonto — comparaba contra una ficcion favorable escrita por mi, que era justo lo que el estudio venia a desmontar. La correcta era el reparto uniforme. Ver INFORME-69.",
+      "como_evitarlo": "la linea base tiene que ser TONTA, no COMODA: uniforme, persistencia, constante, azar. Si el rival es una suposicion mia, no es una linea base: es mi hipotesis disfrazada",
+      "mecanizado": false
+    },
+    {
+      "id": "autopruebas-en-un-modo-que-nadie-corre",
+      "titulo": "Las autopruebas de un guardian viven en un modo que la corrida normal no ejecuta",
+      "veces": 1,
+      "incidente": "añadi dos daños a la meta-auditoria —vaciar el catalogo de errores y quitarle la caducidad a la lectura previa— y disciplina.py siguio diciendo OK sobre el proyecto ROTO: sus autopruebas estaban en `--regla31`, un modo que la corrida normal no ejecutaba. UN GUARDIAN CUYAS AUTOPRUEBAS ESTAN EN UN MODO APARTE SE PUEDE VACIAR Y NO SE ENTERA.",
+      "como_evitarlo": "todo guardian corre sus propias autopruebas ANTES de revisar nada, en su ruta normal, y se niega a opinar si reprueban",
+      "mecanizado": false
+    },
+    {
       "id": "variable-muerta",
       "titulo": "Variable que se calcula y no se usa",
       "veces": 2,
@@ -129,7 +177,7 @@
       "mecanizado": true
     }
   ],
-  "mecanizados": 7,
-  "total": 16,
-  "veces_en_total": 24
+  "mecanizados": 9,
+  "total": 22,
+  "veces_en_total": 31
 }

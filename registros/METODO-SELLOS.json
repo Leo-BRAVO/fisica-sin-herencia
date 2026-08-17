@@ -47,6 +47,10 @@
     "cuando": "2026-08-16 04:30:23",
     "huella": "f4c857d5d252c8e7"
   },
+  "lazo_atencion": {
+    "cuando": "2026-08-17 02:31:46",
+    "huella": "31d04f425b057446"
+  },
   "mundo": {
     "cuando": "2026-08-17 00:00:56",
     "huella": "3987837bc02760ab"
@@ -60,7 +64,7 @@
     "huella": "2e944e1476d9a33f"
   },
   "peticiones": {
-    "cuando": "2026-08-17 00:14:31",
+    "cuando": "2026-08-17 02:22:42",
     "huella": "433905dfca702b81"
   },
   "poder": {

@@ -1,0 +1,14 @@
+{
+  "lecturas": {
+    "peticiones": {
+      "huella_del_catalogo": "115dc48f1d914fa2",
+      "errores_en_ese_momento": 20,
+      "cuando": "sin marca de tiempo"
+    },
+    "lazo_atencion": {
+      "huella_del_catalogo": "f565ead4492de936",
+      "errores_en_ese_momento": 20,
+      "cuando": "sin marca de tiempo"
+    }
+  }
+}

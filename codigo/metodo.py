@@ -184,6 +184,12 @@ def revisar(nombre_modulo, verbose=True, correr_regla31=True):
     # errores que YO repito al escribirlo, y lleva el catalogo de cada uno con su incidente real.
     import disciplina as D
     _dis = D.revisar_modulo(nombre_modulo, verbose=False)
+    # Y LA LECTURA PREVIA: el guardian tiene que haberse consultado ANTES de escribir, no despues.
+    # "son demasiados errores", dijo el director, y llevaba razon: cazarlos al final es rehacer el
+    # trabajo. La constancia CADUCA en cuanto se añade un error nuevo al catalogo.
+    _ok_lect, _porque = D.lectura_valida(nombre_modulo)
+    if not _ok_lect:
+        _dis = list(_dis) + [f"[lectura-previa] {_porque}"]
     _reg("0.5 disciplina", {"aprueba": not _dis, "fallos": _dis})
 
     # PASO 1 — las formulas declaradas deben CUMPLIRSE. Es la unica comprobacion que seguira
