@@ -116,8 +116,8 @@ def paso0_manifiesto(mod):
     return {"aprueba": not fallos, "fallos": fallos, "manifiesto": m}
 
 
-PASOS = ("0 manifiesto", "1 formulas", "2 arranque al final", "2 sin pisar nombres",
-         "3 ficha de sanidad", "4 regla 31", "7 escritura limpia")
+PASOS = ("0 manifiesto", "0.5 disciplina", "1 formulas", "2 arranque al final",
+         "2 sin pisar nombres", "3 ficha de sanidad", "4 regla 31", "7 escritura limpia")
 
 
 def revisar(nombre_modulo, verbose=True, correr_regla31=True):
@@ -156,6 +156,14 @@ def revisar(nombre_modulo, verbose=True, correr_regla31=True):
 
     man = paso0_manifiesto(mod)
     _reg("0 manifiesto", man)
+
+    # PASO 0.5 — EL GUARDIAN QUE ME CORRIGE A MI (disciplina.py, encargo del director).
+    # Va AQUI y no al final porque su trabajo es pararme ANTES de lanzar mal una prueba, no
+    # explicarme despues por que salio mal. Los demas pasos vigilan el modulo; este vigila los
+    # errores que YO repito al escribirlo, y lleva el catalogo de cada uno con su incidente real.
+    import disciplina as D
+    _dis = D.revisar_modulo(nombre_modulo, verbose=False)
+    _reg("0.5 disciplina", {"aprueba": not _dis, "fallos": _dis})
 
     # PASO 1 — las formulas declaradas deben CUMPLIRSE. Es la unica comprobacion que seguira
     # valiendo el dia que Diego mida algo cuya respuesta nadie conoce.
