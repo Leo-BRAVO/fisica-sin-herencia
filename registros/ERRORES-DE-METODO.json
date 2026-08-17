@@ -121,6 +121,38 @@
       "mecanizado": false
     },
     {
+      "id": "factor-elegido-a-ojo",
+      "titulo": "El factor de una relacion metamorfica elegido por intuicion, no por mecanismo",
+      "veces": 1,
+      "incidente": "el prerregistro-56 declaro 'ruido de sensor x10 baja el R2' y la puerta lo midio x1.020. La relacion era cierta; el FACTOR estaba mal: x10 llevaba el ruido a 0.20 y el objeto tenia contraste 0.5, asi que seguia siendo el borron mas brillante. El factor correcto sale del mecanismo —x50, el doble del contraste— y ese numero se sabe a priori porque yo dibujo la escena.",
+      "como_evitarlo": "el factor se deriva de una magnitud del problema que se conozca a priori; si no se puede derivar, la relacion no esta lista",
+      "mecanizado": false
+    },
+    {
+      "id": "error-de-categoria-en-la-carpeta",
+      "titulo": "Poner en resultados/ algo que no es un resultado",
+      "veces": 1,
+      "incidente": "escribi la CORRECCION-01 en resultados/ y sus numeros salian de un TANTEO del banco, que por construccion no puede probar nada. El auditor de actas lo cazo: PONER ALGO EN resultados/ ES AFIRMAR QUE ES UN RESULTADO.",
+      "como_evitarlo": "resultados/ es para actas con datos prerregistrados; registros/ es para notas, lecciones y correcciones",
+      "mecanizado": false
+    },
+    {
+      "id": "sujeto-mal-declarado",
+      "titulo": "Confundir la ENTRADA con el OBJETO DE ESTUDIO al declarar SUJETO",
+      "veces": 1,
+      "incidente": "peticiones.py declaro SUJETO = ('peticion',) y disciplina.py lo reprobo. Una peticion es lo que el modulo RECIBE; lo que estudia es SU PROPIO FILTRO. La tupla vacia es una AFIRMACION que obliga a explicar por que no hay sujeto externo; no declararla sigue reprobando.",
+      "como_evitarlo": "el SUJETO es lo que el estudio MIDE, no lo que el modulo consume",
+      "mecanizado": true
+    },
+    {
+      "id": "detector-aplicado-a-la-prosa",
+      "titulo": "Un detector que lee comentarios y docstrings como si fueran codigo",
+      "veces": 1,
+      "incidente": "`d_prueba_que_caduca` marco a anatomia.py por dos frases de sus COMENTARIOS. El incidente que ese detector existe para cazar fue un conteo dentro de una BUSQUEDA REAL —codigo que se ejecuta y caduca—, y explicar un numero en prosa no caduca nada. Se corrigio aplicandolo al texto correcto, NO aflojandolo.",
+      "como_evitarlo": "un detector de codigo mira codigo; si tiene que mirar prosa, es otro detector y necesita sus propios casos por los dos lados",
+      "mecanizado": true
+    },
+    {
       "id": "variable-muerta",
       "titulo": "Variable que se calcula y no se usa",
       "veces": 2,
@@ -129,7 +161,7 @@
       "mecanizado": true
     }
   ],
-  "mecanizados": 7,
-  "total": 16,
-  "veces_en_total": 24
+  "mecanizados": 9,
+  "total": 20,
+  "veces_en_total": 28
 }

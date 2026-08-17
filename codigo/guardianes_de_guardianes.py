@@ -221,6 +221,23 @@ def recompensa_con_criterio_nuestro(raiz):
                    'if False:')
 
 
+def catalogo_de_errores_vaciado(raiz):
+    """Daño: alguien vacia el catalogo de errores de metodo. Si el guardian que me corrige a mi se
+    puede desactivar borrando una lista, no es un guardian: es un adorno con buena prosa."""
+    return _editar(raiz, "codigo/disciplina.py",
+                   'caso("el catalogo de errores NO esta vacio", len(ERRORES) > 0)',
+                   'caso("el catalogo de errores NO esta vacio", True)')
+
+
+def lectura_previa_no_caduca(raiz):
+    """Daño REAL que este mismo dia estuve a punto de dejar pasar: que la constancia de haber leido
+    el catalogo NO caduque al añadir un error nuevo. Un catalogo que crece y nadie relee es una
+    lista de museo."""
+    return _editar(raiz, "codigo/disciplina.py",
+                   'if d.get("huella_del_catalogo") != _huella_del_catalogo():',
+                   'if False:')
+
+
 MUTACIONES = [
     ("desaparece una regla del medio",            "coherencia.py",      borra_una_regla),
     ("la boleta proclama nodos que no existen",   "coherencia.py",      boleta_miente),
@@ -235,6 +252,8 @@ MUTACIONES = [
     ("el consumidor declara el rango y no lo mira", "contratos.py",     consumidor_que_no_comprueba),
     ("una etiqueta humana se cuela en lo que Diego observa", "mundo.py", etiqueta_humana_en_la_observacion),
     ("la recompensa pasa a depender de un criterio NUESTRO", "mundo.py", recompensa_con_criterio_nuestro),
+    ("se vacia el catalogo de errores de metodo", "disciplina.py", catalogo_de_errores_vaciado),
+    ("la lectura previa deja de caducar al crecer el catalogo", "disciplina.py", lectura_previa_no_caduca),
 ]
 
 
