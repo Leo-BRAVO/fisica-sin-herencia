@@ -289,10 +289,27 @@ CONTEOS = re.compile(r"[\"'][^\"']*\b\d+\s+(reglas|nodos|informes|prerregistros|
                      re.I)
 
 
+def _sin_prosa(texto):
+    """Quita comentarios y docstrings. Lo demas es codigo que SE EJECUTA.
+
+    POR QUE EXISTE — 11-ago-2026, primera vez que este archivo se equivoca contra mi: la version
+    original de `d_prueba_que_caduca` marcaba `anatomia.py` por dos frases de sus COMENTARIOS
+    ("medir cuatro cosas", "acusaria a 10 de 15 organos"). El incidente que el detector existe
+    para cazar fue un literal de conteo dentro de una BUSQUEDA REAL, es decir codigo que se
+    ejecuta y caduca. Explicar un numero en prosa no caduca nada.
+    ESTO NO AFLOJA EL CRITERIO: lo aplica al texto correcto. Un conteo escrito a mano dentro de
+    una cadena OPERATIVA sigue disparando, y la Regla 31 lo prueba por los dos lados."""
+    tres = chr(34) * 3
+    tres2 = chr(39) * 3
+    sin = re.sub(tres + r"[\s\S]*?" + tres, "", texto)
+    sin = re.sub(tres2 + r"[\s\S]*?" + tres2, "", sin)
+    return "\n".join(l for l in sin.split("\n") if not l.strip().startswith("#"))
+
+
 def d_prueba_que_caduca(texto):
     """Ningun conteo del repositorio se escribe a mano dentro de una prueba."""
     return [f"lleva un conteo escrito a mano: {m.group(0)[:60]} — cuando el numero cambie, la "
-            f"prueba caducara en silencio" for m in CONTEOS.finditer(texto)]
+            f"prueba caducara en silencio" for m in CONTEOS.finditer(_sin_prosa(texto))]
 
 
 # ==========================================================================================
@@ -389,6 +406,13 @@ def regla31(verbose=True):
          len(d_prueba_que_caduca('t = "32 reglas vigentes"')) == 1)
     caso("caduca: NO marca un texto sin conteo",
          d_prueba_que_caduca('t = "las reglas vigentes"') == [])
+    caso("caduca: NO marca un conteo que solo aparece en un COMENTARIO",
+         d_prueba_que_caduca("# aqui habia 32 reglas y ahora hay mas\nx = 1\n") == [])
+    caso("caduca: NO marca un conteo dentro de un docstring explicativo",
+         d_prueba_que_caduca('def f():\n    ' + chr(34)*3 + 'acusaria a 10 de 15 organos' +
+                             chr(34)*3 + '\n    return 1\n') == [])
+    caso("caduca: SI SIGUE marcando un conteo dentro de una cadena OPERATIVA",
+         len(d_prueba_que_caduca('if "32 reglas" in t:\n    pass\n')) == 1)
 
     caso("sujeto: MARCA un modulo que no declara SUJETO",
          len(d_sujeto_en_regla31("x", "def regla31():\n    pass\n")) == 1)

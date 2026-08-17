@@ -1,0 +1,192 @@
+{
+  "prerregistro": 54,
+  "organos": 15,
+  "censo": {
+    "atencion": {
+      "usado_por": [
+        "cadena_g14g8",
+        "conectar"
+      ],
+      "huerfano": false,
+      "publica": [],
+      "atribucion_declarada": "POLITICA",
+      "atribucion_medida": "POLITICA",
+      "atribucion_choca": false
+    },
+    "cerebro": {
+      "usado_por": [
+        "conectar"
+      ],
+      "huerfano": false,
+      "publica": [],
+      "atribucion_declarada": null,
+      "atribucion_medida": "ESTIMADOR",
+      "atribucion_choca": false
+    },
+    "contingencia": {
+      "usado_por": [
+        "conectar",
+        "filogenia",
+        "gimnasio",
+        "hito0_multimodal",
+        "hito0_v2",
+        "ojos_gimnasio",
+        "panel_jueces"
+      ],
+      "huerfano": false,
+      "publica": [],
+      "atribucion_declarada": null,
+      "atribucion_medida": "ESTIMADOR",
+      "atribucion_choca": false
+    },
+    "curiosidad2": {
+      "usado_por": [],
+      "huerfano": true,
+      "publica": [],
+      "atribucion_declarada": null,
+      "atribucion_medida": "ESTIMADOR",
+      "atribucion_choca": false
+    },
+    "descubrir": {
+      "usado_por": [
+        "conservada",
+        "descubrir_pool",
+        "dimension",
+        "ganancia_honesta",
+        "reconstruir_datos",
+        "regla31_conservada",
+        "rodar"
+      ],
+      "huerfano": false,
+      "publica": [],
+      "atribucion_declarada": null,
+      "atribucion_medida": "ESTIMADOR",
+      "atribucion_choca": false
+    },
+    "gimnasio": {
+      "usado_por": [
+        "conectar",
+        "hito0_multimodal",
+        "hito0_v2",
+        "ojos_gimnasio",
+        "tacto",
+        "torneo_ojos",
+        "verdugo_escala"
+      ],
+      "huerfano": false,
+      "publica": [],
+      "atribucion_declarada": null,
+      "atribucion_medida": "ACTUADOR",
+      "atribucion_choca": false
+    },
+    "incertidumbre": {
+      "usado_por": [
+        "cadena_g14g8"
+      ],
+      "huerfano": false,
+      "publica": [
+        "epistemica",
+        "aleatoria",
+        "ganancia_predictiva",
+        "curable"
+      ],
+      "atribucion_declarada": "ESTIMADOR",
+      "atribucion_medida": "ESTIMADOR",
+      "atribucion_choca": false
+    },
+    "interocepcion": {
+      "usado_por": [],
+      "huerfano": true,
+      "publica": [],
+      "atribucion_declarada": null,
+      "atribucion_medida": "ESTIMADOR",
+      "atribucion_choca": false
+    },
+    "memoria": {
+      "usado_por": [],
+      "huerfano": true,
+      "publica": [],
+      "atribucion_declarada": null,
+      "atribucion_medida": "ESTIMADOR",
+      "atribucion_choca": false
+    },
+    "percepcion": {
+      "usado_por": [
+        "ojos_gimnasio",
+        "percepcion2",
+        "reconstruir_datos"
+      ],
+      "huerfano": false,
+      "publica": [],
+      "atribucion_declarada": null,
+      "atribucion_medida": "ESTIMADOR",
+      "atribucion_choca": false
+    },
+    "percepcion2": {
+      "usado_por": [
+        "hito0_multimodal",
+        "hito0_v2",
+        "ranuras",
+        "torneo_ojos"
+      ],
+      "huerfano": false,
+      "publica": [],
+      "atribucion_declarada": null,
+      "atribucion_medida": "ESTIMADOR",
+      "atribucion_choca": false
+    },
+    "poder": {
+      "usado_por": [],
+      "huerfano": true,
+      "publica": [],
+      "atribucion_declarada": null,
+      "atribucion_medida": "ESTIMADOR",
+      "atribucion_choca": false
+    },
+    "reflejos": {
+      "usado_por": [
+        "conectar"
+      ],
+      "huerfano": false,
+      "publica": [],
+      "atribucion_declarada": null,
+      "atribucion_medida": "ESTIMADOR",
+      "atribucion_choca": false
+    },
+    "sueno": {
+      "usado_por": [
+        "sueno_motor"
+      ],
+      "huerfano": false,
+      "publica": [],
+      "atribucion_declarada": null,
+      "atribucion_medida": "ESTIMADOR",
+      "atribucion_choca": false
+    },
+    "temple": {
+      "usado_por": [
+        "conectar"
+      ],
+      "huerfano": false,
+      "publica": [],
+      "atribucion_declarada": null,
+      "atribucion_medida": "ESTIMADOR",
+      "atribucion_choca": false
+    }
+  },
+  "huerfanos": [
+    "curiosidad2",
+    "interocepcion",
+    "memoria",
+    "poder"
+  ],
+  "duplicados": {},
+  "atribuciones_que_chocan": [],
+  "criterios": {
+    "A_el_censo_distingue": true,
+    "B_no_acusa_por_no_estar_sellado": true,
+    "C_la_atribucion_se_mide": true,
+    "D_le_gana_a_la_linea_base_tonta": true
+  },
+  "veredicto": "HAY 4 ORGANO(S) DESCONECTADO(S) y 0 numero(s) duplicado(s) — el censo le gana a la suposicion de que todos hacen falta"
+}
