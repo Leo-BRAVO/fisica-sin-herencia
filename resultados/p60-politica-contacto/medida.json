@@ -1,0 +1,77 @@
+{
+  "prerregistro": 60,
+  "razon_de_volumenes_informativa": 0.021339842144040968,
+  "mediana_balbuceo": 0.0085,
+  "desviacion_de_la_geometria": 0.3983159735965328,
+  "mundo_sordo": [
+    {
+      "semilla": 1,
+      "balbuceo": 0.01415,
+      "intrinseca": 0.0171
+    },
+    {
+      "semilla": 2,
+      "balbuceo": 0.00955,
+      "intrinseca": 0.01025
+    },
+    {
+      "semilla": 3,
+      "balbuceo": 0.0257,
+      "intrinseca": 0.00675
+    },
+    {
+      "semilla": 4,
+      "balbuceo": 0.0075,
+      "intrinseca": 0.0134
+    },
+    {
+      "semilla": 5,
+      "balbuceo": 0.01335,
+      "intrinseca": 0.0066
+    }
+  ],
+  "semillas_en_que_gana_la_intrinseca_en_el_mundo_sordo": 3,
+  "semillas_en_que_gana_la_intrinseca": 2,
+  "semillas_en_que_gana_la_barajada": 4,
+  "de": 5,
+  "filas": [
+    {
+      "semilla": 1,
+      "balbuceo": 0.0085,
+      "intrinseca": 0.0078,
+      "barajada": 0.00965
+    },
+    {
+      "semilla": 2,
+      "balbuceo": 0.0074,
+      "intrinseca": 0.01555,
+      "barajada": 0.0167
+    },
+    {
+      "semilla": 3,
+      "balbuceo": 0.0216,
+      "intrinseca": 0.01135,
+      "barajada": 0.003
+    },
+    {
+      "semilla": 4,
+      "balbuceo": 0.00785,
+      "intrinseca": 0.0071,
+      "barajada": 0.0109
+    },
+    {
+      "semilla": 5,
+      "balbuceo": 0.01325,
+      "intrinseca": 0.01885,
+      "barajada": 0.02225
+    }
+  ],
+  "criterios": {
+    "A_el_cortafuegos_aguanta": true,
+    "B_en_el_mundo_sordo_la_intrinseca_no_busca": true,
+    "C_la_intrinseca_busca_sola": false,
+    "D_el_nulo_no_gana": false,
+    "E_no_se_puede_inventar_contacto": true
+  },
+  "veredicto": "ANULADO POR EL NULO — la politica barajada tambien le gana al balbuceo, asi que lo que se mide no es la informacion sino la forma de elegir"
+}
