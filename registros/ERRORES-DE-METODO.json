@@ -1,0 +1,119 @@
+{
+  "errores": [
+    {
+      "id": "base-cero",
+      "titulo": "Relacion metamorfica con base 0.0",
+      "veces": 4,
+      "incidente": "contingencia (ruido), escala.py dos veces, y atencion.py heredado del prerregistro-43. Multiplicar cero por doscientos sigue siendo cero: LA PUERTA midio 'x1.000' y la relacion no probo absolutamente nada.",
+      "como_evitarlo": "toda base de una relacion metamorfica debe ser distinta de cero",
+      "mecanizado": true
+    },
+    {
+      "id": "relacion-sin-saber-a-priori",
+      "titulo": "Relacion metamorfica declarada sin saberla A PRIORI",
+      "veces": 3,
+      "incidente": "prerregistro-46 y prerregistro-43 declararon 'mas ruido baja la cuenta' sobre ruido de PROCESO, que EXCITA el sistema en vez de enterrarlo: la desviacion del mundo subio de 0.658 a 13.686 y las leyes de 3.0 a 4.0. Las dos veces APROBO, por el motivo equivocado — sindy3 perdia leyes por fragilidad suya. Ver LECCION-RUIDO-01.",
+      "como_evitarlo": "cada relacion declara POR QUE se sabe de antemano; si el 'porque' describe una intuicion en vez de un mecanismo, no es a priori",
+      "mecanizado": true
+    },
+    {
+      "id": "objeto-de-estudio-en-mi-regla31",
+      "titulo": "Prueba sobre el OBJETO DE ESTUDIO dentro de la Regla 31 del instrumento",
+      "veces": 2,
+      "incidente": "el prerregistro-45 quedo NULO por esto y el 44 casi. La Regla 31 examina MI PROCEDIMIENTO; lo que hace el sujeto es RESULTADO. Con el sujeto ahi, un defecto suyo bloquea el modulo que existe para medir sus defectos, y ademas el criterio que deberia poder reprobar ya no puede.",
+      "como_evitarlo": "el modulo declara SUJETO = (...) con lo que estudia, y su regla31() no puede mencionarlo",
+      "mecanizado": true
+    },
+    {
+      "id": "criterio-tautologico",
+      "titulo": "Criterio que no puede fallar",
+      "veces": 1,
+      "incidente": "el criterio 4 del prerregistro-41 comparaba el canal del tacto contra la misma consulta de la que se deriva: dio 1.0000 y el predictor tonto tambien. UN CRITERIO QUE NO PUEDE FALLAR TAMPOCO PUEDE APROBAR NADA. Se evito seis veces mas durante agosto, siempre a proposito.",
+      "como_evitarlo": "preguntarse, antes de correr: ¿que resultado haria fallar esto? Si no hay ninguno, no es un criterio",
+      "mecanizado": false
+    },
+    {
+      "id": "aprueba-sobre-vacio",
+      "titulo": "Chequeo que aprueba sobre una lista vacia",
+      "veces": 1,
+      "incidente": "los cuatro endurecimientos de reglas.py salieron en verde sin poder salir de otra forma: no existia ningun prerregistro 42 todavia, y `not []` es siempre cierto. Lo cazo la Regla 31 del archivo que nacio para cazarlo.",
+      "como_evitarlo": "toda lista sobre la que se itera para juzgar se comprueba NO VACIA",
+      "mecanizado": true
+    },
+    {
+      "id": "prueba-que-caduca",
+      "titulo": "Prueba que caduca en silencio",
+      "veces": 1,
+      "incidente": "una prueba de daño buscaba el literal '32 reglas'; al pasar a 34 dejo de poder aplicarse y la meta-auditoria seguia diciendo 'los 9 daños fueron cazados' contando 8. SALTADA era un aprobado disfrazado.",
+      "como_evitarlo": "ningun conteo del repositorio se escribe a mano en una prueba",
+      "mecanizado": true
+    },
+    {
+      "id": "numeros-solo-en-mi-cabeza",
+      "titulo": "Publicar numeros medidos a mano, sin archivo detras",
+      "veces": 2,
+      "incidente": "INFORME-48 publico una obediencia de 0.0297 que no estaba en ningun archivo, e INFORME-58 hizo lo mismo con cuatro cifras del diagnostico. El auditor de actas lo cazo la segunda vez.",
+      "como_evitarlo": "todo numero de un acta sale de un archivo de datos citado",
+      "mecanizado": false
+    },
+    {
+      "id": "nulo-copiado-de-otro-motor",
+      "titulo": "Copiar el nulo de otro instrumento sin comprobar que aplica",
+      "veces": 1,
+      "incidente": "el prerregistro-52 uso el barajado de FILAS —el nulo de sindy3— para un buscador de invariantes. Barajar el tiempo destruye una ecuacion diferencial pero NO toca una cantidad conservada: x2+v2 vale lo mismo en cualquier orden. UN NULO TIENE QUE DESTRUIR LA ESTRUCTURA QUE EL MOTOR BUSCA, y cada motor busca otra.",
+      "como_evitarlo": "cada nulo declara QUE estructura destruye, no de donde se copio",
+      "mecanizado": false
+    },
+    {
+      "id": "control-de-regresion-de-una-sola-familia",
+      "titulo": "Control de 'no rompimos nada' construido con casos parecidos entre si",
+      "veces": 1,
+      "incidente": "el criterio C del prerregistro-47 paso 4 de 4 y no vio que sindy4 se quedaba MUDO en la caida con roce: sus cuatro casos eran todos de la familia del oscilador.",
+      "como_evitarlo": "un control de regresion necesita casos de familias distintas",
+      "mecanizado": false
+    },
+    {
+      "id": "excepcion-de-compatibilidad",
+      "titulo": "Contrato con una excepcion amable",
+      "veces": 1,
+      "incidente": "escribi `_ignorancia()` aceptando la epistemica cruda 'por compatibilidad', y esa concesion reabrio la fuga que el prerregistro-49 existia para cerrar: inflando x2 la ventaja caia de 34.9971 a 27.0034. UNA INTERFAZ CON UNA EXCEPCION AMABLE NO ES UN CONTRATO.",
+      "como_evitarlo": "ningun contrato acepta el valor viejo 'por ahora'",
+      "mecanizado": false
+    },
+    {
+      "id": "expectativa-de-un-solo-lado",
+      "titulo": "Expectativa declarada que solo se equivoca por un lado",
+      "veces": 1,
+      "incidente": "declare 'espero entre 2 y 5 reprobados de 8' y prepare la frase para el caso de que aprobaran todos. Reprobaron los 8: el lado que no habia previsto. Ver INFORME-63.",
+      "como_evitarlo": "toda expectativa declara que dira si falla POR CADA lado",
+      "mecanizado": false
+    },
+    {
+      "id": "medir-con-la-regla-equivocada",
+      "titulo": "Medir con un parametro distinto del que se integro",
+      "veces": 1,
+      "incidente": "sueno.py integraba con paso 0.02 y se le pasaba dt=1.0: ni la fase despierta encontraba nada y la lectura base salia CERO. No era el organo: era yo midiendolo con la regla equivocada.",
+      "como_evitarlo": "el paso de integracion viaja con los datos, no se supone",
+      "mecanizado": false
+    },
+    {
+      "id": "mundo-de-juguete-demasiado-limpio",
+      "titulo": "Mundo de prueba donde la respuesta sale sola",
+      "veces": 1,
+      "incidente": "en contingencia.py el cuerpo era una funcion pura del mando, asi que cualquier fuerza daba 1.000. El instrumento no podia fallar porque el mundo no tenia nada mas que explicar.",
+      "como_evitarlo": "todo mundo de juguete lleva un termino de fondo independiente",
+      "mecanizado": false
+    },
+    {
+      "id": "variable-muerta",
+      "titulo": "Variable que se calcula y no se usa",
+      "veces": 2,
+      "incidente": "poder.py tenia `jueces = [11, 12]` que no coincidia con los indices usados, y cerebro.py:115 tiene 'prog'. UNA VARIABLE MUERTA ES UNA AFIRMACION FALSA SOBRE LO QUE HACE EL CODIGO.",
+      "como_evitarlo": "el paso 7 de la puerta ya lo caza; no borrar ese paso",
+      "mecanizado": true
+    }
+  ],
+  "mecanizados": 6,
+  "total": 14,
+  "veces_en_total": 22
+}
