@@ -307,6 +307,41 @@ ERRORES = [
         "mecanizado": False,
     },
     {
+        "id": "enmendar-un-modulo-sellado-y-no-volver-a-pasar-la-puerta",
+        "titulo": "Enmendar un modulo despues de sellarlo y no volver a pasar la puerta",
+        "veces": 1,
+        "incidente": ("incertidumbre.py sello el 15-ago-2026 a las 20:32 y la Enmienda 3 lo edito "
+                      "a las 20:36. Nunca se volvio a pasar la puerta, asi que el sello quedo "
+                      "MUERTO y nadie se entero durante dos dias: `coherencia` solo exigia sello "
+                      "vigente a los estudios EN COLA, no a los modulos EN USO. Lo destapo de "
+                      "rebote el censo del prerregistro-59, y al volver a pasar la puerta salio "
+                      "que su ficha de sanidad REPRUEBA — el 20.7% del INFORME-60."),
+        "como_evitarlo": ("toda enmienda a un modulo sellado vuelve a pasar la puerta en el mismo "
+                          "commit; y un sello muerto en un modulo que alguien importa es un fallo "
+                          "de `coherencia`, no un detalle"),
+        "mecanizado": True,
+    },
+    {
+        "id": "correr-un-instrumento-y-pisar-los-datos-que-ya-publico",
+        "titulo": "Correr un instrumento con su salida por defecto y pisar los datos de un acta",
+        "veces": 2,
+        "incidente": ("DOS VECES EL MISMO DIA, la segunda a los veinte minutos de escribir esta "
+                      "entrada. (1) mirando de que iba el censo de organos corri `python anatomia.py` a secas. "
+                      "Su --salida por defecto es `resultados/p54-anatomia/medida.json`, o sea LOS "
+                      "DATOS DEL INFORME-65, y los reescribio: donde ponia 4 huerfanos paso a "
+                      "poner 3. El acta seguia diciendo 4 y sus propios datos ya decian otra cosa. "
+                      "Lo cazo `actas.py`; se restauro el archivo con git. (2) veinte minutos "
+                      "despues corri `python censo_muertos.py` a secas para comprobar el archivado "
+                      "y pise los datos del INFORME-70, que ni siquiera estaban commiteados. Lo "
+                      "cazo `actas.py` otra vez, y hubo que RECONSTRUIR el estado medido para "
+                      "volver a generarlos."),
+        "como_evitarlo": ("un modulo de estudio NUNCA se corre a secas para curiosear: o se corre "
+                          "con --salida a una ruta de tanteo, o se corre desde `banco.py`. La "
+                          "salida por defecto es la del acta, y esa solo se escribe cuando el "
+                          "estudio se publica"),
+        "mecanizado": True,
+    },
+    {
         "id": "variable-muerta",
         "titulo": "Variable que se calcula y no se usa",
         "veces": 2,
@@ -335,6 +370,12 @@ CON_DEFECTO_PUBLICADO = {
                       "11-ago-2026; el arreglo va en un modulo nuevo con su prerregistro."),
     "ojos_brazo": ("semilla-que-no-controla-todo, heredado: importa `entrenar` de ojos_keypoint. "
                    "Publicado en CORRECCION-01."),
+    "incertidumbre": ("su ficha de sanidad REPRUEBA: la propiedad ajena 'ruido' explica un 20.7% "
+                      "EXTRA de la lectura, cuando el criterio A pedia <=15%. Bajo del 43.3% y no "
+                      "bajo lo suficiente. Publicado en el INFORME-60, y por eso NO TIENE SELLO "
+                      "VIGENTE: la puerta se niega a sellarlo y hace bien. Lo que se mida con G14 "
+                      "se mide con un instrumento contaminado, y eso va escrito en cada acta que "
+                      "lo use."),
 }
 
 
@@ -612,6 +653,49 @@ def revisar_prerregistros(verbose=True):
     return fallos
 
 
+def d_sello_muerto_en_uso(sellos, importados):
+    """UN SELLO MUERTO EN UN MODULO QUE ALGUIEN IMPORTA. `sellos` es {nombre: vigente?} y
+    `importados` el conjunto de los que alguien usa — se pasan como argumentos para poder
+    examinar este detector con datos hechos a mano, sin tocar el repositorio.
+
+    POR QUE ESTO NO LO CAZABA NADIE: `coherencia` exigia sello vigente a los estudios EN COLA. Un
+    modulo ya integrado y en uso no esta en la cola, asi que su sello podia morir en silencio. Le
+    paso a incertidumbre.py durante dos dias."""
+    return sorted(f"'{m}' lo importa alguien y su sello NO esta vigente: se edito despues de "
+                  f"pasar la puerta y nadie la volvio a pasar"
+                  for m, vigente in sellos.items() if not vigente and m in importados)
+
+
+def revisar_sellos(verbose=True):
+    """El detector de arriba, aplicado al repositorio de verdad."""
+    import metodo
+    if not os.path.exists(metodo.SELLOS):
+        return []
+    sellos = {n: metodo.sello_valido(n)[0]
+              for n in json.load(open(metodo.SELLOS, encoding="utf-8"))}
+    importados = set()
+    for a in sorted(glob.glob(os.path.join(BASE, "codigo", "*.py"))):
+        texto = open(a, encoding="utf-8").read()
+        quien = os.path.basename(a)[:-3]
+        for m in sellos:
+            if m != quien and re.search(rf"^\s*(import\s+{re.escape(m)}\b|from\s+{re.escape(m)}\s+import)",
+                                        texto, re.M):
+                importados.add(m)
+    fallos = d_sello_muerto_en_uso(sellos, importados)
+    # un defecto ya publicado con su acta es DEUDA CONTADA, no un bloqueo mudo: mismo trato que
+    # en revisar_modulo, y por la misma razon
+    deuda = [f for f in fallos if any(f"'{n}'" in f for n in CON_DEFECTO_PUBLICADO)]
+    fallos = [f for f in fallos if f not in deuda]
+    if verbose:
+        for f in fallos:
+            print(f"  FALLO [sello-muerto-en-uso] {f}")
+        for d in deuda:
+            print(f"  deuda [sello-muerto-en-uso] {d} — DEFECTO PUBLICADO")
+        if not fallos and not deuda:
+            print("  ok    ningun modulo en uso arrastra un sello muerto")
+    return fallos
+
+
 def regla31(verbose=True):
     """CADA DETECTOR, POR LOS DOS LADOS. Un detector que solo se ha visto aprobar es
     indistinguible de no tenerlo — y este archivo entero existe por esa leccion."""
@@ -687,6 +771,13 @@ def regla31(verbose=True):
     finally:
         del ERRORES[:]
         ERRORES.extend(_guardado)
+    caso("sello-muerto: MARCA un sello muerto en un modulo que alguien importa",
+         len(d_sello_muerto_en_uso({"a": False}, {"a"})) == 1)
+    caso("sello-muerto: NO marca un sello VIGENTE en un modulo en uso",
+         d_sello_muerto_en_uso({"a": True}, {"a"}) == [])
+    caso("sello-muerto: NO marca un sello muerto en un modulo que NO usa nadie",
+         d_sello_muerto_en_uso({"a": False}, set()) == [])
+
     caso("el catalogo de errores NO esta vacio", len(ERRORES) > 0)
     caso("todo error del catalogo declara si esta mecanizado",
          all("mecanizado" in e and "incidente" in e for e in ERRORES))
@@ -760,6 +851,8 @@ if __name__ == "__main__":
         deudas += len(getattr(revisar_modulo, "ultima_deuda", []))
     print()
     if revisar_prerregistros(verbose=True):
+        malos += 1
+    if revisar_sellos(verbose=True):
         malos += 1
     print(f"\nDISCIPLINA: {'SIN FALLOS BLOQUEANTES' if not malos else f'{malos} sitios que corregir'}"
           f" · {deudas} en DEUDA MEDIDA (modulos anteriores al prerregistro "

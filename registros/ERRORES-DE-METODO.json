@@ -177,6 +177,22 @@
       "mecanizado": false
     },
     {
+      "id": "enmendar-un-modulo-sellado-y-no-volver-a-pasar-la-puerta",
+      "titulo": "Enmendar un modulo despues de sellarlo y no volver a pasar la puerta",
+      "veces": 1,
+      "incidente": "incertidumbre.py sello el 15-ago-2026 a las 20:32 y la Enmienda 3 lo edito a las 20:36. Nunca se volvio a pasar la puerta, asi que el sello quedo MUERTO y nadie se entero durante dos dias: `coherencia` solo exigia sello vigente a los estudios EN COLA, no a los modulos EN USO. Lo destapo de rebote el censo del prerregistro-59, y al volver a pasar la puerta salio que su ficha de sanidad REPRUEBA — el 20.7% del INFORME-60.",
+      "como_evitarlo": "toda enmienda a un modulo sellado vuelve a pasar la puerta en el mismo commit; y un sello muerto en un modulo que alguien importa es un fallo de `coherencia`, no un detalle",
+      "mecanizado": true
+    },
+    {
+      "id": "correr-un-instrumento-y-pisar-los-datos-que-ya-publico",
+      "titulo": "Correr un instrumento con su salida por defecto y pisar los datos de un acta",
+      "veces": 2,
+      "incidente": "DOS VECES EL MISMO DIA, la segunda a los veinte minutos de escribir esta entrada. (1) mirando de que iba el censo de organos corri `python anatomia.py` a secas. Su --salida por defecto es `resultados/p54-anatomia/medida.json`, o sea LOS DATOS DEL INFORME-65, y los reescribio: donde ponia 4 huerfanos paso a poner 3. El acta seguia diciendo 4 y sus propios datos ya decian otra cosa. Lo cazo `actas.py`; se restauro el archivo con git. (2) veinte minutos despues corri `python censo_muertos.py` a secas para comprobar el archivado y pise los datos del INFORME-70, que ni siquiera estaban commiteados. Lo cazo `actas.py` otra vez, y hubo que RECONSTRUIR el estado medido para volver a generarlos.",
+      "como_evitarlo": "un modulo de estudio NUNCA se corre a secas para curiosear: o se corre con --salida a una ruta de tanteo, o se corre desde `banco.py`. La salida por defecto es la del acta, y esa solo se escribe cuando el estudio se publica",
+      "mecanizado": true
+    },
+    {
       "id": "variable-muerta",
       "titulo": "Variable que se calcula y no se usa",
       "veces": 2,
@@ -185,7 +201,7 @@
       "mecanizado": true
     }
   ],
-  "mecanizados": 9,
-  "total": 23,
-  "veces_en_total": 32
+  "mecanizados": 11,
+  "total": 25,
+  "veces_en_total": 35
 }

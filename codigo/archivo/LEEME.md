@@ -26,3 +26,19 @@ lo que esta vivo:
 - `ojos_ganados.py` — prerregistro-21, los ojos que se ganan su dimension.
 - `transferir.py` — prerregistro-05, prueba de transferencia entre trials.
 Si algun prerregistro futuro los necesita, vuelven a `codigo/` con su firma.
+
+## Archivado el 17-ago-2026 por el censo de los muertos (`censo_muertos.py`, prerregistro-59)
+De **55 módulos** examinados —ni órganos del genoma ni guardianes— el censo encontró **uno solo**
+muerto, y sin sello que romper:
+- `estandarizar.py` — z-score por dimensión con estadísticas solo del entrenamiento.
+
+**No lo importaba nadie y ninguna acta lo citaba.** Su nombre aparecía en cuatro sitios y los
+cuatro se comprobaron a mano: dos comentarios que usan el verbo, la lista `LADO_HUMANO` de
+`mente.py`, y una línea de `registros/GIMNASIO.md` que **critica la operación** — dice que
+convertir todo a z-scores **destruye la información de escala**, que es justo de la que viven
+`escala.py` y `verdugo_escala.py`. `reconstruir_datos.py:152` reconoce además que su lógica está
+**copiada, no importada**.
+
+No está roto ni desmentido: es una operación que este proyecto decidió no querer. Vuelve a
+`codigo/` con su firma si algún prerregistro futuro lo necesita. Detalle completo en el
+**INFORME-70**.

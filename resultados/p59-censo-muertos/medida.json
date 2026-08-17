@@ -1,0 +1,732 @@
+{
+  "prerregistro": 59,
+  "candidatos": 55,
+  "muertos": [
+    "estandarizar"
+  ],
+  "archivables": [
+    "estandarizar"
+  ],
+  "inmovibles_por_sello": [],
+  "linea_base_tonta_grep": [],
+  "discrepancias_con_la_linea_base": {
+    "estandarizar": [
+      "conservada.py (importa? no)",
+      "reconstruir_datos.py (importa? no)",
+      "registros/GIMNASIO.md:163"
+    ]
+  },
+  "censo": {
+    "arreglo_motor": {
+      "lo_importan": [
+        "diag_p47"
+      ],
+      "lo_citan": [
+        "resultados/INFORME-58.md:5",
+        "registros/INVENTARIO-MOTOR-01.md:23",
+        "registros/LECCION-RUIDO-01.md:24",
+        "registros/LECCION-RUIDO-01.md:52"
+      ],
+      "muerto": false,
+      "sellado": true,
+      "archivable": false
+    },
+    "banco": {
+      "lo_importan": [],
+      "lo_citan": [
+        "registros/prerregistro-56.md:22"
+      ],
+      "muerto": false,
+      "sellado": true,
+      "archivable": false
+    },
+    "brazo_no_mio": {
+      "lo_importan": [],
+      "lo_citan": [
+        "resultados/INFORME-56.md:3"
+      ],
+      "muerto": false,
+      "sellado": true,
+      "archivable": false
+    },
+    "cadena_g14g8": {
+      "lo_importan": [],
+      "lo_citan": [
+        "resultados/INFORME-60.md:5",
+        "resultados/INFORME-60.md:25",
+        "resultados/INFORME-60.md:97"
+      ],
+      "muerto": false,
+      "sellado": true,
+      "archivable": false
+    },
+    "canonizar": {
+      "lo_importan": [
+        "pruebas"
+      ],
+      "lo_citan": [
+        "resultados/INFORME-29.md:99"
+      ],
+      "muerto": false,
+      "sellado": false,
+      "archivable": false
+    },
+    "censo_muertos": {
+      "lo_importan": [],
+      "lo_citan": [
+        "registros/prerregistro-59.md:4"
+      ],
+      "muerto": false,
+      "sellado": true,
+      "archivable": false
+    },
+    "conectar": {
+      "lo_importan": [
+        "pruebas"
+      ],
+      "lo_citan": [
+        "resultados/INFORME-45.md:5"
+      ],
+      "muerto": false,
+      "sellado": false,
+      "archivable": false
+    },
+    "conectoma": {
+      "lo_importan": [],
+      "lo_citan": [
+        "registros/PROTOCOLO-MEMORIA.md:31"
+      ],
+      "muerto": false,
+      "sellado": false,
+      "archivable": false
+    },
+    "conservada": {
+      "lo_importan": [
+        "regla31_conservada"
+      ],
+      "lo_citan": [
+        "resultados/INFORME-22.md:16",
+        "resultados/INFORME-54.md:54",
+        "registros/AUDITORIA-EXTERNA-01.md:5",
+        "registros/AUDITORIA-EXTERNA-01.md:8",
+        "registros/AUDITORIA-EXTERNA-01.md:9",
+        "registros/AUDITORIA-EXTERNA-01.md:46"
+      ],
+      "muerto": false,
+      "sellado": false,
+      "archivable": false
+    },
+    "curiosidad": {
+      "lo_importan": [],
+      "lo_citan": [
+        "registros/AUDITORIA-EXTERNA-01.md:19",
+        "registros/COLA-ESTUDIOS.json:5",
+        "registros/COLA-ESTUDIOS.json:15",
+        "registros/DISENO-CONSTRUCCION.md:13",
+        "registros/PROTOCOLO-MEMORIA.md:30"
+      ],
+      "muerto": false,
+      "sellado": false,
+      "archivable": false
+    },
+    "descubrir_pool": {
+      "lo_importan": [],
+      "lo_citan": [
+        "registros/AUDITORIA-EXTERNA-01.md:15",
+        "registros/AUDITORIA-EXTERNA-01.md:16",
+        "registros/prerregistro-10.md:6"
+      ],
+      "muerto": false,
+      "sellado": false,
+      "archivable": false
+    },
+    "diag_p47": {
+      "lo_importan": [],
+      "lo_citan": [
+        "resultados/INFORME-58.md:6",
+        "resultados/INFORME-58.md:74",
+        "registros/INVENTARIO-MOTOR-01.md:23"
+      ],
+      "muerto": false,
+      "sellado": false,
+      "archivable": false
+    },
+    "dimension": {
+      "lo_importan": [
+        "pruebas"
+      ],
+      "lo_citan": [
+        "resultados/INFORME-22.md:18",
+        "resultados/INFORME-26.md:5",
+        "registros/AUDITORIA-EXTERNA-01.md:39",
+        "registros/COLA-ESTUDIOS.json:75"
+      ],
+      "muerto": false,
+      "sellado": false,
+      "archivable": false
+    },
+    "energia_libre": {
+      "lo_importan": [
+        "pruebas"
+      ],
+      "lo_citan": [
+        "registros/PLAN-VALIDACION-SISTEMAS.md:92"
+      ],
+      "muerto": false,
+      "sellado": false,
+      "archivable": false
+    },
+    "entropia_transferencia": {
+      "lo_importan": [
+        "pruebas"
+      ],
+      "lo_citan": [
+        "registros/PLAN-VALIDACION-SISTEMAS.md:89",
+        "registros/prerregistro-33.md:89"
+      ],
+      "muerto": false,
+      "sellado": false,
+      "archivable": false
+    },
+    "escala": {
+      "lo_importan": [
+        "arreglo_motor",
+        "diag_p47"
+      ],
+      "lo_citan": [
+        "resultados/INFORME-32.md:166",
+        "resultados/INFORME-55.md:3",
+        "registros/ERRORES-DE-METODO.json:7",
+        "registros/INVENTARIO-MOTOR-01.md:20",
+        "registros/LECCION-RUIDO-01.md:23",
+        "registros/LECCION-RUIDO-01.md:56"
+      ],
+      "muerto": false,
+      "sellado": true,
+      "archivable": false
+    },
+    "espejo2": {
+      "lo_importan": [
+        "pruebas"
+      ],
+      "lo_citan": [
+        "resultados/INFORME-40.md:126",
+        "resultados/INFORME-44.md:101",
+        "resultados/INFORME-47.md:95",
+        "registros/COLA-ESTUDIOS.json:308",
+        "registros/COLA-ESTUDIOS.json:319",
+        "registros/COLA-ESTUDIOS.json:330"
+      ],
+      "muerto": false,
+      "sellado": false,
+      "archivable": false
+    },
+    "estandarizar": {
+      "lo_importan": [],
+      "lo_citan": [],
+      "muerto": true,
+      "sellado": false,
+      "archivable": true
+    },
+    "experimentar": {
+      "lo_importan": [
+        "pruebas"
+      ],
+      "lo_citan": [
+        "resultados/INFORME-46.md:102",
+        "registros/COLA-ESTUDIOS.json:539",
+        "registros/COLA-ESTUDIOS.json:550",
+        "registros/COLA-ESTUDIOS.json:561",
+        "registros/COLA-ESTUDIOS.json:572",
+        "registros/COLA-ESTUDIOS.json:583"
+      ],
+      "muerto": false,
+      "sellado": false,
+      "archivable": false
+    },
+    "experimentar2": {
+      "lo_importan": [
+        "pruebas"
+      ],
+      "lo_citan": [
+        "resultados/INFORME-49.md:6",
+        "registros/COLA-ESTUDIOS.json:664",
+        "registros/COLA-ESTUDIOS.json:676",
+        "registros/COLA-ESTUDIOS.json:688",
+        "registros/COLA-ESTUDIOS.json:700",
+        "registros/COLA-ESTUDIOS.json:712"
+      ],
+      "muerto": false,
+      "sellado": true,
+      "archivable": false
+    },
+    "extraer_posiciones": {
+      "lo_importan": [],
+      "lo_citan": [
+        "resultados/INFORME-22.md:7",
+        "registros/prerregistro-08.md:5",
+        "registros/prerregistro-10.md:5"
+      ],
+      "muerto": false,
+      "sellado": false,
+      "archivable": false
+    },
+    "filogenia": {
+      "lo_importan": [
+        "pruebas",
+        "torneo_ojos"
+      ],
+      "lo_citan": [
+        "resultados/INFORME-34.md:27",
+        "resultados/INFORME-38.md:109",
+        "registros/PLAN-VALIDACION-SISTEMAS.md:62",
+        "registros/prerregistro-27.md:32"
+      ],
+      "muerto": false,
+      "sellado": false,
+      "archivable": false
+    },
+    "ganancia_honesta": {
+      "lo_importan": [
+        "pruebas"
+      ],
+      "lo_citan": [
+        "resultados/INFORME-30.md:131",
+        "registros/ECUACIONES-COMPARADAS.md:114",
+        "registros/GIMNASIO.md:245",
+        "registros/prerregistro-21.md:2",
+        "registros/prerregistro-21.md:37"
+      ],
+      "muerto": false,
+      "sellado": false,
+      "archivable": false
+    },
+    "hito0_multimodal": {
+      "lo_importan": [],
+      "lo_citan": [
+        "registros/COLA-ESTUDIOS.json:144",
+        "registros/COLA-ESTUDIOS.json:155",
+        "registros/COLA-ESTUDIOS.json:166",
+        "registros/COLA-ESTUDIOS.json:177",
+        "registros/COLA-ESTUDIOS.json:188"
+      ],
+      "muerto": false,
+      "sellado": false,
+      "archivable": false
+    },
+    "hito0_v2": {
+      "lo_importan": [],
+      "lo_citan": [
+        "registros/COLA-ESTUDIOS.json:133"
+      ],
+      "muerto": false,
+      "sellado": false,
+      "archivable": false
+    },
+    "intermodal": {
+      "lo_importan": [
+        "hito0_multimodal",
+        "pruebas"
+      ],
+      "lo_citan": [
+        "registros/PLAN-VALIDACION-SISTEMAS.md:88"
+      ],
+      "muerto": false,
+      "sellado": false,
+      "archivable": false
+    },
+    "invariantes": {
+      "lo_importan": [],
+      "lo_citan": [
+        "resultados/INFORME-62.md:4",
+        "registros/prerregistro-52.md:4",
+        "registros/prerregistro-52.md:19",
+        "registros/prerregistro-59.md:14"
+      ],
+      "muerto": false,
+      "sellado": true,
+      "archivable": false
+    },
+    "koopman": {
+      "lo_importan": [
+        "pruebas"
+      ],
+      "lo_citan": [
+        "registros/PLAN-VALIDACION-SISTEMAS.md:90",
+        "registros/prerregistro-33.md:88"
+      ],
+      "muerto": false,
+      "sellado": false,
+      "archivable": false
+    },
+    "latido_nube": {
+      "lo_importan": [],
+      "lo_citan": [
+        "resultados/INFORME-23.md:11"
+      ],
+      "muerto": false,
+      "sellado": false,
+      "archivable": false
+    },
+    "lazo_atencion": {
+      "lo_importan": [],
+      "lo_citan": [
+        "resultados/INFORME-69.md:4",
+        "registros/prerregistro-58.md:4",
+        "registros/prerregistro-58.md:23"
+      ],
+      "muerto": false,
+      "sellado": true,
+      "archivable": false
+    },
+    "mente": {
+      "lo_importan": [],
+      "lo_citan": [
+        "resultados/INFORME-45.md:6",
+        "resultados/INFORME-45.md:142",
+        "registros/CRITICA-EXTERNA-01.md:47",
+        "registros/prerregistro-59.md:9"
+      ],
+      "muerto": false,
+      "sellado": false,
+      "archivable": false
+    },
+    "mundo": {
+      "lo_importan": [
+        "peticiones"
+      ],
+      "lo_citan": [
+        "resultados/INFORME-61.md:4",
+        "resultados/INFORME-64.md:69",
+        "registros/PLAN-MAESTRO-01.md:177",
+        "registros/prerregistro-50.md:4",
+        "registros/prerregistro-50.md:43",
+        "registros/prerregistro-59.md:14"
+      ],
+      "muerto": false,
+      "sellado": true,
+      "archivable": false
+    },
+    "observador_pasivo": {
+      "lo_importan": [
+        "pruebas"
+      ],
+      "lo_citan": [
+        "resultados/INFORME-41.md:121",
+        "resultados/INFORME-43.md:70",
+        "resultados/INFORME-47.md:95",
+        "registros/COLA-ESTUDIOS.json:363",
+        "registros/COLA-ESTUDIOS.json:374",
+        "registros/COLA-ESTUDIOS.json:385"
+      ],
+      "muerto": false,
+      "sellado": false,
+      "archivable": false
+    },
+    "ojos_brazo": {
+      "lo_importan": [],
+      "lo_citan": [
+        "resultados/INFORME-67.md:5",
+        "registros/CORRECCION-01-SEMILLA-TARDIA.md:56",
+        "registros/prerregistro-57.md:3"
+      ],
+      "muerto": false,
+      "sellado": true,
+      "archivable": false
+    },
+    "ojos_gimnasio": {
+      "lo_importan": [
+        "hito0_multimodal",
+        "hito0_v2",
+        "percepcion2",
+        "pruebas",
+        "torneo_ojos"
+      ],
+      "lo_citan": [
+        "registros/CRITICA-EXTERNA-01.md:21",
+        "registros/DIAGNOSTICO-TOTAL.json:5",
+        "registros/DIAGNOSTICO-TOTAL.json:12",
+        "registros/prerregistro-27.md:18",
+        "registros/prerregistro-56.md:10"
+      ],
+      "muerto": false,
+      "sellado": false,
+      "archivable": false
+    },
+    "ojos_keypoint": {
+      "lo_importan": [
+        "ojos_brazo"
+      ],
+      "lo_citan": [
+        "resultados/INFORME-66.md:4",
+        "registros/CORRECCION-01-SEMILLA-TARDIA.md:24",
+        "registros/CORRECCION-01-SEMILLA-TARDIA.md:56",
+        "registros/ERRORES-DE-METODO.json:111",
+        "registros/prerregistro-56.md:4"
+      ],
+      "muerto": false,
+      "sellado": true,
+      "archivable": false
+    },
+    "panel_jueces": {
+      "lo_importan": [
+        "pruebas",
+        "torneo_ojos"
+      ],
+      "lo_citan": [
+        "resultados/INFORME-38.md:88",
+        "registros/prerregistro-31.md:24",
+        "registros/prerregistro-51.md:4"
+      ],
+      "muerto": false,
+      "sellado": false,
+      "archivable": false
+    },
+    "peticiones": {
+      "lo_importan": [],
+      "lo_citan": [
+        "resultados/INFORME-64.md:3",
+        "resultados/INFORME-65.md:25",
+        "registros/ERRORES-DE-METODO.json:143",
+        "registros/prerregistro-53.md:3"
+      ],
+      "muerto": false,
+      "sellado": true,
+      "archivable": false
+    },
+    "preparar_mendeley": {
+      "lo_importan": [],
+      "lo_citan": [
+        "resultados/INFORME-22.md:7"
+      ],
+      "muerto": false,
+      "sellado": false,
+      "archivable": false
+    },
+    "ranuras": {
+      "lo_importan": [
+        "pruebas",
+        "torneo_ojos"
+      ],
+      "lo_citan": [
+        "resultados/INFORME-34.md:27",
+        "registros/PLAN-VALIDACION-SISTEMAS.md:62",
+        "registros/prerregistro-27.md:21"
+      ],
+      "muerto": false,
+      "sellado": false,
+      "archivable": false
+    },
+    "reconstruir_datos": {
+      "lo_importan": [],
+      "lo_citan": [
+        "resultados/INFORME-22.md:52",
+        "registros/AUDITORIA-TOTAL-02.md:17",
+        "registros/PROTOCOLO-MEMORIA.md:37",
+        "registros/REGLAS-ESTRUCTURADAS.md:83"
+      ],
+      "muerto": false,
+      "sellado": false,
+      "archivable": false
+    },
+    "regla31_conservada": {
+      "lo_importan": [
+        "pruebas"
+      ],
+      "lo_citan": [
+        "registros/AUDITORIA-EXTERNA-01.md:9",
+        "registros/AUDITORIA-EXTERNA-01.md:46",
+        "registros/AUDITORIA-EXTERNA-01.md:47"
+      ],
+      "muerto": false,
+      "sellado": false,
+      "archivable": false
+    },
+    "rodar": {
+      "lo_importan": [],
+      "lo_citan": [
+        "resultados/INFORME-29.md:100"
+      ],
+      "muerto": false,
+      "sellado": false,
+      "archivable": false
+    },
+    "sinapsis": {
+      "lo_importan": [
+        "conectar",
+        "pruebas",
+        "trazar"
+      ],
+      "lo_citan": [
+        "resultados/INFORME-35.md:36",
+        "resultados/INFORME-37.md:128",
+        "resultados/mente-3d.html:98",
+        "resultados/sistema-diego-3d.html:252",
+        "registros/PROTOCOLO-MEMORIA.md:32",
+        "registros/PROTOCOLO-MEMORIA.md:33"
+      ],
+      "muerto": false,
+      "sellado": false,
+      "archivable": false
+    },
+    "sindy2": {
+      "lo_importan": [
+        "pruebas",
+        "sindy3"
+      ],
+      "lo_citan": [
+        "registros/PLAN-VALIDACION-SISTEMAS.md:91",
+        "registros/prerregistro-28.md:7"
+      ],
+      "muerto": false,
+      "sellado": false,
+      "archivable": false
+    },
+    "sindy3": {
+      "lo_importan": [
+        "arreglo_motor",
+        "diag_p47",
+        "escala",
+        "pruebas",
+        "sindy4",
+        "sueno"
+      ],
+      "lo_citan": [
+        "resultados/INFORME-50.md:3",
+        "resultados/INFORME-54.md:3",
+        "registros/DIAGNOSTICO-MOTOR-01.md:24",
+        "registros/DIAGNOSTICO-MOTOR-01.md:58",
+        "registros/PLAN-MAESTRO-01.md:27",
+        "registros/PLAN-MAESTRO-01.md:30"
+      ],
+      "muerto": false,
+      "sellado": false,
+      "archivable": false
+    },
+    "sindy4": {
+      "lo_importan": [
+        "arreglo_motor",
+        "diag_p47",
+        "invariantes",
+        "sueno"
+      ],
+      "lo_citan": [
+        "resultados/INFORME-58.md:5",
+        "registros/PLAN-MAESTRO-01.md:30",
+        "registros/PLAN-MAESTRO-01.md:46",
+        "registros/PLAN-MAESTRO-01.md:96",
+        "registros/prerregistro-47.md:4",
+        "registros/prerregistro-47.md:57"
+      ],
+      "muerto": false,
+      "sellado": false,
+      "archivable": false
+    },
+    "soporte": {
+      "lo_importan": [
+        "brazo_no_mio",
+        "espejo2",
+        "observador_pasivo",
+        "panel_jueces",
+        "pruebas",
+        "unico_apto"
+      ],
+      "lo_citan": [
+        "resultados/INFORME-39.md:104",
+        "resultados/INFORME-42.md:95",
+        "resultados/INFORME-47.md:73",
+        "resultados/INFORME-47.md:95",
+        "registros/COLA-ESTUDIOS.json:253",
+        "registros/COLA-ESTUDIOS.json:264"
+      ],
+      "muerto": false,
+      "sellado": false,
+      "archivable": false
+    },
+    "sueno_motor": {
+      "lo_importan": [],
+      "lo_citan": [
+        "resultados/INFORME-59.md:4"
+      ],
+      "muerto": false,
+      "sellado": true,
+      "archivable": false
+    },
+    "tabla_reglas": {
+      "lo_importan": [
+        "coherencia"
+      ],
+      "lo_citan": [
+        "registros/REGLAS-ESTRUCTURADAS.md:6"
+      ],
+      "muerto": false,
+      "sellado": false,
+      "archivable": false
+    },
+    "tacto": {
+      "lo_importan": [],
+      "lo_citan": [
+        "resultados/INFORME-57.md:3",
+        "registros/prerregistro-41.md:86"
+      ],
+      "muerto": false,
+      "sellado": true,
+      "archivable": false
+    },
+    "torneo_ojos": {
+      "lo_importan": [],
+      "lo_citan": [
+        "resultados/INFORME-53.md:7",
+        "resultados/INFORME-53.md:12",
+        "resultados/p38-veredicto/veredicto.json:35",
+        "registros/AUDITORIA-TOTAL-03.md:66",
+        "registros/AUDITORIA-TOTAL-03.md:168",
+        "registros/AUDITORIA-TOTAL-03.md:231"
+      ],
+      "muerto": false,
+      "sellado": true,
+      "archivable": false
+    },
+    "trazar": {
+      "lo_importan": [
+        "pruebas"
+      ],
+      "lo_citan": [
+        "resultados/INFORME-45.md:5",
+        "resultados/INFORME-45.md:141"
+      ],
+      "muerto": false,
+      "sellado": false,
+      "archivable": false
+    },
+    "unico_apto": {
+      "lo_importan": [],
+      "lo_citan": [
+        "resultados/INFORME-48.md:4",
+        "registros/AUDITORIA-TOTAL-03.md:197"
+      ],
+      "muerto": false,
+      "sellado": true,
+      "archivable": false
+    },
+    "verdugo_escala": {
+      "lo_importan": [
+        "pruebas"
+      ],
+      "lo_citan": [
+        "resultados/INFORME-32.md:166"
+      ],
+      "muerto": false,
+      "sellado": false,
+      "archivable": false
+    }
+  },
+  "criterios": {
+    "A_encuentra_lo_plantado": true,
+    "B_no_acusa_a_quien_tiene_cita": true,
+    "C_le_gana_a_la_linea_base": true,
+    "D_ningun_sellado_entre_los_archivables": true,
+    "E_no_toca_nada": true
+  },
+  "veredicto": "1 MODULO(S) MUERTO(S) de 55: 1 archivable(s) y 0 inmovible(s) por sello vigente"
+}
