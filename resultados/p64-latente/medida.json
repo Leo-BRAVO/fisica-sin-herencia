@@ -1,0 +1,125 @@
+{
+  "prerregistro": 64,
+  "semillas": 15,
+  "exigidas": 12,
+  "probabilidad_del_azar": 0.017578125,
+  "con_invariante_keypoint": 1,
+  "con_invariante_pixel": 0,
+  "semillas_donde_solo_el_keypoint_conserva": 1,
+  "semillas_donde_solo_el_pixel_conserva": 0,
+  "semillas_con_invariante_en_el_NULO": 4,
+  "filas": [
+    {
+      "semilla": 277,
+      "pixel": false,
+      "nulo_pixel": false,
+      "keypoint": false,
+      "nulo_keypoint": false
+    },
+    {
+      "semilla": 281,
+      "pixel": false,
+      "nulo_pixel": true,
+      "keypoint": false,
+      "nulo_keypoint": false
+    },
+    {
+      "semilla": 283,
+      "pixel": false,
+      "nulo_pixel": false,
+      "keypoint": false,
+      "nulo_keypoint": false
+    },
+    {
+      "semilla": 293,
+      "pixel": false,
+      "nulo_pixel": false,
+      "keypoint": false,
+      "nulo_keypoint": false
+    },
+    {
+      "semilla": 307,
+      "pixel": false,
+      "nulo_pixel": false,
+      "keypoint": false,
+      "nulo_keypoint": false
+    },
+    {
+      "semilla": 311,
+      "pixel": false,
+      "nulo_pixel": false,
+      "keypoint": false,
+      "nulo_keypoint": false
+    },
+    {
+      "semilla": 313,
+      "pixel": false,
+      "nulo_pixel": false,
+      "keypoint": false,
+      "nulo_keypoint": false
+    },
+    {
+      "semilla": 317,
+      "pixel": false,
+      "nulo_pixel": true,
+      "keypoint": true,
+      "nulo_keypoint": false
+    },
+    {
+      "semilla": 331,
+      "pixel": false,
+      "nulo_pixel": true,
+      "keypoint": false,
+      "nulo_keypoint": false
+    },
+    {
+      "semilla": 337,
+      "pixel": false,
+      "nulo_pixel": false,
+      "keypoint": false,
+      "nulo_keypoint": false
+    },
+    {
+      "semilla": 347,
+      "pixel": false,
+      "nulo_pixel": false,
+      "keypoint": false,
+      "nulo_keypoint": false
+    },
+    {
+      "semilla": 349,
+      "pixel": false,
+      "nulo_pixel": false,
+      "keypoint": false,
+      "nulo_keypoint": true
+    },
+    {
+      "semilla": 353,
+      "pixel": false,
+      "nulo_pixel": false,
+      "keypoint": false,
+      "nulo_keypoint": false
+    },
+    {
+      "semilla": 359,
+      "pixel": false,
+      "nulo_pixel": false,
+      "keypoint": false,
+      "nulo_keypoint": false
+    },
+    {
+      "semilla": 367,
+      "pixel": false,
+      "nulo_pixel": false,
+      "keypoint": false,
+      "nulo_keypoint": false
+    }
+  ],
+  "criterios": {
+    "A_no_se_impone_nada": true,
+    "B_el_nulo_no_encuentra_nada": false,
+    "C_el_keypoint_conserva_mas": false,
+    "D_el_juicio_es_fuera_de_muestra": true
+  },
+  "veredicto": "SE DESCARTA EL ESTUDIO ENTERO — el nulo encontro invariantes en 4 semillas: el diccionario grande los esta fabricando"
+}
