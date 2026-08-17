@@ -33,7 +33,7 @@ COD = os.path.join(BASE, "codigo")
 LADO_HUMANO = {"pruebas.py", "coherencia.py", "auditoria_total.py", "guardianes_de_guardianes.py",
                "diagnostico_total.py", "mente.py", "boleta.py", "conectoma.py", "latido_nube.py",
                "reconstruir_datos.py", "preparar_mendeley.py", "extraer_posiciones.py",
-               "estandarizar.py", "canonizar.py", "forense.py", "autopsia.py", "rodar.py",
+               "canonizar.py", "forense.py", "autopsia.py", "rodar.py",
                "auditoria_total.py", "regla31_conservada.py", "descubrir_pool.py"}
 
 

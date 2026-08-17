@@ -243,6 +243,28 @@ def lectura_previa_no_caduca(raiz):
                    'if False:')
 
 
+def sello_muerto_en_modulo_en_uso(raiz):
+    """Daño REAL, cometido y no detectado durante dos dias: se ENMIENDA un modulo ya sellado y no
+    se vuelve a pasar la puerta. El sello queda muerto y el modulo sigue en uso.
+
+    Aqui NO se toca ningun chequeo: se crea el ESTADO MALO editando `poder.py` —sellado y
+    importado por `lazo_atencion`— igual que la Enmienda 3 edito `incertidumbre.py`. Si nadie
+    grita, un modulo en uso puede divergir de lo que la puerta aprobo sin que se entere nadie."""
+    return _editar(raiz, "codigo/poder.py",
+                   "# poder.py — GEN G13",
+                   "# UNA LINEA QUE NADIE APROBO\n# poder.py — GEN G13")
+
+
+def datos_publicados_pisados(raiz):
+    """Daño REAL, cometido el 17-ago-2026: correr un modulo de estudio a secas y dejar que su
+    --salida por defecto reescriba los datos que un acta ya publicó. El acta sigue diciendo una
+    cifra y su propio archivo de datos dice otra.
+
+    Aqui no se toca ningun chequeo: se reescribe el DATO, que es lo que pasa de verdad."""
+    return _editar(raiz, "resultados/p54-anatomia/medida.json",
+                   "HAY 4 ORGANO(S) DESCONECTADO(S)", "HAY 99 ORGANO(S) DESCONECTADO(S)")
+
+
 MUTACIONES = [
     ("desaparece una regla del medio",            "coherencia.py",      borra_una_regla),
     ("la boleta proclama nodos que no existen",   "coherencia.py",      boleta_miente),
@@ -259,6 +281,9 @@ MUTACIONES = [
     ("la recompensa pasa a depender de un criterio NUESTRO", "mundo.py", recompensa_con_criterio_nuestro),
     ("se vacia el catalogo de errores de metodo", "disciplina.py", catalogo_de_errores_vaciado),
     ("la lectura previa deja de caducar al crecer el catalogo", "disciplina.py", lectura_previa_no_caduca),
+    ("se enmienda un modulo sellado y en uso sin volver a pasar la puerta", "disciplina.py",
+     sello_muerto_en_modulo_en_uso),
+    ("se pisan los datos que un acta ya publico", "actas.py", datos_publicados_pisados),
 ]
 
 

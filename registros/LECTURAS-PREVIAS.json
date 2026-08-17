@@ -9,6 +9,11 @@
       "huella_del_catalogo": "f565ead4492de936",
       "errores_en_ese_momento": 20,
       "cuando": "sin marca de tiempo"
+    },
+    "censo_muertos": {
+      "huella_del_catalogo": "652adc136556f6e7",
+      "errores_en_ese_momento": 25,
+      "cuando": "sin marca de tiempo"
     }
   }
 }
