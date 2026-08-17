@@ -105,6 +105,14 @@
       "mecanizado": false
     },
     {
+      "id": "semilla-que-no-controla-todo",
+      "titulo": "La semilla declarada no controla toda la aleatoriedad",
+      "veces": 1,
+      "incidente": "en ojos_keypoint.py los modelos se CONSTRUYEN antes de que `entrenar` fije torch.manual_seed, asi que sus pesos iniciales salian del estado global. La semilla 263 dio -0.0205 dentro del estudio y 0.6148 corrida sola: MISMA semilla, dos numeros distintos. Invalido la lectura por semilla del INFORME-67 y rompe la mitad de la promesa de que todo se pueda replicar. Ver INFORME-68.",
+      "como_evitarlo": "fijar la semilla del marco ANTES de construir cualquier modelo, no dentro de la funcion que entrena",
+      "mecanizado": true
+    },
+    {
       "id": "media-sobre-resultado-bimodal",
       "titulo": "Criterio construido sobre una MEDIA cuando el resultado tiene dos modos",
       "veces": 1,
@@ -121,7 +129,7 @@
       "mecanizado": true
     }
   ],
-  "mecanizados": 6,
-  "total": 15,
-  "veces_en_total": 23
+  "mecanizados": 7,
+  "total": 16,
+  "veces_en_total": 24
 }

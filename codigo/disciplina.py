@@ -187,6 +187,20 @@ ERRORES = [
         "mecanizado": False,
     },
     {
+        "id": "semilla-que-no-controla-todo",
+        "titulo": "La semilla declarada no controla toda la aleatoriedad",
+        "veces": 1,
+        "incidente": ("en ojos_keypoint.py los modelos se CONSTRUYEN antes de que `entrenar` fije "
+                      "torch.manual_seed, asi que sus pesos iniciales salian del estado global. "
+                      "La semilla 263 dio -0.0205 dentro del estudio y 0.6148 corrida sola: MISMA "
+                      "semilla, dos numeros distintos. Invalido la lectura por semilla del "
+                      "INFORME-67 y rompe la mitad de la promesa de que todo se pueda replicar. "
+                      "Ver INFORME-68."),
+        "como_evitarlo": ("fijar la semilla del marco ANTES de construir cualquier modelo, no "
+                          "dentro de la funcion que entrena"),
+        "mecanizado": True,
+    },
+    {
         "id": "media-sobre-resultado-bimodal",
         "titulo": "Criterio construido sobre una MEDIA cuando el resultado tiene dos modos",
         "veces": 1,
@@ -211,6 +225,25 @@ ERRORES = [
         "mecanizado": True,
     },
 ]
+
+
+# MODULOS CON UN DEFECTO CONOCIDO, PUBLICADO Y NO REPARABLE SIN MATAR SU SELLO.
+#
+# NO ES UNA EXCEPCION NI UN PERDON: es la misma contabilidad honesta que `reglas.py` usa con los
+# organos REPROBADOS. Un modulo sellado que ya produjo un estudio no se puede editar —la puerta
+# sella por hash y editarlo dejaria irreproducible lo que publico—, asi que su defecto no puede
+# "arreglarse": solo puede QUEDAR ESCRITO, con su acta, y arreglarse en un modulo NUEVO.
+#
+# La diferencia con dejarlo pasar en silencio es entera: aqui el defecto se nombra, se cuenta y
+# apunta a donde se publico. Si esta lista crece sin que nadie escriba los modulos nuevos, eso
+# tambien se ve.
+CON_DEFECTO_PUBLICADO = {
+    "ojos_keypoint": ("semilla-que-no-controla-todo: los modelos se construyen antes de que "
+                      "`entrenar` fije torch.manual_seed. Publicado en CORRECCION-01. Sellado el "
+                      "11-ago-2026; el arreglo va en un modulo nuevo con su prerregistro."),
+    "ojos_brazo": ("semilla-que-no-controla-todo, heredado: importa `entrenar` de ojos_keypoint. "
+                   "Publicado en CORRECCION-01."),
+}
 
 
 def _por_id(i):
@@ -327,6 +360,25 @@ def d_prueba_que_caduca(texto):
 
 
 # ==========================================================================================
+def d_semilla_tardia(texto):
+    """La semilla del marco se fija ANTES de construir cualquier modelo.
+
+    Mecaniza el error 16: en ojos_keypoint.py los modelos se construian en la linea del bucle y
+    `entrenar` fijaba la semilla DESPUES, asi que los pesos iniciales venian del estado global.
+    Se busca el patron exacto: una llamada a manual_seed DENTRO de una funcion que recibe el
+    modelo ya construido."""
+    codigo = _sin_prosa(texto)
+    if "torch" not in codigo:
+        return []
+    fallos = []
+    for m in re.finditer(r"def (\w+)\(\s*modelo[^)]*\):", codigo):
+        cuerpo = codigo[m.end():m.end() + 600]
+        if re.search(r"manual_seed", cuerpo):
+            fallos.append(f"'{m.group(1)}' recibe el modelo YA CONSTRUIDO y fija la semilla "
+                          f"dentro: los pesos iniciales no los controla la semilla declarada")
+    return fallos
+
+
 def revisar_modulo(nombre, verbose=True):
     """Corre TODOS los detectores sobre un modulo. Devuelve la lista de incumplimientos."""
     ruta = os.path.join(BASE, "codigo", f"{nombre}.py")
@@ -342,10 +394,17 @@ def revisar_modulo(nombre, verbose=True):
     for det, eid, arg in ((d_base_cero, "base-cero", metodo),
                           (d_relacion_sin_porque, "relacion-sin-saber-a-priori", metodo),
                           (d_aprueba_sobre_vacio, "aprueba-sobre-vacio", texto),
-                          (d_prueba_que_caduca, "prueba-que-caduca", texto)):
+                          (d_prueba_que_caduca, "prueba-que-caduca", texto),
+                          (d_semilla_tardia, "semilla-que-no-controla-todo", texto)):
         for f in det(arg):
             fallos.append(f"[{eid}] {f}")
     deuda = []
+    conocido = CON_DEFECTO_PUBLICADO.get(nombre)
+    if conocido:
+        # el defecto ya esta publicado con su acta: pasa a DEUDA CONTADA, no a bloqueo mudo
+        deuda.extend(fallos)
+        deuda.append(f"[DEFECTO PUBLICADO] {conocido}")
+        fallos = []
     if metodo is not None:                 # solo a los modulos que declaran ser una medida
         nuevo_regimen = int(metodo.get("prerregistro", 0)) >= DESDE_PRERREGISTRO
         for f in d_sujeto_en_regla31(nombre, texto):
@@ -438,6 +497,14 @@ def regla31(verbose=True):
          d_sujeto_en_regla31("x", 'SUJETO = ("sindy4",)\ndef regla31():\n'
                                   '    # aqui NO se prueba sindy4: es resultado\n    otra()\n') == [])
 
+    caso("semilla-tardia: MARCA una funcion que recibe el modelo y fija la semilla dentro",
+         len(d_semilla_tardia("import torch\ndef entrenar(modelo, X):\n"
+                              "    torch.manual_seed(1)\n")) == 1)
+    caso("semilla-tardia: NO marca si la semilla se fija fuera, antes de construir",
+         d_semilla_tardia("import torch\ntorch.manual_seed(1)\n"
+                          "def entrenar(modelo, X):\n    pass\n") == [])
+    caso("semilla-tardia: NO marca a un modulo que no usa torch",
+         d_semilla_tardia("def entrenar(modelo, X):\n    manual_seed(1)\n") == [])
     caso("el catalogo de errores NO esta vacio", len(ERRORES) > 0)
     caso("todo error del catalogo declara si esta mecanizado",
          all("mecanizado" in e and "incidente" in e for e in ERRORES))
