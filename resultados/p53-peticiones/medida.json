@@ -1,0 +1,56 @@
+{
+  "prerregistro": 53,
+  "lote": [
+    {
+      "organo": "interocepcion",
+      "estado": "A_TRAMITE",
+      "motivos": []
+    },
+    {
+      "organo": "memoria",
+      "estado": "A_TRAMITE",
+      "motivos": []
+    },
+    {
+      "organo": "curiosidad2",
+      "estado": "A_TRAMITE",
+      "motivos": []
+    },
+    {
+      "organo": "interocepcion",
+      "estado": "RECHAZADA",
+      "motivos": [
+        "FUGA DEL CORTAFUEGOS (Regla 27), y el fallo es NUESTRO no suyo: la observacion trae la etiqueta humana 'medir la masa de lo que toco creo que la masa explica lo que veo la masa' (palabra 'masa'). Una peticion no puede traer una palabra de fisica humana; si la trae, es que se la dimos nosotros"
+      ]
+    },
+    {
+      "organo": "interocepcion",
+      "estado": "RECHAZADA",
+      "motivos": [
+        "no cita ninguna medida suya: sin evidencia es una opinion, no una peticion"
+      ]
+    },
+    {
+      "organo": "el_universo",
+      "estado": "RECHAZADA",
+      "motivos": [
+        "'el_universo' no es un organo suyo: una peticion sobre algo que no es el no es una mejora de si mismo"
+      ]
+    }
+  ],
+  "aceptadas": 3,
+  "de": 6,
+  "ficha": {
+    "aprueba": true,
+    "fallos": [],
+    "motivo_de_la_fuga": "FUGA DEL CORTAFUEGOS (Regla 27), y el fallo es NUESTRO no su"
+  },
+  "criterios": {
+    "A_caza_la_fuga": true,
+    "B_exige_evidencia": true,
+    "C_no_rechaza_lo_legitimo": true,
+    "D_no_decide": true,
+    "E_le_gana_a_la_linea_base_tonta": true
+  },
+  "veredicto": "CANAL EN PIE — filtra, caza la fuga, exige evidencia y NO decide"
+}
