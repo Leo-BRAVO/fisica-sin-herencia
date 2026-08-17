@@ -169,6 +169,14 @@
       "mecanizado": false
     },
     {
+      "id": "daño-que-desactiva-el-chequeo-en-vez-de-crear-el-estado",
+      "titulo": "Una prueba de daño que apaga el detector en lugar de provocar lo que detecta",
+      "veces": 1,
+      "incidente": "mi daño 'se vacia el catalogo de errores' cambiaba el CHEQUEO —`len(ERRORES) > 0` por `True`— en vez de vaciar la lista. La meta-auditoria lo marco como guardian ciego, y tenia razon: desactivar el detector y provocar lo que el detector busca son cosas distintas, y SOLO LA SEGUNDA prueba que el detector sirve.",
+      "como_evitarlo": "una prueba de daño crea el ESTADO que el guardian debe cazar; si toca el codigo del guardian, esta probando otra cosa",
+      "mecanizado": false
+    },
+    {
       "id": "variable-muerta",
       "titulo": "Variable que se calcula y no se usa",
       "veces": 2,
@@ -178,6 +186,6 @@
     }
   ],
   "mecanizados": 9,
-  "total": 22,
-  "veces_en_total": 31
+  "total": 23,
+  "veces_en_total": 32
 }
