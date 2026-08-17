@@ -1,0 +1,121 @@
+{
+  "prerregistro": 56,
+  "semillas": [
+    227,
+    229,
+    233,
+    239,
+    241
+  ],
+  "por_semilla": {
+    "227": {
+      "pixel_mse": {
+        "r2": 0.7848,
+        "perdida_final": 0.002663,
+        "diverge": false
+      },
+      "keypoint_softmax": {
+        "r2": 0.891,
+        "perdida_final": 0.002824,
+        "diverge": false
+      },
+      "r2_contra_objetivo_al_azar": -0.0255
+    },
+    "229": {
+      "pixel_mse": {
+        "r2": 0.6894,
+        "perdida_final": 0.003396,
+        "diverge": false
+      },
+      "keypoint_softmax": {
+        "r2": 0.9293,
+        "perdida_final": 0.003709,
+        "diverge": false
+      },
+      "r2_contra_objetivo_al_azar": -0.0203
+    },
+    "233": {
+      "pixel_mse": {
+        "r2": 0.6287,
+        "perdida_final": 0.002921,
+        "diverge": false
+      },
+      "keypoint_softmax": {
+        "r2": 0.898,
+        "perdida_final": 0.002845,
+        "diverge": false
+      },
+      "r2_contra_objetivo_al_azar": -0.0093
+    },
+    "239": {
+      "pixel_mse": {
+        "r2": 0.7383,
+        "perdida_final": 0.003638,
+        "diverge": false
+      },
+      "keypoint_softmax": {
+        "r2": 0.9594,
+        "perdida_final": 0.003549,
+        "diverge": false
+      },
+      "r2_contra_objetivo_al_azar": -0.0266
+    },
+    "241": {
+      "pixel_mse": {
+        "r2": 0.7208,
+        "perdida_final": 0.003162,
+        "diverge": false
+      },
+      "keypoint_softmax": {
+        "r2": 0.8745,
+        "perdida_final": 0.003151,
+        "diverge": false
+      },
+      "r2_contra_objetivo_al_azar": -0.0061
+    }
+  },
+  "r2_keypoint": [
+    0.891,
+    0.9293,
+    0.898,
+    0.9594,
+    0.8745
+  ],
+  "r2_pixel": [
+    0.7848,
+    0.6894,
+    0.6287,
+    0.7383,
+    0.7208
+  ],
+  "ventajas": [
+    0.1062,
+    0.2399,
+    0.2693,
+    0.2211,
+    0.1537
+  ],
+  "r2_contra_objetivo_al_azar": [
+    -0.0255,
+    -0.0203,
+    -0.0093,
+    -0.0266,
+    -0.0061
+  ],
+  "ruido_sensor_bajo": 0.8685,
+  "ruido_sensor_alto": -0.0044,
+  "ficha": {
+    "aprueba": true,
+    "fallos": [],
+    "r2_de_un_latente_que_es_la_posicion": 0.9998,
+    "r2_de_ruido_puro": -0.0908
+  },
+  "criterios": {
+    "A_el_latente_es_coordenada": true,
+    "B_le_gana_al_de_hoy": false,
+    "C_la_medida_no_se_infla": true,
+    "D_la_medida_responde": true,
+    "E_no_se_rompio_el_codificador": true
+  },
+  "veredicto": "EL TANTEO ERA RUIDO — el softmax espacial no le gana al codificador de hoy, y la causa de que los ojos puntuen a ruido sigue sin encontrarse"
+}
