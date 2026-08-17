@@ -1,0 +1,20 @@
+{
+  "_sello": "TANTEO DEL BANCO — NO ES EVIDENCIA. Sin prerregistro previo y sin sello, este numero no puede citarse en ningun acta ni sostener ninguna afirmacion. Si el tanteo funciona, el paso siguiente NO es ascenderlo: es escribir un prerregistro y volver a medirlo con semillas nuevas.",
+  "_semillas_quemadas": [
+    211,
+    223
+  ],
+  "_que_se_tanteaba": "perdida por pixel contra cuello de botella de softmax espacial",
+  "tanteo": {
+    "pixel_mse": [
+      0.475,
+      0.6671
+    ],
+    "keypoint_softmax": [
+      0.9036,
+      0.9103
+    ],
+    "que_mide": "r2 fuera de muestra de la POSICION VERDADERA recuperada del latente",
+    "verdad_solo_para_evaluar": "nunca se uso para entrenar: los dos usan la misma perdida por pixel"
+  }
+}

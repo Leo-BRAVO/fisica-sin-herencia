@@ -59,12 +59,15 @@ def paso2_arranque_al_final(ruta):
     return {"aprueba": True}
 
 
-def paso2_sin_pisar_nombres(ruta):
+def paso2_sin_pisar_nombres(ruta, texto=None):
     """PASO 2 — ninguna funcion puede reusar un nombre que ya significa otra cosa en su bucle.
 
     Nace del bug de `soporte.py`: llame `w` al diccionario del mundo, y dentro del bucle `w` ya era
     la velocidad de la articulacion. Reventaba en tiempo de ejecucion."""
-    arbol = ast.parse(open(ruta, encoding="utf-8").read())
+    # `texto` permite probar el detector con codigo hecho a mano, sin inventar archivos falsos en
+    # el repositorio. pruebas.py lo usa para congelar la distincion entre un INICIALIZADOR y un
+    # valor calculado y pisado (ver mas abajo).
+    arbol = ast.parse(texto if texto is not None else open(ruta, encoding="utf-8").read())
     fallos = []
     for fn in [n for n in ast.walk(arbol) if isinstance(n, ast.FunctionDef)]:
         # EL PATRON EXACTO DEL BUG, no "cualquier nombre repetido". Cazado por esta misma puerta
@@ -82,11 +85,29 @@ def paso2_sin_pisar_nombres(ruta):
                         and isinstance(n.targets[0], ast.Name):
                     en_bucle.add((n.targets[0].id, n.lineno))
                     dentro.setdefault(n.targets[0].id, n.lineno)
+        # UN INICIALIZADOR NO ES UN VALOR PISADO — 11-ago-2026, segunda correccion de este mismo
+        # detector. La primera quito la alarma sobre `m` asignado en las dos ramas de un if/else.
+        # Esta quita la que salta sobre `ultima = None` antes de un bucle: eso es un INICIALIZADOR,
+        # y el bucle lo rellena, que es la forma normal de escribir un acumulador. El INFORME-63 ya
+        # lo identifico como falso positivo —marcaba `_iaaft` y `coste_de`, dos algoritmos
+        # perfectamente correctos— y se dejo sin arreglar a proposito: aflojar un detector JUSTO
+        # despues de verlo dispararme en contra es lo que este proyecto prohibe. Se arregla ahora,
+        # con la distincion escrita y probada por los dos lados en pruebas.py.
+        #
+        # LA DISTINCION, y NO afloja el criterio: el bug real de soporte.py asignaba fuera del
+        # bucle un valor CALCULADO —una llamada, una operacion— y el de dentro lo pisaba. Un
+        # literal (None, 0, "", [], {}) no calcula nada: no hay valor que perder.
+        def _es_inicializador(nodo):
+            return isinstance(nodo.value, ast.Constant) or (
+                isinstance(nodo.value, (ast.List, ast.Dict, ast.Tuple, ast.Set))
+                and not getattr(nodo.value, "elts", None)
+                and not getattr(nodo.value, "keys", None))
+
         for n in ast.walk(fn):
             if isinstance(n, ast.Assign) and len(n.targets) == 1 \
                     and isinstance(n.targets[0], ast.Name):
                 v = n.targets[0].id
-                if (v, n.lineno) not in en_bucle:
+                if (v, n.lineno) not in en_bucle and not _es_inicializador(n):
                     fuera.setdefault(v, n.lineno)
         for v, ln_dentro in dentro.items():
             if v in fuera and fuera[v] < ln_dentro:

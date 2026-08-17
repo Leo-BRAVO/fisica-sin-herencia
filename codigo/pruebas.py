@@ -834,6 +834,30 @@ caso("desplazamiento = f(0)", abs(t["desplazamiento"] - 3.0) < 1e-6)
 caso("gradiente correcto", abs(t["gradiente"][0] - 0.5) < 1e-4 and abs(t["gradiente"][2]) < 1e-6)
 caso("estable marcada estable", not t["explota_con_entradas_grandes"])
 t2 = tarjeta("exp(exp(v1))", 2)
+
+# ---- EL DETECTOR DE "PISAR NOMBRES", POR LOS DOS LADOS (11-ago-2026) -------------------------
+# Se corrigio para que un INICIALIZADOR no dispare la alarma. Estas dos pruebas congelan la
+# distincion: si alguien afloja el detector del todo, la primera se pone roja.
+import metodo as _mt
+_bug_real = """
+def f(xs):
+    ultimo = calcular(xs)
+    for x in xs:
+        ultimo = x
+    return ultimo
+"""
+_inicializador = """
+def f(xs):
+    ultimo = None
+    for x in xs:
+        ultimo = x
+    return ultimo
+"""
+caso("puerta: SIGUE cazando un valor CALCULADO fuera del bucle y pisado dentro",
+     bool(_mt.paso2_sin_pisar_nombres(None, texto=_bug_real)["fallos"]))
+caso("puerta: NO marca un INICIALIZADOR (None antes del bucle) — INFORME-63",
+     not _mt.paso2_sin_pisar_nombres(None, texto=_inicializador)["fallos"])
+
 caso("explosiva marcada fragil", t2.get("explota_con_entradas_grandes", False) or "error" in t2)
 
 print()

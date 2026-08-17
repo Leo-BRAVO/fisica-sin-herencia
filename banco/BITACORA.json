@@ -15,10 +15,20 @@
         103
       ],
       "que_se_tanteaba": "la propia Regla 31"
+    },
+    {
+      "salida": "keypoints/tanteo.json",
+      "semillas_quemadas": [
+        211,
+        223
+      ],
+      "que_se_tanteaba": "perdida por pixel contra cuello de botella de softmax espacial"
     }
   ],
   "semillas_quemadas_en_total": [
     101,
-    103
+    103,
+    211,
+    223
   ]
 }
