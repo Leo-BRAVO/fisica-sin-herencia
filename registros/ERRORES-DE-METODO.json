@@ -146,11 +146,27 @@
     },
     {
       "id": "detector-aplicado-a-la-prosa",
-      "titulo": "Un detector que lee comentarios y docstrings como si fueran codigo",
-      "veces": 1,
-      "incidente": "`d_prueba_que_caduca` marco a anatomia.py por dos frases de sus COMENTARIOS. El incidente que ese detector existe para cazar fue un conteo dentro de una BUSQUEDA REAL —codigo que se ejecuta y caduca—, y explicar un numero en prosa no caduca nada. Se corrigio aplicandolo al texto correcto, NO aflojandolo.",
+      "titulo": "Un detector que lee comentarios, docstrings o CADENAS como si fueran codigo",
+      "veces": 2,
+      "incidente": "`d_prueba_que_caduca` marco a anatomia.py por dos frases de sus COMENTARIOS. El incidente que ese detector existe para cazar fue un conteo dentro de una BUSQUEDA REAL —codigo que se ejecuta y caduca—, y explicar un numero en prosa no caduca nada. Se corrigio aplicandolo al texto correcto, NO aflojandolo. SEGUNDA VEZ el mismo dia, en su detector GEMELO: `d_sujeto_en_regla31` ignoraba comentarios pero NO cadenas, y marco la palabra 'lazo' dentro de un mensaje impreso. Arregle uno y no su hermano.",
       "como_evitarlo": "un detector de codigo mira codigo; si tiene que mirar prosa, es otro detector y necesita sus propios casos por los dos lados",
       "mecanizado": true
+    },
+    {
+      "id": "linea-base-favorable",
+      "titulo": "Linea base tonta que no es tonta, sino FAVORABLE",
+      "veces": 1,
+      "incidente": "el criterio E del prerregistro-58 comparaba el reparto medido contra MIS PROPIOS NUMEROS escritos a mano (curable 0.30 y 0.10). La realidad medida es 0.0827 y 0.0776: yo habia inventado una diferencia tres veces mayor de la que existe. El criterio no comparaba contra un rival tonto — comparaba contra una ficcion favorable escrita por mi, que era justo lo que el estudio venia a desmontar. La correcta era el reparto uniforme. Ver INFORME-69.",
+      "como_evitarlo": "la linea base tiene que ser TONTA, no COMODA: uniforme, persistencia, constante, azar. Si el rival es una suposicion mia, no es una linea base: es mi hipotesis disfrazada",
+      "mecanizado": false
+    },
+    {
+      "id": "autopruebas-en-un-modo-que-nadie-corre",
+      "titulo": "Las autopruebas de un guardian viven en un modo que la corrida normal no ejecuta",
+      "veces": 1,
+      "incidente": "añadi dos daños a la meta-auditoria —vaciar el catalogo de errores y quitarle la caducidad a la lectura previa— y disciplina.py siguio diciendo OK sobre el proyecto ROTO: sus autopruebas estaban en `--regla31`, un modo que la corrida normal no ejecutaba. UN GUARDIAN CUYAS AUTOPRUEBAS ESTAN EN UN MODO APARTE SE PUEDE VACIAR Y NO SE ENTERA.",
+      "como_evitarlo": "todo guardian corre sus propias autopruebas ANTES de revisar nada, en su ruta normal, y se niega a opinar si reprueban",
+      "mecanizado": false
     },
     {
       "id": "variable-muerta",
@@ -162,6 +178,6 @@
     }
   ],
   "mecanizados": 9,
-  "total": 20,
-  "veces_en_total": 28
+  "total": 22,
+  "veces_en_total": 31
 }

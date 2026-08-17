@@ -281,6 +281,19 @@ ERRORES = [
         "mecanizado": False,
     },
     {
+        "id": "autopruebas-en-un-modo-que-nadie-corre",
+        "titulo": "Las autopruebas de un guardian viven en un modo que la corrida normal no ejecuta",
+        "veces": 1,
+        "incidente": ("añadi dos daños a la meta-auditoria —vaciar el catalogo de errores y "
+                      "quitarle la caducidad a la lectura previa— y disciplina.py siguio diciendo "
+                      "OK sobre el proyecto ROTO: sus autopruebas estaban en `--regla31`, un modo "
+                      "que la corrida normal no ejecutaba. UN GUARDIAN CUYAS AUTOPRUEBAS ESTAN EN "
+                      "UN MODO APARTE SE PUEDE VACIAR Y NO SE ENTERA."),
+        "como_evitarlo": ("todo guardian corre sus propias autopruebas ANTES de revisar nada, en "
+                          "su ruta normal, y se niega a opinar si reprueban"),
+        "mecanizado": False,
+    },
+    {
         "id": "variable-muerta",
         "titulo": "Variable que se calcula y no se usa",
         "veces": 2,
@@ -705,6 +718,15 @@ if __name__ == "__main__":
         print(f"CONSTANCIA DEJADA para '{a.antes}'. LA PUERTA la exigira, y CADUCARA en cuanto se "
               f"añada un error nuevo al catalogo.")
         sys.exit(0)
+    # LO PRIMERO: EL GUARDIAN SE COMPRUEBA A SI MISMO ANTES DE COMPROBAR NADA.
+    # La meta-auditoria lo cazo el 11-ago-2026: mis dos daños nuevos —vaciar el catalogo y quitarle
+    # la caducidad a la lectura previa— NO ponian rojo a este archivo, porque sus autopruebas
+    # vivian en `--regla31`, UN MODO QUE NADIE EJECUTA EN LA CORRIDA NORMAL. Un guardian cuyas
+    # autopruebas estan en un modo aparte se puede vaciar y no se entera de nada.
+    if regla31(verbose=False) != 0:
+        print("DISCIPLINA: SUS PROPIAS AUTOPRUEBAS REPRUEBAN. No reviso nada mas: un guardian roto "
+              "que sigue opinando es peor que ninguno.")
+        sys.exit(1)
     catalogo(salida=a.catalogo)
     if a.modulo:
         sys.exit(1 if revisar_modulo(a.modulo) else 0)
