@@ -222,11 +222,16 @@ def recompensa_con_criterio_nuestro(raiz):
 
 
 def catalogo_de_errores_vaciado(raiz):
-    """Daño: alguien vacia el catalogo de errores de metodo. Si el guardian que me corrige a mi se
-    puede desactivar borrando una lista, no es un guardian: es un adorno con buena prosa."""
+    """Daño: alguien VACIA el catalogo de errores de metodo. Si el guardian que me corrige a mi se
+    puede desactivar borrando una lista, no es un guardian: es un adorno con buena prosa.
+
+    MI PRIMERA VERSION DE ESTE DAÑO ESTABA MAL Y LA META-AUDITORIA LA CAZO: cambiaba el CHEQUEO
+    (`len(ERRORES) > 0` por `True`) en vez de crear el ESTADO MALO. Desactivar el detector y
+    provocar lo que el detector busca son cosas distintas, y solo la segunda prueba que el detector
+    sirve. Ahora se vacia la lista de verdad."""
     return _editar(raiz, "codigo/disciplina.py",
-                   'caso("el catalogo de errores NO esta vacio", len(ERRORES) > 0)',
-                   'caso("el catalogo de errores NO esta vacio", True)')
+                   "def _por_id(i):",
+                   "ERRORES = []\n\n\ndef _por_id(i):")
 
 
 def lectura_previa_no_caduca(raiz):
