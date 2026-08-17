@@ -356,6 +356,20 @@ ERRORES = [
         "mecanizado": True,
     },
     {
+        "id": "huerfano-que-si-corre",
+        "titulo": "Contar un modulo como desconectado mirando solo las importaciones",
+        "veces": 1,
+        "incidente": ("el censo del prerregistro-54 declaro huerfanos a interocepcion.py y "
+                      "memoria.py, y el INFORME-65 lo publico. Pero los DOS los ejecuta "
+                      "`latido-nube.yml` DESPUES DE CADA ESTUDIO: corren mas a menudo que casi "
+                      "cualquier organo. `anatomia.py` solo mira `import`, y un proyecto que "
+                      "tambien invoca modulos desde un workflow tiene DOS formas de usarlos. De "
+                      "los tres huerfanos que quedaban, solo curiosidad2 lo era de verdad."),
+        "como_evitarlo": ("un censo de conexion mira las importaciones Y las invocaciones desde "
+                          "los workflows y la cola; si solo mira una, lo dice en su veredicto"),
+        "mecanizado": True,
+    },
+    {
         "id": "variable-muerta",
         "titulo": "Variable que se calcula y no se usa",
         "veces": 2,
@@ -650,9 +664,14 @@ def revisar_modulo(nombre, verbose=True):
 
 def revisar_prerregistros(verbose=True):
     """Los prerregistros NUEVOS declaran que diran si su expectativa falla POR CADA LADO."""
-    fallos = []
+    fallos, deuda = [], []
     for p in sorted(glob.glob(os.path.join(BASE, "registros", "prerregistro-*.md"))):
         n = int(re.search(r"(\d+)", os.path.basename(p)).group(1))
+        # LA DEUDA DE POTENCIA SE CUENTA EN TODOS, incluidos los de antes del 47: contar no es
+        # reescribir. Estaba mal puesta debajo del corte y solo veia 2 de los 9 que hay.
+        if n < 61 and d_criterio_sin_potencia(open(p, encoding="utf-8").read(),
+                                              desde_prerregistro=0, numero=n):
+            deuda.append(os.path.basename(p))
         if n < 47:                # rige hacia adelante, como los cuatro endurecimientos
             continue
         t = open(p, encoding="utf-8").read().lower()
@@ -661,11 +680,17 @@ def revisar_prerregistros(verbose=True):
                           f"falla — una expectativa que solo se equivoca por un lado no es honesta")
         for f in d_criterio_sin_potencia(t, numero=n):
             fallos.append(f"{os.path.basename(p)}: {f}")
+        # LOS ANTERIORES AL CORTE SE CUENTAN, NO SE REESCRIBEN: mover hoy un criterio de un estudio
+        # ya publicado seria cambiarle el umbral con los datos delante, que es justo lo prohibido.
     if verbose:
         for f in fallos:
             print(f"  FALLO [expectativa-de-un-solo-lado] {f}")
         if not fallos:
             print("  ok    los prerregistros desde el 47 declaran los dos lados de su expectativa")
+        if deuda:
+            print(f"  !!    {len(deuda)} prerregistros ANTERIORES al 61 congelaron un criterio de "
+                  f"conteo que el azar pasa: {', '.join(x.replace('prerregistro-','').replace('.md','') for x in deuda)} "
+                  f"— DEUDA MEDIDA, no se reescriben")
     return fallos
 
 
@@ -687,15 +712,65 @@ def d_criterio_sin_potencia(texto, desde_prerregistro=61, numero=None):
     if re.search(r"binomial|P\(X|el azar lo pasa|probabilidad del azar", texto, re.I):
         return []
     fallos = []
-    for m in re.finditer(r"\b(\d+)\s+de\s+(\d+)\b", texto):
-        k, n = int(m.group(1)), int(m.group(2))
-        if not (2 <= n <= 30 and k <= n and k > n / 2.0):
+    for linea in texto.splitlines():
+        # SOLO donde hay un CRITERIO, no en la prosa. Sin esto, 'acusaria a 10 de 15 organos'
+        # —una frase del prerregistro-54— se cuenta como criterio flojo, y el detector daria un
+        # techo alarmista en vez de un dato. Un detector que confunde prosa con codigo ya esta en
+        # este catalogo dos veces; es el mismo error con otra ropa.
+        if not re.search(r"criterio|semillas|casos|pide|aprueba", linea, re.I):
             continue
-        p = _cola_binomial(k, n)
-        if p > 0.05:
-            fallos.append(f"el criterio '{k} de {n}' lo pasa el azar el {p:.1%} de las veces y el "
-                          f"prerregistro no lo dice: no esta listo para congelarse")
+        for m in re.finditer(r"\b(\d+)\s+de\s+(\d+)\b", linea):
+            k, n = int(m.group(1)), int(m.group(2))
+            if not (2 <= n <= 30 and k <= n and k > n / 2.0):
+                continue
+            p = _cola_binomial(k, n)
+            if p > 0.05:
+                fallos.append(f"el criterio '{k} de {n}' lo pasa el azar el {p:.1%} de las veces "
+                              f"y el prerregistro no lo dice: no esta listo para congelarse")
     return sorted(set(fallos))
+
+
+def d_huerfano_que_si_corre(huerfanos, invocados):
+    """UN MODULO DECLARADO HUERFANO QUE EL PROYECTO SI EJECUTA. `huerfanos` son los que un censo
+    declara desconectados; `invocados` los que algun workflow o la cola llama por su nombre. Se
+    pasan como argumentos para poder examinar el detector con datos hechos a mano."""
+    return sorted(f"'{m}' figura como huerfano y sin embargo el proyecto lo EJECUTA: un censo que "
+                  f"solo mira `import` no ve la mitad de las formas de usar un modulo"
+                  for m in huerfanos if m in invocados)
+
+
+def modulos_invocados():
+    """Los modulos que los workflows o la cola llaman por su nombre de archivo."""
+    invocados = set()
+    for patron in (os.path.join(BASE, ".github", "workflows", "*.yml"),
+                   os.path.join(BASE, "registros", "COLA-ESTUDIOS.json")):
+        for a in sorted(glob.glob(patron)):
+            for m in re.findall(r"codigo/([\w_]+)\.py", open(a, encoding="utf-8").read()):
+                invocados.add(m)
+    return invocados
+
+
+def revisar_censos(verbose=True):
+    """El detector de arriba, aplicado a lo que el censo de organos publico."""
+    # se mira el censo MAS NUEVO: el viejo (p54) solo contaba importaciones y por eso este mismo
+    # detector lo puso en rojo; el corregido (p63) cuenta las dos vias. Si algun dia vuelve a
+    # publicarse un censo que solo mire una, el detector volvera a gritar.
+    ruta = None
+    for candidata in ("p63-anatomia2", "p54-anatomia"):
+        posible = os.path.join(BASE, "resultados", candidata, "medida.json")
+        if os.path.exists(posible):
+            ruta = posible
+            break
+    if not ruta:
+        return []
+    huerfanos = json.load(open(ruta, encoding="utf-8")).get("huerfanos", [])
+    fallos = d_huerfano_que_si_corre(huerfanos, modulos_invocados())
+    if verbose:
+        for f in fallos:
+            print(f"  FALLO [huerfano-que-si-corre] {f}")
+        if not fallos:
+            print("  ok    ningun modulo declarado huerfano lo ejecuta un workflow")
+    return fallos
 
 
 def d_sello_muerto_en_uso(sellos, importados):
@@ -824,6 +899,15 @@ def regla31(verbose=True):
          d_criterio_sin_potencia("gana en 4 de 5; el azar lo pasa el 18.75%", numero=61) == [])
     caso("potencia: NO marca los prerregistros anteriores al corte",
          d_criterio_sin_potencia("gana en 4 de 5 semillas", numero=60) == [])
+    caso("potencia: NO marca un '4 de 5' que esta en PROSA, no en un criterio",
+         d_criterio_sin_potencia("acusaria a 4 de 5 organos por una razon ajena", numero=61) == [])
+
+    caso("huerfano-que-corre: MARCA a un huerfano que un workflow ejecuta",
+         len(d_huerfano_que_si_corre(["a"], {"a"})) == 1)
+    caso("huerfano-que-corre: NO marca a un huerfano que nadie ejecuta",
+         d_huerfano_que_si_corre(["a"], {"b"}) == [])
+    caso("huerfano-que-corre: NO marca a un modulo ejecutado que NADIE llamo huerfano",
+         d_huerfano_que_si_corre([], {"a"}) == [])
 
     caso("sello-muerto: MARCA un sello muerto en un modulo que alguien importa",
          len(d_sello_muerto_en_uso({"a": False}, {"a"})) == 1)
@@ -907,6 +991,8 @@ if __name__ == "__main__":
     if revisar_prerregistros(verbose=True):
         malos += 1
     if revisar_sellos(verbose=True):
+        malos += 1
+    if revisar_censos(verbose=True):
         malos += 1
     print(f"\nDISCIPLINA: {'SIN FALLOS BLOQUEANTES' if not malos else f'{malos} sitios que corregir'}"
           f" · {deudas} en DEUDA MEDIDA (modulos anteriores al prerregistro "

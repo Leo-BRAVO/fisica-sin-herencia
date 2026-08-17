@@ -201,6 +201,14 @@
       "mecanizado": true
     },
     {
+      "id": "huerfano-que-si-corre",
+      "titulo": "Contar un modulo como desconectado mirando solo las importaciones",
+      "veces": 1,
+      "incidente": "el censo del prerregistro-54 declaro huerfanos a interocepcion.py y memoria.py, y el INFORME-65 lo publico. Pero los DOS los ejecuta `latido-nube.yml` DESPUES DE CADA ESTUDIO: corren mas a menudo que casi cualquier organo. `anatomia.py` solo mira `import`, y un proyecto que tambien invoca modulos desde un workflow tiene DOS formas de usarlos. De los tres huerfanos que quedaban, solo curiosidad2 lo era de verdad.",
+      "como_evitarlo": "un censo de conexion mira las importaciones Y las invocaciones desde los workflows y la cola; si solo mira una, lo dice en su veredicto",
+      "mecanizado": true
+    },
+    {
       "id": "variable-muerta",
       "titulo": "Variable que se calcula y no se usa",
       "veces": 2,
@@ -209,7 +217,7 @@
       "mecanizado": true
     }
   ],
-  "mecanizados": 12,
-  "total": 26,
-  "veces_en_total": 36
+  "mecanizados": 13,
+  "total": 27,
+  "veces_en_total": 37
 }

@@ -278,6 +278,20 @@ def criterio_que_pasa_el_azar(raiz):
     return True
 
 
+def censo_que_solo_mira_importaciones(raiz):
+    """Daño REAL, publicado en CORRECCION-02: un censo declara huerfano a un modulo que el latido
+    EJECUTA despues de cada estudio. Se crea el ESTADO MALO en el dato publicado, no en el chequeo."""
+    ruta = os.path.join(raiz, "resultados", "p63-anatomia2", "medida.json")
+    if not os.path.exists(ruta):
+        return False
+    d = json.load(open(ruta, encoding="utf-8"))
+    if "interocepcion" in d.get("huerfanos", []):
+        return False
+    d["huerfanos"] = sorted(d.get("huerfanos", []) + ["interocepcion"])
+    json.dump(d, open(ruta, "w", encoding="utf-8"), indent=2, ensure_ascii=False)
+    return True
+
+
 MUTACIONES = [
     ("desaparece una regla del medio",            "coherencia.py",      borra_una_regla),
     ("la boleta proclama nodos que no existen",   "coherencia.py",      boleta_miente),
@@ -298,6 +312,8 @@ MUTACIONES = [
      sello_muerto_en_modulo_en_uso),
     ("se pisan los datos que un acta ya publico", "actas.py", datos_publicados_pisados),
     ("se congela un criterio de conteo que el azar pasa", "disciplina.py", criterio_que_pasa_el_azar),
+    ("un censo llama huerfano a un modulo que el latido ejecuta", "disciplina.py",
+     censo_que_solo_mira_importaciones),
 ]
 
 

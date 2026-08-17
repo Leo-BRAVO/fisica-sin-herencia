@@ -1,0 +1,43 @@
+{
+  "prerregistro": 63,
+  "organos": 15,
+  "huerfanos_censo_viejo": [
+    "curiosidad2",
+    "interocepcion",
+    "memoria"
+  ],
+  "huerfanos": [
+    "curiosidad2"
+  ],
+  "rescatados_por_la_segunda_via": [
+    "interocepcion",
+    "memoria"
+  ],
+  "modulos_que_el_proyecto_ejecuta": [
+    "auditoria_total",
+    "boleta",
+    "coherencia",
+    "conectoma",
+    "descubrir_pool",
+    "espejo2",
+    "experimentar",
+    "experimentar2",
+    "hito0_multimodal",
+    "hito0_v2",
+    "interocepcion",
+    "latido_nube",
+    "memoria",
+    "observador_pasivo",
+    "pruebas",
+    "reconstruir_datos",
+    "soporte",
+    "torneo_ojos"
+  ],
+  "criterios": {
+    "A_cuenta_las_dos_vias": true,
+    "B_no_inventa_conexiones": true,
+    "C_le_gana_al_censo_viejo": true,
+    "D_no_acusa_por_no_estar_sellado": true
+  },
+  "veredicto": "1 ORGANO(S) DESCONECTADO(S) de 15, y NO 3: interocepcion, memoria no los importa nadie pero el proyecto SI los ejecuta"
+}
