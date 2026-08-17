@@ -1,0 +1,24 @@
+{
+  "tanteos": [
+    {
+      "salida": "regla31/tanteo.json",
+      "semillas_quemadas": [
+        101,
+        103
+      ],
+      "que_se_tanteaba": "la propia Regla 31"
+    },
+    {
+      "salida": "regla31/tanteo.json",
+      "semillas_quemadas": [
+        101,
+        103
+      ],
+      "que_se_tanteaba": "la propia Regla 31"
+    }
+  ],
+  "semillas_quemadas_en_total": [
+    101,
+    103
+  ]
+}
